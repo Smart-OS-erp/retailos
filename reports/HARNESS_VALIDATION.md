@@ -17,7 +17,7 @@ Scope: documentation, governance, placeholder validation, CI structure, and rese
 | Placeholder script syntax | Pass | `node --check` parsed all six scripts. |
 | Patch hygiene | Pass | `git diff --cached --check` returned no errors after cleanup. |
 | Credential-shaped material | Pass | Focused scan found no token or private-key-shaped material. |
-| Environment check | TODO / not applicable | Exit 0; no runtime environment files exist. |
+| Environment check | Pass / runtime not applicable | Exit 0; `.env.example` contains exactly the four required empty assignments and no runtime environment file is committed. |
 | Service-role client check | TODO / not applicable | Exit 0; no application source exists. |
 | Static dashboard check | TODO / not applicable | Exit 0; no application source exists. |
 | API route protection check | TODO / not applicable | Exit 0; no API routes exist. |

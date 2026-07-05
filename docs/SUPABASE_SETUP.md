@@ -16,7 +16,14 @@ This is a setup plan for the next approved task. No Supabase project, schema, or
 
 ## Environment boundary
 
-Use `.env.local` for local secrets and Vercel/Supabase secret management for deployed environments. Commit only a future `.env.example` containing names and safe descriptions—never real values.
+Use `.env.local` for local secrets and Vercel/Supabase secret management for deployed environments. The committed `.env.example` contains empty assignments for these names only:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `DATABASE_URL`
+
+Only the two `NEXT_PUBLIC_` variables may be read by browser code. `SUPABASE_SERVICE_ROLE_KEY` and `DATABASE_URL` are server-only and must never enter client modules, browser bundles, logs, screenshots, or committed files.
 
 ## Release requirements
 

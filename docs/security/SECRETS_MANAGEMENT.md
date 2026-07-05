@@ -10,6 +10,13 @@
 - Redact commands, logs, CI output, errors, screenshots, and support artifacts.
 - Prefer short-lived identity/OIDC mechanisms over long-lived keys when supported.
 
+## RetailOS environment contract
+
+- Browser-safe configuration: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+- Server-only secrets: `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL`.
+- The server-only names must not be imported, interpolated, or forwarded by any module marked `"use client"` or any browser-executed dependency.
+- `.env.example` contains names with empty values only. Real values belong in ignored local files or managed environment stores.
+
 ## Incident procedure
 
 On suspected exposure: stop propagation, revoke/rotate immediately, preserve safe evidence, assess access logs and affected data, notify the incident owner, remediate the source, and document lessons. Removing a secret from the latest commit alone does not invalidate it or erase history.

@@ -2,7 +2,9 @@
 
 ## Harness milestone
 
-No known documentation or validation-scaffolding blocker.
+The environment-name contract can be completed in the harness. Product scaffolding remains blocked until draft PR #1 is reviewed and merged, as required by `reports/CURRENT_STATE.md` and `reports/NEXT_TASK.md`.
+
+**Owner/action:** repository owner reviews and merges the harness PR, then explicitly updates the current mode/build status before technical-foundation implementation begins.
 
 ## Deferred product decisions
 
