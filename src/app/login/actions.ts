@@ -40,7 +40,7 @@ export async function signUp(formData: FormData) {
   const { error } = await supabase.auth.signUp(credentials);
 
   if (error) {
-    redirect("/login?error=signup");
+    redirect("/signup?error=signup");
   }
 
   redirect("/login?message=confirm");

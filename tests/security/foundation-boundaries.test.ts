@@ -60,8 +60,13 @@ describe("foundation security boundaries", () => {
       path.join(process.cwd(), "src/app/onboarding/actions.ts"),
       "utf8",
     );
+    const navigation = await readFile(
+      path.join(process.cwd(), "src/lib/navigation/onboarding.ts"),
+      "utf8",
+    );
 
-    expect(page).toContain("requireUser()");
+    expect(page).toContain("getOnboardingContext()");
+    expect(navigation).toContain("requireUser()");
     expect(action).toContain("requireUser()");
   });
 

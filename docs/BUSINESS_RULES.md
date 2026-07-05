@@ -23,4 +23,17 @@ Business rules must be versioned, testable, tenant-aware, and separated from UI 
 
 ## Open decisions
 
-Exact age bands, analysis windows, cost basis, confidence formula, currency conversion source, and recommended-action catalogue require product-owner approval before implementation.
+The Phase 0 v1 rule pack below was approved by the product owner on 2026-07-05. Any change requires a new version and recalculation; historical decisions retain the version used.
+
+## Approved Phase 0 v1 rule pack
+
+- **Inventory age:** `fresh` is 0–60 elapsed days, `watch` is 61–90, `aged` is 91–180, and `dead` is over 180. Missing approved receipt/availability evidence remains `unknown` and cannot be treated as day zero.
+- **Sales analysis:** trailing 90 eligible days with a trailing 30-day recent comparison. Voided/refunded activity is excluded from eligible sales; absent coverage is disclosed.
+- **Cost basis:** use the latest approved unit cost carried by the canonical SKU/inventory record. Missing cost suppresses inventory-value and recoverable-value outputs rather than substituting zero.
+- **Data Confidence:** `40% completeness + 30% freshness + 30% consistency`, with every component retained. Results below 60 are suppressed from recovery recommendation and routed to data remediation.
+- **Currency:** Phase 0 performs no foreign-exchange conversion. Aggregate monetary values only when every input uses the organization's approved base currency; otherwise show separated values or `unknown`.
+- **Recovery actions:** investigate, data remediation, bundle/capsule proposal, markdown proposal, campaign repositioning proposal, and store-transfer proposal. They are recommendations/drafts only and never execute stock, price, publishing, or customer-contact changes.
+- **Approvals:** ORG_OWNER and delegated EXECUTIVE may approve. MERCHANDISING_MANAGER may upload, consolidate, analyze, and draft but not self-approve. STORE_MANAGER is limited to assigned-location context and tasks. VIEWER is read-only.
+- **File formats:** bounded CSV is required first. Excel remains conditional on passing the hostile-workbook security gate.
+
+Rule version identifier: `phase0-v1`.

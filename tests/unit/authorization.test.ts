@@ -19,18 +19,52 @@ describe("organization RBAC", () => {
     expect(hasPermission("executive", "audit.view")).toBe(true);
     expect(hasPermission("executive", "organization.manage")).toBe(false);
     expect(hasPermission("executive", "members.manage")).toBe(false);
+    expect(hasPermission("executive", "location.view")).toBe(true);
+    expect(hasPermission("executive", "brand.view")).toBe(true);
+    expect(hasPermission("executive", "onboarding.view")).toBe(true);
+    expect(hasPermission("executive", "event.view")).toBe(true);
+    expect(hasPermission("executive", "location.manage")).toBe(false);
+    expect(hasPermission("executive", "brand.manage")).toBe(false);
   });
 
-  it("defaults operational and viewer roles to organization visibility only", () => {
-    for (const role of organizationRoles.filter(
-      (candidate) =>
-        candidate !== "org_owner" && candidate !== "executive",
-    )) {
+  it("gives store and viewer roles read-only foundation visibility", () => {
+    for (const role of ["store_manager", "viewer"] as const) {
       expect(hasPermission(role, "organization.view")).toBe(true);
+      expect(hasPermission(role, "location.view")).toBe(true);
+      expect(hasPermission(role, "brand.view")).toBe(true);
       expect(hasPermission(role, "organization.manage")).toBe(false);
       expect(hasPermission(role, "members.view")).toBe(false);
       expect(hasPermission(role, "members.manage")).toBe(false);
       expect(hasPermission(role, "audit.view")).toBe(false);
+      expect(hasPermission(role, "location.manage")).toBe(false);
+      expect(hasPermission(role, "brand.manage")).toBe(false);
+      expect(hasPermission(role, "onboarding.manage")).toBe(false);
+      expect(hasPermission(role, "event.view")).toBe(false);
     }
+  });
+
+  it("lets merchandising manage brands without tenant administration", () => {
+    expect(hasPermission("merchandising_manager", "organization.view")).toBe(
+      true,
+    );
+    expect(hasPermission("merchandising_manager", "location.view")).toBe(true);
+    expect(hasPermission("merchandising_manager", "brand.view")).toBe(true);
+    expect(hasPermission("merchandising_manager", "brand.manage")).toBe(true);
+    expect(hasPermission("merchandising_manager", "location.manage")).toBe(
+      false,
+    );
+    expect(hasPermission("merchandising_manager", "onboarding.manage")).toBe(
+      false,
+    );
+  });
+
+  it("keeps the canonical role catalogue stable", () => {
+    expect(organizationRoles).toEqual([
+      "org_owner",
+      "executive",
+      "merchandising_manager",
+      "store_manager",
+      "viewer",
+    ]);
   });
 });
