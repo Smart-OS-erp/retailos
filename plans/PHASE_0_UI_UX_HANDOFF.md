@@ -1,8 +1,11 @@
 # Phase 0 UI/UX Handoff
 
-**Status:** Design specification only; no product UI, routes, components, or mock screens are authorized by this document.  
-**Active phase:** Phase 0 — Foundation: Inventory Recovery Intelligence  
-**Current repository mode:** Phase 0 end-to-end — design and architecture  
+**Status:** Design specification only; no product UI, routes, components, or mock screens are authorized by this document.
+
+**Active phase:** Phase 0 — Foundation: Inventory Recovery Intelligence
+
+**Current repository mode:** Phase 0 end-to-end — design and architecture
+
 **Implementation gate:** Start implementation only after this handoff, the engineering plan, and the security gate are accepted. Each milestone still passes its own data, authorization, and validation gate.
 
 ## 1. Purpose and guardrails
