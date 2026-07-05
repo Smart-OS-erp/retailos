@@ -38,3 +38,9 @@ Next.js/Supabase scaffold, Auth session boundaries, organizations, memberships, 
 - Local validation used Node 26.3.0; GitHub CI reproduced the quality and security gates on the repository-pinned Node 22 runtime.
 
 These items are release blockers, not silently passed gates.
+
+## Subsequent non-production evidence
+
+After this original foundation report, the reviewed migration was applied to `retailos-dev` and `npm run test:live-supabase` passed synthetic Auth, atomic onboarding, audit, RBAC, anonymous denial, and two-tenant RLS checks with cleanup. Confirm-email signups, an eight-character minimum password, and exact local callback URLs were also verified.
+
+Hosted token-hash template activation, CLI migration-history reconciliation, Vercel Git linkage, and protected preview verification remain open. See `reports/CURRENT_STATE.md` and `reports/OPEN_BLOCKERS.md` for current authority.

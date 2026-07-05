@@ -1,6 +1,6 @@
 # Design System
 
-This file records constraints for future product implementation. It does not authorize UI screens in the harness milestone.
+This file records constraints for Phase 0 product implementation. The approved design handoff lives in `plans/PHASE_0_UI_UX_HANDOFF.md`; implementation still proceeds only with each milestone's real data, authorization, states, and tests.
 
 ## Principles
 

@@ -3,12 +3,12 @@
 ## Harness acceptance
 
 - All requested repository paths exist.
-- `reports/CURRENT_STATE.md` names Phase 0 and says no product implementation exists.
+- `reports/CURRENT_STATE.md` names Phase 0 and accurately records the current implementation mode.
 - `AGENTS.md` contains mission, roadmap, active-phase control, Security Grade AAA+, harness standard, workflow, phase gates, prohibitions, validation, and handoff format.
 - Future phases are documentation-only.
 - Placeholder scripts execute safely and state their incomplete scope.
 - CI exposes lint, typecheck, test, build, and security jobs/steps without claiming an absent application was validated.
-- No secrets, service-role browser usage, app scaffold, static dashboard data, or UI screens are present.
+- No secrets, service-role browser usage, static dashboard data, or fake product screens are present.
 
 ## Secure-foundation acceptance
 
@@ -26,7 +26,9 @@
 - Local lint, strict TypeScript, unit, integration, security, dependency audit, and production build pass.
 - The embedded PostgreSQL integration suite creates two authenticated users and organizations, verifies own-tenant reads/updates, denies cross-tenant reads/updates, denies anonymous table access, denies direct membership writes, and verifies atomic onboarding/audit behavior.
 - Source-boundary tests verify that server-only variable names are unreachable from browser modules and protected onboarding code reauthorizes on the server.
-- Live Supabase Auth, remote migration, preview deployment, and live two-tenant behavior remain not verified and block release acceptance.
+- The reviewed migration is applied to non-production `retailos-dev`; synthetic live Auth, onboarding, audit, RBAC, anonymous denial, and two-tenant RLS verification pass with cleanup.
+- Confirm-email signups, an eight-character minimum password, and exact local confirmation callback URLs are configured.
+- Hosted token-hash template activation, migration-history reconciliation, Vercel Git linkage, and a protected preview flow remain unverified release blockers.
 
 ## Evidence rules
 

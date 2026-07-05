@@ -4,30 +4,30 @@
 
 Create a secure foundation for inventory recovery intelligence and, after the harness PR is accepted, deliver the smallest trustworthy path from tenant-scoped inventory facts to explainable recovery opportunities.
 
-## Harness milestone (current)
+## Current delivery mode
 
-This change is limited to governance, documentation, reports, validation scaffolding, CI structure, reserved test/migration boundaries, and design handoff specifications. It intentionally contains no application scaffold or product implementation.
+The harness and secure technical foundation exist. Full Phase 0 is explicitly approved, but delivery remains milestone-gated. The current branch is design/architecture first; product implementation begins only after the combined UI/UX, engineering, security, permission, and business-rule handoff is accepted.
 
-## In scope after harness acceptance
+## In scope
 
-- Next.js technical scaffold.
-- Supabase project integration and migration discipline.
-- Authentication, organizations, memberships, roles, and RLS.
-- Minimal onboarding skeleton needed to establish an organization and authorized membership.
-- Security and tenant-isolation tests.
-- Subsequent Phase 0 slices for inventory inputs, recovery classification, explanation, and authorized actions, each requiring separate acceptance.
+- Secure SaaS foundation expansion and full onboarding.
+- Tenant-scoped sample data, hostile file intake, staging, validation, and consolidation.
+- Canonical product/SKU/location/inventory data and the live Operating View.
+- Approved deterministic inventory recovery scores, opportunities, and Attention Queue.
+- Recovery projects, tasks, approvals, and campaign brief drafts.
+- Deterministic/template-based permission-aware Retail Copilot explanations.
+- Executive, Merchandising, Store Manager, and Viewer workspaces backed by persisted data.
+- Security, tenant/location isolation, acceptance, deployment, and rollback evidence for every milestone.
 
-## Out of scope now
+## Out of scope
 
-- Full Next.js or Supabase scaffold.
-- Dashboards, UI screens, and mock product experiences.
 - Seeded demo analytics presented as real intelligence.
-- Sales, POS, procurement, fulfilment, finance, CRM, workforce, integrations, forecasting, and autonomous Copilot actions.
+- Shopify, WooCommerce, Google Sheets, marketplace, POS, finance, wholesale, accounting, warehouse management, forecasting, advanced agent execution, and autonomous Copilot actions.
 - Implementing any capability beyond the active Phase 0 boundary, including Phases 0.5–10.
 
 ## Phase 0 intelligence boundary
 
-A future recovery result must be tenant-scoped, based on known data, include its calculation version and freshness, explain the contributing signals, and never mutate price, stock, or customer-facing channels without explicit permission and confirmation.
+A recovery result must be tenant-scoped, based on persisted known data, include its calculation version and freshness, explain contributing signals and confidence, and never mutate price, stock, publishing, or customer-facing channels in Phase 0.
 
 ## Exit criteria
 
