@@ -8,7 +8,8 @@ This is the deployment contract for the Phase 0 secure technical foundation.
 - The four required variables are configured for Preview; `SUPABASE_SERVICE_ROLE_KEY` and `DATABASE_URL` are sensitive, server-only values.
 - Production variables are intentionally not populated with non-production credentials.
 - No deployment is active. Two CLI attempts were removed after Vercel unexpectedly classified them as production targets.
-- A protected preview remains blocked until the Vercel account adds its GitHub login connection, links `Smart-OS-erp/retailos`, and enables preview access protection.
+- Vercel Authentication protects deployment URLs (`all_except_custom_domains`) and Git fork protection is enabled.
+- A protected preview remains blocked until the Vercel account completes its GitHub login connection and links `Smart-OS-erp/retailos`.
 
 ## Environment model
 

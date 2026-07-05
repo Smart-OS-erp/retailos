@@ -4,7 +4,7 @@
 
 - **Observed:** two CLI deployments were reported by Vercel as targeting production even without `--prod`, including one attempt with explicit `--target=preview`.
 - **Resolution:** remove both deployments immediately and verify through the Vercel API that the project has zero active deployments. Preview variables remain scoped only to Preview.
-- **Remaining action:** add the account's GitHub login connection, enable preview protection, and use the connected feature branch to create the protected preview.
+- **Remaining action:** complete the account's GitHub login connection and use the connected feature branch to create the protected preview. Vercel Authentication and Git fork protection are already enabled.
 - **Status:** unauthorized deployment exposure resolved; protected preview remains blocked.
 
 ## 2026-07-05 — Non-production Supabase deployment constraints
