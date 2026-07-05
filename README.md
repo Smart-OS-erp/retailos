@@ -1,21 +1,21 @@
 # RetailOS
 
-RetailOS is the operating system for African fashion retail: a secure, multi-tenant platform intended to help fashion retailers recover inventory value, operate stores, coordinate commerce, and make permission-aware decisions from trustworthy data.
+RetailOS is the operating system for African fashion retail: a secure, multi-tenant platform intended to help fashion retailers recover inventory value and turn trustworthy retail data into permission-aware daily operating decisions.
 
-This repository is in a **harness-first restart**. The active phase is **Phase 0 — Foundation: Inventory Recovery Intelligence**. No product application has been scaffolded and no product features, dashboards, or screens are implemented in this change.
+This repository is in a **harness-first restart**. The active phase is **Phase 0 — Foundation: Inventory Recovery Intelligence**. This change contains no product application scaffold, features, dashboards, or UI screens.
 
 ## Current objective
 
 This foundation establishes:
 
-- phase control and agent working rules;
-- Security Grade AAA+ requirements;
-- product, security, and operational source documentation;
-- validation gates and placeholder security checks;
-- CI structure for lint, typecheck, test, build, and security checks;
+- the RetailOS agent operating manual and active-phase control;
+- Security Grade AAA+ requirements and security documentation;
+- product, design, data, deployment, and operational source documentation;
+- validation gates and honest placeholder security checks;
+- CI structure for future lint, typecheck, test, build, and security validation;
 - empty test, migration, planning, and design-handoff boundaries.
 
-The authoritative active phase is always declared in [`reports/CURRENT_STATE.md`](reports/CURRENT_STATE.md). Agents may use the roadmap for context, but may implement only that declared phase.
+The authoritative active phase is always declared in [`reports/CURRENT_STATE.md`](reports/CURRENT_STATE.md). Agents may use the roadmap for context, but may implement only the declared phase.
 
 ## Repository map
 
@@ -25,11 +25,11 @@ The authoritative active phase is always declared in [`reports/CURRENT_STATE.md`
 - `scripts/` — safe placeholder environment and security validations.
 - `tests/` — reserved test layers; no product tests exist yet.
 - `supabase/` — reserved migration boundary and setup guidance.
-- `figma-handoff/` — design tokens and future implementation specifications only.
+- `figma-handoff/` — documentation-only design tokens and future implementation specifications.
 
 ## Validation
 
-Until a package manager and application scaffold are intentionally introduced, CI uses explicit placeholder steps and these directly executable checks:
+Until a package manifest and application scaffold are intentionally introduced, CI records quality commands as not applicable and runs these directly executable checks:
 
 ```bash
 node scripts/verify-env.ts
@@ -40,4 +40,6 @@ node scripts/security/no-unscoped-supabase-query.ts
 node scripts/security/verify-rls-policies.ts
 ```
 
-See [`AGENTS.md`](AGENTS.md) before making changes.
+Placeholder success means the relevant product surface does not exist; it is not evidence that a future implementation is secure.
+
+Read [`AGENTS.md`](AGENTS.md) before making changes.

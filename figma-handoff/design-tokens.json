@@ -3,24 +3,24 @@
   "status": "documentation-only",
   "color": {
     "surface": {
-      "canvas": { "$type": "color", "$value": "#F7F6F2" },
+      "canvas": { "$type": "color", "$value": "#F6F7FB" },
       "raised": { "$type": "color", "$value": "#FFFFFF" },
-      "inverse": { "$type": "color", "$value": "#17231C" }
+      "inverse": { "$type": "color", "$value": "#0B1020" }
     },
     "text": {
-      "primary": { "$type": "color", "$value": "#17231C" },
-      "secondary": { "$type": "color", "$value": "#536158" },
+      "primary": { "$type": "color", "$value": "#111827" },
+      "secondary": { "$type": "color", "$value": "#5B6475" },
       "inverse": { "$type": "color", "$value": "#FFFFFF" }
     },
     "action": {
-      "primary": { "$type": "color", "$value": "#146C43" },
-      "primaryHover": { "$type": "color", "$value": "#0E5735" },
+      "primary": { "$type": "color", "$value": "#6D28D9" },
+      "primaryHover": { "$type": "color", "$value": "#5B21B6" },
       "danger": { "$type": "color", "$value": "#B42318" },
       "focus": { "$type": "color", "$value": "#2563EB" }
     },
     "border": {
-      "default": { "$type": "color", "$value": "#D7DDD8" },
-      "strong": { "$type": "color", "$value": "#89968D" }
+      "default": { "$type": "color", "$value": "#E2E5EC" },
+      "strong": { "$type": "color", "$value": "#8B93A5" }
     }
   },
   "space": {

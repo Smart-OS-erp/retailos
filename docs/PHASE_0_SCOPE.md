@@ -23,7 +23,7 @@ This change is limited to governance, documentation, reports, validation scaffol
 - Dashboards, UI screens, and mock product experiences.
 - Seeded demo analytics presented as real intelligence.
 - Sales, POS, procurement, fulfilment, finance, CRM, workforce, integrations, forecasting, and autonomous Copilot actions.
-- Implementing any Phase 1–5 capability.
+- Implementing any capability beyond the active Phase 0 boundary, including Phases 0.5–10.
 
 ## Phase 0 intelligence boundary
 

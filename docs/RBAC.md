@@ -6,13 +6,13 @@ Authorization derives from an authenticated user, an organization membership, a 
 
 ## Proposed Phase 0 roles
 
-- **Owner:** manages organization-critical configuration, memberships, and all approved Phase 0 capabilities. Owner transfer must be controlled and audited.
-- **Admin:** manages operations and members within delegated permissions but cannot silently assume owner-only powers.
-- **Inventory Manager:** manages inventory inputs and reviews or approves recovery actions within policy.
-- **Analyst:** views permitted inventory intelligence and exports where separately allowed; cannot mutate operational state.
-- **Viewer:** read-only access to explicitly granted Phase 0 information.
+- **ORG_OWNER:** manages organization-critical configuration, memberships, and all approved Phase 0 capabilities. Owner transfer must be controlled and audited.
+- **EXECUTIVE:** views organization-wide operating intelligence and approves explicitly delegated recovery actions.
+- **MERCHANDISING_MANAGER:** manages inventory inputs and reviews or approves recovery actions within policy.
+- **STORE_MANAGER:** works only within assigned location scope and explicitly delegated operational permissions.
+- **VIEWER:** read-only access to explicitly granted Phase 0 information.
 
-These roles are a specification pending implementation review. Exact permission identifiers must be enumerated in migrations/application policy, not inferred from labels.
+These roles match the operating manual but remain a specification pending implementation review. Exact permission identifiers and role-to-permission mappings must be enumerated in migrations/application policy, not inferred from labels.
 
 ## Enforcement rules
 

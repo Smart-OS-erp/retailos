@@ -33,4 +33,4 @@ Contradictions must be recorded in `reports/OPEN_BLOCKERS.md`; agents must not s
 
 ## Roadmap boundary
 
-Phases 1–5 are described in `AGENTS.md` only to protect architectural direction. They are not accepted backlog for the active build and must not appear as implemented navigation, APIs, tables, demo data, or screens.
+Phases 0.5–10 are described in `AGENTS.md` only to protect architectural direction. They are not accepted backlog for the active build and must not appear as implemented navigation, APIs, tables, demo data, or screens.
