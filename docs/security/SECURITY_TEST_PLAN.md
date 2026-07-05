@@ -16,6 +16,8 @@ At least two tenants, multiple roles, a user with no membership, suspended/expir
 
 Security checks run on pull requests and main. A real implemented control must have a failing regression test. Placeholders must say TODO and cannot satisfy a product gate. High/critical findings or failed tenant-isolation tests block merge/release.
 
+The foundation CI runs a two-tenant behavioral RLS suite on an embedded PostgreSQL engine, plus RBAC unit tests and source-boundary checks. Before release, repeat the allow/deny matrix against the non-production Supabase project through the same `authenticated` role used by the application.
+
 ## Evidence
 
 Record commit, environment, command, result, and artifact. Keep test data synthetic and secrets ephemeral. Manual testing complements automated evidence but does not replace repeatable regression checks.

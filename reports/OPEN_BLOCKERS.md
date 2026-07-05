@@ -1,15 +1,17 @@
 # Open Blockers
 
-## Harness milestone
+## Release blockers
 
-The environment-name contract can be completed in the harness. Product scaffolding remains blocked until draft PR #1 is reviewed and merged, as required by `reports/CURRENT_STATE.md` and `reports/NEXT_TASK.md`.
+- **Remote migration not applied.** Owner/action: apply the reviewed migration to a non-production Supabase project and retain migration output.
+- **Supabase Auth not verified.** Owner/action: configure allowed site/callback URLs and the token-hash confirmation email template, then test sign-up, confirmation, sign-in, sign-out, expiry, and invalid links.
+- **Live tenant isolation not verified.** Owner/action: run the two-tenant allow/deny matrix through Supabase's authenticated role after migration.
+- **Preview environment not verified.** Owner/action: scope all four variables in Vercel without exposing server-only values, deploy a protected preview, and run smoke/security checks.
 
-**Owner/action:** repository owner reviews and merges the harness PR, then explicitly updates the current mode/build status before technical-foundation implementation begins.
+## Production governance blockers
+
+- Name privacy/legal, retention/deletion, incident-response, and environment owners before real tenant or personal data.
+- Approve MFA/recovery policy, monitoring/alerting, backups, restoration, and rollback evidence before production.
 
 ## Deferred product decisions
 
-These do not block the harness PR, but must be resolved before the affected implementation:
-
-- Approve exact inventory recovery age bands, analysis windows, cost basis, confidence thresholds, and action catalogue.
-- Confirm production privacy/legal owners, retention requirements, and incident contacts before real tenant/personal data.
-- Provision and separate Supabase/Vercel environments only during an approved technical-foundation task.
+Inventory recovery thresholds, analysis windows, cost basis, confidence levels, and action catalog remain future Phase 0 decisions. They do not authorize product implementation in this foundation change.

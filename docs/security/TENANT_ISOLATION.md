@@ -17,3 +17,5 @@ Data belonging to one RetailOS organization must never be readable, writable, in
 Create two organizations, multiple users and roles, and similarly shaped records. Assert allowed CRUD within scope and denial across scope, including guessed IDs, bulk endpoints, realtime, storage, exports, and background processing.
 
 RLS is the final database guard, not a reason to omit application authorization.
+
+The current foundation automates the organization/read/update/audit subset against two synthetic tenants. Realtime, storage, exports, background processing, invitations, suspended memberships, and future domain tables are not implemented and therefore remain future test obligations.

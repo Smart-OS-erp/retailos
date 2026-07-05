@@ -21,3 +21,5 @@ Every tenant operation must satisfy all of: authenticated principal, active orga
 ## Evidence
 
 Maintain a permission matrix and automated tests covering each role/action plus unauthenticated, no-membership, suspended-membership, and cross-tenant cases. Test through the same Supabase roles used in production.
+
+The current migration forces RLS on all three public tables, revokes anonymous and authenticated default privileges, grants only required columns/operations, and keeps security-definer helpers in the non-exposed `private` schema. Local PostgreSQL-engine tests verify owner access, cross-tenant denial, anonymous denial, direct membership-write denial, and audit isolation. Live Supabase verification remains required.

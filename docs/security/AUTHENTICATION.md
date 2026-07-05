@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Use Supabase Auth through supported server/client patterns after scaffold approval.
+- Use Supabase Auth through the implemented `@supabase/ssr` cookie pattern.
 - Use HTTPS everywhere outside controlled local development.
 - Prefer secure, HTTP-only, same-site session cookies for server-rendered flows; do not expose reusable tokens unnecessarily.
 - Validate redirect targets against an allowlist and separate local, preview, and production callback URLs.
@@ -18,3 +18,5 @@ MFA policy, recovery codes, support-assisted recovery, and owner-account safegua
 ## Testing
 
 Cover expired/malformed sessions, revoked users, replayed links, open redirects, cross-environment callbacks, brute-force controls, and concurrent session behavior. Never log passwords, OTPs, reset links, access tokens, or refresh tokens.
+
+The repository currently verifies redirect allowlisting and server reauthorization structurally. Live Auth behavior remains blocked until the non-production Supabase Auth settings and migration are configured.
