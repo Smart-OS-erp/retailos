@@ -19,6 +19,7 @@ Next.js/Supabase scaffold, Auth session boundaries, organizations, memberships, 
 | `npm run build` | Pass — Next.js 16.2.10 production build |
 | `npm audit --audit-level=moderate` | Pass — 0 vulnerabilities |
 | `git diff --check` | Pass |
+| GitHub CI on Node 22 | Pass — Quality and Security jobs |
 
 ## Security evidence
 
@@ -34,6 +35,6 @@ Next.js/Supabase scaffold, Auth session boundaries, organizations, memberships, 
 - The migration has not been applied to the user's Supabase project.
 - Supabase Auth callback/template configuration has not been exercised.
 - Live RLS, expiry/revocation, rate controls, Vercel environment scope, preview deployment, observability, backup, and rollback evidence are not available.
-- Local validation used Node 26.3.0 while the repository and CI pin Node 22; CI must provide the reproducible Node 22 result.
+- Local validation used Node 26.3.0; GitHub CI reproduced the quality and security gates on the repository-pinned Node 22 runtime.
 
 These items are release blockers, not silently passed gates.
