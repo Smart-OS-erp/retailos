@@ -1,5 +1,25 @@
 # Recent Failures
 
+## 2026-07-05 — Vercel CLI misclassified preview attempts
+
+- **Observed:** two CLI deployments were reported by Vercel as targeting production even without `--prod`, including one attempt with explicit `--target=preview`.
+- **Resolution:** remove both deployments immediately and verify through the Vercel API that the project has zero active deployments. Preview variables remain scoped only to Preview.
+- **Remaining action:** add the account's GitHub login connection, enable preview protection, and use the connected feature branch to create the protected preview.
+- **Status:** unauthorized deployment exposure resolved; protected preview remains blocked.
+
+## 2026-07-05 — Non-production Supabase deployment constraints
+
+- **Observed:** Supabase CLI management commands lacked an authenticated CLI session, and the direct database hostname could not be reached from this IPv4-only environment. The hosted default email service also disabled confirmation-template editing.
+- **Resolution:** apply the already-reviewed additive migration through authenticated SQL Editor, verify it through the live two-tenant harness, and commit the intended Auth configuration/template as code. No credentials were printed or committed.
+- **Remaining action:** reconcile CLI migration history, then configure approved custom SMTP or an eligible Supabase plan for the token-hash template.
+- **Status:** database/RLS verification resolved; migration history and hosted email template remain open blockers.
+
+## 2026-07-05 — Parallel local test timeout
+
+- **Observed:** the PGlite integration `beforeAll` exceeded its ten-second hook limit while lint, typecheck, tests, and security scans were launched concurrently.
+- **Resolution:** rerun the quality gates without competing database initialization; all 15 tests passed and the production build completed.
+- **Status:** resolved; no test was skipped in the successful run.
+
 ## 2026-07-05 — Phase-leak review false positive
 
 - **Observed:** a broad text search flagged negative security assertions and the explicit “No dashboard” onboarding message.

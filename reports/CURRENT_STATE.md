@@ -1,5 +1,5 @@
 Project: RetailOS
 Active Phase: Phase 0 — Foundation: Inventory Recovery Intelligence
-Current Mode: Secure Technical Foundation
-Build Status: Implemented and verified locally and in CI; not migrated or deployed
-Next Required Step: Review the foundation, apply it to non-production Supabase, and complete live security verification
+Current Mode: Secure Technical Foundation — Non-production verification
+Build Status: Applied to retailos-dev and verified locally/live; Vercel preview environment configured but no deployment is active
+Next Required Step: Resolve hosted confirmation-template delivery, reconcile migration history, enable Vercel preview protection/Git linkage, and verify a protected preview
