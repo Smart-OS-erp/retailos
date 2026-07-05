@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Quality placeholders
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Detect application toolchain
+        id: toolchain
+        shell: bash
+        run: |
+          if [[ -f package.json && -f package-lock.json ]]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "TODO (safe): no application package/lockfile exists; product quality commands are not applicable."
+          fi
+      - name: Install dependencies
+        if: steps.toolchain.outputs.ready == 'true'
+        run: npm ci
+      - name: Lint
+        if: steps.toolchain.outputs.ready == 'true'
+        run: npm run lint
+      - name: Typecheck
+        if: steps.toolchain.outputs.ready == 'true'
+        run: npm run typecheck
+      - name: Test
+        if: steps.toolchain.outputs.ready == 'true'
+        run: npm test
+      - name: Build
+        if: steps.toolchain.outputs.ready == 'true'
+        run: npm run build
+      - name: Validate environment contract
+        run: node scripts/verify-env.ts
+      - name: Record placeholder status
+        if: steps.toolchain.outputs.ready != 'true'
+        run: echo "Lint, typecheck, test, and build are TODO/not-applicable until the approved application scaffold adds package scripts."
