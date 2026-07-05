@@ -1,6 +1,6 @@
 # Supabase Setup
 
-The secure technical foundation now includes reviewed client boundaries and a versioned migration. Applying the migration and configuring Auth remain environment-owner actions; no remote migration is claimed in this repository state.
+The secure technical foundation includes reviewed client boundaries, a versioned migration, local Auth configuration-as-code, and a live isolation harness. The migration is applied to the non-production `retailos-dev` project and the live Auth/RLS matrix passes. Production promotion is not approved.
 
 ## Required setup sequence
 
@@ -13,6 +13,15 @@ The secure technical foundation now includes reviewed client boundaries and a ve
 7. Configure Auth URLs, approved providers, email behavior, session handling, MFA roadmap, and rate controls per environment.
 8. Configure private storage buckets and upload policies only when uploads enter active scope.
 9. Generate types from the reviewed schema and verify migration reproducibility.
+
+## Current non-production evidence
+
+- `20260705113000_secure_technical_foundation.sql` was applied successfully through Supabase SQL Editor.
+- Confirm-email signups are enabled, minimum password length is eight, and the two local `/auth/confirm` callback URLs are allowlisted.
+- `npm run test:live-supabase` creates isolated synthetic identities and tenants, verifies Auth/onboarding/audit/RBAC/RLS allow-deny behavior through anon and authenticated clients, and removes its fixtures.
+- `supabase/config.toml` and `supabase/templates/confirmation.html` contain the intended local Auth configuration and token-hash template.
+
+The SQL Editor application did not register the version in Supabase CLI migration history. Reconcile that history before a later `db push`. The hosted token-hash email body also remains blocked until custom SMTP or an eligible Supabase plan is configured; never commit or paste SMTP credentials.
 
 ## Environment boundary
 

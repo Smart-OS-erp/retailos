@@ -15,6 +15,7 @@
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
     "test:security": "vitest run tests/security",
+    "test:live-supabase": "node scripts/security/live-supabase-isolation.ts",
     "security": "node scripts/verify-env.ts && node scripts/security/no-service-role-client.ts && node scripts/security/no-static-dashboard-data.ts && node scripts/security/no-unprotected-api-route.ts && node scripts/security/no-unscoped-supabase-query.ts && node scripts/security/verify-rls-policies.ts"
   },
   "dependencies": {
