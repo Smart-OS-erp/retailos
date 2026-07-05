@@ -22,5 +22,5 @@ if (violations.length) {
 } else if (!files.length) {
   console.log("TODO (safe): no application source exists; static dashboard data scan is not yet applicable.");
 } else {
-  console.log("Heuristic dashboard scan passed. TODO: require provenance-aware integration tests for implemented metrics.");
+  console.log("Static dashboard scan passed. Add provenance-aware metric tests when dashboard work is explicitly phase-approved.");
 }

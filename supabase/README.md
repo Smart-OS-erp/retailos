@@ -1,14 +1,14 @@
-# Supabase Boundary
+# Supabase Foundation
 
-Supabase is not configured in the harness milestone. This directory reserves the reviewed location for migrations and synthetic local/test seed data.
+The first Phase 0 migration defines organizations, memberships, RBAC roles, audit events, an atomic onboarding function, explicit grants, and forced RLS.
 
-Before adding a migration:
+## Migration discipline
 
-1. confirm the active-phase requirement;
-2. model organizations and tenant ownership explicitly;
-3. enable and test RLS for tenant tables;
-4. add migration and policy tests, including cross-tenant denial;
-5. avoid production data and secrets in `seed.sql`;
-6. document rollback/compatibility implications.
+1. Review SQL and the tenant trust boundary.
+2. Apply first to a non-production Supabase project.
+3. Record migration output without secrets.
+4. Run local and live two-tenant RLS tests.
+5. Generate Supabase TypeScript types and compare them with `src/types/database.ts`.
+6. Document rollback/compatibility implications before production promotion.
 
-See `docs/SUPABASE_SETUP.md` and `docs/security/SUPABASE_SECURITY.md`.
+Do not use `SUPABASE_SERVICE_ROLE_KEY` for normal user traffic or to make failing RLS tests pass. `seed.sql` remains intentionally empty of product data.

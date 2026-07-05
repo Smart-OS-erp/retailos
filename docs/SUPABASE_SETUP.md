@@ -1,6 +1,6 @@
 # Supabase Setup
 
-This is a setup plan for the next approved task. No Supabase project, schema, or client is configured in the harness milestone.
+The secure technical foundation now includes reviewed client boundaries and a versioned migration. Applying the migration and configuring Auth remain environment-owner actions; no remote migration is claimed in this repository state.
 
 ## Required setup sequence
 

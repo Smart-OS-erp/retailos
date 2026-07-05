@@ -10,7 +10,7 @@
 - CI exposes lint, typecheck, test, build, and security jobs/steps without claiming an absent application was validated.
 - No secrets, service-role browser usage, app scaffold, static dashboard data, or UI screens are present.
 
-## Secure-foundation acceptance (next approved task)
+## Secure-foundation acceptance
 
 - An unauthenticated user cannot access tenant data.
 - A user without membership cannot access an organization by changing client input.
@@ -20,6 +20,13 @@
 - Organization creation/invitation is validated, idempotent where retried, and audited.
 - RLS is enabled and policy coverage is verified for every tenant table.
 - Security tests fail when a representative tenant filter, API guard, or RLS policy is removed.
+
+## Current evidence
+
+- Local lint, strict TypeScript, unit, integration, security, dependency audit, and production build pass.
+- The embedded PostgreSQL integration suite creates two authenticated users and organizations, verifies own-tenant reads/updates, denies cross-tenant reads/updates, denies anonymous table access, denies direct membership writes, and verifies atomic onboarding/audit behavior.
+- Source-boundary tests verify that server-only variable names are unreachable from browser modules and protected onboarding code reauthorizes on the server.
+- Live Supabase Auth, remote migration, preview deployment, and live two-tenant behavior remain not verified and block release acceptance.
 
 ## Evidence rules
 

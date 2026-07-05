@@ -22,6 +22,15 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
+          cache: npm
+      - name: Install dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+      - name: Audit dependencies
+        run: npm audit --audit-level=moderate
+      - name: Run tenant-isolation integration tests
+        run: npm run test:integration
+      - name: Run security regression tests
+        run: npm run test:security
       - name: Reject service role in client source
         run: node scripts/security/no-service-role-client.ts
       - name: Reject static dashboard data
@@ -33,4 +42,4 @@ jobs:
       - name: Verify tenant-table RLS declarations
         run: node scripts/security/verify-rls-policies.ts
       - name: Security status
-        run: echo "Current checks are harness heuristics/TODOs and must be replaced or extended as implementation surfaces are added."
+        run: echo "Static checks supplement, but do not replace, the behavioral tenant-isolation tests."

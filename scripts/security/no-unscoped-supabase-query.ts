@@ -28,5 +28,5 @@ if (violations.length) {
 } else if (!files.length) {
   console.log("TODO (safe): no application source exists; Supabase query scope scan is not yet applicable.");
 } else {
-  console.log("Heuristic Supabase query scope scan passed. TODO: add RLS-backed query and cross-tenant integration tests.");
+  console.log("Supabase query scope scan passed. Current tenant tables are also covered by behavioral RLS integration tests.");
 }

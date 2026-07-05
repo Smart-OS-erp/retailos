@@ -3,3 +3,9 @@
 .env.*.local
 node_modules
 .next
+coverage
+dist
+out
+.vercel
+*.log
+*.tsbuildinfo
