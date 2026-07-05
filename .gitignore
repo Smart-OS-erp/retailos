@@ -1,18 +1,5 @@
-# Environment and secrets
 .env
-.env.*
-!.env.example
-
-# Dependencies and generated artifacts
-node_modules/
-.next/
-coverage/
-dist/
-out/
-
-# Local tooling
-.vercel/
-*.log
-*.tsbuildinfo
-.DS_Store
-Thumbs.db
+.env.local
+.env.*.local
+node_modules
+.next
