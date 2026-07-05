@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Quality placeholders
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - name: Detect application toolchain
+        id: toolchain
+        shell: bash
+        run: |
+          if [[ -f package.json && -f package-lock.json ]]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          elif [[ ! -f package.json && ! -f package-lock.json ]]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "TODO (safe): no application package/lockfile exists; product quality commands are not applicable."
+          else
+            echo "::error::package.json and package-lock.json must be introduced together."
+            exit 1
+          fi
+      - name: Install dependencies
+        if: steps.toolchain.outputs.ready == 'true'
+        run: npm ci
+      - name: Lint
+        if: steps.toolchain.outputs.ready == 'true'
+        run: npm run lint
+      - name: Typecheck
+        if: steps.toolchain.outputs.ready == 'true'
+        run: npm run typecheck
+      - name: Test
+        if: steps.toolchain.outputs.ready == 'true'
+        run: npm test
+      - name: Build
+        if: steps.toolchain.outputs.ready == 'true'
+        run: npm run build
+      - name: Validate environment contract
+        run: node scripts/verify-env.ts
+      - name: Record placeholder status
+        if: steps.toolchain.outputs.ready != 'true'
+        run: echo "Lint, typecheck, test, and build are TODO/not-applicable until the approved application scaffold adds package scripts."

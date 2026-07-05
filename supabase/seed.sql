@@ -1,0 +1,3 @@
+-- RetailOS harness placeholder.
+-- No product schema or seed data exists yet.
+-- Future seed data must be synthetic, deterministic, tenant-separated, and safe for local/test use only.

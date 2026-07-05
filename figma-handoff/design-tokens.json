@@ -1,0 +1,42 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "status": "documentation-only",
+  "color": {
+    "surface": {
+      "canvas": { "$type": "color", "$value": "#F6F7FB" },
+      "raised": { "$type": "color", "$value": "#FFFFFF" },
+      "inverse": { "$type": "color", "$value": "#0B1020" }
+    },
+    "text": {
+      "primary": { "$type": "color", "$value": "#111827" },
+      "secondary": { "$type": "color", "$value": "#5B6475" },
+      "inverse": { "$type": "color", "$value": "#FFFFFF" }
+    },
+    "action": {
+      "primary": { "$type": "color", "$value": "#6D28D9" },
+      "primaryHover": { "$type": "color", "$value": "#5B21B6" },
+      "danger": { "$type": "color", "$value": "#B42318" },
+      "focus": { "$type": "color", "$value": "#2563EB" }
+    },
+    "border": {
+      "default": { "$type": "color", "$value": "#E2E5EC" },
+      "strong": { "$type": "color", "$value": "#8B93A5" }
+    }
+  },
+  "space": {
+    "1": { "$type": "dimension", "$value": "4px" },
+    "2": { "$type": "dimension", "$value": "8px" },
+    "3": { "$type": "dimension", "$value": "12px" },
+    "4": { "$type": "dimension", "$value": "16px" },
+    "6": { "$type": "dimension", "$value": "24px" },
+    "8": { "$type": "dimension", "$value": "32px" }
+  },
+  "radius": {
+    "control": { "$type": "dimension", "$value": "8px" },
+    "panel": { "$type": "dimension", "$value": "12px" }
+  },
+  "font": {
+    "sans": { "$type": "fontFamily", "$value": ["Inter", "system-ui", "sans-serif"] },
+    "mono": { "$type": "fontFamily", "$value": ["ui-monospace", "monospace"] }
+  }
+}
