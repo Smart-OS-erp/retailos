@@ -1,10 +1,10 @@
 Next Task:
-Milestone 4 — Deterministic Intelligence:
-- Persist versioned Data Confidence, Inventory Risk, Recovery Opportunity, and Attention Priority results.
-- Orchestrate calculations from the latest approved inventory snapshot only.
-- Build Inventory Recovery Intelligence, Attention Queue, Executive Briefing, and opportunity surfaces with source evidence and caveats.
-- Prove unknown/low-confidence suppression, no mixed-currency aggregation, client-authored score denial, and location isolation.
+Milestone 5 — Projectisation Engine:
+- Add recovery projects, SKU evidence links, tasks, campaign briefs, and immutable approval records.
+- Implement opportunity-to-project creation and guarded status transitions with separate draft and approval permissions.
+- Build projectisation, task, approval, completed-project, and campaign-brief surfaces.
+- Prove stale, replayed, self, unauthorized, and invalid-transition approvals fail closed.
 
 Foundation release blockers remain tracked in `reports/OPEN_BLOCKERS.md` and must be cleared before preview acceptance.
 
-Do not start projectisation, Copilot, or role workspaces until Milestone 4 is accepted.
+Do not start Copilot or role workspaces until Milestone 5 is accepted.

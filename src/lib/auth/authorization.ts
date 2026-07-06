@@ -51,6 +51,7 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "event.view",
     "data.view",
     "inventory.view",
+    "opportunity.view",
   ]),
   merchandising_manager: new Set([
     "organization.view",
@@ -60,12 +61,15 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "data.view",
     "data.manage",
     "inventory.view",
+    "intelligence.run",
+    "opportunity.view",
   ]),
   store_manager: new Set([
     "organization.view",
     "location.view",
     "brand.view",
     "inventory.view",
+    "opportunity.view",
   ]),
   viewer: new Set([
     "organization.view",
@@ -73,6 +77,7 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "brand.view",
     "data.view",
     "inventory.view",
+    "opportunity.view",
   ]),
 };
 

@@ -289,6 +289,103 @@ describe("Phase 0 Consolidation Hub", () => {
     ).rejects.toThrow(/source_changed/);
   });
 
+  it("persists deterministic intelligence without mixing currencies", async () => {
+    await database.exec("reset role");
+    const snapshot = (
+      await database.query<{ snapshot_id: string }>(
+        `select snapshot_id
+         from public.consolidation_runs
+         where organization_id = $1 and upload_id = $2`,
+        [organizationA, readyUploadA],
+      )
+    ).rows[0]!.snapshot_id;
+
+    const product = (
+      await database.query<{ id: string }>(
+        `insert into public.products (
+          organization_id, name, style_code, created_by
+        ) values ($1, 'Currency comparison', 'CURRENCY-COMPARISON', $2)
+        returning id`,
+        [organizationA, OWNER_A],
+      )
+    ).rows[0]!.id;
+    const ghsSku = (
+      await database.query<{ id: string }>(
+        `insert into public.skus (
+          organization_id, product_id, sku_code, approved_unit_cost,
+          currency_code, created_by
+        ) values ($1, $2, 'CONSOLIDATE-GHS', 100, 'GHS', $3)
+        returning id`,
+        [organizationA, product, OWNER_A],
+      )
+    ).rows[0]!.id;
+    const lowConfidenceSku = (
+      await database.query<{ id: string }>(
+        `insert into public.skus (
+          organization_id, product_id, sku_code, approved_unit_cost, created_by
+        ) values ($1, $2, 'CONSOLIDATE-LOW-CONFIDENCE', 100, $3)
+        returning id`,
+        [organizationA, product, OWNER_A],
+      )
+    ).rows[0]!.id;
+    await database.query(
+      `insert into public.inventory_positions (
+        organization_id, snapshot_id, sku_id, location_id, on_hand_quantity,
+        approved_unit_cost, currency_code, first_available_at,
+        units_sold_90, units_sold_30
+      ) values
+        ($1, $2, $3, $4, 3, 100, 'GHS', current_date - 200, 0, 0),
+        ($1, $2, $5, $4, 5, 100, null, null, null, null)`,
+      [organizationA, snapshot, ghsSku, locationA2, lowConfidenceSku],
+    );
+
+    await authenticate(OWNER_A);
+    const first = await database.query<{ id: string }>(
+      "select public.run_inventory_recovery_intelligence() as id",
+    );
+    const retry = await database.query<{ id: string }>(
+      "select public.run_inventory_recovery_intelligence() as id",
+    );
+    const insights = await database.query<{
+      data_confidence_status: string;
+      suppression_reason: string | null;
+    }>(
+      `select data_confidence_status, suppression_reason
+       from public.inventory_risk_insights
+       order by data_confidence_score desc`,
+    );
+    const briefing = await database.query<{
+      summary: { totals_by_currency: Record<string, number> };
+    }>("select summary from public.executive_briefings");
+
+    expect(retry.rows[0]!.id).toBe(first.rows[0]!.id);
+    expect(insights.rows).toHaveLength(3);
+    expect(insights.rows).toContainEqual({
+      data_confidence_status: "suppressed",
+      suppression_reason: "LOW_DATA_CONFIDENCE",
+    });
+    expect(briefing.rows[0]!.summary.totals_by_currency).toEqual({
+      GHS: 300,
+      NGN: 300000,
+    });
+
+    await expect(
+      database.query(
+        `insert into public.inventory_risk_insights (
+          organization_id, intelligence_run_id, inventory_position_id,
+          location_id, age_status, sales_status, data_confidence_status,
+          data_confidence_score, inventory_risk_status,
+          recovery_opportunity_status, attention_priority_status,
+          rule_version, evidence, evaluated_at
+        ) values (
+          $1, $2, gen_random_uuid(), $3, 'unknown', 'unknown', 'known',
+          100, 'known', 'known', 'known', 'forged', '{}', now()
+        )`,
+        [organizationA, first.rows[0]!.id, locationA1],
+      ),
+    ).rejects.toThrow();
+  });
+
   it("requires explicit warning acceptance and never accepts blockers", async () => {
     await authenticate(OWNER_A);
     await database.query(
@@ -328,6 +425,15 @@ describe("Phase 0 Consolidation Hub", () => {
       location_id: locationA2,
       sku_code: "CONSOLIDATE-1",
     });
+
+    const insights = await database.query<{ location_id: string }>(
+      "select location_id from public.inventory_risk_insights",
+    );
+    const opportunities = await database.query<{ location_id: string }>(
+      "select location_id from public.recovery_opportunities",
+    );
+    expect(insights.rows.every((row) => row.location_id === locationA1)).toBe(true);
+    expect(opportunities.rows.every((row) => row.location_id === locationA1)).toBe(true);
   });
 
   it("rejects cross-tenant and anonymous consolidation calls", async () => {

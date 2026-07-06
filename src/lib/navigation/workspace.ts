@@ -6,6 +6,8 @@ const coreItems: readonly NavigationItem[] = [
   { label: "Workspace", href: "/workspace" },
   { label: "Data", href: "/data" },
   { label: "Consolidation Hub", href: "/consolidation" },
+  { label: "Inventory Recovery", href: "/inventory-recovery" },
+  { label: "Attention Queue", href: "/attention-queue" },
 ];
 
 export function workspaceNavigation(

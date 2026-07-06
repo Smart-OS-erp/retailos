@@ -647,6 +647,125 @@ export type Database = {
         Update: never;
         Relationships: [];
       };
+      intelligence_runs: {
+        Row: {
+          id: string;
+          organization_id: string;
+          snapshot_id: string;
+          rule_version: string;
+          status: "completed" | "failed";
+          evaluated_at: string;
+          created_by: string;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      inventory_risk_insights: {
+        Row: {
+          id: string;
+          organization_id: string;
+          intelligence_run_id: string;
+          inventory_position_id: string;
+          location_id: string;
+          age_status: "known" | "unknown";
+          age_days: number | null;
+          age_band: "fresh" | "watch" | "aged" | "dead" | null;
+          sales_status: "known" | "unknown";
+          sales_trend:
+            | "growing"
+            | "stable"
+            | "declining"
+            | "new_activity"
+            | "no_sales"
+            | null;
+          data_confidence_status: "known" | "suppressed";
+          data_confidence_score: number;
+          inventory_risk_status: "known" | "unknown" | "suppressed";
+          inventory_risk_score: number | null;
+          inventory_risk_band: "low" | "moderate" | "high" | "critical" | null;
+          recovery_opportunity_status: "known" | "unknown" | "suppressed";
+          recovery_opportunity_score: number | null;
+          recovery_opportunity_band: "monitor" | "review" | "strong" | null;
+          attention_priority_status: "known" | "unknown" | "suppressed";
+          attention_priority_score: number | null;
+          attention_priority_band: "low" | "medium" | "high" | "urgent" | null;
+          inventory_value: number | null;
+          currency_code: string | null;
+          suppression_reason: string | null;
+          rule_version: string;
+          evidence: Json;
+          caveats: Json;
+          evaluated_at: string;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      recovery_opportunities: {
+        Row: {
+          id: string;
+          organization_id: string;
+          inventory_risk_insight_id: string;
+          location_id: string;
+          title: string;
+          proposed_action:
+            | "investigate"
+            | "remediate"
+            | "bundle"
+            | "markdown"
+            | "campaign"
+            | "transfer";
+          status: "open" | "dismissed" | "projectised";
+          recovery_opportunity_score: number;
+          recovery_opportunity_band: "review" | "strong";
+          attention_priority_score: number;
+          attention_priority_band: "low" | "medium" | "high" | "urgent";
+          estimated_value: number;
+          currency_code: string;
+          rule_version: string;
+          evidence: Json;
+          caveats: Json;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      executive_briefings: {
+        Row: {
+          id: string;
+          organization_id: string;
+          intelligence_run_id: string;
+          summary: Json;
+          caveats: Json;
+          rule_version: string;
+          generated_at: string;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      action_cards: {
+        Row: {
+          id: string;
+          organization_id: string;
+          recovery_opportunity_id: string;
+          location_id: string;
+          title: string;
+          proposed_action: string;
+          priority_band: "low" | "medium" | "high" | "urgent";
+          status: "open" | "dismissed" | "projectised";
+          evidence: Json;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
       sales_facts: {
         Row: {
           id: string;
@@ -728,6 +847,10 @@ export type Database = {
           target_upload_id: string;
           expected_content_sha256: string;
         };
+        Returns: string;
+      };
+      run_inventory_recovery_intelligence: {
+        Args: Record<string, never>;
         Returns: string;
       };
     };
