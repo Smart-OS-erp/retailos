@@ -2,15 +2,20 @@ import { notFound } from "next/navigation";
 
 import { DataPage } from "@/components/data-page";
 import { Notice } from "@/components/notice";
+import { acceptUploadWarnings, consolidateUpload } from "@/app/consolidation/actions";
+import { hasPermission } from "@/lib/auth/authorization";
 
 type UploadDetailPageProps = {
   params: Promise<{ uploadId: string }>;
+  searchParams: Promise<{ accepted?: string; error?: string }>;
 };
 
 export default async function UploadDetailPage({
   params,
+  searchParams,
 }: UploadDetailPageProps) {
   const { uploadId } = await params;
+  const state = await searchParams;
 
   return (
     <DataPage
@@ -22,7 +27,7 @@ export default async function UploadDetailPage({
         const [uploadResult, stagingResult, issuesResult] = await Promise.all([
           context.supabase
             .from("data_uploads")
-            .select("id, file_name, upload_type, status, row_count, byte_size, created_at")
+            .select("id, file_name, upload_type, status, row_count, byte_size, content_sha256, created_at")
             .eq("organization_id", organizationId)
             .eq("id", uploadId)
             .maybeSingle(),
@@ -45,9 +50,19 @@ export default async function UploadDetailPage({
         const issues = issuesResult.data ?? [];
         const blocking = issues.filter((issue) => issue.severity === "blocking").length;
         const warnings = issues.filter((issue) => issue.severity === "warning").length;
+        const canManage = hasPermission(context.membership.role, "data.manage");
 
         return (
           <div className="content-grid">
+            {state.error ? (
+              <Notice title="Action not completed" tone="error">
+                The request failed closed because its permission, source digest, or validation state could not be proven.
+              </Notice>
+            ) : state.accepted ? (
+              <Notice title="Warnings accepted" tone="success">
+                The decision was audited. Missing evidence remains visible to downstream intelligence.
+              </Notice>
+            ) : null}
             {blocking > 0 ? (
               <Notice title="Consolidation blocked" tone="error">
                 {blocking} blocking issue{blocking === 1 ? "" : "s"} must be fixed in a new intake.
@@ -71,6 +86,27 @@ export default async function UploadDetailPage({
               <p className="table-meta">
                 {upload.upload_type.replaceAll("_", " ")} · {upload.byte_size.toLocaleString()} bytes · {upload.status.replaceAll("_", " ")}
               </p>
+              {canManage && upload.status === "parsed" ? (
+                <form action={acceptUploadWarnings}>
+                  <input name="uploadId" type="hidden" value={upload.id} />
+                  <button className="button button-secondary" type="submit">
+                    Accept warnings with audit
+                  </button>
+                </form>
+              ) : null}
+              {canManage && upload.status === "ready" && upload.content_sha256 ? (
+                <form action={consolidateUpload}>
+                  <input name="uploadId" type="hidden" value={upload.id} />
+                  <input
+                    name="contentSha256"
+                    type="hidden"
+                    value={upload.content_sha256}
+                  />
+                  <button className="button button-primary" type="submit">
+                    Approve and consolidate
+                  </button>
+                </form>
+              ) : null}
               <div className="table-wrap">
                 <table className="data-table">
                   <thead><tr><th>SKU</th><th>Location</th><th>On hand</th><th>Cost</th><th>Status</th></tr></thead>

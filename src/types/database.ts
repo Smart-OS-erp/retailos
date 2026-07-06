@@ -588,6 +588,8 @@ export type Database = {
           approved_unit_cost: number | null;
           currency_code: string | null;
           first_available_at: string | null;
+          units_sold_90: number | null;
+          units_sold_30: number | null;
           created_at: string;
         };
         Insert: {
@@ -600,8 +602,48 @@ export type Database = {
           approved_unit_cost?: number | null;
           currency_code?: string | null;
           first_available_at?: string | null;
+          units_sold_90?: number | null;
+          units_sold_30?: number | null;
           created_at?: string;
         };
+        Update: never;
+        Relationships: [];
+      };
+      consolidation_runs: {
+        Row: {
+          id: string;
+          organization_id: string;
+          upload_id: string;
+          source_sha256: string;
+          approval_evidence_sha256: string;
+          source_row_count: number;
+          status: "completed" | "failed";
+          snapshot_id: string | null;
+          inserted_count: number;
+          updated_count: number;
+          excluded_count: number;
+          approved_by: string;
+          approved_at: string;
+          completed_at: string | null;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      consolidation_items: {
+        Row: {
+          id: string;
+          organization_id: string;
+          consolidation_run_id: string;
+          staging_row_id: string;
+          sku_id: string;
+          location_id: string;
+          outcome: "inserted" | "updated";
+          source_evidence: Json;
+          created_at: string;
+        };
+        Insert: never;
         Update: never;
         Relationships: [];
       };
@@ -636,7 +678,31 @@ export type Database = {
         Relationships: [];
       };
     };
-    Views: Record<string, never>;
+    Views: {
+      current_inventory_positions: {
+        Row: {
+          id: string;
+          organization_id: string;
+          snapshot_id: string;
+          observed_at: string;
+          sku_id: string;
+          sku_code: string;
+          product_id: string;
+          product_name: string;
+          brand_id: string | null;
+          location_id: string;
+          location_name: string;
+          location_code: string;
+          on_hand_quantity: number;
+          approved_unit_cost: number | null;
+          currency_code: string | null;
+          first_available_at: string | null;
+          units_sold_90: number | null;
+          units_sold_30: number | null;
+        };
+        Relationships: [];
+      };
+    };
     Functions: {
       create_organization: {
         Args: {
@@ -652,6 +718,17 @@ export type Database = {
           target_status: OnboardingStepStatus;
         };
         Returns: undefined;
+      };
+      accept_inventory_upload_warnings: {
+        Args: { target_upload_id: string };
+        Returns: undefined;
+      };
+      consolidate_inventory_upload: {
+        Args: {
+          target_upload_id: string;
+          expected_content_sha256: string;
+        };
+        Returns: string;
       };
     };
     Enums: {

@@ -1,10 +1,10 @@
 Next Task:
-Milestone 3 — Consolidation Hub:
-- Add consolidation runs, immutable approval evidence, canonical-match lineage, and current inventory position contracts.
-- Implement an atomic, idempotent approval/consolidation function with audit and outbox evidence.
-- Build the live Consolidation Hub and Operating View without static metrics.
-- Prove that blocked, changed, cross-tenant, or replayed staging data cannot create duplicate canonical inventory.
+Milestone 4 — Deterministic Intelligence:
+- Persist versioned Data Confidence, Inventory Risk, Recovery Opportunity, and Attention Priority results.
+- Orchestrate calculations from the latest approved inventory snapshot only.
+- Build Inventory Recovery Intelligence, Attention Queue, Executive Briefing, and opportunity surfaces with source evidence and caveats.
+- Prove unknown/low-confidence suppression, no mixed-currency aggregation, client-authored score denial, and location isolation.
 
 Foundation release blockers remain tracked in `reports/OPEN_BLOCKERS.md` and must be cleared before preview acceptance.
 
-Do not start persisted intelligence, projectisation, Copilot, or role workspaces until Milestone 3 is accepted.
+Do not start projectisation, Copilot, or role workspaces until Milestone 4 is accepted.
