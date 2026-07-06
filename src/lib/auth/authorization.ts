@@ -52,6 +52,11 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "data.view",
     "inventory.view",
     "opportunity.view",
+    "project.view",
+    "project.approve",
+    "task.view",
+    "campaign_brief.view",
+    "campaign_brief.approve",
   ]),
   merchandising_manager: new Set([
     "organization.view",
@@ -63,6 +68,12 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "inventory.view",
     "intelligence.run",
     "opportunity.view",
+    "project.view",
+    "project.manage",
+    "task.view",
+    "task.manage",
+    "campaign_brief.view",
+    "campaign_brief.manage",
   ]),
   store_manager: new Set([
     "organization.view",
@@ -70,6 +81,10 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "brand.view",
     "inventory.view",
     "opportunity.view",
+    "project.view",
+    "task.view",
+    "task.manage",
+    "campaign_brief.view",
   ]),
   viewer: new Set([
     "organization.view",
@@ -78,6 +93,9 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "data.view",
     "inventory.view",
     "opportunity.view",
+    "project.view",
+    "task.view",
+    "campaign_brief.view",
   ]),
 };
 

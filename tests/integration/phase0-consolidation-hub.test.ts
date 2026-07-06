@@ -7,6 +7,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 const OWNER_A = "20000000-0000-4000-8000-00000000001a";
 const OWNER_B = "20000000-0000-4000-8000-00000000001b";
 const STORE_A = "20000000-0000-4000-8000-00000000001c";
+const EXECUTIVE_A = "20000000-0000-4000-8000-00000000001d";
 const DIGEST_A = "a".repeat(64);
 const DIGEST_WARNING = "b".repeat(64);
 
@@ -114,7 +115,8 @@ describe("Phase 0 Consolidation Hub", () => {
       insert into auth.users (id) values
         ('${OWNER_A}'),
         ('${OWNER_B}'),
-        ('${STORE_A}');
+        ('${STORE_A}'),
+        ('${EXECUTIVE_A}');
     `);
 
     const migrationsDirectory = path.join(process.cwd(), "supabase", "migrations");
@@ -156,6 +158,12 @@ describe("Phase 0 Consolidation Hub", () => {
         [organizationA, STORE_A, OWNER_A],
       )
     ).rows[0]!.id;
+    await database.query(
+      `insert into public.memberships (
+        organization_id, user_id, role, status, created_by
+      ) values ($1, $2, 'executive', 'active', $3)`,
+      [organizationA, EXECUTIVE_A, OWNER_A],
+    );
 
     await authenticate(OWNER_A);
     locationA1 = (
@@ -384,6 +392,111 @@ describe("Phase 0 Consolidation Hub", () => {
         [organizationA, first.rows[0]!.id, locationA1],
       ),
     ).rejects.toThrow();
+  });
+
+  it("enforces separated, versioned project and campaign approvals", async () => {
+    await authenticate(OWNER_A);
+    const opportunity = (
+      await database.query<{ id: string }>(
+        `select id from public.recovery_opportunities
+         where organization_id = $1 and location_id = $2 and status = 'open'
+         order by created_at limit 1`,
+        [organizationA, locationA1],
+      )
+    ).rows[0]!.id;
+    const project = (
+      await database.query<{ id: string }>(
+        "select public.create_recovery_project($1) as id",
+        [opportunity],
+      )
+    ).rows[0]!.id;
+    const brief = (
+      await database.query<{ id: string }>(
+        "select id from public.campaign_briefs where recovery_project_id = $1",
+        [project],
+      )
+    ).rows[0]!.id;
+
+    await database.query(
+      "select public.submit_recovery_project($1, 1)",
+      [project],
+    );
+    await expect(
+      database.query(
+        "select public.approve_recovery_project($1, 2)",
+        [project],
+      ),
+    ).rejects.toThrow(/self_approval_denied/);
+
+    await authenticate(EXECUTIVE_A);
+    await expect(
+      database.query(
+        "select public.approve_recovery_project($1, 1)",
+        [project],
+      ),
+    ).rejects.toThrow(/stale_project_version/);
+    await database.query(
+      "select public.approve_recovery_project($1, 2)",
+      [project],
+    );
+    await expect(
+      database.query(
+        "select public.approve_recovery_project($1, 2)",
+        [project],
+      ),
+    ).rejects.toThrow(/stale_project_version/);
+    await database.query(
+      "select public.approve_campaign_brief($1, 2)",
+      [brief],
+    );
+    await expect(
+      database.query(
+        "select public.approve_campaign_brief($1, 2)",
+        [brief],
+      ),
+    ).rejects.toThrow(/stale_brief_version/);
+
+    await authenticate(STORE_A);
+    const tasks = await database.query<{ id: string; version: number }>(
+      `select id, version from public.recovery_project_tasks
+       where recovery_project_id = $1 order by created_at, id`,
+      [project],
+    );
+    expect(tasks.rows).toHaveLength(3);
+    for (const task of tasks.rows) {
+      await database.query(
+        "select public.set_recovery_task_status($1, $2, 'in_progress')",
+        [task.id, task.version],
+      );
+      await database.query(
+        "select public.set_recovery_task_status($1, $2, 'completed')",
+        [task.id, task.version + 1],
+      );
+    }
+
+    await authenticate(EXECUTIVE_A);
+    const projectState = await database.query<{
+      status: string;
+      approval_count: number;
+    }>(
+      `select project.status,
+        (select count(*)::integer from public.approval_records
+         where recovery_project_id = project.id) as approval_count
+       from public.recovery_projects project where project.id = $1`,
+      [project],
+    );
+    const briefState = await database.query<{ status: string; content: { constraints: string[] } }>(
+      "select status, content from public.campaign_briefs where id = $1",
+      [brief],
+    );
+    expect(projectState.rows).toEqual([{ status: "completed", approval_count: 2 }]);
+    expect(briefState.rows[0]!.status).toBe("approved");
+    expect(briefState.rows[0]!.content.constraints[0]).toContain("Proposal only");
+
+    await authenticate(OWNER_B);
+    await expect(
+      database.query("select public.create_recovery_project($1)", [opportunity]),
+    ).rejects.toThrow(/permission_denied/);
   });
 
   it("requires explicit warning acceptance and never accepts blockers", async () => {

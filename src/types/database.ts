@@ -766,6 +766,115 @@ export type Database = {
         Update: never;
         Relationships: [];
       };
+      recovery_projects: {
+        Row: {
+          id: string;
+          organization_id: string;
+          recovery_opportunity_id: string;
+          location_id: string;
+          name: string;
+          status:
+            | "draft"
+            | "pending_approval"
+            | "approved"
+            | "in_progress"
+            | "completed"
+            | "cancelled";
+          version: number;
+          evidence_version: string;
+          evidence_snapshot: Json;
+          created_by: string;
+          submitted_by: string | null;
+          submitted_at: string | null;
+          approved_by: string | null;
+          approved_at: string | null;
+          completed_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      recovery_project_skus: {
+        Row: {
+          id: string;
+          organization_id: string;
+          recovery_project_id: string;
+          inventory_position_id: string;
+          sku_id: string;
+          location_id: string;
+          quantity: number;
+          approved_unit_cost: number | null;
+          currency_code: string | null;
+          evidence: Json;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      recovery_project_tasks: {
+        Row: {
+          id: string;
+          organization_id: string;
+          recovery_project_id: string;
+          location_id: string;
+          title: string;
+          status: "pending" | "in_progress" | "completed";
+          version: number;
+          assigned_membership_id: string | null;
+          evidence: Json;
+          created_by: string;
+          completed_by: string | null;
+          completed_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      campaign_briefs: {
+        Row: {
+          id: string;
+          organization_id: string;
+          recovery_project_id: string;
+          location_id: string;
+          status: "draft" | "pending_approval" | "approved";
+          version: number;
+          content: Json;
+          evidence_version: string;
+          evidence_snapshot: Json;
+          created_by: string;
+          approved_by: string | null;
+          approved_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      approval_records: {
+        Row: {
+          id: string;
+          organization_id: string;
+          recovery_project_id: string;
+          campaign_brief_id: string | null;
+          location_id: string;
+          subject_type: "recovery_project" | "campaign_brief";
+          subject_version: number;
+          evidence_version: string;
+          decision: "approved";
+          decided_by: string;
+          decided_at: string;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
       sales_facts: {
         Row: {
           id: string;
@@ -852,6 +961,30 @@ export type Database = {
       run_inventory_recovery_intelligence: {
         Args: Record<string, never>;
         Returns: string;
+      };
+      create_recovery_project: {
+        Args: { target_opportunity_id: string };
+        Returns: string;
+      };
+      submit_recovery_project: {
+        Args: { target_project_id: string; expected_version: number };
+        Returns: number;
+      };
+      approve_recovery_project: {
+        Args: { target_project_id: string; expected_version: number };
+        Returns: number;
+      };
+      approve_campaign_brief: {
+        Args: { target_brief_id: string; expected_version: number };
+        Returns: number;
+      };
+      set_recovery_task_status: {
+        Args: {
+          target_task_id: string;
+          expected_version: number;
+          target_status: string;
+        };
+        Returns: number;
       };
     };
     Enums: {

@@ -1,5 +1,13 @@
 # Recent Failures
 
+## 2026-07-06 — Concurrent build/test security-test timeout
+
+- **Observed:** the five-second browser-boundary security test timed out while a
+  full Turbopack production build was consuming the same Windows workspace.
+- **Resolution:** allow the successful build to finish, then rerun `npm run test`
+  without competing compilation; all 12 files and 62 tests passed.
+- **Status:** resolved; no assertion failed and no test was skipped.
+
 ## 2026-07-05 — Vercel CLI misclassified preview attempts
 
 - **Observed:** two CLI deployments were reported by Vercel as targeting production even without `--prod`, including one attempt with explicit `--target=preview`.

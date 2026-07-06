@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { IntelligencePage } from "@/components/intelligence-page";
 
 export default function AttentionQueuePage() {
@@ -35,7 +37,7 @@ export default function AttentionQueuePage() {
                     {opportunities.map((opportunity) => (
                       <tr key={opportunity.id}>
                         <td><span className="status-badge">{opportunity.attention_priority_band} · {opportunity.attention_priority_score}</span></td>
-                        <td>{opportunity.title}</td>
+                        <td><Link href={`/projectisation/opportunities/${opportunity.id}`}>{opportunity.title}</Link></td>
                         <td>{locations.get(opportunity.location_id) ?? "Restricted"}</td>
                         <td>{opportunity.proposed_action}</td>
                         <td>{opportunity.estimated_value.toLocaleString("en-NG")} {opportunity.currency_code}</td>
