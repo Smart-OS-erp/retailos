@@ -5,15 +5,19 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 import { BrandLockup } from "@/components/brand-lockup";
+import type { OrganizationRole } from "@/lib/auth/authorization";
+import { workspaceNavigation } from "@/lib/navigation/workspace";
 
 type MobileNavigationProps = {
   email: string;
   organizationName: string;
+  role: OrganizationRole;
 };
 
 export function MobileNavigation({
   email,
   organizationName,
+  role,
 }: MobileNavigationProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const openButtonRef = useRef<HTMLButtonElement>(null);
@@ -69,8 +73,13 @@ export function MobileNavigation({
           <strong>{organizationName}</strong>
         </div>
         <nav aria-label="Primary">
+          {workspaceNavigation(role).map((item) => (
+            <Link className="nav-link" href={item.href} key={item.href}>
+              {item.label}
+            </Link>
+          ))}
           <Link
-            className="nav-link nav-link-active"
+            className="nav-link"
             href="/onboarding"
           >
             Setup status

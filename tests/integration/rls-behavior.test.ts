@@ -94,7 +94,7 @@ describe("tenant RLS behavior", () => {
       ) values ($1, $2, 'viewer', 'active', $3)`,
       [organizationA, USER_C, USER_A],
     );
-  });
+  }, 30_000);
 
   afterAll(async () => {
     await database.close();

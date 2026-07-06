@@ -35,6 +35,22 @@ export type EventDeliveryStatus =
   | "delivered"
   | "failed";
 
+export type DataUploadType =
+  | "sample"
+  | "inventory_csv"
+  | "sales_csv"
+  | "product_csv"
+  | "store_csv";
+export type DataUploadStatus =
+  | "received"
+  | "parsed"
+  | "validation_blocked"
+  | "ready"
+  | "consolidated"
+  | "failed";
+export type ValidationSeverity = "blocking" | "warning" | "info";
+export type ValidationStatus = "pending" | "blocked" | "warning" | "valid";
+
 export type Database = {
   public: {
     Tables: {
@@ -272,6 +288,348 @@ export type Database = {
           available_at?: string;
           delivered_at?: string | null;
           last_error?: string | null;
+          created_at?: string;
+        };
+        Update: never;
+        Relationships: [];
+      };
+      entities: {
+        Row: {
+          id: string;
+          organization_id: string;
+          name: string;
+          entity_type: "retailer" | "brand_owner";
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          name: string;
+          entity_type?: "retailer" | "brand_owner";
+          created_by: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          name?: string;
+          entity_type?: "retailer" | "brand_owner";
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      categories: {
+        Row: {
+          id: string;
+          organization_id: string;
+          name: string;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          name: string;
+          created_by: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: { name?: string; updated_at?: string };
+        Relationships: [];
+      };
+      products: {
+        Row: {
+          id: string;
+          organization_id: string;
+          brand_id: string | null;
+          category_id: string | null;
+          name: string;
+          style_code: string;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          brand_id?: string | null;
+          category_id?: string | null;
+          name: string;
+          style_code: string;
+          created_by: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          brand_id?: string | null;
+          category_id?: string | null;
+          name?: string;
+          style_code?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      skus: {
+        Row: {
+          id: string;
+          organization_id: string;
+          product_id: string;
+          sku_code: string;
+          size: string | null;
+          color: string | null;
+          barcode: string | null;
+          approved_unit_cost: number | null;
+          currency_code: string | null;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          product_id: string;
+          sku_code: string;
+          size?: string | null;
+          color?: string | null;
+          barcode?: string | null;
+          approved_unit_cost?: number | null;
+          currency_code?: string | null;
+          created_by: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          product_id?: string;
+          sku_code?: string;
+          size?: string | null;
+          color?: string | null;
+          barcode?: string | null;
+          approved_unit_cost?: number | null;
+          currency_code?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      data_uploads: {
+        Row: {
+          id: string;
+          organization_id: string;
+          upload_type: DataUploadType;
+          file_name: string;
+          content_sha256: string | null;
+          byte_size: number;
+          row_count: number;
+          status: DataUploadStatus;
+          warnings_accepted_at: string | null;
+          warnings_accepted_by: string | null;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          upload_type: DataUploadType;
+          file_name: string;
+          content_sha256?: string | null;
+          byte_size?: number;
+          row_count?: number;
+          status?: DataUploadStatus;
+          warnings_accepted_at?: string | null;
+          warnings_accepted_by?: string | null;
+          created_by: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          row_count?: number;
+          status?: DataUploadStatus;
+          warnings_accepted_at?: string | null;
+          warnings_accepted_by?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      raw_upload_rows: {
+        Row: {
+          id: string;
+          organization_id: string;
+          upload_id: string;
+          row_number: number;
+          payload: Json;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          upload_id: string;
+          row_number: number;
+          payload: Json;
+          created_at?: string;
+        };
+        Update: never;
+        Relationships: [];
+      };
+      staging_inventory_rows: {
+        Row: {
+          id: string;
+          organization_id: string;
+          upload_id: string;
+          raw_row_id: string;
+          location_id: string | null;
+          sku_code: string | null;
+          product_name: string | null;
+          location_code: string | null;
+          on_hand_quantity: number | null;
+          approved_unit_cost: number | null;
+          currency_code: string | null;
+          first_available_at: string | null;
+          units_sold_90: number | null;
+          units_sold_30: number | null;
+          validation_status: ValidationStatus;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          upload_id: string;
+          raw_row_id: string;
+          location_id?: string | null;
+          sku_code?: string | null;
+          product_name?: string | null;
+          location_code?: string | null;
+          on_hand_quantity?: number | null;
+          approved_unit_cost?: number | null;
+          currency_code?: string | null;
+          first_available_at?: string | null;
+          units_sold_90?: number | null;
+          units_sold_30?: number | null;
+          validation_status?: ValidationStatus;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          location_id?: string | null;
+          sku_code?: string | null;
+          product_name?: string | null;
+          location_code?: string | null;
+          on_hand_quantity?: number | null;
+          approved_unit_cost?: number | null;
+          currency_code?: string | null;
+          first_available_at?: string | null;
+          units_sold_90?: number | null;
+          units_sold_30?: number | null;
+          validation_status?: ValidationStatus;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      validation_issues: {
+        Row: {
+          id: string;
+          organization_id: string;
+          upload_id: string;
+          staging_row_id: string | null;
+          severity: ValidationSeverity;
+          issue_code: string;
+          message: string;
+          accepted_at: string | null;
+          accepted_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          upload_id: string;
+          staging_row_id?: string | null;
+          severity: ValidationSeverity;
+          issue_code: string;
+          message: string;
+          accepted_at?: string | null;
+          accepted_by?: string | null;
+          created_at?: string;
+        };
+        Update: { accepted_at?: string | null; accepted_by?: string | null };
+        Relationships: [];
+      };
+      inventory_snapshots: {
+        Row: {
+          id: string;
+          organization_id: string;
+          upload_id: string;
+          observed_at: string;
+          status: "approved" | "superseded";
+          created_by: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          upload_id: string;
+          observed_at: string;
+          status?: "approved" | "superseded";
+          created_by: string;
+          created_at?: string;
+        };
+        Update: never;
+        Relationships: [];
+      };
+      inventory_positions: {
+        Row: {
+          id: string;
+          organization_id: string;
+          snapshot_id: string;
+          sku_id: string;
+          location_id: string;
+          on_hand_quantity: number;
+          approved_unit_cost: number | null;
+          currency_code: string | null;
+          first_available_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          snapshot_id: string;
+          sku_id: string;
+          location_id: string;
+          on_hand_quantity: number;
+          approved_unit_cost?: number | null;
+          currency_code?: string | null;
+          first_available_at?: string | null;
+          created_at?: string;
+        };
+        Update: never;
+        Relationships: [];
+      };
+      sales_facts: {
+        Row: {
+          id: string;
+          organization_id: string;
+          upload_id: string;
+          sku_id: string;
+          location_id: string;
+          sold_at: string;
+          quantity: number;
+          gross_amount: number | null;
+          currency_code: string | null;
+          source_record_key: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          upload_id: string;
+          sku_id: string;
+          location_id: string;
+          sold_at: string;
+          quantity: number;
+          gross_amount?: number | null;
+          currency_code?: string | null;
+          source_record_key?: string | null;
           created_at?: string;
         };
         Update: never;

@@ -5,6 +5,7 @@ import { BrandLockup } from "@/components/brand-lockup";
 import { MobileNavigation } from "@/components/mobile-navigation";
 import type { OrganizationRole } from "@/lib/auth/authorization";
 import { roleWorkspaceLabel } from "@/lib/navigation/onboarding";
+import { workspaceNavigation } from "@/lib/navigation/workspace";
 
 type AppShellProps = {
   children: ReactNode;
@@ -32,21 +33,12 @@ export function AppShell({
             <strong>{organizationName}</strong>
           </div>
           <nav className="primary-nav" aria-label="Primary">
-            <Link className="nav-link nav-link-active" href="/onboarding">
-              <svg
-                aria-hidden="true"
-                className="nav-icon"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M5 12.5 9.2 17 19 7"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                />
-              </svg>
+            {workspaceNavigation(role).map((item) => (
+              <Link className="nav-link" href={item.href} key={item.href}>
+                {item.label}
+              </Link>
+            ))}
+            <Link className="nav-link" href="/onboarding">
               Setup status
             </Link>
           </nav>
@@ -60,7 +52,11 @@ export function AppShell({
         </div>
       </aside>
       <div className="app-main">
-        <MobileNavigation email={email} organizationName={organizationName} />
+        <MobileNavigation
+          email={email}
+          organizationName={organizationName}
+          role={role}
+        />
         <main className="page-frame" id="main-content">
           {children}
         </main>

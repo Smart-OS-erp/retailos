@@ -21,6 +21,20 @@ export const permissions = [
   "onboarding.view",
   "onboarding.manage",
   "event.view",
+  "data.view",
+  "data.manage",
+  "inventory.view",
+  "intelligence.run",
+  "opportunity.view",
+  "project.view",
+  "project.manage",
+  "project.approve",
+  "task.view",
+  "task.manage",
+  "campaign_brief.view",
+  "campaign_brief.manage",
+  "campaign_brief.approve",
+  "copilot.use",
 ] as const;
 
 export type Permission = (typeof permissions)[number];
@@ -35,22 +49,30 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "brand.view",
     "onboarding.view",
     "event.view",
+    "data.view",
+    "inventory.view",
   ]),
   merchandising_manager: new Set([
     "organization.view",
     "location.view",
     "brand.view",
     "brand.manage",
+    "data.view",
+    "data.manage",
+    "inventory.view",
   ]),
   store_manager: new Set([
     "organization.view",
     "location.view",
     "brand.view",
+    "inventory.view",
   ]),
   viewer: new Set([
     "organization.view",
     "location.view",
     "brand.view",
+    "data.view",
+    "inventory.view",
   ]),
 };
 
@@ -59,4 +81,10 @@ export function hasPermission(
   permission: Permission,
 ) {
   return rolePermissions[role].has(permission);
+}
+
+export function permissionsForRole(
+  role: OrganizationRole,
+): ReadonlySet<Permission> {
+  return rolePermissions[role];
 }
