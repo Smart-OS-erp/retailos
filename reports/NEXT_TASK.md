@@ -1,10 +1,11 @@
 Next Task:
-Milestone 6 — Retail Copilot Phase 0:
-- Add permission-scoped saved insight/activity records and narrow read-only retrieval functions.
-- Implement deterministic Morning Brief, risk, opportunity, confidence, project, and task explanations with citations.
-- Build Copilot overview, Morning Brief, risk, opportunities, and project-support surfaces.
-- Prove every retrieval reauthorizes, inaccessible citations never render, unsupported or injection-style prompts refuse, and no real LLM/high-impact tool exists.
+Milestone 7 — Role Workspaces Phase 0:
+- Replace the generic completed-onboarding redirect with role-aware Phase 0 workspace routing.
+- Build Executive, Merchandising, Store Manager, and Viewer workspaces from live organization data only.
+- Keep store manager reads assigned-location scoped through RLS and location permissions.
+- Keep viewer workflows read-only; do not expose mutation forms to viewer roles.
+- Surface links into Data, Consolidation Hub, Inventory Recovery, Projectisation, Tasks, and Retail Copilot without creating static dashboards or future-phase modules.
 
 Foundation release blockers remain tracked in `reports/OPEN_BLOCKERS.md` and must be cleared before preview acceptance.
 
-Do not start role workspaces until Milestone 6 is accepted.
+Do not start hosted migration or protected-preview acceptance until Milestone 7 is accepted.

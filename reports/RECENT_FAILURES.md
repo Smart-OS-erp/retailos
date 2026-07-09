@@ -1,5 +1,19 @@
 # Recent Failures
 
+## 2026-07-10 — Milestone 6 Copilot local validation fixes
+
+- **Observed:** the first Copilot integration assertion expected a store manager
+  Morning Brief to always be `answered`, but visible open opportunities may
+  already be projectised by earlier workflow evidence.
+- **Resolution:** assert the safe statuses (`answered` or
+  `insufficient_evidence`) and continue enforcing citation scope, refusal,
+  read-only behavior, user-only logs, and cross-tenant denial.
+- **Observed:** `npm run typecheck` rejected optional Copilot citation/fact
+  normalization under `exactOptionalPropertyTypes`.
+- **Resolution:** omit optional values unless the RPC returned them.
+- **Status:** resolved; `npm run typecheck`, `npm run test:integration`,
+  `npm run test`, and `npm run build` pass after the fixes.
+
 ## 2026-07-06 — Concurrent build/test security-test timeout
 
 - **Observed:** the five-second browser-boundary security test timed out while a

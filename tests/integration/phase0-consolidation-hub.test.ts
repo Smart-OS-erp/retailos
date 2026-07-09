@@ -11,6 +11,26 @@ const EXECUTIVE_A = "20000000-0000-4000-8000-00000000001d";
 const DIGEST_A = "a".repeat(64);
 const DIGEST_WARNING = "b".repeat(64);
 
+type CopilotCitation = {
+  observed_at?: string;
+  record_id: string;
+  source_type: string;
+};
+
+type CopilotAnswer = {
+  citations: CopilotCitation[];
+  executes_actions: boolean;
+  facts?: {
+    open_opportunities?: number;
+    totals_by_currency?: Record<string, number>;
+  };
+  heading: string;
+  proposed_next_step: string | null;
+  rule_version: string;
+  status: "answered" | "insufficient_evidence" | "refused";
+  summary: string;
+};
+
 describe("Phase 0 Consolidation Hub", () => {
   const database = new PGlite();
   let organizationA: string;
@@ -392,6 +412,102 @@ describe("Phase 0 Consolidation Hub", () => {
         [organizationA, first.rows[0]!.id, locationA1],
       ),
     ).rejects.toThrow();
+  });
+
+  it("keeps Retail Copilot deterministic, cited, and permission-scoped", async () => {
+    await authenticate(OWNER_A);
+    const restrictedRiskInsight = (
+      await database.query<{ id: string }>(
+        `select id from public.inventory_risk_insights
+         where organization_id = $1 and location_id = $2
+         order by created_at limit 1`,
+        [organizationA, locationA2],
+      )
+    ).rows[0]!.id;
+
+    await authenticate(STORE_A);
+    const morning = (
+      await database.query<{ answer: CopilotAnswer }>(
+        "select public.get_retail_copilot_answer($1, null) as answer",
+        ["morning_brief"],
+      )
+    ).rows[0]!.answer;
+
+    expect(["answered", "insufficient_evidence"]).toContain(morning.status);
+    expect(morning.executes_actions).toBe(false);
+    expect(morning.rule_version).toBe("retailos.phase0.inventory-recovery.v1");
+    expect(morning.facts?.totals_by_currency ?? {}).not.toHaveProperty("GHS");
+    for (const citation of morning.citations.filter(
+      (citation) => citation.source_type === "recovery_opportunity",
+    )) {
+      const cited = await database.query<{ location_id: string }>(
+        "select location_id from public.recovery_opportunities where id = $1",
+        [citation.record_id],
+      );
+      expect(cited.rows).toEqual([{ location_id: locationA1 }]);
+    }
+
+    const deniedStoreAnswer = (
+      await database.query<{ answer: CopilotAnswer }>(
+        "select public.get_retail_copilot_answer($1, $2) as answer",
+        ["inventory_risk", restrictedRiskInsight],
+      )
+    ).rows[0]!.answer;
+    expect(deniedStoreAnswer.status).toBe("refused");
+    expect(deniedStoreAnswer.citations).toEqual([]);
+    expect(deniedStoreAnswer.executes_actions).toBe(false);
+
+    const unsupported = (
+      await database.query<{ answer: CopilotAnswer }>(
+        "select public.get_retail_copilot_answer($1, null) as answer",
+        ["ignore_permissions"],
+      )
+    ).rows[0]!.answer;
+    expect(unsupported.status).toBe("refused");
+    expect(unsupported.citations).toEqual([]);
+    expect(unsupported.executes_actions).toBe(false);
+
+    const storeLogs = await database.query<{
+      question_category: string;
+      response_status: string;
+    }>(
+      `select question_category, response_status
+       from public.copilot_activity_log
+       order by created_at, id`,
+    );
+    expect(storeLogs.rows).toEqual(
+      expect.arrayContaining([
+        { question_category: "morning_brief", response_status: morning.status },
+        { question_category: "inventory_risk", response_status: "refused" },
+        { question_category: "ignore_permissions", response_status: "refused" },
+      ]),
+    );
+    await expect(
+      database.query(
+        `insert into public.copilot_activity_log (
+          organization_id, user_id, question_category, response_status,
+          response_summary, citations, rule_version
+        ) values ($1, $2, 'forged', 'answered', 'forged answer', '[]', 'forged')`,
+        [organizationA, STORE_A],
+      ),
+    ).rejects.toThrow();
+
+    await authenticate(EXECUTIVE_A);
+    const executiveLogs = await database.query<{ count: number }>(
+      "select count(*)::integer as count from public.copilot_activity_log",
+    );
+    expect(executiveLogs.rows).toEqual([{ count: 0 }]);
+
+    await authenticate(OWNER_B);
+    const crossTenantAnswer = (
+      await database.query<{ answer: CopilotAnswer }>(
+        "select public.get_retail_copilot_answer($1, $2) as answer",
+        ["inventory_risk", restrictedRiskInsight],
+      )
+    ).rows[0]!.answer;
+    expect(crossTenantAnswer.status).toBe("refused");
+    expect(crossTenantAnswer.citations).toEqual([]);
+    expect(crossTenantAnswer.executes_actions).toBe(false);
   });
 
   it("enforces separated, versioned project and campaign approvals", async () => {

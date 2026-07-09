@@ -6,8 +6,8 @@ flowchart LR
   B --> C["Milestone 3<br/>Consolidation Hub<br/>Accepted locally"]
   C --> D["Milestone 4<br/>Deterministic Intelligence<br/>Accepted locally"]
   D --> E["Milestone 5<br/>Projectisation<br/>Accepted locally"]
-  E --> F["Milestone 6<br/>Retail Copilot<br/>In progress"]
-  F --> G["Milestone 7<br/>Role Workspaces"]
+  E --> F["Milestone 6<br/>Retail Copilot<br/>Accepted locally"]
+  F --> G["Milestone 7<br/>Role Workspaces<br/>In progress"]
   G --> H["Milestone 8<br/>Hosted migration, browser verification, protected preview"]
 ```
 

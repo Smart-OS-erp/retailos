@@ -10,6 +10,7 @@ const coreItems: readonly NavigationItem[] = [
   { label: "Attention Queue", href: "/attention-queue" },
   { label: "Projectisation", href: "/projectisation" },
   { label: "Tasks", href: "/tasks" },
+  { label: "Retail Copilot", href: "/copilot" },
 ];
 
 export function workspaceNavigation(

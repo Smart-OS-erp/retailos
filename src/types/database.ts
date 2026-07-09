@@ -875,6 +875,26 @@ export type Database = {
         Update: never;
         Relationships: [];
       };
+      copilot_activity_log: {
+        Row: {
+          id: string;
+          organization_id: string;
+          user_id: string;
+          question_category: string;
+          subject_id: string | null;
+          response_status:
+            | "answered"
+            | "insufficient_evidence"
+            | "refused";
+          response_summary: string;
+          citations: Json;
+          rule_version: string;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
       sales_facts: {
         Row: {
           id: string;
@@ -985,6 +1005,13 @@ export type Database = {
           target_status: string;
         };
         Returns: number;
+      };
+      get_retail_copilot_answer: {
+        Args: {
+          question_category: string;
+          target_subject_id?: string | null;
+        };
+        Returns: Json;
       };
     };
     Enums: {
