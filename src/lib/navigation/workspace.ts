@@ -22,3 +22,15 @@ export function workspaceNavigation(
 
   return coreItems;
 }
+
+export function workspacePathForRole(role: OrganizationRole) {
+  const paths: Record<OrganizationRole, string> = {
+    org_owner: "/workspace/executive",
+    executive: "/workspace/executive",
+    merchandising_manager: "/workspace/merchandising",
+    store_manager: "/workspace/store",
+    viewer: "/workspace/viewer",
+  };
+
+  return paths[role];
+}

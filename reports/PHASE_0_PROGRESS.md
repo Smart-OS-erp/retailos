@@ -7,8 +7,8 @@ flowchart LR
   C --> D["Milestone 4<br/>Deterministic Intelligence<br/>Accepted locally"]
   D --> E["Milestone 5<br/>Projectisation<br/>Accepted locally"]
   E --> F["Milestone 6<br/>Retail Copilot<br/>Accepted locally"]
-  F --> G["Milestone 7<br/>Role Workspaces<br/>In progress"]
-  G --> H["Milestone 8<br/>Hosted migration, browser verification, protected preview"]
+  F --> G["Milestone 7<br/>Role Workspaces<br/>Accepted locally"]
+  G --> H["Milestone 8<br/>Hosted migration, browser verification, protected preview<br/>In progress"]
 ```
 
 The active implementation switch remains `reports/CURRENT_STATE.md`. A local

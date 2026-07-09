@@ -4,6 +4,7 @@ import {
   getOnboardingContext,
   nextIncompleteStep,
 } from "@/lib/navigation/onboarding";
+import { workspacePathForRole } from "@/lib/navigation/workspace";
 
 export default async function WorkspacePage() {
   const context = await getOnboardingContext();
@@ -16,7 +17,5 @@ export default async function WorkspacePage() {
     redirect(nextStep);
   }
 
-  // Milestone 1 resolves the user's role but does not fabricate an operating
-  // dashboard. The complete screen renders the authorized landing identity.
-  redirect("/onboarding/complete");
+  redirect(workspacePathForRole(context.membership.role));
 }
