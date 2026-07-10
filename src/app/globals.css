@@ -333,6 +333,21 @@ input:disabled {
   text-align: center;
 }
 
+.setup-diagnostic {
+  box-shadow: none;
+  margin: 0 0 20px;
+  padding: 18px;
+}
+
+.setup-diagnostic h2 {
+  font-size: 1.02rem;
+  margin-bottom: 4px;
+}
+
+.setup-help {
+  margin-top: 16px;
+}
+
 .auth-switch a {
   font-weight: 700;
 }

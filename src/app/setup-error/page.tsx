@@ -38,14 +38,47 @@ export default async function SetupErrorPage({
           {errorMessages[errorKey] ?? errorMessages["setup-state"]}
         </Notice>
 
+        <div className="panel setup-diagnostic" aria-label="Setup diagnostic">
+          <h2>What this means</h2>
+          <dl className="definition">
+            <div>
+              <dt>Account status</dt>
+              <dd>Your browser has an authenticated RetailOS session.</dd>
+            </div>
+            <div>
+              <dt>Blocked layer</dt>
+              <dd>
+                RetailOS cannot load the tenant setup records required for the
+                Phase 0 preview workspace.
+              </dd>
+            </div>
+            <div>
+              <dt>Safe next action</dt>
+              <dd>
+                Apply and verify the hosted Supabase Phase 0 migrations, then
+                retry onboarding with the same account.
+              </dd>
+            </div>
+          </dl>
+        </div>
+
         <div className="actions">
-          <Link className="button button-primary" href="/create-organization">
-            Try creating an organization
+          <Link className="button button-primary" href="/onboarding">
+            Retry setup
+          </Link>
+          <Link className="button button-secondary" href="/create-organization">
+            Create organization
           </Link>
           <Link className="button button-secondary" href="/logout">
             Sign out
           </Link>
         </div>
+
+        <p className="help setup-help">
+          This page is a fail-closed guardrail, not a product dashboard. It
+          prevents redirect loops while the protected preview waits for hosted
+          database verification.
+        </p>
       </div>
     </AuthShell>
   );

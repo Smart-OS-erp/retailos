@@ -65,21 +65,31 @@ export async function getOnboardingContext(): Promise<OnboardingContext | null> 
     return null;
   }
 
-  const [{ data: organization }, { data: checklists, error: checklistError }] =
-    await Promise.all([
-      supabase
-        .from("organizations")
-        .select("id, name, slug")
-        .eq("id", membership.organization_id)
-        .maybeSingle(),
-      supabase
-        .from("onboarding_checklists")
-        .select("step, status")
-        .eq("organization_id", membership.organization_id)
-        .eq("user_id", user.id),
-    ]);
+  const [
+    { data: organization, error: organizationError },
+    { data: checklists, error: checklistError },
+  ] = await Promise.all([
+    supabase
+      .from("organizations")
+      .select("id, name, slug")
+      .eq("id", membership.organization_id)
+      .maybeSingle(),
+    supabase
+      .from("onboarding_checklists")
+      .select("step, status")
+      .eq("organization_id", membership.organization_id)
+      .eq("user_id", user.id),
+  ]);
 
-  if (!organization || checklistError || !checklists) {
+  if (!organization || organizationError || checklistError || !checklists) {
+    console.error("[onboarding] setup state unavailable", {
+      checklistErrorCode: checklistError?.code ?? null,
+      checklistErrorMessage: checklistError?.message ?? null,
+      hasChecklists: Boolean(checklists),
+      hasOrganization: Boolean(organization),
+      organizationErrorCode: organizationError?.code ?? null,
+      organizationErrorMessage: organizationError?.message ?? null,
+    });
     redirect("/setup-error?error=setup-state");
   }
 
