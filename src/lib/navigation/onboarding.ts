@@ -47,7 +47,7 @@ export async function getOnboardingContext(): Promise<OnboardingContext | null> 
     .limit(2);
 
   if (membershipError) {
-    redirect("/onboarding?error=authorization");
+    redirect("/setup-error?error=authorization");
   }
 
   if (!memberships?.length) {
@@ -57,7 +57,7 @@ export async function getOnboardingContext(): Promise<OnboardingContext | null> 
   // Organization switching is not part of this milestone. Fail closed rather
   // than silently choosing a tenant if more than one membership exists.
   if (memberships.length !== 1) {
-    redirect("/onboarding?error=organization-context");
+    redirect("/setup-error?error=organization-context");
   }
 
   const membership = memberships[0];
@@ -80,7 +80,7 @@ export async function getOnboardingContext(): Promise<OnboardingContext | null> 
     ]);
 
   if (!organization || checklistError || !checklists) {
-    redirect("/onboarding?error=setup-state");
+    redirect("/setup-error?error=setup-state");
   }
 
   return {

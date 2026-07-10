@@ -1,5 +1,21 @@
 # Recent Failures
 
+## 2026-07-10 — Preview signup confirmation used localhost and onboarding looped
+
+- **Observed:** a hosted preview signup sent a confirmation link to
+  `localhost:3000/?code=...`, and the authenticated preview reached
+  `/onboarding?error=setup-state` with `ERR_TOO_MANY_REDIRECTS`.
+- **Cause:** signup did not provide Supabase `emailRedirectTo`, the confirmation
+  route only handled `token_hash` links, `/` discarded `code` confirmation
+  parameters, and setup-state errors redirected back into onboarding pages that
+  call the same failing context loader.
+- **Resolution:** signup now supplies a deployed `/auth/confirm` redirect,
+  `/auth/confirm` exchanges Supabase PKCE `code` links and still supports
+  `token_hash`, `/` forwards confirmation parameters to `/auth/confirm`, and
+  setup-state failures render `/setup-error` instead of looping.
+- **Status:** locally resolved; lint, typecheck, security, tests, and build pass.
+  Hosted verification remains pending after Vercel redeploy.
+
 ## 2026-07-10 — Milestone 6 Copilot local validation fixes
 
 - **Observed:** the first Copilot integration assertion expected a store manager
