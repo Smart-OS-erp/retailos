@@ -23,6 +23,59 @@ The secure technical foundation includes reviewed client boundaries, a versioned
 
 The SQL Editor application did not register the version in Supabase CLI migration history. Reconcile that history before a later `db push`. The hosted token-hash email body also remains blocked until custom SMTP or an eligible Supabase plan is configured; never commit or paste SMTP credentials.
 
+## Hosted Phase 0 migration checklist
+
+Use this checklist for the current protected PR #4 preview only. Do not paste
+database passwords, service-role keys, SMTP credentials, or connection strings
+into chat.
+
+1. Confirm the target Supabase project is the approved non-production
+   `retailos-dev` project.
+2. Confirm these foundations are already present before using the default
+   hosted-pending bundle:
+   - `20260705113000_secure_technical_foundation.sql`
+   - `20260705140000_phase0_foundation_expansion.sql`
+3. Generate the reviewed hosted-pending bundle locally:
+
+   ```bash
+   npm run migration:hosted-bundle
+   ```
+
+   This writes `.tmp/phase0-hosted-migration.sql`. The `.tmp/` folder is
+   ignored by Git. The script only reads committed SQL migrations and prints
+   SHA256 checksums; it does not read environment variables or apply SQL.
+4. Apply `.tmp/phase0-hosted-migration.sql` once through Supabase SQL Editor or
+   an authenticated Supabase CLI session. The default bundle applies these
+   source migrations in order:
+   - `20260706100000_phase0_data_foundation.sql`
+   - `20260706110000_phase0_consolidation_hub.sql`
+   - `20260706120000_phase0_inventory_recovery_intelligence.sql`
+   - `20260706130000_phase0_projectisation_engine.sql`
+   - `20260706140000_phase0_retail_copilot.sql`
+5. If the target is a fresh non-production database, do not use the default
+   bundle. Generate the complete Phase 0 set explicitly instead:
+
+   ```bash
+   node scripts/build-hosted-migration-bundle.ts --full-phase0 --write .tmp/phase0-full-migration.sql
+   ```
+
+6. In Supabase Auth URL configuration, add the protected preview confirmation
+   callback before testing signup:
+   - `https://retailos-git-phase-0-end-to-end-tonybabalola-1114s-projects.vercel.app/auth/confirm`
+   - `https://retailos-qq1yxqnsz-tonybabalola-1114s-projects.vercel.app/auth/confirm`
+
+   Keep production URLs out of the non-production project until production
+   deployment is approved.
+7. After applying SQL and updating the redirect allowlist, rerun:
+
+   ```bash
+   npm run test:live-supabase
+   ```
+
+   Then run a protected-preview smoke test with a fresh test email: signup,
+   email confirmation, organization creation, onboarding setup, and role-aware
+   protected-route access.
+
 ## Environment boundary
 
 Use `.env.local` for local secrets and Vercel/Supabase secret management for deployed environments. The committed `.env.example` contains empty assignments for these names only:
