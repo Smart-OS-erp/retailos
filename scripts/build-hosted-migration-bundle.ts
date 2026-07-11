@@ -5,7 +5,7 @@ const path = require("node:path");
 const root = path.resolve(__dirname, "..");
 const migrationsDir = path.join(root, "supabase", "migrations");
 
-const hostedPendingMigrations = [
+const dataForwardMigrations = [
   "20260706100000_phase0_data_foundation.sql",
   "20260706110000_phase0_consolidation_hub.sql",
   "20260706120000_phase0_inventory_recovery_intelligence.sql",
@@ -13,15 +13,22 @@ const hostedPendingMigrations = [
   "20260706140000_phase0_retail_copilot.sql",
 ];
 
+const hostedPendingMigrations = [
+  "20260705140000_phase0_foundation_expansion.sql",
+  ...dataForwardMigrations,
+];
+
 const fullPhase0Migrations = [
   "20260705113000_secure_technical_foundation.sql",
-  "20260705140000_phase0_foundation_expansion.sql",
   ...hostedPendingMigrations,
 ];
 
 const args = process.argv.slice(2);
 const useFullPhase0Set = args.includes("--full-phase0");
-const selectedMigrations = useFullPhase0Set
+const useDataForwardOnly = args.includes("--data-forward-only");
+const selectedMigrations = useDataForwardOnly
+  ? dataForwardMigrations
+  : useFullPhase0Set
   ? fullPhase0Migrations
   : hostedPendingMigrations;
 
@@ -49,7 +56,9 @@ function readMigration(name) {
 }
 
 function buildBundle(migrations) {
-  const mode = useFullPhase0Set
+  const mode = useDataForwardOnly
+    ? "Phase 0 data-forward migration set for a database where foundation expansion already exists"
+    : useFullPhase0Set
     ? "full Phase 0 migration set for a fresh non-production database"
     : "hosted pending Phase 0 set for the current retailos-dev blocker";
   const migrationList = migrations
@@ -76,6 +85,7 @@ function buildBundle(migrations) {
     "-- - Apply to the approved non-production Supabase project only.",
     "-- - Apply exactly once, in one transaction per source migration as authored.",
     "-- - Do not use the full set on a database where earlier migrations already exist.",
+    "-- - Use --data-forward-only only when phase0_foundation_expansion already exists.",
     "--",
     "-- Included source files and SHA256 checksums:",
     migrationList,
@@ -100,9 +110,11 @@ try {
 
   report(`Bundle SHA256: ${bundleHash}`);
   report(
-    useFullPhase0Set
+    useDataForwardOnly
+      ? "Mode note: data-forward bundle assumes Phase 0 foundation expansion is already applied."
+      : useFullPhase0Set
       ? "Mode note: full Phase 0 bundle is only for a fresh non-production database."
-      : "Mode note: pending bundle assumes secure technical foundation and Phase 0 foundation expansion are already applied.",
+      : "Mode note: pending bundle assumes secure technical foundation is already applied and includes Phase 0 foundation expansion.",
   );
 } catch (error) {
   console.error(

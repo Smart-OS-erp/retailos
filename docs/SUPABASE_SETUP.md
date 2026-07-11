@@ -31,10 +31,9 @@ into chat.
 
 1. Confirm the target Supabase project is the approved non-production
    `retailos-dev` project.
-2. Confirm these foundations are already present before using the default
+2. Confirm this foundation is already present before using the default
    hosted-pending bundle:
    - `20260705113000_secure_technical_foundation.sql`
-   - `20260705140000_phase0_foundation_expansion.sql`
 3. Generate the reviewed hosted-pending bundle locally:
 
    ```bash
@@ -47,26 +46,35 @@ into chat.
 4. Apply `.tmp/phase0-hosted-migration.sql` once through Supabase SQL Editor or
    an authenticated Supabase CLI session. The default bundle applies these
    source migrations in order:
+   - `20260705140000_phase0_foundation_expansion.sql`
    - `20260706100000_phase0_data_foundation.sql`
    - `20260706110000_phase0_consolidation_hub.sql`
    - `20260706120000_phase0_inventory_recovery_intelligence.sql`
    - `20260706130000_phase0_projectisation_engine.sql`
    - `20260706140000_phase0_retail_copilot.sql`
-5. If the target is a fresh non-production database, do not use the default
+5. If `20260705140000_phase0_foundation_expansion.sql` has already been
+   applied and verified in another environment, generate the data-forward-only
+   bundle explicitly instead:
+
+   ```bash
+   node scripts/build-hosted-migration-bundle.ts --data-forward-only --write .tmp/phase0-data-forward-migration.sql
+   ```
+
+6. If the target is a fresh non-production database, do not use the default
    bundle. Generate the complete Phase 0 set explicitly instead:
 
    ```bash
    node scripts/build-hosted-migration-bundle.ts --full-phase0 --write .tmp/phase0-full-migration.sql
    ```
 
-6. In Supabase Auth URL configuration, add the protected preview confirmation
+7. In Supabase Auth URL configuration, add the protected preview confirmation
    callback before testing signup:
    - `https://retailos-git-phase-0-end-to-end-tonybabalola-1114s-projects.vercel.app/auth/confirm`
    - `https://retailos-qq1yxqnsz-tonybabalola-1114s-projects.vercel.app/auth/confirm`
 
    Keep production URLs out of the non-production project until production
    deployment is approved.
-7. After applying SQL and updating the redirect allowlist, rerun:
+8. After applying SQL and updating the redirect allowlist, rerun:
 
    ```bash
    npm run test:live-phase0-schema
