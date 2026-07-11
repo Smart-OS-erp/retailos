@@ -2,46 +2,43 @@
 
 ## Outcome
 
-Milestone 8 is partially complete. The branch is pushed, PR #4 is open as a
-draft, GitHub checks are green, and Vercel produced a protected preview. Hosted
-Supabase Phase 0 migration verification is blocked by unavailable database
-tooling/access from this environment.
+Milestone 8 hosted verification is accepted for the protected non-production demo setup flow.
+
+Phase 0 is implemented, merged to `main`, deployed by Vercel, backed by the hosted Supabase Phase 0 schema, and verified by live schema/RLS/Auth harnesses. The user also confirmed the hosted setup/onboarding flow is successful after the location code-normalization fix.
+
+Phase 0 is not yet approved for real tenant or personal data because production governance and Supabase migration-history reconciliation remain open.
 
 ## Verified evidence
 
-- Branch `phase-0-end-to-end` pushed to GitHub.
-- Draft PR #4 opened into `main`.
-- GitHub CI quality check passed.
-- GitHub security foundation check passed.
-- Vercel preview deployment `dpl_GecBWtCAdg8UABFMhXXGM76Azq7A` reached READY.
-- Protected-fetch verification returned the live RetailOS login page with HTTP
-  200 and expected security headers.
-- In-app browser verified:
-  - `/` redirects to `/login` and renders RetailOS sign-in.
-  - `/signup` renders the RetailOS account creation screen.
-  - `/copilot` redirects unauthenticated users to `/login`.
+- PR #4 merged Phase 0 foundation into `main`.
+- PR #5 merged the onboarding code-normalization fix into `main`.
+- GitHub CI quality check passed for PR #5.
+- GitHub security foundation check passed for PR #5.
+- Vercel preview deployment `dpl_4q1sLUx6X9n7vBZPbQRrBbV32Uac` reached READY.
+- Vercel main deployment `dpl_64jVS5hFwxSveS1kaFaybQXsJXfu` reached READY.
+- Vercel protected fetch confirmed the deployed PR #5 login page responds with HTTP 200 and expected security headers.
+- Vercel protected fetch confirmed the main deployment is protected by Vercel SSO.
+- `npm run test:live-phase0-schema` passed against hosted Supabase with 34 relation/view endpoints and 11 RPC endpoints.
+- `npm run test:live-supabase` passed against hosted Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS.
+- User reported the hosted setup/onboarding flow is now successful after the location code-normalization fix.
 
 ## Commands and checks
 
-- `git push -u origin phase-0-end-to-end` — passed.
-- `gh pr create --draft --base main --head phase-0-end-to-end` — opened PR #4.
-- `gh pr view 4 --json ...` — confirmed CI, Security, and Vercel checks green.
-- Vercel connector `_get_deployment` — confirmed preview READY.
-- Vercel connector `_web_fetch_vercel_url` — confirmed deployed login response.
-- In-app browser checks — confirmed public auth pages and protected-route
-  redirect.
+- `git switch main` — passed.
+- `git pull --ff-only` — passed; local `main` fast-forwarded to merge commit `89f71e5`.
+- `npm run test:live-phase0-schema` — passed.
+- `npm run test:live-supabase` — passed.
+- Vercel connector `_list_deployments` — confirmed PR #5 and main deployments READY.
+- Vercel connector `_web_fetch_vercel_url` — confirmed deployed login/protection behavior.
 
-## Blocked evidence
+## Remaining blockers
 
-- Hosted Supabase Phase 0 migrations from data foundation through Retail Copilot
-  were not applied or verified in this environment.
-- Direct database connection failed because the Supabase database hostname did
-  not resolve from this environment.
-- `psql`, `supabase`, and `vercel` CLIs were unavailable.
-- Supabase SQL Editor loaded as a blank shell in the in-app browser.
+- Supabase hosted confirmation template decision: accept current hosted email behavior for the protected demo, or configure custom SMTP/eligible plan for the committed token-hash template.
+- Supabase migration history repair before future CLI-driven migrations.
+- Production governance before real tenant or personal data.
 
 ## Gate decision
 
-Milestone 8 is not accepted yet. The preview is available for review, but PR #4
-should remain draft until hosted Supabase migrations and live authenticated
-Phase 0 smoke checks pass. Production deployment is not approved.
+Hosted setup verification is accepted for the protected non-production Phase 0 demo.
+
+Do not start Phase 0.5 or future-phase work until the remaining release/governance blockers are resolved or explicitly accepted and `reports/CURRENT_STATE.md` is updated by human-approved phase control.
