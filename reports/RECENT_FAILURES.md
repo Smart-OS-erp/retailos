@@ -1,5 +1,23 @@
 # Recent Failures
 
+## 2026-07-11 — Hosted Phase 0 schema verification confirms missing migrations
+
+- **Observed:** `npm run test:live-phase0-schema` reached hosted Supabase but
+  reported missing Phase 0 relation/view endpoints and RPC endpoints, including
+  `onboarding_checklists`.
+- **Cause:** the hosted project currently exposes the secure foundation schema,
+  but the Phase 0 expansion/data/consolidation/intelligence/projectisation and
+  Copilot migrations have not been applied or are not visible through PostgREST.
+- **Impact:** authenticated users can have valid sessions while `/onboarding`
+  fails closed to `/setup-error?error=setup-state`.
+- **Resolution:** pending. Generate `.tmp/phase0-hosted-migration.sql` with
+  `npm run migration:hosted-bundle`, apply the reviewed Phase 0 SQL to the
+  approved non-production Supabase project, then rerun
+  `npm run test:live-phase0-schema`, `npm run test:live-supabase`, and preview
+  smoke tests.
+- **Status:** blocked on hosted Supabase SQL/CLI access; no secrets were
+  printed.
+
 ## 2026-07-10 — Preview signup confirmation used localhost and onboarding looped
 
 - **Observed:** a hosted preview signup sent a confirmation link to

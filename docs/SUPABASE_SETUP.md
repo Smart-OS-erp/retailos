@@ -69,6 +69,7 @@ into chat.
 7. After applying SQL and updating the redirect allowlist, rerun:
 
    ```bash
+   npm run test:live-phase0-schema
    npm run test:live-supabase
    ```
 
