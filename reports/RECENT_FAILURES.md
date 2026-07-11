@@ -17,10 +17,9 @@
   make duplicate-code retry idempotent within the current organization, add
   tenant-scoped reads for onboarding location/brand lists, and add back/clickable
   stepper navigation for completed/current onboarding steps.
-- **Status:** locally resolved; `npm run lint`, `npm run typecheck`,
-  `npm run test:unit -- tests/unit/retail-code.test.ts`, `npm run security`,
-  `npm run test`, and `npm run build` pass. Hosted preview verification remains
-  pending after Vercel redeploy.
+- **Status:** resolved in hosted deployment. PR #5 merged, Vercel preview and
+  main deployments reached READY, hosted live schema/RLS checks pass, and the
+  user reported setup/onboarding succeeds after the fix.
 
 ## 2026-07-11 — Hosted Phase 0 schema verification confirms missing migrations
 
@@ -32,13 +31,12 @@
   Copilot migrations have not been applied or are not visible through PostgREST.
 - **Impact:** authenticated users can have valid sessions while `/onboarding`
   fails closed to `/setup-error?error=setup-state`.
-- **Resolution:** pending. Generate `.tmp/phase0-hosted-migration.sql` with
-  `npm run migration:hosted-bundle`, apply the reviewed Phase 0 SQL to the
-  approved non-production Supabase project, then rerun
-  `npm run test:live-phase0-schema`, `npm run test:live-supabase`, and preview
-  smoke tests.
-- **Status:** blocked on hosted Supabase SQL/CLI access; no secrets were
-  printed.
+- **Resolution:** generated `.tmp/phase0-hosted-migration.sql`, applied the
+  reviewed Phase 0 SQL to the approved non-production Supabase project through
+  Supabase SQL Editor, reran hosted schema/RLS verification, and completed a
+  deployed setup/onboarding verification path.
+- **Status:** resolved for hosted schema/setup-state. Supabase migration-history
+  reconciliation remains a separate release blocker.
 
 ## 2026-07-10 — Preview signup confirmation used localhost and onboarding looped
 
@@ -53,8 +51,8 @@
   `/auth/confirm` exchanges Supabase PKCE `code` links and still supports
   `token_hash`, `/` forwards confirmation parameters to `/auth/confirm`, and
   setup-state failures render `/setup-error` instead of looping.
-- **Status:** locally resolved; lint, typecheck, security, tests, and build pass.
-  Hosted verification remains pending after Vercel redeploy.
+- **Status:** resolved in hosted deployment. Fresh hosted signup/confirmation
+  and setup were user-verified after the callback and setup-state fixes.
 
 ## 2026-07-10 — Milestone 6 Copilot local validation fixes
 

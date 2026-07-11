@@ -2,33 +2,30 @@
 
 ## Release blockers
 
-- **Location onboarding fix needs hosted preview verification.** The local fix
-  normalizes uppercase user-entered location/brand codes into the lowercase
-  database format and passes lint/typecheck/security/tests/build, but the
-  protected preview must redeploy before the user can verify the Location step
-  no longer blocks onboarding. Owner/action: engineering pushes the branch and
-  verifies the Vercel preview once the deployment is ready.
-- **Confirmation template cannot be customized on the current hosted email service.** The non-production project requires custom SMTP or an eligible Supabase plan before the token-hash template can replace the default `ConfirmationURL` template. Owner/action: environment owner selects and configures the approved delivery option without sharing credentials in chat; engineering then verifies valid, invalid, expired, and replayed links.
-- **Supabase Auth hosted redirect allowlist must include the deployed preview confirmation URL.** App code now supplies `/auth/confirm`, but Supabase may reject non-localhost redirect URLs unless the branch alias or preview domain is allowlisted. Owner/action: add the protected preview/branch alias confirmation URL in Supabase Auth URL configuration, then retry signup with a fresh test email.
-- **Hosted Phase 0 migrations are not applied/verified.** `npm run test:live-phase0-schema` confirms the hosted REST schema is missing the Phase 0 expansion/data/consolidation/intelligence/projectisation/copilot relations and RPCs, including `onboarding_checklists`. Direct Postgres DNS for `DATABASE_URL` is not resolvable from this environment, `psql`, `supabase`, and `vercel` CLIs are unavailable, and the Supabase SQL Editor opened as a blank shell in the in-app browser. Owner/action: environment owner provides working Supabase CLI/SQL Editor access or generates `.tmp/phase0-hosted-migration.sql` with `npm run migration:hosted-bundle`, applies the reviewed migrations from `supabase/migrations/20260705140000_phase0_foundation_expansion.sql` through `20260706140000_phase0_retail_copilot.sql`, then engineering reruns `npm run test:live-phase0-schema`, live tenant/RLS, and app smoke checks.
-- **Migration history is not reconciled.** The earlier foundation migration was applied successfully to `retailos-dev` through SQL Editor because CLI management authentication was unavailable and the direct database hostname was unreachable from this environment. Owner/action: authenticate Supabase CLI and run the reviewed migration-history repair before a later `db push`.
+- **Hosted confirmation template decision remains open.** The current Supabase hosted email service may not allow replacing the default confirmation template with the committed token-hash template unless custom SMTP or an eligible Supabase plan is configured. Owner/action: environment owner either explicitly accepts the current hosted confirmation behavior for the protected non-production demo or configures approved SMTP/plan support without sharing credentials in chat; engineering then verifies valid, invalid, expired, and replayed links.
+- **Migration history is not reconciled.** The reviewed Phase 0 migrations were applied to `retailos-dev` through SQL Editor because CLI management authentication was unavailable and the direct database hostname was unreachable from this environment. Owner/action: authenticate Supabase CLI and run the official migration-history repair before a later `supabase db push`; if CLI repair remains unavailable, run the reviewed SQL Editor fallback in `supabase/repair_migration_history.sql` after hosted schema/RLS checks pass.
 
 ## Verified non-production controls
 
 - The reviewed foundation schema is applied to `retailos-dev`.
-- The protected Vercel preview for PR #4 is deployed and Vercel/GitHub checks are green.
-- The in-app browser verified the deployed login page, signup page, and unauthenticated protected-route redirect.
+- The reviewed Phase 0 expansion/data/consolidation/intelligence/projectisation/Copilot migrations are applied to `retailos-dev`.
+- `npm run test:live-phase0-schema` passes against hosted Supabase: 34 relation/view endpoints and 11 RPC endpoints are visible.
+- `npm run test:live-supabase` passes against hosted Supabase: Auth, atomic organization creation, onboarding, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.
+- PR #4 and PR #5 are merged.
+- Vercel deployment `dpl_4q1sLUx6X9n7vBZPbQRrBbV32Uac` for PR #5 reached READY.
+- Vercel deployment `dpl_64jVS5hFwxSveS1kaFaybQXsJXfu` for main reached READY.
+- The deployed login page responds through Vercel.
+- User-reported hosted setup/onboarding flow is successful after the location code-normalization fix.
+- Supabase Auth redirect URLs include the branch confirmation callback used during protected preview testing.
 - Confirm-email signups are enabled, the password minimum is eight characters, and exact localhost/127.0.0.1 confirmation callbacks are allowlisted.
-- The live foundation harness passes against `retailos-dev`; Auth, atomic organization creation, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.
-- Synthetic records created by the live foundation test harness were removed by cleanup.
-- The Vercel project has Preview-scoped configuration only; production variables were intentionally not populated with non-production values.
-- Vercel project protection reports `all_except_custom_domains`, and Git fork protection is enabled.
+- Synthetic records created by live harness checks were removed by cleanup.
+- Vercel project protection reports protected preview behavior, and Git fork protection is enabled.
 
 ## Production governance blockers
 
 - Name privacy/legal, retention/deletion, incident-response, and environment owners before real tenant or personal data.
-- Approve MFA/recovery policy, monitoring/alerting, backups, restoration, and rollback evidence before production.
+- Approve MFA/recovery policy, monitoring/alerting, backups, restoration, and rollback evidence before real tenant or personal data.
 
 ## Deferred product decisions
 
-Inventory recovery thresholds, analysis windows, cost basis, confidence levels, and action catalog remain future Phase 0 decisions. They do not authorize product implementation in this foundation change.
+Inventory recovery thresholds, analysis windows, cost basis, confidence levels, and action catalog remain future Phase 0 decisions. They do not authorize Phase 0.5 or future-phase implementation.

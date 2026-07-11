@@ -18,3 +18,18 @@ Do not use `SUPABASE_SERVICE_ROLE_KEY` for normal user traffic or to make failin
 The first migration is applied to `retailos-dev` and `npm run test:live-supabase` passes the synthetic Auth/onboarding/audit/RBAC/two-tenant RLS matrix with cleanup. Because the migration was applied through SQL Editor, reconcile its CLI migration-history entry before using `supabase db push` against this project.
 
 The committed confirmation template uses `token_hash` and the application `/auth/confirm` route. Hosted template activation requires custom SMTP or an eligible Supabase plan; secret SMTP values belong only in managed environment configuration.
+
+## Migration-history repair
+
+The reviewed Phase 0 migrations were applied to the hosted non-production
+project through Supabase SQL Editor. Before a future `supabase db push`, repair
+the Supabase CLI migration history so the already-applied migrations are not
+replayed.
+
+Preferred path: use the official Supabase CLI `migration repair` command once
+the CLI is authenticated for the project.
+
+Fallback path: after `npm run test:live-phase0-schema` and
+`npm run test:live-supabase` pass against the target, run
+`supabase/repair_migration_history.sql` in Supabase SQL Editor. This fallback
+only records migration metadata; it does not create product tables.
