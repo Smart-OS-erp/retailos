@@ -8,9 +8,9 @@ import {
   isValidOrganizationSlug,
   normalizeOrganizationSlug,
 } from "@/lib/organizations/slug";
+import { isValidRetailCode, normalizeRetailCode } from "@/lib/retail-code";
 import type { OnboardingStep, OnboardingStepStatus } from "@/types/database";
 
-const CODE_PATTERN = /^[A-Z0-9]+(?:-[A-Z0-9]+)*$/;
 const APPROVED_TIMEZONES = new Set([
   "Africa/Accra",
   "Africa/Johannesburg",
@@ -94,16 +94,14 @@ export async function createFirstLocation(formData: FormData) {
     "/onboarding/locations",
   );
   const name = String(formData.get("locationName") ?? "").trim();
-  const code = String(formData.get("locationCode") ?? "").trim().toUpperCase();
+  const code = normalizeRetailCode(formData.get("locationCode"));
   const timezone = String(formData.get("timezone") ?? "");
 
   if (
     !organizationId
     || name.length < 2
     || name.length > 120
-    || code.length < 2
-    || code.length > 32
-    || !CODE_PATTERN.test(code)
+    || !isValidRetailCode(code)
     || !APPROVED_TIMEZONES.has(timezone)
   ) {
     redirect("/onboarding/locations?error=invalid");
@@ -119,6 +117,25 @@ export async function createFirstLocation(formData: FormData) {
   });
 
   if (error) {
+    if (error.code === "23505") {
+      const { data: existingLocation, error: existingLocationError } = await supabase
+        .from("locations")
+        .select("id")
+        .eq("organization_id", organizationId)
+        .eq("code", code)
+        .maybeSingle();
+
+      if (!existingLocationError && existingLocation) {
+        await updateStep(
+          organizationId,
+          "first_location",
+          "completed",
+          "/onboarding/locations",
+        );
+        redirect("/onboarding/brands");
+      }
+    }
+
     redirect("/onboarding/locations?error=create");
   }
 
@@ -161,15 +178,13 @@ export async function addBrandAndContinue(formData: FormData) {
     "/onboarding/brands",
   );
   const name = String(formData.get("brandName") ?? "").trim();
-  const code = String(formData.get("brandCode") ?? "").trim().toUpperCase();
+  const code = normalizeRetailCode(formData.get("brandCode"));
 
   if (
     !organizationId
     || name.length < 2
     || name.length > 120
-    || code.length < 2
-    || code.length > 32
-    || !CODE_PATTERN.test(code)
+    || !isValidRetailCode(code)
   ) {
     redirect("/onboarding/brands?error=invalid");
   }
@@ -183,6 +198,25 @@ export async function addBrandAndContinue(formData: FormData) {
   });
 
   if (error) {
+    if (error.code === "23505") {
+      const { data: existingBrand, error: existingBrandError } = await supabase
+        .from("brands")
+        .select("id")
+        .eq("organization_id", organizationId)
+        .eq("code", code)
+        .maybeSingle();
+
+      if (!existingBrandError && existingBrand) {
+        await updateStep(
+          organizationId,
+          "brands",
+          "completed",
+          "/onboarding/brands",
+        );
+        redirect("/onboarding/team");
+      }
+    }
+
     redirect("/onboarding/brands?error=create");
   }
 

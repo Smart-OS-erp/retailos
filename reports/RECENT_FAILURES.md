@@ -1,5 +1,27 @@
 # Recent Failures
 
+## 2026-07-11 — Onboarding location save rejected uppercase retail codes
+
+- **Observed:** users could confirm email, create an organization, and reach
+  the Location step, but submitting values like `LAG-LEK` or `ABJ-AR1`
+  returned "Location needs attention" and refresh preserved the same failed
+  state. The stepper also did not offer an obvious way back to earlier setup
+  steps.
+- **Cause:** the server action uppercased location and brand codes before
+  insert, while the Phase 0 database check constraint intentionally accepts
+  canonical lowercase internal codes only.
+- **Impact:** fresh and existing test users were blocked on step 2 of
+  onboarding even though authentication and organization setup succeeded.
+- **Resolution:** normalize submitted location/brand codes to lowercase before
+  persistence, render stored codes back as uppercase for retail readability,
+  make duplicate-code retry idempotent within the current organization, add
+  tenant-scoped reads for onboarding location/brand lists, and add back/clickable
+  stepper navigation for completed/current onboarding steps.
+- **Status:** locally resolved; `npm run lint`, `npm run typecheck`,
+  `npm run test:unit -- tests/unit/retail-code.test.ts`, `npm run security`,
+  `npm run test`, and `npm run build` pass. Hosted preview verification remains
+  pending after Vercel redeploy.
+
 ## 2026-07-11 — Hosted Phase 0 schema verification confirms missing migrations
 
 - **Observed:** `npm run test:live-phase0-schema` reached hosted Supabase but

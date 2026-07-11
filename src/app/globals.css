@@ -571,6 +571,27 @@ input:disabled {
   min-width: 0;
 }
 
+.step-link,
+.step-static {
+  align-items: flex-start;
+  color: inherit;
+  display: inline-grid;
+  justify-items: start;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.step-link:hover .step-marker,
+.step-link:focus-visible .step-marker {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 4px var(--purple-soft);
+}
+
+.step-link:focus-visible {
+  border-radius: 999px;
+  outline: 0;
+}
+
 .step-marker {
   align-items: center;
   background: var(--surface);
@@ -640,6 +661,12 @@ input:disabled {
   justify-content: space-between;
   margin-top: 28px;
   padding-top: 20px;
+}
+
+.panel-action-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .definition {

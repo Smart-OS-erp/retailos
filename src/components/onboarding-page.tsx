@@ -11,6 +11,7 @@ import { redirect } from "next/navigation";
 
 type OnboardingPageProps = {
   children: (context: OnboardingContext) => ReactNode;
+  context?: OnboardingContext;
   currentStep: OnboardingStep;
   description: string;
   eyebrow?: string;
@@ -19,12 +20,13 @@ type OnboardingPageProps = {
 
 export async function OnboardingPage({
   children,
+  context: providedContext,
   currentStep,
   description,
   eyebrow = "Organization setup",
   title,
 }: OnboardingPageProps) {
-  const context = await getOnboardingContext();
+  const context = providedContext ?? await getOnboardingContext();
   if (!context) {
     redirect("/create-organization");
   }
