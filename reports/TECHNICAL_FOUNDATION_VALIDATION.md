@@ -43,4 +43,4 @@ These items are release blockers, not silently passed gates.
 
 After this original foundation report, the reviewed migration was applied to `retailos-dev` and `npm run test:live-supabase` passed synthetic Auth, atomic onboarding, audit, RBAC, anonymous denial, and two-tenant RLS checks with cleanup. Confirm-email signups, an eight-character minimum password, and exact local callback URLs were also verified.
 
-Hosted token-hash template activation, CLI migration-history reconciliation, Vercel Git linkage, and protected preview verification remain open. See `reports/CURRENT_STATE.md` and `reports/OPEN_BLOCKERS.md` for current authority.
+Vercel Git linkage, protected preview verification, hosted setup/onboarding, hosted schema/RLS checks, and Supabase migration-history repair were completed in later Phase 0 closeout work. Hosted token-hash template activation remains open until custom SMTP/eligible plan support is configured or the current hosted confirmation behavior is explicitly accepted. See `reports/CURRENT_STATE.md` and `reports/OPEN_BLOCKERS.md` for current authority.

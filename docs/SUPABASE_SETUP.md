@@ -21,7 +21,7 @@ The secure technical foundation includes reviewed client boundaries, a versioned
 - `npm run test:live-supabase` creates isolated synthetic identities and tenants, verifies Auth/onboarding/audit/RBAC/RLS allow-deny behavior through anon and authenticated clients, and removes its fixtures.
 - `supabase/config.toml` and `supabase/templates/confirmation.html` contain the intended local Auth configuration and token-hash template.
 
-The SQL Editor application did not register the version in Supabase CLI migration history. Reconcile that history before a later `db push`. Prefer the official Supabase CLI migration repair flow once CLI authentication is available; if CLI access remains unavailable, use the reviewed fallback handoff in `supabase/repair_migration_history.sql` only after hosted schema and live RLS checks pass. The hosted token-hash email body also remains blocked until custom SMTP or an eligible Supabase plan is configured; never commit or paste SMTP credentials.
+The SQL Editor application did not automatically register the manually applied migrations in Supabase CLI migration history, so `supabase/repair_migration_history.sql` was run through Supabase SQL Editor after hosted schema and live RLS checks passed. The hosted token-hash email body still requires custom SMTP or an eligible Supabase plan; never commit or paste SMTP credentials.
 
 ## Hosted Phase 0 migration checklist
 

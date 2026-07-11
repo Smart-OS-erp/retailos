@@ -28,7 +28,8 @@
 - Source-boundary tests verify that server-only variable names are unreachable from browser modules and protected onboarding code reauthorizes on the server.
 - The reviewed migration is applied to non-production `retailos-dev`; synthetic live Auth, onboarding, audit, RBAC, anonymous denial, and two-tenant RLS verification pass with cleanup.
 - Confirm-email signups, an eight-character minimum password, and exact local confirmation callback URLs are configured.
-- Hosted token-hash template activation, migration-history reconciliation, Vercel Git linkage, and a protected preview flow remain unverified release blockers.
+- Vercel Git linkage, protected preview deployment, hosted setup/onboarding, hosted schema/RLS checks, and Supabase migration-history repair are verified for the protected non-production Phase 0 demo.
+- Hosted token-hash template activation remains an open release decision until custom SMTP/eligible plan support is configured or the current hosted confirmation behavior is explicitly accepted.
 
 ## Evidence rules
 

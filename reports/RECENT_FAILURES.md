@@ -35,8 +35,9 @@
   reviewed Phase 0 SQL to the approved non-production Supabase project through
   Supabase SQL Editor, reran hosted schema/RLS verification, and completed a
   deployed setup/onboarding verification path.
-- **Status:** resolved for hosted schema/setup-state. Supabase migration-history
-  reconciliation remains a separate release blocker.
+- **Status:** resolved for hosted schema/setup-state. Supabase migration history
+  was later repaired through the reviewed SQL Editor fallback and live hosted
+  schema/RLS checks still pass.
 
 ## 2026-07-10 — Preview signup confirmation used localhost and onboarding looped
 
@@ -87,8 +88,8 @@
 
 - **Observed:** Supabase CLI management commands lacked an authenticated CLI session, and the direct database hostname could not be reached from this IPv4-only environment. The hosted default email service also disabled confirmation-template editing.
 - **Resolution:** apply the already-reviewed additive migration through authenticated SQL Editor, verify it through the live two-tenant harness, and commit the intended Auth configuration/template as code. No credentials were printed or committed.
-- **Remaining action:** reconcile CLI migration history, then configure approved custom SMTP or an eligible Supabase plan for the token-hash template.
-- **Status:** database/RLS verification resolved; migration history and hosted email template remain open blockers.
+- **Remaining action:** configure approved custom SMTP or an eligible Supabase plan for the token-hash template, or explicitly accept current hosted confirmation behavior for the protected demo.
+- **Status:** database/RLS verification and migration-history repair are resolved; hosted email template remains an open blocker/decision.
 
 ## 2026-07-05 — Parallel local test timeout
 
