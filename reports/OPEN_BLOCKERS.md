@@ -2,6 +2,12 @@
 
 ## Release blockers
 
+- **Location onboarding fix needs hosted preview verification.** The local fix
+  normalizes uppercase user-entered location/brand codes into the lowercase
+  database format and passes lint/typecheck/security/tests/build, but the
+  protected preview must redeploy before the user can verify the Location step
+  no longer blocks onboarding. Owner/action: engineering pushes the branch and
+  verifies the Vercel preview once the deployment is ready.
 - **Confirmation template cannot be customized on the current hosted email service.** The non-production project requires custom SMTP or an eligible Supabase plan before the token-hash template can replace the default `ConfirmationURL` template. Owner/action: environment owner selects and configures the approved delivery option without sharing credentials in chat; engineering then verifies valid, invalid, expired, and replayed links.
 - **Supabase Auth hosted redirect allowlist must include the deployed preview confirmation URL.** App code now supplies `/auth/confirm`, but Supabase may reject non-localhost redirect URLs unless the branch alias or preview domain is allowlisted. Owner/action: add the protected preview/branch alias confirmation URL in Supabase Auth URL configuration, then retry signup with a fresh test email.
 - **Hosted Phase 0 migrations are not applied/verified.** `npm run test:live-phase0-schema` confirms the hosted REST schema is missing the Phase 0 expansion/data/consolidation/intelligence/projectisation/copilot relations and RPCs, including `onboarding_checklists`. Direct Postgres DNS for `DATABASE_URL` is not resolvable from this environment, `psql`, `supabase`, and `vercel` CLIs are unavailable, and the Supabase SQL Editor opened as a blank shell in the in-app browser. Owner/action: environment owner provides working Supabase CLI/SQL Editor access or generates `.tmp/phase0-hosted-migration.sql` with `npm run migration:hosted-bundle`, applies the reviewed migrations from `supabase/migrations/20260705140000_phase0_foundation_expansion.sql` through `20260706140000_phase0_retail_copilot.sql`, then engineering reruns `npm run test:live-phase0-schema`, live tenant/RLS, and app smoke checks.

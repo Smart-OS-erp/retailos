@@ -1,7 +1,12 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
 import { FormField } from "@/components/form-field";
 import { Notice } from "@/components/notice";
 import { OnboardingPage } from "@/components/onboarding-page";
 import { requireUser } from "@/lib/auth/require-user";
+import { getOnboardingContext } from "@/lib/navigation/onboarding";
+import { displayRetailCode } from "@/lib/retail-code";
 
 import {
   addBrandAndContinue,
@@ -16,14 +21,23 @@ type BrandsPageProps = {
 export default async function BrandsPage({ searchParams }: BrandsPageProps) {
   const params = await searchParams;
   const error = typeof params.error === "string" ? params.error : "";
+  const context = await getOnboardingContext();
+  if (!context) {
+    redirect("/create-organization");
+  }
+
   const { supabase } = await requireUser();
   const { data: brands } = await supabase
     .from("brands")
     .select("id, name, code")
+    .eq("organization_id", context.organization.id)
     .order("created_at", { ascending: true });
+  const hasBrands = Boolean(brands?.length);
+  const showError = Boolean(error) && !hasBrands;
 
   return (
     <OnboardingPage
+      context={context}
       currentStep="brands"
       description="Record a brand identity now, or safely skip this optional step and return later."
       title="Add the brands you operate"
@@ -31,21 +45,21 @@ export default async function BrandsPage({ searchParams }: BrandsPageProps) {
       {(context) => (
         <section className="panel" aria-labelledby="brand-title">
           <h2 id="brand-title">
-            {brands?.length ? "Brands recorded" : "First brand"}
+            {hasBrands ? "Brands recorded" : "First brand"}
           </h2>
-          {error ? (
+          {showError ? (
             <Notice title="Brand needs attention" tone="error">
               {error === "invalid"
                 ? "Check the brand name and code."
-                : "We could not safely save that brand. It may already exist."}
+                : "We could not safely save that brand. Use letters, numbers, and hyphens for the code, then try again."}
             </Notice>
           ) : null}
-          {brands?.length ? (
+          {hasBrands ? (
             <>
               <dl className="definition">
-                {brands.map((brand) => (
+                {brands?.map((brand) => (
                   <div key={brand.id}>
-                    <dt>{brand.code}</dt>
+                    <dt>{displayRetailCode(brand.code)}</dt>
                     <dd>{brand.name}</dd>
                   </div>
                 ))}
@@ -56,7 +70,9 @@ export default async function BrandsPage({ searchParams }: BrandsPageProps) {
                   type="hidden"
                   value={context.organization.id}
                 />
-                <span className="muted">Brands 3 of 5</span>
+                <Link className="button button-secondary" href="/onboarding/locations">
+                  Back to locations
+                </Link>
                 <button className="button button-primary" type="submit">
                   Continue to team
                 </button>
@@ -89,17 +105,22 @@ export default async function BrandsPage({ searchParams }: BrandsPageProps) {
                 required
               />
               <div className="panel-actions">
-                <button
-                  className="button button-secondary"
-                  formAction={skipBrands}
-                  formNoValidate
-                  type="submit"
-                >
-                  Skip for now
-                </button>
-                <button className="button button-primary" type="submit">
-                  Save brand and continue
-                </button>
+                <Link className="button button-secondary" href="/onboarding/locations">
+                  Back to locations
+                </Link>
+                <div className="panel-action-group">
+                  <button
+                    className="button button-secondary"
+                    formAction={skipBrands}
+                    formNoValidate
+                    type="submit"
+                  >
+                    Skip for now
+                  </button>
+                  <button className="button button-primary" type="submit">
+                    Save brand and continue
+                  </button>
+                </div>
               </div>
             </form>
           )}

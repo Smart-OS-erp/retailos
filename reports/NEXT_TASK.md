@@ -1,11 +1,12 @@
 Next Task:
 Milestone 8 — Hosted verification and protected preview:
-- Apply missing Phase 0 migrations to the non-production Supabase project without exposing secrets.
-- Generate the reviewed SQL handoff with `npm run migration:hosted-bundle` if SQL Editor/CLI access is available outside this workspace.
-- Add the protected preview `/auth/confirm` URLs to the Supabase Auth redirect allowlist before retrying signup.
-- Rerun `npm run test:live-phase0-schema`; it must pass before the preview can be accepted.
-- Run live Supabase tenant-isolation verification and authenticated app smoke tests after migrations are applied.
-- Keep PR #4 as draft until hosted database verification passes.
+- Redeploy preview after the onboarding code-normalization fix, then verify a real user can enter uppercase location codes such as `LAG-LEK` and continue to Brands without a location save error.
+- Verify completed/current onboarding steps are navigable from the setup stepper and that the Location/Brands pages expose a safe back path.
+- Verify fresh email signup confirmation on the protected preview with a real inbox; the branch `/auth/confirm` callback is now allowlisted in Supabase.
+- Resolve or explicitly accept the hosted email-template limitation before preview acceptance.
+- Reconcile Supabase migration history before a later CLI `db push`.
+- Keep rerunning `npm run test:live-phase0-schema` and `npm run test:live-supabase` after any hosted database change.
+- Do not merge/accept the preview PR until remaining release blockers are resolved or explicitly accepted.
 - Keep the Vercel preview protected.
 - Do not deploy to production without explicit approval.
 

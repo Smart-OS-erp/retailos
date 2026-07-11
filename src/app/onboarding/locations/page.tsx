@@ -1,7 +1,12 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
 import { FormField } from "@/components/form-field";
 import { Notice } from "@/components/notice";
 import { OnboardingPage } from "@/components/onboarding-page";
 import { requireUser } from "@/lib/auth/require-user";
+import { getOnboardingContext } from "@/lib/navigation/onboarding";
+import { displayRetailCode } from "@/lib/retail-code";
 
 import { completeLocationStep, createFirstLocation } from "../actions";
 
@@ -12,37 +17,52 @@ type LocationsPageProps = {
 export default async function LocationsPage({ searchParams }: LocationsPageProps) {
   const params = await searchParams;
   const error = typeof params.error === "string" ? params.error : "";
+  const context = await getOnboardingContext();
+  if (!context) {
+    redirect("/create-organization");
+  }
+
   const { supabase } = await requireUser();
-  const { data: locations } = await supabase
+  const { data: locations, error: locationsError } = await supabase
     .from("locations")
     .select("id, name, code, timezone")
+    .eq("organization_id", context.organization.id)
     .order("created_at", { ascending: true });
+  const hasLocations = Boolean(locations?.length);
+  const showError = Boolean(error) && !hasLocations;
 
   return (
     <OnboardingPage
+      context={context}
       currentStep="first_location"
       description="Add the first operating location so later inventory evidence can carry an explicit place and timezone."
       title="Set your first location"
     >
-      {(context) => (
+      {(resolvedContext) => (
         <section className="panel" aria-labelledby="location-title">
           <h2 id="location-title">
-            {locations?.length ? "Location recorded" : "Location details"}
+            {hasLocations ? "Location recorded" : "Location details"}
           </h2>
-          {error ? (
+          {locationsError ? (
+            <Notice title="Location list needs attention" tone="error">
+              RetailOS could not read saved locations for this organization.
+              Refresh your session and try again.
+            </Notice>
+          ) : null}
+          {showError ? (
             <Notice title="Location needs attention" tone="error">
               {error === "invalid"
                 ? "Check the name, code, and timezone."
-                : "We could not safely save the location. It may already exist."}
+                : "We could not safely save the location. Use letters, numbers, and hyphens for the code, then try again."}
             </Notice>
           ) : null}
 
-          {locations?.length ? (
+          {hasLocations ? (
             <>
               <dl className="definition">
-                {locations.map((location) => (
+                {locations?.map((location) => (
                   <div key={location.id}>
-                    <dt>{location.code} · {location.timezone}</dt>
+                    <dt>{displayRetailCode(location.code)} · {location.timezone}</dt>
                     <dd>{location.name}</dd>
                   </div>
                 ))}
@@ -51,9 +71,11 @@ export default async function LocationsPage({ searchParams }: LocationsPageProps
                 <input
                   name="organizationId"
                   type="hidden"
-                  value={context.organization.id}
+                  value={resolvedContext.organization.id}
                 />
-                <span className="muted">Location 2 of 5</span>
+                <Link className="button button-secondary" href="/onboarding/company">
+                  Back to company
+                </Link>
                 <button className="button button-primary" type="submit">
                   Continue to brands
                 </button>
@@ -64,7 +86,7 @@ export default async function LocationsPage({ searchParams }: LocationsPageProps
               <input
                 name="organizationId"
                 type="hidden"
-                value={context.organization.id}
+                value={resolvedContext.organization.id}
               />
               <FormField
                 autoComplete="organization-title"
@@ -96,7 +118,9 @@ export default async function LocationsPage({ searchParams }: LocationsPageProps
                 </select>
               </label>
               <div className="panel-actions">
-                <span className="muted">Location 2 of 5</span>
+                <Link className="button button-secondary" href="/onboarding/company">
+                  Back to company
+                </Link>
                 <button className="button button-primary" type="submit">
                   Save location
                 </button>
