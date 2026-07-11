@@ -7,5 +7,6 @@ coverage
 dist
 out
 .vercel
+.tmp
 *.log
 *.tsbuildinfo

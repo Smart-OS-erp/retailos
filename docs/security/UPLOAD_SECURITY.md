@@ -1,6 +1,6 @@
 # Upload Security
 
-Uploads are not part of the harness milestone. When activated, they require a dedicated threat review.
+Uploads are approved for the Phase 0 data-foundation milestone but are not implemented. Activation requires the hostile-upload gate in `plans/PHASE_0_SECURITY_GATE.md` and matching negative tests.
 
 ## Required controls
 

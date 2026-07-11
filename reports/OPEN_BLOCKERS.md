@@ -3,14 +3,18 @@
 ## Release blockers
 
 - **Confirmation template cannot be customized on the current hosted email service.** The non-production project requires custom SMTP or an eligible Supabase plan before the token-hash template can replace the default `ConfirmationURL` template. Owner/action: environment owner selects and configures the approved delivery option without sharing credentials in chat; engineering then verifies valid, invalid, expired, and replayed links.
-- **Migration history is not reconciled.** The reviewed migration was applied successfully to `retailos-dev` through SQL Editor because CLI management authentication was unavailable and the direct database hostname was unreachable from this environment. Owner/action: authenticate Supabase CLI and run the reviewed migration-history repair before a later `db push`.
-- **Protected preview is not deployed.** The `retailos` Vercel project exists, all four required variables are scoped to Preview, server-only values are sensitive, Vercel Authentication protects deployment URLs, and Git fork protection is enabled. Git linkage is blocked until the account completes its GitHub login connection; the GitHub authorization screen currently keeps its Authorize action disabled. No active deployment remains. Owner/action: account owner completes or repairs the Vercel–GitHub login connection and connects `Smart-OS-erp/retailos`; engineering then deploys the feature branch and runs smoke/security checks.
+- **Supabase Auth hosted redirect allowlist must include the deployed preview confirmation URL.** App code now supplies `/auth/confirm`, but Supabase may reject non-localhost redirect URLs unless the branch alias or preview domain is allowlisted. Owner/action: add the protected preview/branch alias confirmation URL in Supabase Auth URL configuration, then retry signup with a fresh test email.
+- **Hosted Phase 0 migrations are not applied/verified.** `npm run test:live-phase0-schema` confirms the hosted REST schema is missing the Phase 0 expansion/data/consolidation/intelligence/projectisation/copilot relations and RPCs, including `onboarding_checklists`. Direct Postgres DNS for `DATABASE_URL` is not resolvable from this environment, `psql`, `supabase`, and `vercel` CLIs are unavailable, and the Supabase SQL Editor opened as a blank shell in the in-app browser. Owner/action: environment owner provides working Supabase CLI/SQL Editor access or generates `.tmp/phase0-hosted-migration.sql` with `npm run migration:hosted-bundle`, applies the reviewed migrations from `supabase/migrations/20260705140000_phase0_foundation_expansion.sql` through `20260706140000_phase0_retail_copilot.sql`, then engineering reruns `npm run test:live-phase0-schema`, live tenant/RLS, and app smoke checks.
+- **Migration history is not reconciled.** The earlier foundation migration was applied successfully to `retailos-dev` through SQL Editor because CLI management authentication was unavailable and the direct database hostname was unreachable from this environment. Owner/action: authenticate Supabase CLI and run the reviewed migration-history repair before a later `db push`.
 
 ## Verified non-production controls
 
 - The reviewed foundation schema is applied to `retailos-dev`.
+- The protected Vercel preview for PR #4 is deployed and Vercel/GitHub checks are green.
+- The in-app browser verified the deployed login page, signup page, and unauthenticated protected-route redirect.
 - Confirm-email signups are enabled, the password minimum is eight characters, and exact localhost/127.0.0.1 confirmation callbacks are allowlisted.
-- Synthetic Auth, atomic onboarding, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS isolation passed; all synthetic records were removed by the test harness.
+- The live foundation harness passes against `retailos-dev`; Auth, atomic organization creation, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.
+- Synthetic records created by the live foundation test harness were removed by cleanup.
 - The Vercel project has Preview-scoped configuration only; production variables were intentionally not populated with non-production values.
 - Vercel project protection reports `all_except_custom_domains`, and Git fork protection is enabled.
 

@@ -1,5 +1,61 @@
 # Recent Failures
 
+## 2026-07-11 — Hosted Phase 0 schema verification confirms missing migrations
+
+- **Observed:** `npm run test:live-phase0-schema` reached hosted Supabase but
+  reported missing Phase 0 relation/view endpoints and RPC endpoints, including
+  `onboarding_checklists`.
+- **Cause:** the hosted project currently exposes the secure foundation schema,
+  but the Phase 0 expansion/data/consolidation/intelligence/projectisation and
+  Copilot migrations have not been applied or are not visible through PostgREST.
+- **Impact:** authenticated users can have valid sessions while `/onboarding`
+  fails closed to `/setup-error?error=setup-state`.
+- **Resolution:** pending. Generate `.tmp/phase0-hosted-migration.sql` with
+  `npm run migration:hosted-bundle`, apply the reviewed Phase 0 SQL to the
+  approved non-production Supabase project, then rerun
+  `npm run test:live-phase0-schema`, `npm run test:live-supabase`, and preview
+  smoke tests.
+- **Status:** blocked on hosted Supabase SQL/CLI access; no secrets were
+  printed.
+
+## 2026-07-10 — Preview signup confirmation used localhost and onboarding looped
+
+- **Observed:** a hosted preview signup sent a confirmation link to
+  `localhost:3000/?code=...`, and the authenticated preview reached
+  `/onboarding?error=setup-state` with `ERR_TOO_MANY_REDIRECTS`.
+- **Cause:** signup did not provide Supabase `emailRedirectTo`, the confirmation
+  route only handled `token_hash` links, `/` discarded `code` confirmation
+  parameters, and setup-state errors redirected back into onboarding pages that
+  call the same failing context loader.
+- **Resolution:** signup now supplies a deployed `/auth/confirm` redirect,
+  `/auth/confirm` exchanges Supabase PKCE `code` links and still supports
+  `token_hash`, `/` forwards confirmation parameters to `/auth/confirm`, and
+  setup-state failures render `/setup-error` instead of looping.
+- **Status:** locally resolved; lint, typecheck, security, tests, and build pass.
+  Hosted verification remains pending after Vercel redeploy.
+
+## 2026-07-10 — Milestone 6 Copilot local validation fixes
+
+- **Observed:** the first Copilot integration assertion expected a store manager
+  Morning Brief to always be `answered`, but visible open opportunities may
+  already be projectised by earlier workflow evidence.
+- **Resolution:** assert the safe statuses (`answered` or
+  `insufficient_evidence`) and continue enforcing citation scope, refusal,
+  read-only behavior, user-only logs, and cross-tenant denial.
+- **Observed:** `npm run typecheck` rejected optional Copilot citation/fact
+  normalization under `exactOptionalPropertyTypes`.
+- **Resolution:** omit optional values unless the RPC returned them.
+- **Status:** resolved; `npm run typecheck`, `npm run test:integration`,
+  `npm run test`, and `npm run build` pass after the fixes.
+
+## 2026-07-06 — Concurrent build/test security-test timeout
+
+- **Observed:** the five-second browser-boundary security test timed out while a
+  full Turbopack production build was consuming the same Windows workspace.
+- **Resolution:** allow the successful build to finish, then rerun `npm run test`
+  without competing compilation; all 12 files and 62 tests passed.
+- **Status:** resolved; no assertion failed and no test was skipped.
+
 ## 2026-07-05 — Vercel CLI misclassified preview attempts
 
 - **Observed:** two CLI deployments were reported by Vercel as targeting production even without `--prod`, including one attempt with explicit `--target=preview`.

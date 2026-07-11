@@ -1,10 +1,15 @@
-import { signIn, signUp } from "./actions";
+import Link from "next/link";
+
+import { AuthShell } from "@/components/auth-shell";
+import { FormField } from "@/components/form-field";
+import { Notice } from "@/components/notice";
+
+import { signIn } from "./actions";
 
 const errorMessages: Record<string, string> = {
   invalid: "Enter a valid email and a password between 8 and 128 characters.",
   authentication: "We could not sign you in with those credentials.",
-  signup: "We could not create the account. Try again or contact support.",
-  confirmation: "The confirmation link is invalid or expired.",
+  confirmation: "This confirmation link is invalid or has expired.",
 };
 
 type LoginPageProps = {
@@ -18,60 +23,56 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const errorMessage = errorMessages[errorKey];
 
   return (
-    <main className="shell">
-      <section className="card" aria-labelledby="login-title">
-        <p className="eyebrow">RetailOS secure foundation</p>
-        <h1 id="login-title">Sign in to your organization</h1>
-        <p className="lede">
-          Authentication is provided by Supabase. Organization access is
-          enforced again by database row-level security.
-        </p>
+    <AuthShell>
+      <div className="auth-card">
+        <header className="auth-card-header">
+          <p className="eyebrow">Welcome back</p>
+          <h1>Sign in to RetailOS</h1>
+          <p className="lede">
+            Continue to your organization’s secure operating workspace.
+          </p>
+        </header>
 
         {errorMessage ? (
-          <p className="notice notice-error" role="alert">
+          <Notice title="Sign-in needs attention" tone="error">
             {errorMessage}
-          </p>
+          </Notice>
         ) : null}
 
         {messageKey === "confirm" ? (
-          <p className="notice notice-success" role="status">
-            Check your email to confirm the account before signing in.
-          </p>
+          <Notice title="Confirm your email" tone="success">
+            We sent a secure confirmation link. Use it before signing in.
+          </Notice>
         ) : null}
 
-        <form className="stack">
-          <label>
-            Email
-            <input
-              autoComplete="email"
-              inputMode="email"
-              maxLength={254}
-              name="email"
-              required
-              type="email"
-            />
-          </label>
-          <label>
-            Password
-            <input
-              autoComplete="current-password"
-              maxLength={128}
-              minLength={8}
-              name="password"
-              required
-              type="password"
-            />
-          </label>
-          <div className="actions">
-            <button className="primary" formAction={signIn} type="submit">
-              Sign in
-            </button>
-            <button className="secondary" formAction={signUp} type="submit">
-              Create account
-            </button>
-          </div>
+        <form action={signIn} className="stack">
+          <FormField
+            autoComplete="email"
+            inputMode="email"
+            label="Work email"
+            maxLength={254}
+            name="email"
+            required
+            type="email"
+          />
+          <FormField
+            autoComplete="current-password"
+            label="Password"
+            maxLength={128}
+            minLength={8}
+            name="password"
+            required
+            type="password"
+          />
+          <button className="button button-primary button-full" type="submit">
+            Sign in securely
+          </button>
         </form>
-      </section>
-    </main>
+
+        <p className="auth-switch">
+          New to RetailOS? <Link href="/signup">Create an account</Link>
+        </p>
+      </div>
+    </AuthShell>
   );
 }

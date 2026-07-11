@@ -1,9 +1,14 @@
 Next Task:
-After this non-production foundation verification is reviewed:
-- Configure custom SMTP or approve a Supabase plan that permits the token-hash confirmation email template, then verify valid, invalid, expired, and replayed confirmation links.
-- Reconcile the SQL Editor deployment with Supabase migration history before any later `db push`.
-- Configure the four environment variables separately for Vercel preview without exposing server-only values.
-- Complete the Vercel account's GitHub login connection, connect `Smart-OS-erp/retailos`, then deploy and verify the already-protected preview, including sign-up, confirmation, sign-in, sign-out, onboarding, and authorization smoke tests.
-- Keep production environment configuration and deployment approval separate.
+Milestone 8 — Hosted verification and protected preview:
+- Apply missing Phase 0 migrations to the non-production Supabase project without exposing secrets.
+- Generate the reviewed SQL handoff with `npm run migration:hosted-bundle` if SQL Editor/CLI access is available outside this workspace.
+- Add the protected preview `/auth/confirm` URLs to the Supabase Auth redirect allowlist before retrying signup.
+- Rerun `npm run test:live-phase0-schema`; it must pass before the preview can be accepted.
+- Run live Supabase tenant-isolation verification and authenticated app smoke tests after migrations are applied.
+- Keep PR #4 as draft until hosted database verification passes.
+- Keep the Vercel preview protected.
+- Do not deploy to production without explicit approval.
 
-Do not add dashboards, inventory intelligence, uploads, or future-phase modules until this foundation is accepted.
+Foundation release blockers remain tracked in `reports/OPEN_BLOCKERS.md` and must be cleared before preview acceptance.
+
+Do not start Phase 0.5 or future-phase work.
