@@ -1,5 +1,5 @@
 Project: RetailOS
 Active Phase: Phase 0.5 — Integration Hub MVP
-Current Mode: Phase 0.5 Kickoff — Integration Hub planning
-Build Status: Phase 0 is accepted for transition by founder instruction, production governance is accepted by founder instruction, and the current Supabase hosted confirmation email behavior remains accepted for the protected non-production demo. No Phase 0.5 product implementation has been built yet.
-Next Required Step: Build the secure Phase 0.5 Integration Hub MVP in a scoped implementation PR: data source setup, connector scaffold/MVP boundaries, import API, sync jobs, external records, sync errors, webhook event table, and pipeline handoff back into validation/consolidation/intelligence.
+Current Mode: Phase 0.5 Milestone 1 — Integration Hub schema/security foundation
+Build Status: Integration Hub schema/RLS foundation is implemented locally on branch `phase-0-5-integration-hub-foundation`; real connector authentication, provider sync, scheduled workers, and UI are not implemented yet.
+Next Required Step: Validate and review the Phase 0.5 foundation PR, then apply the reviewed migration to hosted Supabase before building Integration Hub UI or real connector behavior.

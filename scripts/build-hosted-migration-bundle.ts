@@ -23,11 +23,18 @@ const fullPhase0Migrations = [
   ...hostedPendingMigrations,
 ];
 
+const phase05Migrations = [
+  "20260707100000_phase0_5_integration_hub.sql",
+];
+
 const args = process.argv.slice(2);
 const useFullPhase0Set = args.includes("--full-phase0");
 const useDataForwardOnly = args.includes("--data-forward-only");
+const usePhase05Set = args.includes("--phase0-5");
 const selectedMigrations = useDataForwardOnly
   ? dataForwardMigrations
+  : usePhase05Set
+  ? phase05Migrations
   : useFullPhase0Set
   ? fullPhase0Migrations
   : hostedPendingMigrations;
@@ -58,6 +65,8 @@ function readMigration(name) {
 function buildBundle(migrations) {
   const mode = useDataForwardOnly
     ? "Phase 0 data-forward migration set for a database where foundation expansion already exists"
+    : usePhase05Set
+    ? "Phase 0.5 Integration Hub migration set for a database where Phase 0 already exists"
     : useFullPhase0Set
     ? "full Phase 0 migration set for a fresh non-production database"
     : "hosted pending Phase 0 set for the current retailos-dev blocker";
@@ -112,6 +121,8 @@ try {
   report(
     useDataForwardOnly
       ? "Mode note: data-forward bundle assumes Phase 0 foundation expansion is already applied."
+      : usePhase05Set
+      ? "Mode note: Phase 0.5 bundle assumes all Phase 0 migrations are already applied."
       : useFullPhase0Set
       ? "Mode note: full Phase 0 bundle is only for a fresh non-production database."
       : "Mode note: pending bundle assumes secure technical foundation is already applied and includes Phase 0 foundation expansion.",

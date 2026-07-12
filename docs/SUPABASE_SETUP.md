@@ -87,6 +87,34 @@ into chat.
 
 ## Environment boundary
 
+## Hosted Phase 0.5 migration checklist
+
+Use this checklist only after all Phase 0 migrations and migration-history
+repair are already applied to the target non-production project. Do not paste
+database passwords, service-role keys, connector credentials, webhook secrets,
+SMTP credentials, or connection strings into chat.
+
+1. Confirm the target Supabase project is the approved project for Phase 0.5
+   testing.
+2. Generate the reviewed Phase 0.5 hosted bundle locally:
+
+   ```bash
+   npm run migration:hosted-phase0-5-bundle
+   ```
+
+   This writes `.tmp/phase0-5-hosted-migration.sql`. The `.tmp/` folder is
+   ignored by Git.
+3. Apply `.tmp/phase0-5-hosted-migration.sql` once through Supabase SQL Editor
+   or an authenticated Supabase CLI session.
+4. After applying SQL, rerun the hosted schema/RLS checks that are updated for
+   the Phase 0.5 migration set.
+5. Do not configure real provider credentials until the connector-specific
+   secret handling and webhook verification plan is reviewed.
+
+The Phase 0.5 migration creates Integration Hub foundation tables and RPCs only.
+It does not authenticate to Shopify, WooCommerce, Google Sheets, POS, ERP, or a
+custom backend.
+
 Use `.env.local` for local secrets and Vercel/Supabase secret management for deployed environments. The committed `.env.example` contains empty assignments for these names only:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
