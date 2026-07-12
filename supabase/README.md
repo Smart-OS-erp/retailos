@@ -17,7 +17,7 @@ Do not use `SUPABASE_SERVICE_ROLE_KEY` for normal user traffic or to make failin
 
 The reviewed Phase 0 migrations are applied to `retailos-dev`, Supabase migration history is repaired for the seven applied Phase 0 migrations, and `npm run test:live-supabase` passes the synthetic Auth/onboarding/audit/RBAC/two-tenant RLS matrix with cleanup.
 
-The committed confirmation template uses `token_hash` and the application `/auth/confirm` route. Hosted template activation requires custom SMTP or an eligible Supabase plan; secret SMTP values belong only in managed environment configuration.
+The committed confirmation template uses `token_hash` and the application `/auth/confirm` route. The current hosted Supabase confirmation email behavior is accepted for the protected non-production demo only. Hosted template activation requires custom SMTP or an eligible Supabase plan if required for production; secret SMTP values belong only in managed environment configuration.
 
 ## Migration-history repair
 

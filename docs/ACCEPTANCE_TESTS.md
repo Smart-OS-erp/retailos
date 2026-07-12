@@ -29,7 +29,7 @@
 - The reviewed migration is applied to non-production `retailos-dev`; synthetic live Auth, onboarding, audit, RBAC, anonymous denial, and two-tenant RLS verification pass with cleanup.
 - Confirm-email signups, an eight-character minimum password, and exact local confirmation callback URLs are configured.
 - Vercel Git linkage, protected preview deployment, hosted setup/onboarding, hosted schema/RLS checks, and Supabase migration-history repair are verified for the protected non-production Phase 0 demo.
-- Hosted token-hash template activation remains an open release decision until custom SMTP/eligible plan support is configured or the current hosted confirmation behavior is explicitly accepted.
+- Current hosted Supabase confirmation email behavior is explicitly accepted for the protected non-production Phase 0 demo. Token-hash template activation through custom SMTP/eligible plan support remains a production-governance follow-up if required before production launch.
 
 ## Evidence rules
 
