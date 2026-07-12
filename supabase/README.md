@@ -33,16 +33,16 @@ handling are reviewed.
 
 ## Current status
 
-The reviewed Phase 0 migrations are applied to `retailos-dev`, Supabase migration history is repaired for the seven applied Phase 0 migrations, and `npm run test:live-supabase` passes the synthetic Auth/onboarding/audit/RBAC/two-tenant RLS matrix with cleanup.
+The reviewed Phase 0 migrations and Phase 0.5 Integration Hub migration are applied to `retailos-dev`, Supabase migration history is repaired for the seven applied Phase 0 migrations plus `20260707100000_phase0_5_integration_hub.sql`, `npm run test:live-phase0-schema` passes for 40 relation/view endpoints and 13 RPC endpoints, and `npm run test:live-supabase` passes the synthetic Auth/onboarding/audit/RBAC/two-tenant RLS matrix with cleanup.
 
 The committed confirmation template uses `token_hash` and the application `/auth/confirm` route. The current hosted Supabase confirmation email behavior is accepted for the protected non-production demo only. Hosted template activation requires custom SMTP or an eligible Supabase plan if required for production; secret SMTP values belong only in managed environment configuration.
 
 ## Migration-history repair
 
-The reviewed Phase 0 migrations were applied to the hosted non-production
-project through Supabase SQL Editor, then recorded in Supabase CLI migration
-history with `supabase/repair_migration_history.sql` after hosted schema/RLS
-checks passed.
+The reviewed Phase 0 and Phase 0.5 migrations were applied to the hosted
+non-production project through Supabase SQL Editor, then recorded in Supabase
+CLI migration history with `supabase/repair_migration_history.sql` after hosted
+schema/RLS checks passed.
 
 Preferred path: use the official Supabase CLI `migration repair` command once
 the CLI is authenticated for the project.
@@ -50,5 +50,5 @@ the CLI is authenticated for the project.
 Fallback path for future non-production repairs: after
 `npm run test:live-phase0-schema` and `npm run test:live-supabase` pass against
 the target, run `supabase/repair_migration_history.sql` in Supabase SQL Editor.
-This fallback only records migration metadata; it does not create product
-tables.
+This fallback only records migration metadata for already-applied reviewed SQL;
+it does not create product tables.
