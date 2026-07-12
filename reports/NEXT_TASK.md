@@ -1,24 +1,21 @@
 Next Task:
-Milestone 8 — Release-readiness closeout:
-- Keep the deployed RetailOS app protected until production governance is accepted.
-- The founder/environment-owner accepted the current Supabase hosted confirmation email behavior for the protected non-production demo on 2026-07-12. Do not treat this as production email approval.
-- If any hosted database setting changes, rerun `npm run test:live-phase0-schema` and `npm run test:live-supabase`.
-- Before real tenant or personal data, name privacy/legal, retention/deletion, incident-response, environment, backup, rollback, MFA/recovery, and monitoring owners.
+Phase 0.5 — Integration Hub MVP kickoff:
+- Implement only the approved Integration Hub MVP scope.
+- Start with schema/security/design contracts before connector behavior.
+- Add data source setup and connection-status surfaces.
+- Add external record storage, sync jobs, sync errors, and webhook event table.
+- Add RetailOS Import API with tenant-scoped auth and audit behavior.
+- Add Shopify, WooCommerce, and Google Sheets connector scaffold or MVP only within Phase 0.5 scope.
+- Ensure sync output flows back through the existing validation, consolidation, and intelligence pipeline.
+- Keep the rule that RetailOS connects to the system behind a website, not to "a website" directly.
 
 Verified:
-- PR #4, PR #5, PR #6, PR #7, and PR #8 are merged.
-- Vercel deployments for the preview and main are READY.
+- Phase 0 foundation is implemented, deployed, and validated.
+- Hosted setup/onboarding is user-verified.
 - Hosted Phase 0 schema verification passes.
 - Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.
-- User-reported hosted setup/onboarding is successful after the location code-normalization fix.
-- Supabase migration history is repaired for the seven applied Phase 0 migrations:
-  - `20260705113000`
-  - `20260705140000`
-  - `20260706100000`
-  - `20260706110000`
-  - `20260706120000`
-  - `20260706130000`
-  - `20260706140000`
+- Supabase migration history is repaired for the seven applied Phase 0 migrations.
 - Current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only.
+- Production governance is accepted by founder instruction on 2026-07-12.
 
-Do not start Phase 0.5 or future-phase work until Phase 0 is explicitly accepted and the active phase changes.
+Do not build outside Phase 0.5. Do not add POS, finance, wholesale, forecasting, warehouse management, marketplace publishing, autonomous campaign execution, or real LLM agent execution.

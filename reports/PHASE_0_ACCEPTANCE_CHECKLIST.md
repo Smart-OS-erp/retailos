@@ -2,13 +2,13 @@
 
 ## Current decision status
 
-Status: Current Supabase hosted confirmation email behavior accepted for the protected non-production demo; not approved for real tenant or personal data.
+Status: Phase 0 accepted for transition to Phase 0.5 by founder instruction on 2026-07-12.
 
 Environment: protected non-production Vercel deployment backed by the approved `retailos-dev` Supabase project.
 
 Repository state: PR #4, PR #5, PR #6, PR #7, and PR #8 are merged into `main`.
 
-Phase control: `reports/CURRENT_STATE.md` still declares `Phase 0 — Foundation: Inventory Recovery Intelligence`. Do not start Phase 0.5 or future-phase implementation until a human-approved phase change is committed.
+Phase control: `reports/CURRENT_STATE.md` declares `Phase 0.5 — Integration Hub MVP`. Do not start Phase 1 or future-phase implementation until a later human-approved phase change is committed.
 
 ## Verified protected-demo evidence
 
@@ -64,33 +64,34 @@ Acceptance record:
 
 ## Decision 2 — Production governance owners
 
-RetailOS must not process real tenant or personal data until these owners and controls are named.
+Production governance was accepted by founder instruction in the Codex thread on 2026-07-12. The founder/environment owner remains accountable for any control area without a separately named delegate in the repository.
 
 | Control area | Required owner/action | Status |
 | --- | --- | --- |
-| Privacy/legal | Name accountable owner for privacy policy, data processing basis, tenant terms, and notification requirements. | TODO |
-| Retention/deletion | Approve retention windows, deletion process, export process, and audit-log retention. | TODO |
-| Incident response | Name incident lead, escalation channel, legal/privacy contact, and customer communication owner. | TODO |
-| Environment/secrets | Name owner for Vercel/Supabase environments, secret rotation, and access review. | TODO |
-| Backup/restore | Document backup schedule, restore test evidence, and recovery-point/recovery-time expectations. | TODO |
-| Rollback | Document rollback path for app releases and database migrations. | TODO |
-| MFA/recovery | Approve MFA requirements, emergency access process, and account recovery path for platform admins. | TODO |
-| Monitoring/alerting | Name owner for uptime, auth failures, RLS/security anomalies, error tracking, and deployment alerts. | TODO |
-| Support/abuse | Name owner for support intake, suspicious signup handling, and tenant-access support boundaries. | TODO |
+| Privacy/legal | Name accountable owner for privacy policy, data processing basis, tenant terms, and notification requirements. | Accepted by founder/environment owner instruction on 2026-07-12 |
+| Retention/deletion | Approve retention windows, deletion process, export process, and audit-log retention. | Accepted by founder/environment owner instruction on 2026-07-12 |
+| Incident response | Name incident lead, escalation channel, legal/privacy contact, and customer communication owner. | Accepted by founder/environment owner instruction on 2026-07-12 |
+| Environment/secrets | Name owner for Vercel/Supabase environments, secret rotation, and access review. | Accepted by founder/environment owner instruction on 2026-07-12 |
+| Backup/restore | Document backup schedule, restore test evidence, and recovery-point/recovery-time expectations. | Accepted by founder/environment owner instruction on 2026-07-12 |
+| Rollback | Document rollback path for app releases and database migrations. | Accepted by founder/environment owner instruction on 2026-07-12 |
+| MFA/recovery | Approve MFA requirements, emergency access process, and account recovery path for platform admins. | Accepted by founder/environment owner instruction on 2026-07-12 |
+| Monitoring/alerting | Name owner for uptime, auth failures, RLS/security anomalies, error tracking, and deployment alerts. | Accepted by founder/environment owner instruction on 2026-07-12 |
+| Support/abuse | Name owner for support intake, suspicious signup handling, and tenant-access support boundaries. | Accepted by founder/environment owner instruction on 2026-07-12 |
 
 ## Go/no-go state
 
 | Scope | Current state | Rationale |
 | --- | --- | --- |
 | Protected non-production Phase 0 demo | Accepted with current hosted Supabase confirmation behavior | Core hosted flow and security harnesses pass; email behavior is accepted for protected demo use only. |
-| Real tenant or personal data | No-go | Governance owners and production controls are not yet approved. |
-| Production launch | No-go | Production email confirmation, governance, monitoring, backup/restore, rollback, and privacy/legal controls remain open. |
-| Phase 0.5 or future phases | No-go | Active phase has not changed and production/real-data governance is not accepted. |
+| Real tenant or personal data | Accepted by founder instruction | Production governance was accepted in the Codex thread on 2026-07-12. |
+| Production launch | Requires separate deployment approval | Governance is accepted, but production deployment still requires normal deployment approval and environment verification. |
+| Phase 0.5 | Active | `reports/CURRENT_STATE.md` declares Phase 0.5 as the active phase. |
+| Phase 1 or future phases | No-go | Active phase has not changed beyond Phase 0.5. |
 
 ## Acceptance instructions
 
-1. Keep using only synthetic/non-production demo data until production governance is accepted.
-2. Fill the production governance owner table before any real data enters RetailOS.
-3. Rerun required hosted tests if any hosted Supabase setting changes.
-4. Update `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, and `reports/OPEN_BLOCKERS.md` in a reviewed PR after governance decisions are made.
-5. Only after Phase 0 is explicitly accepted for the next scope may the active phase be changed for Phase 0.5 or future work.
+1. Keep Phase 0.5 implementation inside the Integration Hub MVP boundary.
+2. Rerun required hosted tests if any hosted Supabase setting changes.
+3. Use managed secret stores for real connector credentials; never paste or commit them.
+4. Update `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, and `reports/OPEN_BLOCKERS.md` in reviewed PRs as Phase 0.5 milestones complete.
+5. Only after Phase 0.5 is explicitly accepted may the active phase be changed for Phase 1 or future work.
