@@ -1,12 +1,13 @@
 Next Task:
 Milestone 8 — Release-readiness closeout:
 - Keep the deployed RetailOS app protected until production governance is accepted.
+- Review `reports/PHASE_0_ACCEPTANCE_CHECKLIST.md` and record the founder/environment-owner decision before changing the phase gate.
 - Decide whether to accept the current Supabase hosted confirmation email behavior for this non-production demo or configure custom SMTP/an eligible Supabase plan for the token-hash template. Do not paste SMTP credentials into chat.
 - If any hosted database setting changes, rerun `npm run test:live-phase0-schema` and `npm run test:live-supabase`.
 - Before real tenant or personal data, name privacy/legal, retention/deletion, incident-response, environment, backup, rollback, MFA/recovery, and monitoring owners.
 
 Verified:
-- PR #4, PR #5, and PR #6 are merged.
+- PR #4, PR #5, PR #6, and PR #7 are merged.
 - Vercel deployments for the preview and main are READY.
 - Hosted Phase 0 schema verification passes.
 - Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.

@@ -3,6 +3,7 @@
 ## Release blockers
 
 - **Hosted confirmation template decision remains open.** The current Supabase hosted email service may not allow replacing the default confirmation template with the committed token-hash template unless custom SMTP or an eligible Supabase plan is configured. Owner/action: environment owner either explicitly accepts the current hosted confirmation behavior for the protected non-production demo or configures approved SMTP/plan support without sharing credentials in chat; engineering then verifies valid, invalid, expired, and replayed links.
+- **Phase 0 acceptance decision remains open.** `reports/PHASE_0_ACCEPTANCE_CHECKLIST.md` must be reviewed and updated with the chosen email-confirmation path and named production-governance owners before RetailOS handles real tenant or personal data.
 
 ## Verified non-production controls
 
@@ -11,7 +12,7 @@
 - Supabase migration history is repaired for all seven applied Phase 0 migrations.
 - `npm run test:live-phase0-schema` passes against hosted Supabase after migration-history repair: 34 relation/view endpoints and 11 RPC endpoints are visible.
 - `npm run test:live-supabase` passes against hosted Supabase after migration-history repair: Auth, atomic organization creation, onboarding, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.
-- PR #4, PR #5, and PR #6 are merged.
+- PR #4, PR #5, PR #6, and PR #7 are merged.
 - Vercel deployment `dpl_4q1sLUx6X9n7vBZPbQRrBbV32Uac` for PR #5 reached READY.
 - Vercel deployment `dpl_64jVS5hFwxSveS1kaFaybQXsJXfu` for main reached READY.
 - The deployed login page responds through Vercel.
