@@ -25,6 +25,10 @@ describe("organization RBAC", () => {
     expect(hasPermission("executive", "event.view")).toBe(true);
     expect(hasPermission("executive", "location.manage")).toBe(false);
     expect(hasPermission("executive", "brand.manage")).toBe(false);
+    expect(hasPermission("executive", "integration.view")).toBe(true);
+    expect(hasPermission("executive", "integration.manage")).toBe(false);
+    expect(hasPermission("executive", "integration.sync")).toBe(false);
+    expect(hasPermission("executive", "integration.import")).toBe(false);
   });
 
   it("gives store and viewer roles read-only foundation visibility", () => {
@@ -40,6 +44,10 @@ describe("organization RBAC", () => {
       expect(hasPermission(role, "brand.manage")).toBe(false);
       expect(hasPermission(role, "onboarding.manage")).toBe(false);
       expect(hasPermission(role, "event.view")).toBe(false);
+      expect(hasPermission(role, "integration.view")).toBe(false);
+      expect(hasPermission(role, "integration.manage")).toBe(false);
+      expect(hasPermission(role, "integration.sync")).toBe(false);
+      expect(hasPermission(role, "integration.import")).toBe(false);
     }
   });
 
@@ -55,6 +63,18 @@ describe("organization RBAC", () => {
     );
     expect(hasPermission("merchandising_manager", "onboarding.manage")).toBe(
       false,
+    );
+    expect(hasPermission("merchandising_manager", "integration.view")).toBe(
+      true,
+    );
+    expect(hasPermission("merchandising_manager", "integration.manage")).toBe(
+      true,
+    );
+    expect(hasPermission("merchandising_manager", "integration.sync")).toBe(
+      true,
+    );
+    expect(hasPermission("merchandising_manager", "integration.import")).toBe(
+      true,
     );
   });
 

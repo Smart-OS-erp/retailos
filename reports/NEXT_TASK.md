@@ -1,11 +1,11 @@
 Next Task:
-Phase 0.5 — Integration Hub MVP kickoff:
-- Implement only the approved Integration Hub MVP scope.
-- Start with schema/security/design contracts before connector behavior.
-- Add data source setup and connection-status surfaces.
-- Add external record storage, sync jobs, sync errors, and webhook event table.
-- Add RetailOS Import API with tenant-scoped auth and audit behavior.
-- Add Shopify, WooCommerce, and Google Sheets connector scaffold or MVP only within Phase 0.5 scope.
+Phase 0.5 — Integration Hub MVP:
+- Review and merge the Integration Hub schema/security foundation PR.
+- Apply the reviewed Phase 0.5 migration to hosted Supabase after PR acceptance.
+- Update hosted schema verification for Phase 0.5 tables and RPCs after the migration is applied.
+- Build Integration Hub UI only after schema/RLS foundation is accepted.
+- Build RetailOS Import API only after API authentication/idempotency details are reviewed.
+- Build Shopify, WooCommerce, and Google Sheets connector scaffold or MVP only within Phase 0.5 scope.
 - Ensure sync output flows back through the existing validation, consolidation, and intelligence pipeline.
 - Keep the rule that RetailOS connects to the system behind a website, not to "a website" directly.
 

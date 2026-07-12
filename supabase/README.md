@@ -13,6 +13,24 @@ The first Phase 0 migration defines organizations, memberships, RBAC roles, audi
 
 Do not use `SUPABASE_SERVICE_ROLE_KEY` for normal user traffic or to make failing RLS tests pass. `seed.sql` remains intentionally empty of product data.
 
+## Phase 0.5
+
+`20260707100000_phase0_5_integration_hub.sql` adds the Integration Hub foundation:
+
+- provider catalogue;
+- tenant data sources;
+- external records;
+- sync jobs;
+- sync errors;
+- webhook events;
+- permission-checked `create_data_source`;
+- permission-checked `enqueue_data_source_sync`.
+
+The migration intentionally does not store real provider credentials or perform
+real Shopify, WooCommerce, Google Sheets, POS, ERP, or custom-backend syncs.
+Scaffolded connectors must fail safely until connector depth and credential
+handling are reviewed.
+
 ## Current status
 
 The reviewed Phase 0 migrations are applied to `retailos-dev`, Supabase migration history is repaired for the seven applied Phase 0 migrations, and `npm run test:live-supabase` passes the synthetic Auth/onboarding/audit/RBAC/two-tenant RLS matrix with cleanup.
