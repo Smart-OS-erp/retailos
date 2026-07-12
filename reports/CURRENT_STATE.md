@@ -1,5 +1,5 @@
 Project: RetailOS
-Active Phase: Phase 0 — Foundation: Inventory Recovery Intelligence
-Current Mode: Phase 0 Protected Demo Accepted — Production Governance Pending
-Build Status: Phase 0 foundation is implemented, merged to main through PR #8, deployed by Vercel, live Supabase schema/RLS checks pass, user-reported hosted setup/onboarding flow is successful, Supabase migration history is repaired, and the current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only
-Next Required Step: Assign production governance owners before real tenant/personal data or any Phase 0.5/future-phase work
+Active Phase: Phase 0.5 — Integration Hub MVP
+Current Mode: Phase 0.5 Kickoff — Integration Hub planning
+Build Status: Phase 0 is accepted for transition by founder instruction, production governance is accepted by founder instruction, and the current Supabase hosted confirmation email behavior remains accepted for the protected non-production demo. No Phase 0.5 product implementation has been built yet.
+Next Required Step: Build the secure Phase 0.5 Integration Hub MVP in a scoped implementation PR: data source setup, connector scaffold/MVP boundaries, import API, sync jobs, external records, sync errors, webhook event table, and pipeline handoff back into validation/consolidation/intelligence.

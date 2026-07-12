@@ -6,7 +6,7 @@ Milestone 8 hosted verification is accepted for the protected non-production dem
 
 Phase 0 is implemented, merged to `main` through PR #7, deployed by Vercel, backed by the hosted Supabase Phase 0 schema, verified by live schema/RLS/Auth harnesses, and has repaired Supabase migration history for the manually applied Phase 0 migrations.
 
-Phase 0 is not yet approved for real tenant or personal data because production governance remains open. The current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only.
+Phase 0 is accepted for transition to Phase 0.5 by founder instruction on 2026-07-12. The current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only.
 
 ## Verified evidence
 
@@ -31,6 +31,7 @@ Phase 0 is not yet approved for real tenant or personal data because production 
 - `npm run test:live-supabase` passed against hosted Supabase after the repair: Auth, onboarding, audit, RBAC, and two-tenant RLS.
 - User reported the hosted setup/onboarding flow is successful after the location code-normalization fix.
 - Founder/environment-owner accepted the current Supabase hosted confirmation email behavior for the protected non-production demo on 2026-07-12.
+- Founder/environment-owner accepted production governance and approved moving to Phase 0.5 on 2026-07-12.
 
 ## Commands and checks
 
@@ -67,13 +68,13 @@ The hosted-email acceptance record was validated locally on branch `accept-hoste
 
 Hosted database settings were not changed by this decision-record update, so live Supabase tests were not rerun for this branch.
 
-## Remaining blockers
+## Remaining blockers before Phase 0.5 implementation
 
-- Production governance before real tenant or personal data.
-- Production email confirmation behavior remains subject to production governance; custom SMTP/eligible plan support is still expected if the committed token-hash template is required for production.
+- Connector credential handling, connector depth, and sync retry/rollback behavior must be designed before real connector authentication or scheduled sync behavior.
+- Production deployment still requires separate deployment approval and environment verification.
 
 ## Gate decision
 
-Hosted setup verification, migration-history repair, and current hosted Supabase confirmation email behavior are accepted for the protected non-production Phase 0 demo.
+Hosted setup verification, migration-history repair, current hosted Supabase confirmation email behavior for the protected non-production demo, and production governance are accepted for Phase 0 closeout.
 
-Do not start Phase 0.5 or future-phase work until the remaining release/governance blockers are resolved or explicitly accepted and `reports/CURRENT_STATE.md` is updated by human-approved phase control.
+`reports/CURRENT_STATE.md` now declares Phase 0.5 as active. Do not start Phase 1 or later work until a later human-approved phase change.

@@ -6,9 +6,9 @@ RetailOS is a secure operating system for African fashion retail. It converts fr
 
 ## Active product outcome
 
-The active phase is Phase 0 — Foundation: Inventory Recovery Intelligence. Its intended outcome is to help an authorized retailer understand where inventory value is trapped, why an item was classified as a recovery opportunity, and what safe next action should be considered.
+The active phase is Phase 0.5 — Integration Hub MVP. Its intended outcome is to move RetailOS beyond manual upload into connected retail data while preserving the approved Phase 0 validation, consolidation, intelligence, projectisation, and Copilot pipeline.
 
-This repository currently contains only the harness. No inventory feature, recommendation engine, user interface, or production data path exists yet.
+Phase 0 — Foundation: Inventory Recovery Intelligence is accepted for transition by founder instruction. Phase 0.5 must focus on data sources, external records, sync jobs, sync errors, webhook events, import API boundaries, and safe handoff into the existing pipeline.
 
 ## Product principles
 
@@ -25,7 +25,7 @@ When documents disagree, use this order:
 
 1. `reports/CURRENT_STATE.md` for active phase and build mode.
 2. `AGENTS.md` for implementation and security constraints.
-3. `docs/PHASE_0_SCOPE.md` for active-phase boundaries.
+3. `docs/PHASE_0_5_SCOPE.md` for active Phase 0.5 boundaries.
 4. This document for product intent.
 5. Specialized business, intelligence, security, and design documents.
 
@@ -33,4 +33,4 @@ Contradictions must be recorded in `reports/OPEN_BLOCKERS.md`; agents must not s
 
 ## Roadmap boundary
 
-Phases 0.5–10 are described in `AGENTS.md` only to protect architectural direction. They are not accepted backlog for the active build and must not appear as implemented navigation, APIs, tables, demo data, or screens.
+Phases 1–10 are described in `AGENTS.md` only to protect architectural direction. They are not accepted backlog for the active build and must not appear as implemented navigation, APIs, tables, demo data, or screens.
