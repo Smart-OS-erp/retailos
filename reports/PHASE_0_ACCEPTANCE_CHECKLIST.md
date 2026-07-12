@@ -2,11 +2,11 @@
 
 ## Current decision status
 
-Status: Ready for founder and environment-owner review, not approved for real tenant or personal data.
+Status: Current Supabase hosted confirmation email behavior accepted for the protected non-production demo; not approved for real tenant or personal data.
 
 Environment: protected non-production Vercel deployment backed by the approved `retailos-dev` Supabase project.
 
-Repository state: PR #4, PR #5, PR #6, and PR #7 are merged into `main`.
+Repository state: PR #4, PR #5, PR #6, PR #7, and PR #8 are merged into `main`.
 
 Phase control: `reports/CURRENT_STATE.md` still declares `Phase 0 — Foundation: Inventory Recovery Intelligence`. Do not start Phase 0.5 or future-phase implementation until a human-approved phase change is committed.
 
@@ -23,7 +23,7 @@ Phase control: `reports/CURRENT_STATE.md` still declares `Phase 0 — Foundation
 
 ## Decision 1 — Hosted email confirmation
 
-Choose one path before real tenant or personal data.
+Chosen path for protected non-production demo: Option A.
 
 ### Option A — Accept current hosted confirmation behavior for the protected demo
 
@@ -33,13 +33,14 @@ This is acceptable only if all conditions remain true:
 - The environment remains non-production.
 - Test users understand that the hosted Supabase confirmation email body may differ from the committed token-hash template.
 - No real tenant data, customer data, employee data, or production secrets are entered.
-- The limitation remains listed in `reports/OPEN_BLOCKERS.md`.
+- The limitation remains documented as a production-governance follow-up.
 
 Acceptance record:
 
-- Decision owner: TODO
-- Decision date: TODO
+- Decision owner: founder/environment owner, approved by user instruction in Codex thread
+- Decision date: 2026-07-12
 - Approved scope: protected non-production demo only
+- Decision: accepted current Supabase hosted confirmation email behavior for the protected non-production demo
 - Required follow-up before production: custom SMTP/eligible plan decision, email-link replay/expiry testing, and production governance approval
 
 ### Option B — Configure custom SMTP or eligible Supabase plan
@@ -81,16 +82,15 @@ RetailOS must not process real tenant or personal data until these owners and co
 
 | Scope | Current state | Rationale |
 | --- | --- | --- |
-| Protected non-production Phase 0 demo | Ready for explicit acceptance after Decision 1 is recorded | Core hosted flow and security harnesses pass. |
+| Protected non-production Phase 0 demo | Accepted with current hosted Supabase confirmation behavior | Core hosted flow and security harnesses pass; email behavior is accepted for protected demo use only. |
 | Real tenant or personal data | No-go | Governance owners and production controls are not yet approved. |
-| Production launch | No-go | Email confirmation, governance, monitoring, backup/restore, rollback, and privacy/legal controls remain open. |
-| Phase 0.5 or future phases | No-go | Active phase has not changed and Phase 0 is not formally accepted. |
+| Production launch | No-go | Production email confirmation, governance, monitoring, backup/restore, rollback, and privacy/legal controls remain open. |
+| Phase 0.5 or future phases | No-go | Active phase has not changed and production/real-data governance is not accepted. |
 
 ## Acceptance instructions
 
-1. Pick Decision 1, Option A or Option B.
-2. Fill the relevant acceptance record above without adding secrets.
-3. Fill the production governance owner table before any real data enters RetailOS.
-4. Rerun required hosted tests if any hosted Supabase setting changes.
-5. Update `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, and `reports/OPEN_BLOCKERS.md` in a reviewed PR.
-6. Only after Phase 0 is explicitly accepted may the active phase be changed for the next approved scope.
+1. Keep using only synthetic/non-production demo data until production governance is accepted.
+2. Fill the production governance owner table before any real data enters RetailOS.
+3. Rerun required hosted tests if any hosted Supabase setting changes.
+4. Update `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, and `reports/OPEN_BLOCKERS.md` in a reviewed PR after governance decisions are made.
+5. Only after Phase 0 is explicitly accepted for the next scope may the active phase be changed for Phase 0.5 or future work.

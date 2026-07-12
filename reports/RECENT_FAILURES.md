@@ -88,8 +88,8 @@
 
 - **Observed:** Supabase CLI management commands lacked an authenticated CLI session, and the direct database hostname could not be reached from this IPv4-only environment. The hosted default email service also disabled confirmation-template editing.
 - **Resolution:** apply the already-reviewed additive migration through authenticated SQL Editor, verify it through the live two-tenant harness, and commit the intended Auth configuration/template as code. No credentials were printed or committed.
-- **Remaining action:** configure approved custom SMTP or an eligible Supabase plan for the token-hash template, or explicitly accept current hosted confirmation behavior for the protected demo.
-- **Status:** database/RLS verification and migration-history repair are resolved; hosted email template remains an open blocker/decision.
+- **Remaining action:** configure approved custom SMTP or an eligible Supabase plan for the token-hash template if required before production.
+- **Status:** database/RLS verification and migration-history repair are resolved; current hosted confirmation behavior is accepted for the protected non-production demo only.
 
 ## 2026-07-05 — Parallel local test timeout
 
