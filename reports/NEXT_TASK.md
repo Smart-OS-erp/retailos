@@ -1,8 +1,8 @@
 Next Task:
 Phase 0.5 — Integration Hub MVP:
-- Review and merge the RetailOS Import API credential/control-plane foundation.
-- Apply the Import API credential/control-plane migration to hosted Supabase and verify the hosted schema.
-- Build `/api/import/v1/records` only after import credential storage, tenant scoping, replay handling, idempotency keys, rate limits, and audit evidence are merged, applied, and tested.
+- Review and merge the RetailOS Import API route implementation.
+- Configure `IMPORT_API_TOKEN_HASH_SECRET` in Vercel Preview before live route smoke testing.
+- Smoke test `/api/import/v1/records` with a tenant-scoped Import API credential, idempotency key, and external record payload.
 - Build Shopify, WooCommerce, and Google Sheets connector scaffold or MVP only within Phase 0.5 scope.
 - Ensure sync output flows back through the existing validation, consolidation, and intelligence pipeline.
 - Keep the rule that RetailOS connects to the system behind a website, not to "a website" directly.
@@ -15,7 +15,9 @@ Verified:
 - Hosted Phase 0/0.5 schema verification passes for 40 relation/view endpoints and 13 RPC endpoints.
 - Integration Hub UI/data-source setup flow is merged in PR #13.
 - RetailOS Import API authentication/idempotency/security boundary is merged in PR #14.
-- Import API credential/control-plane foundation is implemented locally on branch `phase-0-5-import-api-credentials` and pending review.
+- Import API credential/control-plane foundation is merged in PR #15, applied to hosted Supabase, and verified.
+- Hosted Phase 0/0.5 schema verification now passes for 43 relation/view endpoints and 15 RPC endpoints.
+- Import API route is implemented locally on branch `phase-0-5-import-api-route` and pending review.
 - Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.
 - Supabase migration history is repaired for the seven applied Phase 0 migrations plus the applied Phase 0.5 migration.
 - Current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only.

@@ -4,10 +4,10 @@
 
 Phase: Phase 0.5 — Integration Hub MVP.
 
-Mode: reviewed boundary plus credential/control-plane foundation. The current
-implementation adds Import API credential metadata, token-hash storage,
-idempotency/replay evidence, and rate-limit evidence. It does not implement an
-API route, connector worker, or normalization job.
+Mode: reviewed boundary plus route implementation. The current implementation
+adds Import API credential metadata, token-hash storage, idempotency/replay
+evidence, rate-limit evidence, and `POST /api/import/v1/records`. It does not
+implement a connector worker or normalization job.
 
 The RetailOS Import API is the approved path for tenant-scoped records from
 custom backends, spreadsheet feeds, POS/ERP exports, and partner systems when a
@@ -26,7 +26,7 @@ The Import API must not become:
 
 ## Endpoint shape
 
-Planned route:
+Implemented route:
 
 ```text
 POST /api/import/v1/records
@@ -157,11 +157,11 @@ There are two idempotency layers.
 
 `Idempotency-Key` is required for every request.
 
-The future implementation should create or reuse a `sync_jobs` row with:
+The route creates or reuses a `sync_jobs` row with:
 
 - `organization_id`
 - `data_source_id`
-- `trigger = import_api`
+- `trigger = api`
 - `idempotency_key`
 
 The existing database uniqueness contract on `(organization_id, data_source_id,
@@ -297,7 +297,7 @@ Data tests:
 
 ## Implementation gate
 
-Do not implement `/api/import/v1/records` until the credential/control-plane
-migration is reviewed, merged, applied to hosted Supabase, and verified. The
-route must use this foundation instead of creating ad hoc credential,
-idempotency, or rate-limit storage.
+Do not broaden `/api/import/v1/records` beyond external-record ingestion until
+the route is reviewed, deployed with `IMPORT_API_TOKEN_HASH_SECRET`, and smoke
+tested against a real tenant-scoped Import API credential. The route must
+continue using the credential/idempotency foundation instead of ad hoc storage.

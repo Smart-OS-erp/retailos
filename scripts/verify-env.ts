@@ -8,7 +8,10 @@ const requiredKeys = [
   "SUPABASE_SERVICE_ROLE_KEY",
   "DATABASE_URL",
 ];
-const requiredKeySet = new Set(requiredKeys);
+const optionalKeys = [
+  "IMPORT_API_TOKEN_HASH_SECRET",
+];
+const allowedKeySet = new Set([...requiredKeys, ...optionalKeys]);
 const examplePath = path.join(root, ".env.example");
 const envFiles = fs.readdirSync(root, { withFileTypes: true })
   .filter((entry) =>
@@ -42,7 +45,7 @@ if (!fs.existsSync(examplePath)) {
     }
   }
   for (const [key, metadata] of exampleVariables) {
-    if (!requiredKeySet.has(key)) {
+    if (!allowedKeySet.has(key)) {
       violations.push(`.env.example:${metadata.line} contains unexpected variable ${key}`);
     }
     if (metadata.value.trim() !== "") {
