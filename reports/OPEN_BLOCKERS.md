@@ -4,8 +4,8 @@
 
 - **Connector credential handling must be designed before any real connector authentication.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries.
 - **Connector depth must be selected per provider.** Phase 0.5 allows Shopify, WooCommerce, and Google Sheets connector scaffold or MVP. Owner/action: product/engineering must record whether each connector is scaffold-only or functional MVP before implementation.
-- **Sync retry/rollback behavior must be explicit.** Owner/action: engineering must define idempotency keys, retry limits, error states, replay handling, and audit events before enabling scheduled sync behavior.
-- **RetailOS Import API boundary must be reviewed before implementation.** Owner/action: engineering/security must accept `docs/IMPORT_API_BOUNDARY.md`, then implement credential schema, tenant scoping, replay handling, idempotency keys, rate limits, and audit evidence before exposing ingestion endpoints.
+- **Sync retry/rollback behavior must be explicit before scheduled sync behavior.** Owner/action: engineering must define retry limits, worker rollback behavior, and downstream normalization failure handling before enabling scheduled sync workers.
+- **RetailOS Import API route remains blocked.** Owner/action: engineering/security must review and merge the credential/control-plane foundation, apply the migration to hosted Supabase, and verify hosted schema before exposing `/api/import/v1/records`.
 
 ## Verified Phase 0 acceptance controls
 

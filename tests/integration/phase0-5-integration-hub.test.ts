@@ -16,6 +16,7 @@ describe("Phase 0.5 Integration Hub foundation", () => {
   let organizationB: string;
   let shopifySourceA: string;
   let importApiSourceB: string;
+  let importApiCredentialB: string;
 
   async function authenticate(userId: string) {
     await database.exec("reset role");
@@ -116,6 +117,18 @@ describe("Phase 0.5 Integration Hub foundation", () => {
       await database.query<{ id: string }>(
         "select public.create_data_source($1, $2, $3) as id",
         [organizationB, "import_api", "Tenant B API"],
+      )
+    ).rows[0]!.id;
+
+    importApiCredentialB = (
+      await database.query<{ id: string }>(
+        "select public.create_import_api_credential($1, $2, $3, $4) as id",
+        [
+          importApiSourceB,
+          "Tenant B primary import token",
+          "rtos_testb123",
+          "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        ],
       )
     ).rows[0]!.id;
   }, 30_000);
@@ -245,7 +258,169 @@ describe("Phase 0.5 Integration Hub foundation", () => {
     ]);
   });
 
-  it("queues sync for non-secret import API sources without normalizing records directly", async () => {
+  it("stores import API credential metadata without exposing token hashes", async () => {
+    await authenticate(OWNER_B);
+    const credentials = await database.query<{
+      id: string;
+      token_prefix: string;
+      status: string;
+    }>(
+      "select id, token_prefix, status from public.import_api_credentials",
+    );
+    const source = await database.query<{
+      status: string;
+      credential_status: string;
+    }>(
+      "select status, credential_status from public.data_sources where id = $1",
+      [importApiSourceB],
+    );
+    const audits = await database.query<{ action: string }>(
+      "select action from public.audit_events where target_id = $1",
+      [importApiCredentialB],
+    );
+
+    expect(credentials.rows).toEqual([
+      {
+        id: importApiCredentialB,
+        token_prefix: "rtos_testb123",
+        status: "active",
+      },
+    ]);
+    expect(source.rows).toEqual([
+      { status: "connected", credential_status: "configured" },
+    ]);
+    expect(audits.rows).toContainEqual({
+      action: "integration.import_api_credentials.insert",
+    });
+
+    await expect(
+      database.query("select token_hash from public.import_api_credentials"),
+    ).rejects.toThrow();
+  });
+
+  it("only allows Import API credentials on Import API data sources", async () => {
+    await authenticate(MERCH_A);
+
+    await expect(
+      database.query(
+        "select public.create_import_api_credential($1, $2, $3, $4)",
+        [
+          shopifySourceA,
+          "Wrong source token",
+          "rtos_wrong1",
+          "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        ],
+      ),
+    ).rejects.toThrow(/import_api_source_required/);
+
+    await authenticate(VIEWER_A);
+    await expect(
+      database.query(
+        "select public.create_import_api_credential($1, $2, $3, $4)",
+        [
+          shopifySourceA,
+          "Viewer token",
+          "rtos_viewer1",
+          "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        ],
+      ),
+    ).rejects.toThrow();
+  });
+
+  it("records Import API idempotency and rate-limit evidence with tenant lineage", async () => {
+    await authenticate(OWNER_B);
+    const idempotency = await database.query<{ id: string }>(
+      `insert into public.import_api_idempotency_keys (
+        organization_id, data_source_id, credential_id, idempotency_key,
+        request_hash, status
+      ) values (
+        $1, $2, $3, 'import-request-001',
+        'sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
+        'reserved'
+      ) returning id`,
+      [organizationB, importApiSourceB, importApiCredentialB],
+    );
+    const rateLimit = await database.query<{ id: string }>(
+      `insert into public.import_api_rate_limit_events (
+        organization_id, data_source_id, credential_id, limit_name,
+        window_started_at, window_seconds, request_count, blocked_count
+      ) values (
+        $1, $2, $3, 'per_minute',
+        timezone('utc', now()), 60, 3, 1
+      ) returning id`,
+      [organizationB, importApiSourceB, importApiCredentialB],
+    );
+
+    expect(idempotency.rows).toHaveLength(1);
+    expect(rateLimit.rows).toHaveLength(1);
+
+    await expect(
+      database.query(
+        `insert into public.import_api_idempotency_keys (
+          organization_id, data_source_id, credential_id, idempotency_key,
+          request_hash
+        ) values (
+          $1, $2, $3, 'import-request-001',
+          'sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+        )`,
+        [organizationB, importApiSourceB, importApiCredentialB],
+      ),
+    ).rejects.toThrow();
+
+    await authenticate(MERCH_A);
+    await expect(
+      database.query(
+        `insert into public.import_api_idempotency_keys (
+          organization_id, data_source_id, credential_id, idempotency_key,
+          request_hash
+        ) values (
+          $1, $2, $3, 'cross-tenant-request',
+          'sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+        )`,
+        [organizationA, shopifySourceA, importApiCredentialB],
+      ),
+    ).rejects.toThrow();
+  });
+
+  it("revokes import API credentials without deleting audit evidence", async () => {
+    await authenticate(OWNER_B);
+    const temporaryCredential = (
+      await database.query<{ id: string }>(
+        "select public.create_import_api_credential($1, $2, $3, $4) as id",
+        [
+          importApiSourceB,
+          "Temporary import token",
+          "rtos_temp123",
+          "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        ],
+      )
+    ).rows[0]!.id;
+
+    await database.query("select public.revoke_import_api_credential($1)", [
+      temporaryCredential,
+    ]);
+
+    const credential = await database.query<{
+      status: string;
+      revoked_by: string;
+    }>(
+      "select status, revoked_by from public.import_api_credentials where id = $1",
+      [temporaryCredential],
+    );
+    const audit = await database.query<{ action: string }>(
+      "select action from public.audit_events where target_id = $1 order by created_at",
+      [temporaryCredential],
+    );
+
+    expect(credential.rows).toEqual([
+      { status: "revoked", revoked_by: OWNER_B },
+    ]);
+    expect(audit.rows).toContainEqual({
+      action: "integration.import_api_credentials.update",
+    });
+  });
+
+  it("queues sync for credentialed import API sources without normalizing records directly", async () => {
     await authenticate(OWNER_B);
     const jobId = (
       await database.query<{ id: string }>(

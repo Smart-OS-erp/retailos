@@ -60,6 +60,9 @@ const requiredRelations = [
   "sync_jobs",
   "sync_errors",
   "webhook_events",
+  "import_api_credentials",
+  "import_api_idempotency_keys",
+  "import_api_rate_limit_events",
 ];
 
 const requiredFunctions = [
@@ -76,6 +79,8 @@ const requiredFunctions = [
   "get_retail_copilot_answer",
   "create_data_source",
   "enqueue_data_source_sync",
+  "create_import_api_credential",
+  "revoke_import_api_credential",
 ];
 
 function toRestUrl(baseUrl) {

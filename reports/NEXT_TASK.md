@@ -1,8 +1,8 @@
 Next Task:
 Phase 0.5 — Integration Hub MVP:
-- Review and merge the RetailOS Import API authentication/idempotency/security boundary.
-- Build the Import API schema/credential foundation only after the boundary is accepted.
-- Build `/api/import/v1/records` only after import credential storage, tenant scoping, replay handling, idempotency keys, rate limits, and audit evidence are implemented and tested.
+- Review and merge the RetailOS Import API credential/control-plane foundation.
+- Apply the Import API credential/control-plane migration to hosted Supabase and verify the hosted schema.
+- Build `/api/import/v1/records` only after import credential storage, tenant scoping, replay handling, idempotency keys, rate limits, and audit evidence are merged, applied, and tested.
 - Build Shopify, WooCommerce, and Google Sheets connector scaffold or MVP only within Phase 0.5 scope.
 - Ensure sync output flows back through the existing validation, consolidation, and intelligence pipeline.
 - Keep the rule that RetailOS connects to the system behind a website, not to "a website" directly.
@@ -14,7 +14,8 @@ Verified:
 - Hosted Phase 0.5 migration is applied to `retailos-dev`.
 - Hosted Phase 0/0.5 schema verification passes for 40 relation/view endpoints and 13 RPC endpoints.
 - Integration Hub UI/data-source setup flow is merged in PR #13.
-- RetailOS Import API authentication/idempotency/security boundary is documented locally on branch `phase-0-5-import-api-boundary` and pending review.
+- RetailOS Import API authentication/idempotency/security boundary is merged in PR #14.
+- Import API credential/control-plane foundation is implemented locally on branch `phase-0-5-import-api-credentials` and pending review.
 - Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.
 - Supabase migration history is repaired for the seven applied Phase 0 migrations plus the applied Phase 0.5 migration.
 - Current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only.
