@@ -5,6 +5,7 @@
 - **Connector credential handling must be designed before any real connector authentication.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries.
 - **Connector depth must be selected per provider.** Phase 0.5 allows Shopify, WooCommerce, and Google Sheets connector scaffold or MVP. Owner/action: product/engineering must record whether each connector is scaffold-only or functional MVP before implementation.
 - **Sync retry/rollback behavior must be explicit.** Owner/action: engineering must define idempotency keys, retry limits, error states, replay handling, and audit events before enabling scheduled sync behavior.
+- **RetailOS Import API authentication and idempotency must be reviewed before implementation.** Owner/action: engineering/security must define inbound auth, tenant scoping, replay handling, idempotency keys, rate limits, and audit evidence before exposing ingestion endpoints.
 
 ## Verified Phase 0 acceptance controls
 
@@ -12,6 +13,7 @@
 - The reviewed foundation schema is applied to `retailos-dev`.
 - The reviewed Phase 0 expansion/data/consolidation/intelligence/projectisation/Copilot migrations are applied to `retailos-dev`.
 - The reviewed Phase 0.5 Integration Hub migration is applied to `retailos-dev`.
+- Integration Hub UI/data-source setup flow is implemented on branch `phase-0-5-integration-hub-ui` and pending review.
 - Supabase migration history is repaired for all seven applied Phase 0 migrations plus the applied Phase 0.5 migration.
 - `npm run test:live-phase0-schema` passes against hosted Supabase after Phase 0.5 migration-history repair: 40 relation/view endpoints and 13 RPC endpoints are visible.
 - `npm run test:live-supabase` passes against hosted Supabase after migration-history repair: Auth, atomic organization creation, onboarding, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.

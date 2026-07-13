@@ -23,4 +23,32 @@ describe("workspace navigation", () => {
       ),
     ).toBe(true);
   });
+
+  it("shows Integration Hub only to roles with Phase 0.5 integration visibility", () => {
+    expect(
+      workspaceNavigation("org_owner").some(
+        (item) => item.href === "/integrations",
+      ),
+    ).toBe(true);
+    expect(
+      workspaceNavigation("executive").some(
+        (item) => item.href === "/integrations",
+      ),
+    ).toBe(true);
+    expect(
+      workspaceNavigation("merchandising_manager").some(
+        (item) => item.href === "/integrations",
+      ),
+    ).toBe(true);
+    expect(
+      workspaceNavigation("store_manager").some(
+        (item) => item.href === "/integrations",
+      ),
+    ).toBe(false);
+    expect(
+      workspaceNavigation("viewer").some(
+        (item) => item.href === "/integrations",
+      ),
+    ).toBe(false);
+  });
 });
