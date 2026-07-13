@@ -35,6 +35,18 @@ Before `/api/import/v1/records` is implemented, the project must have reviewed:
 - negative tests for anonymous, wrong-token, revoked-token, cross-tenant,
   malformed, oversized, duplicate, and unsupported-record requests.
 
+The credential/control-plane foundation is implemented through:
+
+- `import_api_credentials`
+- `import_api_idempotency_keys`
+- `import_api_rate_limit_events`
+- `create_import_api_credential`
+- `revoke_import_api_credential`
+
+Raw Import API tokens must never be stored. Browser-readable metadata may expose
+only non-secret fields such as label, prefix, status, expiry, and usage
+timestamps. Token hashes remain server/database-controlled evidence.
+
 Import API requests must never trust caller-supplied `organization_id` and must
 not write directly to canonical inventory, sales, intelligence, or
 projectisation tables.

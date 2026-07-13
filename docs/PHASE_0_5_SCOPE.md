@@ -72,10 +72,13 @@ RetailOS connects to the system behind the website:
 
 The Import API boundary is documented in `docs/IMPORT_API_BOUNDARY.md`.
 
-Implementation must not begin until that boundary is reviewed. The route must
-derive tenant scope from a server-verified import credential, not from request
-body fields. Imported records must land in `external_records` first and must not
-bypass validation, normalization, consolidation, or intelligence gates.
+The boundary is reviewed and the credential/control-plane foundation now covers
+token-hash storage, tenant-scoped credential metadata, idempotency/replay
+evidence, and rate-limit evidence. The route must still not be exposed until
+that foundation is merged, applied to hosted Supabase, and verified. The route
+must derive tenant scope from a server-verified import credential, not from
+request body fields. Imported records must land in `external_records` first and
+must not bypass validation, normalization, consolidation, or intelligence gates.
 
 ## Security baseline
 
@@ -86,7 +89,7 @@ bypass validation, normalization, consolidation, or intelligence gates.
 - Webhook handlers must verify provider authenticity before trusting payloads.
 - API keys or tokens must be hashed/encrypted where appropriate and never logged.
 - All sensitive connector actions require audit logs.
-- RLS must cover data sources, external records, sync jobs, sync errors, and webhook events.
+- RLS must cover data sources, external records, sync jobs, sync errors, webhook events, Import API credentials, idempotency keys, and rate-limit evidence.
 
 ## Delivery discipline
 

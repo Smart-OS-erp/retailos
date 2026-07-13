@@ -4,8 +4,10 @@
 
 Phase: Phase 0.5 — Integration Hub MVP.
 
-Mode: design contract only. This document does not implement an API route,
-credential table, connector worker, or normalization job.
+Mode: reviewed boundary plus credential/control-plane foundation. The current
+implementation adds Import API credential metadata, token-hash storage,
+idempotency/replay evidence, and rate-limit evidence. It does not implement an
+API route, connector worker, or normalization job.
 
 The RetailOS Import API is the approved path for tenant-scoped records from
 custom backends, spreadsheet feeds, POS/ERP exports, and partner systems when a
@@ -63,7 +65,7 @@ Import API credentials must be:
 - created only by a user with `integration.manage`;
 - never readable by browser code after creation.
 
-Recommended future table:
+Implemented credential table:
 
 ```text
 import_api_credentials
@@ -76,7 +78,7 @@ Minimum fields:
 - `data_source_id`
 - `token_hash`
 - `token_prefix`
-- `token_last4`
+- `hash_algorithm`
 - `status`
 - `created_by`
 - `created_at`
@@ -84,6 +86,11 @@ Minimum fields:
 - `revoked_at`
 - `revoked_by`
 - `last_used_at`
+
+Implemented replay/rate-limit tables:
+
+- `import_api_idempotency_keys`
+- `import_api_rate_limit_events`
 
 The token verification path must use constant-time comparison where practical
 and must not reveal whether a token prefix, data source, organization, or status
@@ -290,6 +297,7 @@ Data tests:
 
 ## Implementation gate
 
-Do not implement `/api/import/v1/records` until this boundary is reviewed and
-the planned schema additions for import credentials and request idempotency
-evidence are accepted.
+Do not implement `/api/import/v1/records` until the credential/control-plane
+migration is reviewed, merged, applied to hosted Supabase, and verified. The
+route must use this foundation instead of creating ad hoc credential,
+idempotency, or rate-limit storage.

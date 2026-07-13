@@ -77,6 +77,12 @@ export type WebhookEventStatus =
   | "processed"
   | "failed"
   | "ignored";
+export type ImportApiCredentialStatus = "active" | "revoked" | "expired";
+export type ImportApiIdempotencyStatus =
+  | "reserved"
+  | "completed"
+  | "failed"
+  | "expired";
 
 export type DataUploadType =
   | "sample"
@@ -1196,6 +1202,119 @@ export type Database = {
         };
         Relationships: [];
       };
+      import_api_credentials: {
+        Row: {
+          id: string;
+          organization_id: string;
+          data_source_id: string;
+          label: string;
+          token_prefix: string;
+          token_hash: string;
+          hash_algorithm: "hmac-sha256";
+          status: ImportApiCredentialStatus;
+          created_by: string;
+          expires_at: string | null;
+          last_used_at: string | null;
+          revoked_at: string | null;
+          revoked_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          data_source_id: string;
+          label: string;
+          token_prefix: string;
+          token_hash: string;
+          hash_algorithm?: "hmac-sha256";
+          status?: ImportApiCredentialStatus;
+          created_by: string;
+          expires_at?: string | null;
+          last_used_at?: string | null;
+          revoked_at?: string | null;
+          revoked_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          label?: string;
+          status?: ImportApiCredentialStatus;
+          last_used_at?: string | null;
+          revoked_at?: string | null;
+          revoked_by?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      import_api_idempotency_keys: {
+        Row: {
+          id: string;
+          organization_id: string;
+          data_source_id: string;
+          credential_id: string;
+          idempotency_key: string;
+          request_hash: string;
+          status: ImportApiIdempotencyStatus;
+          sync_job_id: string | null;
+          response_summary: Json;
+          first_seen_at: string;
+          last_seen_at: string;
+          expires_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          data_source_id: string;
+          credential_id: string;
+          idempotency_key: string;
+          request_hash: string;
+          status?: ImportApiIdempotencyStatus;
+          sync_job_id?: string | null;
+          response_summary?: Json;
+          first_seen_at?: string;
+          last_seen_at?: string;
+          expires_at?: string;
+        };
+        Update: {
+          status?: ImportApiIdempotencyStatus;
+          sync_job_id?: string | null;
+          response_summary?: Json;
+          last_seen_at?: string;
+        };
+        Relationships: [];
+      };
+      import_api_rate_limit_events: {
+        Row: {
+          id: string;
+          organization_id: string;
+          data_source_id: string;
+          credential_id: string;
+          limit_name: string;
+          window_started_at: string;
+          window_seconds: number;
+          request_count: number;
+          blocked_count: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          data_source_id: string;
+          credential_id: string;
+          limit_name: string;
+          window_started_at: string;
+          window_seconds: number;
+          request_count?: number;
+          blocked_count?: number;
+          created_at?: string;
+        };
+        Update: {
+          request_count?: number;
+          blocked_count?: number;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       current_inventory_positions: {
@@ -1300,6 +1419,22 @@ export type Database = {
         };
         Returns: string;
       };
+      create_import_api_credential: {
+        Args: {
+          target_data_source_id: string;
+          target_label: string;
+          target_token_prefix: string;
+          target_token_hash: string;
+          target_expires_at?: string | null;
+        };
+        Returns: string;
+      };
+      revoke_import_api_credential: {
+        Args: {
+          target_credential_id: string;
+        };
+        Returns: undefined;
+      };
     };
     Enums: {
       membership_status: MembershipStatus;
@@ -1315,6 +1450,8 @@ export type Database = {
       sync_job_status: SyncJobStatus;
       external_record_status: ExternalRecordStatus;
       webhook_event_status: WebhookEventStatus;
+      import_api_credential_status: ImportApiCredentialStatus;
+      import_api_idempotency_status: ImportApiIdempotencyStatus;
     };
     CompositeTypes: Record<string, never>;
   };
