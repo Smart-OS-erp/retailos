@@ -11,10 +11,11 @@
 - Phase 0 foundation is implemented, deployed, and validated.
 - The reviewed foundation schema is applied to `retailos-dev`.
 - The reviewed Phase 0 expansion/data/consolidation/intelligence/projectisation/Copilot migrations are applied to `retailos-dev`.
-- Supabase migration history is repaired for all seven applied Phase 0 migrations.
-- `npm run test:live-phase0-schema` passes against hosted Supabase after migration-history repair: 34 relation/view endpoints and 11 RPC endpoints are visible.
+- The reviewed Phase 0.5 Integration Hub migration is applied to `retailos-dev`.
+- Supabase migration history is repaired for all seven applied Phase 0 migrations plus the applied Phase 0.5 migration.
+- `npm run test:live-phase0-schema` passes against hosted Supabase after Phase 0.5 migration-history repair: 40 relation/view endpoints and 13 RPC endpoints are visible.
 - `npm run test:live-supabase` passes against hosted Supabase after migration-history repair: Auth, atomic organization creation, onboarding, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.
-- PR #4, PR #5, PR #6, PR #7, and PR #8 are merged.
+- PR #4, PR #5, PR #6, PR #7, PR #8, PR #9, PR #10, and PR #11 are merged.
 - Current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only; custom SMTP/eligible plan support remains a production follow-up if the committed token-hash template is required.
 - Production governance is accepted by founder instruction on 2026-07-12.
 - Synthetic records created by live harness checks were removed by cleanup.

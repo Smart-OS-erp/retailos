@@ -2,8 +2,9 @@
 
 ## Outcome
 
-Implemented the Integration Hub database/security foundation locally on branch
-`phase-0-5-integration-hub-foundation`.
+Implemented the Integration Hub database/security foundation, merged it, applied
+the reviewed migration to hosted Supabase, and updated hosted verification for
+Phase 0.5 endpoints.
 
 This branch does not implement real provider authentication, scheduled workers,
 provider-specific API calls, POS, payments, finance, wholesale, warehouse
@@ -54,11 +55,18 @@ LLM agent execution.
 
 ## Not yet verified
 
-- Hosted Supabase application of the Phase 0.5 migration.
 - Browser smoke tests for Integration Hub UI, because UI is not implemented in this branch.
+
+## Verified hosted
+
+- `npm run migration:hosted-phase0-5-bundle` — passed and wrote `.tmp/phase0-5-hosted-migration.sql`.
+- Hosted Supabase SQL Editor applied `.tmp/phase0-5-hosted-migration.sql` successfully with "Success. No rows returned."
+- `npm run test:live-phase0-schema` — passed after hosted Phase 0.5 migration: 40 relation/view endpoints and 13 RPC endpoints.
+- `npm run test:live-supabase` — passed after hosted Phase 0.5 migration: Auth, onboarding, audit, RBAC, and two-tenant RLS matrix.
+- `supabase/repair_migration_history.sql` was run through Supabase SQL Editor and returned eight migration-history rows, including `20260707100000 phase0_5_integration_hub`.
 
 ## Next step
 
-Review the diff for secrets and phase leakage, then open a PR. After merge,
-apply the reviewed Phase 0.5 migration to the hosted Supabase project and
-update hosted schema checks.
+Build the Phase 0.5 Integration Hub UI/data-source setup flow against the
+verified hosted schema. Build Import API and real connector behavior only after
+authentication, idempotency, retry, and credential-handling details are reviewed.

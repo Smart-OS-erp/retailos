@@ -54,6 +54,12 @@ const requiredRelations = [
   "campaign_briefs",
   "approval_records",
   "copilot_activity_log",
+  "integration_providers",
+  "data_sources",
+  "external_records",
+  "sync_jobs",
+  "sync_errors",
+  "webhook_events",
 ];
 
 const requiredFunctions = [
@@ -68,6 +74,8 @@ const requiredFunctions = [
   "approve_campaign_brief",
   "set_recovery_task_status",
   "get_retail_copilot_answer",
+  "create_data_source",
+  "enqueue_data_source_sync",
 ];
 
 function toRestUrl(baseUrl) {
@@ -138,7 +146,7 @@ async function run() {
   }
 
   console.log(
-    `Live Phase 0 hosted schema verification passed using ${authLabel} for ${requiredRelations.length} relation/view endpoint(s) and ${requiredFunctions.length} RPC endpoint(s).`,
+    `Live Phase 0/0.5 hosted schema verification passed using ${authLabel} for ${requiredRelations.length} relation/view endpoint(s) and ${requiredFunctions.length} RPC endpoint(s).`,
   );
 }
 

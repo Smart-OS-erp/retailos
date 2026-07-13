@@ -108,12 +108,21 @@ SMTP credentials, or connection strings into chat.
    or an authenticated Supabase CLI session.
 4. After applying SQL, rerun the hosted schema/RLS checks that are updated for
    the Phase 0.5 migration set.
-5. Do not configure real provider credentials until the connector-specific
+5. Repair Supabase migration history for the applied Phase 0.5 migration with
+   `supabase/repair_migration_history.sql` only after hosted schema/RLS checks
+   pass. The expected migration-history result has eight rows and includes
+   `20260707100000 phase0_5_integration_hub`.
+6. Do not configure real provider credentials until the connector-specific
    secret handling and webhook verification plan is reviewed.
 
 The Phase 0.5 migration creates Integration Hub foundation tables and RPCs only.
 It does not authenticate to Shopify, WooCommerce, Google Sheets, POS, ERP, or a
 custom backend.
+
+Current non-production status: the Phase 0.5 migration is applied to
+`retailos-dev`, hosted schema verification passes for 40 relation/view endpoints
+and 13 RPC endpoints, live Auth/onboarding/audit/RBAC/two-tenant RLS verification
+passes, and Supabase migration history includes the Phase 0.5 migration row.
 
 Use `.env.local` for local secrets and Vercel/Supabase secret management for deployed environments. The committed `.env.example` contains empty assignments for these names only:
 

@@ -1,7 +1,7 @@
--- RetailOS Phase 0 migration-history repair handoff
+-- RetailOS Phase 0 / Phase 0.5 migration-history repair handoff
 --
 -- Purpose:
---   The reviewed Phase 0 SQL has been applied to the hosted Supabase project
+--   The reviewed Phase 0 and Phase 0.5 SQL has been applied to the hosted Supabase project
 --   through SQL Editor. This fallback script records those already-applied
 --   migrations in Supabase CLI migration history so a later `supabase db push`
 --   does not try to replay them.
@@ -70,6 +70,11 @@ values
     '20260706140000',
     'phase0_retail_copilot',
     array['Applied manually through SQL Editor; reviewed source: supabase/migrations/20260706140000_phase0_retail_copilot.sql']
+  ),
+  (
+    '20260707100000',
+    'phase0_5_integration_hub',
+    array['Applied manually through SQL Editor; reviewed source: supabase/migrations/20260707100000_phase0_5_integration_hub.sql']
   )
 on conflict (version) do update
 set
@@ -92,6 +97,7 @@ where version in (
   '20260706110000',
   '20260706120000',
   '20260706130000',
-  '20260706140000'
+  '20260706140000',
+  '20260707100000'
 )
 order by version;
