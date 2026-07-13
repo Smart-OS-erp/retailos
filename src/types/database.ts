@@ -57,7 +57,7 @@ export type DataSourceStatus =
   | "paused"
   | "disabled"
   | "error";
-export type SyncJobTrigger = "manual" | "scheduled" | "webhook" | "import_api";
+export type SyncJobTrigger = "manual" | "scheduled" | "webhook" | "api";
 export type SyncJobStatus =
   | "queued"
   | "running"

@@ -27,7 +27,16 @@ describe("Import API boundary", () => {
     expect(source).toContain("service role is not used");
   });
 
-  it("does not expose the Import API route before credential foundation is reviewed", async () => {
-    await expect(fileExists("src/app/api/import/v1/records/route.ts")).resolves.toBe(false);
+  it("exposes the Import API route only through the reviewed control plane", async () => {
+    await expect(fileExists("src/app/api/import/v1/records/route.ts")).resolves.toBe(true);
+
+    const routeSource = await readFile(
+      path.join(process.cwd(), "src/app/api/import/v1/records/route.ts"),
+      "utf8",
+    );
+
+    expect(routeSource).toContain("authorizeImportApiRequest");
+    expect(routeSource).toContain("PostgresImportApiStore");
+    expect(routeSource).not.toContain("SUPABASE_SERVICE_ROLE_KEY");
   });
 });

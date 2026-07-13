@@ -5,7 +5,8 @@ This is the deployment contract for the Phase 0 secure technical foundation.
 ## Current status
 
 - The `retailos` Vercel project is linked to `Smart-OS-erp/retailos`.
-- The four required variables are configured for Preview; `SUPABASE_SERVICE_ROLE_KEY` and `DATABASE_URL` are sensitive, server-only values.
+- The four foundation variables are configured for Preview; `SUPABASE_SERVICE_ROLE_KEY` and `DATABASE_URL` are sensitive, server-only values.
+- Phase 0.5 Import API previews also require server-only `IMPORT_API_TOKEN_HASH_SECRET` before `/api/import/v1/records` can accept bearer-token traffic.
 - Production variables are intentionally not populated with non-production credentials.
 - Git-linked Vercel deployments for the Phase 0 PRs and merged `main` have reached READY.
 - Vercel Authentication protects deployment URLs (`all_except_custom_domains`) and Git fork protection is enabled.
