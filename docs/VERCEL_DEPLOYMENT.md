@@ -7,11 +7,25 @@ This is the deployment contract for the Phase 0 secure technical foundation.
 - The `retailos` Vercel project is linked to `Smart-OS-erp/retailos`.
 - The four foundation variables are configured for Preview; `SUPABASE_SERVICE_ROLE_KEY` and `DATABASE_URL` are sensitive, server-only values.
 - Phase 0.5 Import API previews also require server-only `IMPORT_API_TOKEN_HASH_SECRET` before `/api/import/v1/records` can accept bearer-token traffic.
-- Production variables are intentionally not populated with non-production credentials.
+- Production variables were intentionally not populated with non-production credentials during the earlier foundation stage. After PR #16 merged, Vercel deployed `main` as production and runtime logs showed the deployment is blocked by missing `NEXT_PUBLIC_SUPABASE_URL`.
 - Git-linked Vercel deployments for the Phase 0 PRs and merged `main` have reached READY.
 - Vercel Authentication protects deployment URLs (`all_except_custom_domains`) and Git fork protection is enabled.
 - Production promotion, custom-domain exposure, and real tenant/personal data remain blocked until production governance is approved.
 - Earlier CLI deployments that Vercel unexpectedly classified as production targets were removed; use Git-linked deployments for preview verification.
+
+## Required environment variables for deployed smoke testing
+
+Configure these in the intended deployed Vercel environment before smoke
+testing:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `DATABASE_URL`
+- `IMPORT_API_TOKEN_HASH_SECRET`
+
+Do not paste values into chat. Set them directly in Vercel environment
+settings, then redeploy.
 
 ## Environment model
 
