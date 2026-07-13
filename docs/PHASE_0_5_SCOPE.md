@@ -68,6 +68,15 @@ RetailOS connects to the system behind the website:
 - Failed syncs are visible, non-destructive, auditable, and retry-safe.
 - Connector scaffolds clearly identify unsupported actions instead of faking success.
 
+## Import API boundary
+
+The Import API boundary is documented in `docs/IMPORT_API_BOUNDARY.md`.
+
+Implementation must not begin until that boundary is reviewed. The route must
+derive tenant scope from a server-verified import credential, not from request
+body fields. Imported records must land in `external_records` first and must not
+bypass validation, normalization, consolidation, or intelligence gates.
+
 ## Security baseline
 
 - Provider secrets must be stored server-side only.
