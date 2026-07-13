@@ -34,6 +34,49 @@ export type EventDeliveryStatus =
   | "processing"
   | "delivered"
   | "failed";
+export type IntegrationConnectorDepth = "manual" | "scaffold" | "mvp" | "api";
+export type IntegrationCredentialStatus =
+  | "missing"
+  | "configured"
+  | "not_required"
+  | "expired"
+  | "revoked";
+export type IntegrationSourceSystem =
+  | "manual_file"
+  | "shopify"
+  | "woocommerce"
+  | "google_sheets"
+  | "pos_erp"
+  | "custom_backend"
+  | "import_api";
+export type DataSourceStatus =
+  | "draft"
+  | "configuration_required"
+  | "connected"
+  | "syncing"
+  | "paused"
+  | "disabled"
+  | "error";
+export type SyncJobTrigger = "manual" | "scheduled" | "webhook" | "import_api";
+export type SyncJobStatus =
+  | "queued"
+  | "running"
+  | "succeeded"
+  | "partially_succeeded"
+  | "failed"
+  | "cancelled";
+export type ExternalRecordStatus =
+  | "received"
+  | "validated"
+  | "normalized"
+  | "rejected"
+  | "quarantined";
+export type WebhookEventStatus =
+  | "received"
+  | "verified"
+  | "processed"
+  | "failed"
+  | "ignored";
 
 export type DataUploadType =
   | "sample"
@@ -925,6 +968,234 @@ export type Database = {
         Update: never;
         Relationships: [];
       };
+      integration_providers: {
+        Row: {
+          id: string;
+          provider_key: string;
+          display_name: string;
+          source_system: IntegrationSourceSystem;
+          default_connector_depth: IntegrationConnectorDepth;
+          default_credential_status: IntegrationCredentialStatus;
+          supports_manual_sync: boolean;
+          supports_webhooks: boolean;
+          is_enabled: boolean;
+          help_text: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          provider_key: string;
+          display_name: string;
+          source_system: IntegrationSourceSystem;
+          default_connector_depth: IntegrationConnectorDepth;
+          default_credential_status: IntegrationCredentialStatus;
+          supports_manual_sync?: boolean;
+          supports_webhooks?: boolean;
+          is_enabled?: boolean;
+          help_text: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          display_name?: string;
+          default_connector_depth?: IntegrationConnectorDepth;
+          default_credential_status?: IntegrationCredentialStatus;
+          supports_manual_sync?: boolean;
+          supports_webhooks?: boolean;
+          is_enabled?: boolean;
+          help_text?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      data_sources: {
+        Row: {
+          id: string;
+          organization_id: string;
+          provider_id: string;
+          name: string;
+          source_key: string;
+          connector_depth: IntegrationConnectorDepth;
+          status: DataSourceStatus;
+          credential_status: IntegrationCredentialStatus;
+          connection_metadata: Json;
+          last_sync_requested_at: string | null;
+          last_successful_sync_at: string | null;
+          last_error_at: string | null;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          provider_id: string;
+          name: string;
+          source_key: string;
+          connector_depth: IntegrationConnectorDepth;
+          status?: DataSourceStatus;
+          credential_status?: IntegrationCredentialStatus;
+          connection_metadata?: Json;
+          last_sync_requested_at?: string | null;
+          last_successful_sync_at?: string | null;
+          last_error_at?: string | null;
+          created_by: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          name?: string;
+          status?: DataSourceStatus;
+          credential_status?: IntegrationCredentialStatus;
+          connection_metadata?: Json;
+          last_sync_requested_at?: string | null;
+          last_successful_sync_at?: string | null;
+          last_error_at?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      sync_jobs: {
+        Row: {
+          id: string;
+          organization_id: string;
+          data_source_id: string;
+          trigger: SyncJobTrigger;
+          status: SyncJobStatus;
+          idempotency_key: string | null;
+          requested_by: string | null;
+          attempt_count: number;
+          started_at: string | null;
+          finished_at: string | null;
+          error_summary: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          data_source_id: string;
+          trigger: SyncJobTrigger;
+          status?: SyncJobStatus;
+          idempotency_key?: string | null;
+          requested_by?: string | null;
+          attempt_count?: number;
+          started_at?: string | null;
+          finished_at?: string | null;
+          error_summary?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          status?: SyncJobStatus;
+          attempt_count?: number;
+          started_at?: string | null;
+          finished_at?: string | null;
+          error_summary?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      external_records: {
+        Row: {
+          id: string;
+          organization_id: string;
+          data_source_id: string;
+          sync_job_id: string | null;
+          location_id: string | null;
+          record_type: string;
+          source_record_key: string;
+          source_updated_at: string | null;
+          payload: Json;
+          payload_hash: string;
+          status: ExternalRecordStatus;
+          received_by: string | null;
+          received_at: string;
+          normalized_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          data_source_id: string;
+          sync_job_id?: string | null;
+          location_id?: string | null;
+          record_type: string;
+          source_record_key: string;
+          source_updated_at?: string | null;
+          payload: Json;
+          payload_hash: string;
+          status?: ExternalRecordStatus;
+          received_by?: string | null;
+          received_at?: string;
+          normalized_at?: string | null;
+        };
+        Update: {
+          status?: ExternalRecordStatus;
+          normalized_at?: string | null;
+        };
+        Relationships: [];
+      };
+      sync_errors: {
+        Row: {
+          id: string;
+          organization_id: string;
+          sync_job_id: string;
+          external_record_id: string | null;
+          severity: "warning" | "error" | "critical";
+          error_code: string;
+          message: string;
+          retryable: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          sync_job_id: string;
+          external_record_id?: string | null;
+          severity?: "warning" | "error" | "critical";
+          error_code: string;
+          message: string;
+          retryable?: boolean;
+          created_at?: string;
+        };
+        Update: never;
+        Relationships: [];
+      };
+      webhook_events: {
+        Row: {
+          id: string;
+          organization_id: string;
+          data_source_id: string;
+          provider_event_id: string;
+          event_type: string;
+          payload: Json;
+          signature_verified: boolean;
+          status: WebhookEventStatus;
+          received_at: string;
+          processed_at: string | null;
+          error_summary: string | null;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          data_source_id: string;
+          provider_event_id: string;
+          event_type: string;
+          payload: Json;
+          signature_verified?: boolean;
+          status?: WebhookEventStatus;
+          received_at?: string;
+          processed_at?: string | null;
+          error_summary?: string | null;
+        };
+        Update: {
+          status?: WebhookEventStatus;
+          processed_at?: string | null;
+          error_summary?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       current_inventory_positions: {
@@ -1013,6 +1284,22 @@ export type Database = {
         };
         Returns: Json;
       };
+      create_data_source: {
+        Args: {
+          target_organization_id: string;
+          target_provider_key: string;
+          target_name: string;
+          requested_connector_depth?: IntegrationConnectorDepth | null;
+        };
+        Returns: string;
+      };
+      enqueue_data_source_sync: {
+        Args: {
+          target_data_source_id: string;
+          target_idempotency_key?: string | null;
+        };
+        Returns: string;
+      };
     };
     Enums: {
       membership_status: MembershipStatus;
@@ -1021,6 +1308,13 @@ export type Database = {
       onboarding_step_status: OnboardingStepStatus;
       event_scope: EventScope;
       event_delivery_status: EventDeliveryStatus;
+      integration_connector_depth: IntegrationConnectorDepth;
+      integration_credential_status: IntegrationCredentialStatus;
+      data_source_status: DataSourceStatus;
+      sync_job_trigger: SyncJobTrigger;
+      sync_job_status: SyncJobStatus;
+      external_record_status: ExternalRecordStatus;
+      webhook_event_status: WebhookEventStatus;
     };
     CompositeTypes: Record<string, never>;
   };
