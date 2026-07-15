@@ -5,8 +5,7 @@
 - **Connector credential handling must be designed before any real connector authentication.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries.
 - **Connector depth must be selected per provider.** Phase 0.5 allows Shopify, WooCommerce, and Google Sheets connector scaffold or MVP. Owner/action: product/engineering must record whether each connector is scaffold-only or functional MVP before implementation.
 - **Sync retry/rollback behavior must be explicit before scheduled sync behavior.** Owner/action: engineering must define retry limits, worker rollback behavior, and downstream normalization failure handling before enabling scheduled sync workers.
-- **RetailOS Import API authenticated live smoke is blocked by the deployed `DATABASE_URL` credentials.** Vercel Production/Preview env vars are configured and the production login page renders, but authenticated Import API smoke returns `500 internal_error`. Vercel runtime logs for deployment `dpl_6UuUssxFcTGKb9on9aKREtnuoXG7` and correlation `82fb1f6b-a406-4272-8783-cd9c99fd6c1c` show `28P01 password authentication failed for user "postgres"`. Owner/action: correct Vercel `DATABASE_URL` with the exact approved Supabase pooler/session-pooler username and password, redeploy, then rerun `npm run smoke:import-api`.
-- **Direct `DATABASE_URL` is not reliable in this environment.** Earlier local and Vercel direct-host checks failed against `db.djvqhjgkcljdiuicdtpx.supabase.co`; the current pooler-style value is reachable but rejects credentials. Owner/action: use the exact Supabase pooler/session-pooler connection string from the Supabase dashboard, including the required pooler username format and current database password.
+- **Database password was exposed in chat during unblock.** The pooler `DATABASE_URL` now works for the protected demo, but the password was pasted into the agent conversation. Owner/action: rotate the Supabase database password, update Vercel `DATABASE_URL` with the rotated pooler/session-pooler string, redeploy, and rerun `npm run smoke:import-api`.
 
 ## Verified Phase 0 acceptance controls
 
@@ -18,9 +17,10 @@
 - RetailOS Import API authentication/idempotency/security boundary is merged in PR #14.
 - RetailOS Import API credential/control-plane foundation is merged in PR #15, applied to hosted Supabase, and verified.
 - Required Vercel Production/Preview env vars are configured.
-- Vercel production deployment `dpl_BUZbXGDfqxsezMevAY3jfqaR6mEG` is READY, protected, and aliased to `https://retailos-ten.vercel.app`.
+- Vercel production deployment `dpl_DPMjtQr8GhR4fo2ft5Mt6BHkwAMo` is READY, protected, and aliased to `https://retailos-ten.vercel.app`.
 - Protected root route renders the RetailOS login page.
 - Unauthenticated Import API POST fails closed with `401 authentication_required`.
+- Authenticated Import API smoke passed against production: tenant-scoped credential creation, external record acceptance/persistence, idempotent replay, and cleanup were verified.
 - Supabase migration history is repaired for all seven applied Phase 0 migrations plus the applied Phase 0.5 migrations.
 - `npm run test:live-phase0-schema` passes against hosted Supabase after Import API credential migration: 43 relation/view endpoints and 15 RPC endpoints are visible.
 - `npm run test:live-supabase` passes against hosted Supabase after migration-history repair: Auth, atomic organization creation, onboarding, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.

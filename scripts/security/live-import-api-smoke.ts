@@ -255,6 +255,21 @@ async function run() {
   const cookie = await getVercelBypassCookie(baseUrlInput);
   const idempotencyKey = `smoke-${runId}`;
   const sourceRecordKey = `sku-${runId}`;
+  const requestBody = JSON.stringify({
+    records: [
+      {
+        record_type: "product_master",
+        source_record_key: sourceRecordKey,
+        source_updated_at: new Date().toISOString(),
+        location_code: "lag-smoke",
+        payload: {
+          sku: sourceRecordKey,
+          name: "Smoke Test Product",
+          brand: "RetailOS",
+        },
+      },
+    ],
+  });
 
   const response = await fetch(`${baseUrl}/api/import/v1/records`, {
     method: "POST",
@@ -264,21 +279,7 @@ async function run() {
       "idempotency-key": idempotencyKey,
       ...(cookie ? { cookie } : {}),
     },
-    body: JSON.stringify({
-      records: [
-        {
-          record_type: "product_master",
-          source_record_key: sourceRecordKey,
-          source_updated_at: new Date().toISOString(),
-          location_code: "lag-smoke",
-          payload: {
-            sku: sourceRecordKey,
-            name: "Smoke Test Product",
-            brand: "RetailOS",
-          },
-        },
-      ],
-    }),
+    body: requestBody,
   });
 
   const responseBody = await response.json().catch(() => ({}));
@@ -305,21 +306,7 @@ async function run() {
       "idempotency-key": idempotencyKey,
       ...(cookie ? { cookie } : {}),
     },
-    body: JSON.stringify({
-      records: [
-        {
-          record_type: "product_master",
-          source_record_key: sourceRecordKey,
-          source_updated_at: new Date().toISOString(),
-          location_code: "lag-smoke",
-          payload: {
-            sku: sourceRecordKey,
-            name: "Smoke Test Product",
-            brand: "RetailOS",
-          },
-        },
-      ],
-    }),
+    body: requestBody,
   });
 
   const replayBody = await replay.json().catch(() => ({}));
