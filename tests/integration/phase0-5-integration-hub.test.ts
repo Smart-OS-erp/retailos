@@ -552,15 +552,9 @@ describe("Phase 0.5 Integration Hub foundation", () => {
 
     expect(retryUploadId).toBe(uploadId);
     expect(upload.rows).toEqual([
-      { upload_type: "inventory_csv", row_count: 2, status: "validation_blocked" },
+      { upload_type: "inventory_csv", row_count: 2, status: "parsed" },
     ]);
     expect(staging.rows).toEqual([
-      {
-        sku_code: "PRODUCT-BLOCKED",
-        location_id: null,
-        on_hand_quantity: null,
-        validation_status: "blocked",
-      },
       {
         sku_code: "SKU-NORMALIZED",
         location_id: locationB,
@@ -569,21 +563,21 @@ describe("Phase 0.5 Integration Hub foundation", () => {
       },
     ]);
     expect(issues.rows).toContainEqual({
-      issue_code: "unsupported_external_record_type",
-      severity: "blocking",
+      issue_code: "missing_approved_unit_cost",
+      severity: "warning",
     });
     expect(records.rows).toEqual([
-      { source_record_key: "product-blocked", status: "validation_blocked" },
+      { source_record_key: "product-blocked", status: "normalized" },
       { source_record_key: "sku-normalized", status: "normalized" },
     ]);
     expect(job.rows).toEqual([
       {
-        status: "partially_succeeded",
-        error_summary: "External records normalized with validation blockers.",
+        status: "succeeded",
+        error_summary: "External records mapped with validation warnings.",
       },
     ]);
     expect(run.rows).toEqual([
-      { normalized_count: 1, validation_blocked_count: 1 },
+      { normalized_count: 2, validation_blocked_count: 0 },
     ]);
     expect(snapshots.rows).toEqual([{ count: 0 }]);
 
@@ -598,6 +592,131 @@ describe("Phase 0.5 Integration Hub foundation", () => {
     await expect(
       database.query("select public.normalize_external_records($1)", [jobId]),
     ).rejects.toThrow(/permission_denied/);
+  });
+
+  it("maps product, store, and sales records for review without direct canonical writes", async () => {
+    await authenticate(OWNER_B);
+    const jobId = (
+      await database.query<{ id: string }>(
+        "select public.enqueue_data_source_sync($1, $2) as id",
+        [importApiSourceB, "tenant-b-all-record-types"],
+      )
+    ).rows[0]!.id;
+
+    await database.query(
+      `insert into public.external_records (
+        organization_id, data_source_id, sync_job_id, record_type,
+        source_record_key, payload, payload_hash, received_by
+      ) values
+        (
+          $1, $2, $3, 'product_master', 'product-valid',
+          '{"sku":"SKU-PRODUCT","name":"Mapped product","approved_unit_cost":15500,"currency_code":"NGN"}',
+          'hash:product-valid-v001', $4
+        ),
+        (
+          $1, $2, $3, 'store_master', 'store-valid',
+          '{"location_code":"lagos-import","location_name":"Tenant B Lagos"}',
+          'hash:store-valid-v001', $4
+        ),
+        (
+          $1, $2, $3, 'sales_history', 'sale-valid',
+          '{"sku":"SKU-PRODUCT","location_code":"lagos-import","quantity":2,"sold_at":"2026-07-14","gross_amount":45000,"currency_code":"NGN"}',
+          'hash:sale-valid-v001', $4
+        )`,
+      [organizationB, importApiSourceB, jobId, OWNER_B],
+    );
+
+    const beforeProducts = (
+      await database.query<{ count: number }>(
+        "select count(*)::integer as count from public.products where organization_id = $1",
+        [organizationB],
+      )
+    ).rows[0]!.count;
+    const beforeSales = (
+      await database.query<{ count: number }>(
+        "select count(*)::integer as count from public.sales_facts where organization_id = $1",
+        [organizationB],
+      )
+    ).rows[0]!.count;
+    const beforeLocations = (
+      await database.query<{ count: number }>(
+        "select count(*)::integer as count from public.locations where organization_id = $1",
+        [organizationB],
+      )
+    ).rows[0]!.count;
+
+    const uploadId = (
+      await database.query<{ id: string }>(
+        "select public.normalize_external_records($1) as id",
+        [jobId],
+      )
+    ).rows[0]!.id;
+
+    const upload = await database.query<{
+      row_count: number;
+      status: string;
+      upload_type: string;
+    }>(
+      "select upload_type, row_count, status from public.data_uploads where id = $1",
+      [uploadId],
+    );
+    const rawRows = await database.query<{ count: number }>(
+      "select count(*)::integer as count from public.raw_upload_rows where upload_id = $1",
+      [uploadId],
+    );
+    const issues = await database.query<{ count: number }>(
+      "select count(*)::integer as count from public.validation_issues where upload_id = $1",
+      [uploadId],
+    );
+    const records = await database.query<{ status: string }>(
+      "select status from public.external_records where sync_job_id = $1 order by source_record_key",
+      [jobId],
+    );
+    const job = await database.query<{
+      error_summary: string | null;
+      status: string;
+    }>(
+      "select status, error_summary from public.sync_jobs where id = $1",
+      [jobId],
+    );
+    const afterProducts = (
+      await database.query<{ count: number }>(
+        "select count(*)::integer as count from public.products where organization_id = $1",
+        [organizationB],
+      )
+    ).rows[0]!.count;
+    const afterSales = (
+      await database.query<{ count: number }>(
+        "select count(*)::integer as count from public.sales_facts where organization_id = $1",
+        [organizationB],
+      )
+    ).rows[0]!.count;
+    const afterLocations = (
+      await database.query<{ count: number }>(
+        "select count(*)::integer as count from public.locations where organization_id = $1",
+        [organizationB],
+      )
+    ).rows[0]!.count;
+
+    expect(upload.rows).toEqual([
+      { upload_type: "inventory_csv", row_count: 3, status: "parsed" },
+    ]);
+    expect(rawRows.rows).toEqual([{ count: 3 }]);
+    expect(issues.rows).toEqual([{ count: 0 }]);
+    expect(records.rows).toEqual([
+      { status: "normalized" },
+      { status: "normalized" },
+      { status: "normalized" },
+    ]);
+    expect(job.rows).toEqual([
+      {
+        status: "succeeded",
+        error_summary: "External records mapped for review before canonical write.",
+      },
+    ]);
+    expect(afterProducts).toBe(beforeProducts);
+    expect(afterSales).toBe(beforeSales);
+    expect(afterLocations).toBe(beforeLocations);
   });
 
   it("stores external records with tenant lineage and denies cross-tenant lineage", async () => {

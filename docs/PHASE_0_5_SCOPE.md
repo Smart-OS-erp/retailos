@@ -94,10 +94,11 @@ normalization are approved in a separate reviewed PR.
 External-record pipeline handoff is documented in
 `docs/PHASE_0_5_PIPELINE_HANDOFF.md`.
 
-The first supported handoff normalizes `inventory_snapshot` records into the
-existing upload/staging/validation path. It does not consolidate canonical
-inventory automatically, and it does not map product master, sales history, or
-store master records yet.
+The supported handoff maps `inventory_snapshot`, `product_master`,
+`store_master`, and `sales_history` records into persisted upload/raw/validation
+evidence. Inventory snapshots can proceed to the existing consolidation approval
+path. Product, store, and sales records are review-gated and do not directly
+write canonical products, locations, or sales facts in Phase 0.5.
 
 ## Security baseline
 

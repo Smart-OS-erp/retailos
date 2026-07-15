@@ -37,6 +37,11 @@ pipeline handoff. It normalizes `inventory_snapshot` records into
 `validation_issues`, while preserving the existing consolidation approval gate.
 It does not write directly to canonical inventory or run real provider syncs.
 
+`20260715143000_phase0_5_record_type_mappings.sql` extends the handoff to all
+approved Import API record types. Product master, store master, and sales
+history records map into raw upload and validation evidence for review; they do
+not directly write products, locations, SKUs, or sales facts.
+
 ## Current status
 
 The reviewed Phase 0 migrations and Phase 0.5 Integration Hub migration are applied to `retailos-dev`, Supabase migration history is repaired for the seven applied Phase 0 migrations plus `20260707100000_phase0_5_integration_hub.sql`, `npm run test:live-phase0-schema` passes for 40 relation/view endpoints and 13 RPC endpoints, and `npm run test:live-supabase` passes the synthetic Auth/onboarding/audit/RBAC/two-tenant RLS matrix with cleanup.

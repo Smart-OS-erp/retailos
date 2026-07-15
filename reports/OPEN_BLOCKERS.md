@@ -2,10 +2,10 @@
 
 ## Phase 0.5 implementation blockers
 
-- **Hosted Milestone 7 migration is not applied yet.** The pipeline handoff migration exists locally and is integration-tested, but hosted Supabase must be updated after PR review/merge. Owner/action: apply `20260715133000_phase0_5_pipeline_handoff.sql`, then run hosted schema/RLS checks.
+- **Hosted Milestone 7/8 migrations are not applied yet.** The pipeline handoff and record-type mapping migrations exist locally and are integration-tested, but hosted Supabase must be updated after PR review/merge. Owner/action: apply `20260715133000_phase0_5_pipeline_handoff.sql` and `20260715143000_phase0_5_record_type_mappings.sql`, then run hosted schema/RLS checks.
 - **Connector credential handling must be designed before any real connector authentication.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries before moving Shopify, WooCommerce, or Google Sheets beyond scaffold-only.
 - **Provider MVP approval is still required before real Shopify/WooCommerce/Google Sheets sync.** Connector depth is recorded as scaffold-only in `docs/PHASE_0_5_CONNECTOR_STRATEGY.md`. Owner/action: founder/product must explicitly approve a provider-specific MVP before engineering adds real provider auth or API calls.
-- **Additional external-record mappings are not implemented yet.** `inventory_snapshot` handoff is implemented; `product_master`, `sales_history`, and `store_master` are currently preserved with validation blockers. Owner/action: choose and implement the next mapping contract.
+- **Product/location/sales canonical write approval flows are not implemented yet.** Import API record types now map into persisted evidence, but product master, store master, and sales history records do not directly mutate canonical products, locations, SKUs, or sales facts. Owner/action: keep as review-gated unless a later active phase approves canonical write workflows.
 - **Database password was exposed in chat during unblock.** The pooler `DATABASE_URL` now works for the protected demo, but the password was pasted into the agent conversation. Owner/action: rotate the Supabase database password, update Vercel `DATABASE_URL` with the rotated pooler/session-pooler string, redeploy, and rerun `npm run smoke:import-api`.
 
 ## Verified Phase 0 acceptance controls
@@ -24,7 +24,7 @@
 - Authenticated Import API smoke passed against production: tenant-scoped credential creation, external record acceptance/persistence, idempotent replay, and cleanup were verified.
 - Connector depth decisions are recorded: Shopify, WooCommerce, and Google Sheets remain scaffold-only; Import API is the approved live ingestion path.
 - Sync retry/rollback behavior is documented before scheduled sync workers are enabled.
-- Local integration tests verify the first external-record pipeline handoff into upload/staging/validation.
+- Local integration tests verify all approved Import API record types map into upload/raw/validation evidence without direct canonical writes.
 - Supabase migration history is repaired for all seven applied Phase 0 migrations plus the applied Phase 0.5 migrations.
 - `npm run test:live-phase0-schema` passes against hosted Supabase after Import API credential migration: 43 relation/view endpoints and 15 RPC endpoints are visible.
 - `npm run test:live-supabase` passes against hosted Supabase after migration-history repair: Auth, atomic organization creation, onboarding, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.
