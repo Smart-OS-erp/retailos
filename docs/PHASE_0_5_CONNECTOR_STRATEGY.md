@@ -54,7 +54,10 @@ Provider/API payload
 → intelligence/projectisation recalculation
 ```
 
-The Import API currently implements the raw ingestion part of this path. Provider-specific workers and external-record normalization are still not implemented.
+The Import API currently implements the raw ingestion part of this path. The
+first pipeline handoff for `inventory_snapshot` external records is documented
+in `docs/PHASE_0_5_PIPELINE_HANDOFF.md`. Provider-specific workers and
+additional record-type mappings are still not implemented.
 
 ## Phase leakage guardrails
 

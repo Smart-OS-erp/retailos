@@ -89,6 +89,16 @@ Shopify, WooCommerce, and Google Sheets remain scaffold-only in Phase 0.5 until
 real credential handling, provider API calls, and provider-specific
 normalization are approved in a separate reviewed PR.
 
+## Pipeline handoff
+
+External-record pipeline handoff is documented in
+`docs/PHASE_0_5_PIPELINE_HANDOFF.md`.
+
+The first supported handoff normalizes `inventory_snapshot` records into the
+existing upload/staging/validation path. It does not consolidate canonical
+inventory automatically, and it does not map product master, sales history, or
+store master records yet.
+
 ## Security baseline
 
 - Provider secrets must be stored server-side only.

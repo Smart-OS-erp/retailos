@@ -14,6 +14,7 @@ describe("Phase 0.5 Integration Hub foundation", () => {
   const database = new PGlite();
   let organizationA: string;
   let organizationB: string;
+  let locationB: string;
   let shopifySourceA: string;
   let importApiSourceB: string;
   let importApiCredentialB: string;
@@ -90,6 +91,15 @@ describe("Phase 0.5 Integration Hub foundation", () => {
       await database.query<{ id: string }>(
         "select public.create_organization($1, $2) as id",
         ["Integration Tenant B", "integration-tenant-b"],
+      )
+    ).rows[0]!.id;
+    locationB = (
+      await database.query<{ id: string }>(
+        `insert into public.locations (
+          organization_id, name, code, timezone, created_by
+        ) values ($1, 'Tenant B Lagos', 'lagos-import', 'Africa/Lagos', $2)
+        returning id`,
+        [organizationB, OWNER_B],
       )
     ).rows[0]!.id;
 
@@ -440,6 +450,154 @@ describe("Phase 0.5 Integration Hub foundation", () => {
 
     expect(job.rows).toEqual([{ status: "queued" }]);
     expect(source.rows).toEqual([{ status: "syncing" }]);
+  });
+
+  it("normalizes external records into upload staging without canonical writes", async () => {
+    await authenticate(OWNER_B);
+    const jobId = (
+      await database.query<{ id: string }>(
+        "select public.enqueue_data_source_sync($1, $2) as id",
+        [importApiSourceB, "tenant-b-normalization"],
+      )
+    ).rows[0]!.id;
+
+    await database.query(
+      `insert into public.external_records (
+        organization_id, data_source_id, sync_job_id, record_type,
+        source_record_key, payload, payload_hash, received_by
+      ) values
+        (
+          $1, $2, $3, 'inventory_snapshot', 'sku-normalized',
+          '{"sku":"SKU-NORMALIZED","name":"Normalized jacket","location_code":"lagos-import","on_hand_quantity":7,"approved_unit_cost":12000,"currency_code":"NGN","first_available_at":"2026-07-01","units_sold_90":2,"units_sold_30":1}',
+          'hash:normalized-v001', $4
+        ),
+        (
+          $1, $2, $3, 'product_master', 'product-blocked',
+          '{"sku":"PRODUCT-BLOCKED","name":"Blocked product"}',
+          'hash:blocked-v001', $4
+        )`,
+      [organizationB, importApiSourceB, jobId, OWNER_B],
+    );
+
+    const uploadId = (
+      await database.query<{ id: string }>(
+        "select public.normalize_external_records($1) as id",
+        [jobId],
+      )
+    ).rows[0]!.id;
+    const retryUploadId = (
+      await database.query<{ id: string }>(
+        "select public.normalize_external_records($1) as id",
+        [jobId],
+      )
+    ).rows[0]!.id;
+
+    const upload = await database.query<{
+      row_count: number;
+      status: string;
+      upload_type: string;
+    }>(
+      "select upload_type, row_count, status from public.data_uploads where id = $1",
+      [uploadId],
+    );
+    const staging = await database.query<{
+      location_id: string | null;
+      on_hand_quantity: number | null;
+      sku_code: string | null;
+      validation_status: string;
+    }>(
+      `select sku_code, location_id, on_hand_quantity, validation_status
+       from public.staging_inventory_rows
+       where upload_id = $1
+       order by sku_code`,
+      [uploadId],
+    );
+    const issues = await database.query<{
+      issue_code: string;
+      severity: string;
+    }>(
+      "select issue_code, severity from public.validation_issues where upload_id = $1 order by issue_code",
+      [uploadId],
+    );
+    const records = await database.query<{
+      source_record_key: string;
+      status: string;
+    }>(
+      `select source_record_key, status
+       from public.external_records
+       where sync_job_id = $1
+       order by source_record_key`,
+      [jobId],
+    );
+    const job = await database.query<{
+      error_summary: string | null;
+      status: string;
+    }>(
+      "select status, error_summary from public.sync_jobs where id = $1",
+      [jobId],
+    );
+    const run = await database.query<{
+      normalized_count: number;
+      validation_blocked_count: number;
+    }>(
+      `select normalized_count, validation_blocked_count
+       from public.external_record_normalization_runs
+       where sync_job_id = $1`,
+      [jobId],
+    );
+    const snapshots = await database.query<{ count: number }>(
+      "select count(*)::integer as count from public.inventory_snapshots where organization_id = $1",
+      [organizationB],
+    );
+
+    expect(retryUploadId).toBe(uploadId);
+    expect(upload.rows).toEqual([
+      { upload_type: "inventory_csv", row_count: 2, status: "validation_blocked" },
+    ]);
+    expect(staging.rows).toEqual([
+      {
+        sku_code: "PRODUCT-BLOCKED",
+        location_id: null,
+        on_hand_quantity: null,
+        validation_status: "blocked",
+      },
+      {
+        sku_code: "SKU-NORMALIZED",
+        location_id: locationB,
+        on_hand_quantity: 7,
+        validation_status: "valid",
+      },
+    ]);
+    expect(issues.rows).toContainEqual({
+      issue_code: "unsupported_external_record_type",
+      severity: "blocking",
+    });
+    expect(records.rows).toEqual([
+      { source_record_key: "product-blocked", status: "validation_blocked" },
+      { source_record_key: "sku-normalized", status: "normalized" },
+    ]);
+    expect(job.rows).toEqual([
+      {
+        status: "partially_succeeded",
+        error_summary: "External records normalized with validation blockers.",
+      },
+    ]);
+    expect(run.rows).toEqual([
+      { normalized_count: 1, validation_blocked_count: 1 },
+    ]);
+    expect(snapshots.rows).toEqual([{ count: 0 }]);
+
+    await expect(
+      database.query(
+        "select public.consolidate_inventory_upload($1, $2)",
+        [uploadId, "a".repeat(64)],
+      ),
+    ).rejects.toThrow(/upload_not_ready|source_changed/);
+
+    await authenticate(MERCH_A);
+    await expect(
+      database.query("select public.normalize_external_records($1)", [jobId]),
+    ).rejects.toThrow(/permission_denied/);
   });
 
   it("stores external records with tenant lineage and denies cross-tenant lineage", async () => {

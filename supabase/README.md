@@ -31,6 +31,12 @@ real Shopify, WooCommerce, Google Sheets, POS, ERP, or custom-backend syncs.
 Scaffolded connectors must fail safely until connector depth and credential
 handling are reviewed.
 
+`20260715133000_phase0_5_pipeline_handoff.sql` adds the first external-record
+pipeline handoff. It normalizes `inventory_snapshot` records into
+`data_uploads`, `raw_upload_rows`, `staging_inventory_rows`, and
+`validation_issues`, while preserving the existing consolidation approval gate.
+It does not write directly to canonical inventory or run real provider syncs.
+
 ## Current status
 
 The reviewed Phase 0 migrations and Phase 0.5 Integration Hub migration are applied to `retailos-dev`, Supabase migration history is repaired for the seven applied Phase 0 migrations plus `20260707100000_phase0_5_integration_hub.sql`, `npm run test:live-phase0-schema` passes for 40 relation/view endpoints and 13 RPC endpoints, and `npm run test:live-supabase` passes the synthetic Auth/onboarding/audit/RBAC/two-tenant RLS matrix with cleanup.
