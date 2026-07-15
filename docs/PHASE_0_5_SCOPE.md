@@ -74,11 +74,20 @@ The Import API boundary is documented in `docs/IMPORT_API_BOUNDARY.md`.
 
 The boundary is reviewed and the credential/control-plane foundation now covers
 token-hash storage, tenant-scoped credential metadata, idempotency/replay
-evidence, and rate-limit evidence. The route must still not be exposed until
-that foundation is merged, applied to hosted Supabase, and verified. The route
-must derive tenant scope from a server-verified import credential, not from
-request body fields. Imported records must land in `external_records` first and
-must not bypass validation, normalization, consolidation, or intelligence gates.
+evidence, and rate-limit evidence. The route is deployed and has passed a
+tenant-scoped authenticated production smoke test. The route must derive tenant
+scope from a server-verified import credential, not from request body fields.
+Imported records must land in `external_records` first and must not bypass
+validation, normalization, consolidation, or intelligence gates.
+
+## Connector strategy
+
+Connector depth and retry/rollback rules are recorded in
+`docs/PHASE_0_5_CONNECTOR_STRATEGY.md`.
+
+Shopify, WooCommerce, and Google Sheets remain scaffold-only in Phase 0.5 until
+real credential handling, provider API calls, and provider-specific
+normalization are approved in a separate reviewed PR.
 
 ## Security baseline
 

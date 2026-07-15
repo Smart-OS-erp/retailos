@@ -23,6 +23,13 @@ Gate:
 
 - no real connector authentication or scheduled sync behavior until the security contract is documented and reviewed.
 
+Status:
+
+- Connector depth, credential boundaries, retry/rollback behavior, and pipeline
+  handoff rules are recorded in `docs/PHASE_0_5_CONNECTOR_STRATEGY.md`.
+- Shopify, WooCommerce, and Google Sheets are scaffold-only until a separate
+  provider-specific MVP PR is approved.
+
 ## Milestone 1 — Integration Hub schema foundation
 
 Deliverables:

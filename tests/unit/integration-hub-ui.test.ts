@@ -23,6 +23,7 @@ describe("Integration Hub UI contract", () => {
 
     expect(ui).toContain("How do you currently manage inventory and sales?");
     expect(ui).toContain("RetailOS connects to the system behind the sales channel");
+    expect(ui).toContain("Route deployed; credential setup remains server-side");
     expect(ui).not.toContain("SUPABASE_SERVICE_ROLE_KEY");
     expect(ui).not.toContain("DATABASE_URL");
     expect(ui).not.toContain("SHOPIFY_ACCESS_TOKEN");
@@ -36,5 +37,16 @@ describe("Integration Hub UI contract", () => {
     expect(page).toContain("const canComplete = dataSources.length > 0");
     expect(page).toContain("disabled={!canComplete}");
     expect(page).toContain("returnPath=\"/onboarding/data-source\"");
+  });
+
+  it("records scaffold-only connector depth decisions before provider MVP work", async () => {
+    const strategy = await source("docs/PHASE_0_5_CONNECTOR_STRATEGY.md");
+
+    expect(strategy).toContain("Shopify, WooCommerce, and Google Sheets at **scaffold-only**");
+    expect(strategy).toContain("| Shopify | `scaffold` |");
+    expect(strategy).toContain("| WooCommerce | `scaffold` |");
+    expect(strategy).toContain("| Google Sheets | `scaffold` |");
+    expect(strategy).toContain("maximum 3 provider/network attempts per sync job");
+    expect(strategy).toContain("Never write directly from a connector into canonical inventory");
   });
 });
