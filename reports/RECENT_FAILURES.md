@@ -1,5 +1,13 @@
 # Recent Failures
 
+## 2026-07-15 — Hosted Phase 0.5 migration blocked by direct Supabase database host
+
+- **Observed:** after PR #23 merged, applying `20260715133000_phase0_5_pipeline_handoff.sql` and `20260715143000_phase0_5_record_type_mappings.sql` from the local machine failed before SQL execution with DNS resolution error for the direct Supabase database host.
+- **Cause:** local ignored `.env.local` still points `DATABASE_URL` at the direct `db.<project>.supabase.co` host instead of the working pooler/session-pooler host. Secret values were not printed.
+- **Impact:** hosted Supabase still needs the Phase 0.5 Milestone 7/8 migrations applied before hosted schema/RLS and Import API normalization smoke can pass.
+- **Next action:** update ignored local `DATABASE_URL` to the rotated Supabase pooler/session-pooler URL, or apply the reviewed SQL through Supabase SQL Editor, then run `npm run test:live-phase0-schema`, `npm run test:live-supabase`, and Import API normalization smoke.
+- **Security note:** the database password previously exposed in chat still needs rotation before final acceptance.
+
 ## 2026-07-15 — Import API authenticated smoke blocked by Supabase database URL configuration
 
 - **Observed:** after configuring required Vercel Production/Preview environment variables and redeploying production, the protected root route rendered the RetailOS login page and unauthenticated Import API POST failed closed with `401 authentication_required`. Authenticated tenant-scoped Import API smoke reached app code but returned `500 internal_error`.
