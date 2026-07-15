@@ -2,9 +2,9 @@
 
 ## Phase 0.5 implementation blockers
 
-- **Hosted Milestone 7/8 migrations are not applied yet.** The pipeline handoff and record-type mapping migrations exist locally and are integration-tested, but hosted Supabase must be updated. Local apply is currently blocked because ignored `.env.local` points `DATABASE_URL` at the direct Supabase database host, which fails DNS resolution from this environment. Owner/action: update ignored local `DATABASE_URL` to the rotated pooler/session-pooler URL or apply the reviewed SQL through Supabase SQL Editor, then run hosted schema/RLS checks.
-- **Connector credential handling must be designed before any real connector authentication.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries before moving Shopify, WooCommerce, or Google Sheets beyond scaffold-only.
-- **Provider MVP approval is still required before real Shopify/WooCommerce/Google Sheets sync.** Connector depth is recorded as scaffold-only in `docs/PHASE_0_5_CONNECTOR_STRATEGY.md`. Owner/action: founder/product must explicitly approve a provider-specific MVP before engineering adds real provider auth or API calls.
+- **Hosted Milestone 7/8/9 migrations are not applied yet.** The pipeline handoff, record-type mapping, and provider MVP promotion migrations exist locally and are integration-tested, but hosted Supabase must be updated. Local apply is currently blocked because ignored `.env.local` points `DATABASE_URL` at the direct Supabase database host, which fails DNS resolution from this environment. Owner/action: update ignored local `DATABASE_URL` to the rotated pooler/session-pooler URL or apply the reviewed SQL through Supabase SQL Editor, then run hosted schema/RLS checks.
+- **Connector credential handling must be implemented before any live provider API access.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries before marking Shopify, WooCommerce, or Google Sheets connected.
+- **Provider workers are not implemented yet.** Shopify, WooCommerce, and Google Sheets can now be created as MVP-depth data sources, but live provider API calls and scheduled workers are not implemented. Owner/action: implement one provider-specific worker at a time with credential storage, retries, external record writes, and normalization tests.
 - **Product/location/sales canonical write approval flows are not implemented yet.** Import API record types now map into persisted evidence, but product master, store master, and sales history records do not directly mutate canonical products, locations, SKUs, or sales facts. Owner/action: keep as review-gated unless a later active phase approves canonical write workflows.
 - **Database password was exposed in chat during unblock.** The pooler `DATABASE_URL` now works for the protected demo, but the password was pasted into the agent conversation. Owner/action: rotate the Supabase database password, update Vercel `DATABASE_URL` with the rotated pooler/session-pooler string, redeploy, and rerun `npm run smoke:import-api`.
 
@@ -22,7 +22,7 @@
 - Protected root route renders the RetailOS login page.
 - Unauthenticated Import API POST fails closed with `401 authentication_required`.
 - Authenticated Import API smoke passed against production: tenant-scoped credential creation, external record acceptance/persistence, idempotent replay, and cleanup were verified.
-- Connector depth decisions are recorded: Shopify, WooCommerce, and Google Sheets remain scaffold-only; Import API is the approved live ingestion path.
+- Connector depth decisions are updated: Shopify, WooCommerce, and Google Sheets are MVP-approved but credential-gated; Import API is the approved live ingestion path.
 - Sync retry/rollback behavior is documented before scheduled sync workers are enabled.
 - Local integration tests verify all approved Import API record types map into upload/raw/validation evidence without direct canonical writes.
 - Supabase migration history is repaired for all seven applied Phase 0 migrations plus the applied Phase 0.5 migrations.

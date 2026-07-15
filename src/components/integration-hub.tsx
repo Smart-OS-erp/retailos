@@ -127,14 +127,14 @@ export function IntegrationHub({
     <div className="content-grid">
       {queryState?.created ? (
         <Notice title="Data source created" tone="success">
-          RetailOS saved the source inside this organization. Credential-backed
-          connectors remain scaffolded until secrets and sync depth are reviewed.
+          RetailOS saved the source inside this organization. MVP connectors
+          stay credential-gated until server-side provider credentials are configured.
         </Notice>
       ) : null}
       {queryState?.sync ? (
         <Notice title="Sync request recorded" tone="info">
-          RetailOS enqueued the safe Phase 0.5 sync scaffold. Sources without
-          credentials fail closed and record an auditable error.
+          RetailOS recorded the Phase 0.5 sync request. Sources without
+          server-side credentials fail closed and record an auditable error.
         </Notice>
       ) : null}
       {queryState?.error ? (
@@ -234,7 +234,7 @@ export function IntegrationHub({
             </div>
             <div>
               <dt>Real connector auth</dt>
-              <dd>Not configured</dd>
+              <dd>MVP-approved; server-side credentials required</dd>
             </div>
             <div>
               <dt>Import API</dt>
@@ -242,7 +242,7 @@ export function IntegrationHub({
             </div>
             <div>
               <dt>Next safe action</dt>
-              <dd>Create source, then review scaffold sync or Import API outcome.</dd>
+              <dd>Create source, then configure credentials or review Import API outcome.</dd>
             </div>
           </dl>
         </aside>
@@ -348,8 +348,8 @@ export function IntegrationHub({
           </div>
         ) : (
           <p className="empty-state">
-            No data source exists yet. Add CSV / Excel or a scaffolded provider
-            to begin Phase 0.5 setup.
+            No data source exists yet. Add CSV / Excel, Import API, or an
+            MVP-approved provider to begin Phase 0.5 setup.
           </p>
         )}
       </section>

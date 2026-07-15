@@ -2,24 +2,26 @@
 
 ## Decision
 
-Phase 0.5 keeps Shopify, WooCommerce, and Google Sheets at **scaffold-only** depth until a later reviewed PR approves real credential storage, provider API access, and provider-specific normalization.
+Founder approval moved Shopify, WooCommerce, and Google Sheets to **MVP-approved** depth for Phase 0.5. Shopify, WooCommerce, and Google Sheets at **MVP-approved** depth change the provider/data-source contract from `scaffold` to `mvp`; this does not permit secrets in the browser, fake connected states, or direct writes into canonical retail tables.
 
 | Provider | Phase 0.5 depth | Manual sync behavior now | Real credentials now | Rationale |
 | --- | --- | --- | --- | --- |
-| Shopify | `scaffold` | Allowed to request a sync envelope; fails closed while credentials are missing | No | Shopify OAuth/webhooks need a separate secret, consent, webhook authenticity, and rate-limit design. |
-| WooCommerce | `scaffold` | Allowed to request a sync envelope; fails closed while credentials are missing | No | WooCommerce key storage and site-specific API risk must be reviewed before live API access. |
-| Google Sheets | `scaffold` | Allowed to request a sync envelope; fails closed while credentials are missing | No | Google OAuth/service-account handling and sheet sharing boundaries need explicit approval before access. |
+| Shopify | `mvp` | Allowed to request a sync envelope; fails closed while credentials are missing | Server-side only, not yet configured in repo | Shopify may be configured as a Phase 0.5 MVP source, but provider OAuth/webhook secrets must stay server-only and rate-limited. |
+| WooCommerce | `mvp` | Allowed to request a sync envelope; fails closed while credentials are missing | Server-side only, not yet configured in repo | WooCommerce may be configured as a Phase 0.5 MVP source, but consumer keys/secrets must stay server-only and tenant-scoped. |
+| Google Sheets | `mvp` | Allowed to request a sync envelope; fails closed while credentials are missing | Server-side only, not yet configured in repo | Google Sheets may be configured as a Phase 0.5 MVP source, but OAuth/service-account credentials must stay server-only and tenant-scoped. |
 | RetailOS Import API | `api` | Accepted through the deployed Import API route after tenant-scoped bearer credential verification | Server-only token hash secret only | Import API is the approved Phase 0.5 live ingestion path for custom backends and feeds. |
 | CSV / Excel | `manual` | No Integration Hub sync worker | Not required | Existing upload flow remains manual and must continue through validation before consolidation. |
+| POS / ERP | `scaffold` | No direct POS/ERP sync worker | No | POS/ERP remains an onboarding-help or Import API path; direct POS work is future-phase unless separately approved. |
+| Custom backend | `scaffold` | Use Import API or reviewed feed path | Server-only only when implemented | RetailOS connects to the backend/feed behind a website, not by scraping a website. |
 
-The provider catalogue may expose these systems to users as setup options, but it must not imply that Shopify, WooCommerce, or Google Sheets are connected until real credential handling is implemented and verified.
+The provider catalogue may expose Shopify, WooCommerce, and Google Sheets as MVP setup options, but it must not imply that any provider is connected until server-side credentials are configured and verified.
 
 ## Credential boundary
 
 - Provider access tokens, OAuth secrets, WooCommerce keys, Google credentials, webhook secrets, database credentials, and Supabase service-role keys must never be stored in `data_sources.connection_metadata`, client components, browser bundles, fixtures, screenshots, or committed files.
-- Provider credential implementation must be server-only and encrypted or otherwise protected according to the approved secret-management design before any connector moves from `scaffold` to `mvp`.
+- Provider credential implementation must be server-only and encrypted or otherwise protected according to the approved secret-management design before any MVP connector can perform live provider API access.
 - Browser-facing Integration Hub UI may display provider status, credential status, and safe help text only.
-- Scaffold providers must keep `credential_status = 'missing'` until a reviewed provider-specific credential flow exists.
+- MVP providers must keep `credential_status = 'missing'` until a reviewed provider-specific credential flow exists.
 
 ## Sync retry and rollback contract
 
@@ -55,9 +57,10 @@ Provider/API payload
 ```
 
 The Import API currently implements the raw ingestion part of this path. The
-first pipeline handoff for `inventory_snapshot` external records is documented
-in `docs/PHASE_0_5_PIPELINE_HANDOFF.md`. Provider-specific workers and
-additional record-type mappings are still not implemented.
+pipeline handoff for `inventory_snapshot`, `product_master`, `store_master`,
+and `sales_history` external records is documented in
+`docs/PHASE_0_5_PIPELINE_HANDOFF.md`. Provider-specific live API workers are
+still not implemented.
 
 ## Phase leakage guardrails
 
@@ -71,4 +74,4 @@ This strategy does not authorize:
 - advanced forecasting;
 - real LLM agent execution.
 
-Any future connector MVP must remain limited to Phase 0.5 ingestion and pipeline handoff.
+Any connector MVP work must remain limited to Phase 0.5 ingestion and pipeline handoff.

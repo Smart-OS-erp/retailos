@@ -85,9 +85,11 @@ validation, normalization, consolidation, or intelligence gates.
 Connector depth and retry/rollback rules are recorded in
 `docs/PHASE_0_5_CONNECTOR_STRATEGY.md`.
 
-Shopify, WooCommerce, and Google Sheets remain scaffold-only in Phase 0.5 until
-real credential handling, provider API calls, and provider-specific
-normalization are approved in a separate reviewed PR.
+Shopify, WooCommerce, and Google Sheets are now MVP-approved in Phase 0.5, but
+they remain credential-gated. They must not show a connected state or perform
+live provider API calls until server-side credential configuration and
+provider-specific workers are implemented and verified. POS/ERP and custom
+backend remain scaffold/import-API paths unless separately approved.
 
 ## Pipeline handoff
 

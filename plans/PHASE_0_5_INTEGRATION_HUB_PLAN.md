@@ -27,8 +27,10 @@ Status:
 
 - Connector depth, credential boundaries, retry/rollback behavior, and pipeline
   handoff rules are recorded in `docs/PHASE_0_5_CONNECTOR_STRATEGY.md`.
-- Shopify, WooCommerce, and Google Sheets are scaffold-only until a separate
-  provider-specific MVP PR is approved.
+- Founder approval moved Shopify, WooCommerce, and Google Sheets to
+  Phase 0.5 MVP connector depth. They remain credential-gated and must not
+  perform live provider API calls until server-side credential setup and
+  provider-specific workers are reviewed.
 
 ## Milestone 1 — Integration Hub schema foundation
 

@@ -159,11 +159,11 @@ describe("Phase 0.5 Integration Hub foundation", () => {
     expect(providers.rows).toEqual([
       { provider_key: "csv_excel", default_connector_depth: "manual" },
       { provider_key: "custom_backend", default_connector_depth: "scaffold" },
-      { provider_key: "google_sheets", default_connector_depth: "scaffold" },
+      { provider_key: "google_sheets", default_connector_depth: "mvp" },
       { provider_key: "import_api", default_connector_depth: "api" },
       { provider_key: "pos_erp", default_connector_depth: "scaffold" },
-      { provider_key: "shopify", default_connector_depth: "scaffold" },
-      { provider_key: "woocommerce", default_connector_depth: "scaffold" },
+      { provider_key: "shopify", default_connector_depth: "mvp" },
+      { provider_key: "woocommerce", default_connector_depth: "mvp" },
     ]);
 
     await database.exec("reset role");
@@ -173,7 +173,7 @@ describe("Phase 0.5 Integration Hub foundation", () => {
     ).rejects.toThrow();
   });
 
-  it("creates scaffolded data sources with audit evidence and tenant isolation", async () => {
+  it("creates approved provider MVP data sources with audit evidence and tenant isolation", async () => {
     await authenticate(MERCH_A);
     const source = await database.query<{
       id: string;
@@ -188,7 +188,7 @@ describe("Phase 0.5 Integration Hub foundation", () => {
         id: shopifySourceA,
         status: "configuration_required",
         credential_status: "missing",
-        connector_depth: "scaffold",
+        connector_depth: "mvp",
       },
     ]);
 
@@ -227,7 +227,7 @@ describe("Phase 0.5 Integration Hub foundation", () => {
     expect(viewerSources.rows).toEqual([]);
   });
 
-  it("fails scaffold sync safely when credentials are missing and deduplicates retries", async () => {
+  it("fails MVP sync safely when credentials are missing and deduplicates retries", async () => {
     await authenticate(MERCH_A);
     const firstJob = (
       await database.query<{ id: string }>(

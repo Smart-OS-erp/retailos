@@ -8,7 +8,7 @@ async function source(relativePath: string) {
 }
 
 describe("Integration Hub UI contract", () => {
-  it("uses reviewed Phase 0.5 RPCs for source creation and scaffold sync", async () => {
+  it("uses reviewed Phase 0.5 RPCs for source creation and credential-gated sync", async () => {
     const actions = await source("src/app/integrations/actions.ts");
 
     expect(actions).toContain("\"create_data_source\"");
@@ -39,13 +39,13 @@ describe("Integration Hub UI contract", () => {
     expect(page).toContain("returnPath=\"/onboarding/data-source\"");
   });
 
-  it("records scaffold-only connector depth decisions before provider MVP work", async () => {
+  it("records MVP connector depth decisions without exposing provider secrets", async () => {
     const strategy = await source("docs/PHASE_0_5_CONNECTOR_STRATEGY.md");
 
-    expect(strategy).toContain("Shopify, WooCommerce, and Google Sheets at **scaffold-only**");
-    expect(strategy).toContain("| Shopify | `scaffold` |");
-    expect(strategy).toContain("| WooCommerce | `scaffold` |");
-    expect(strategy).toContain("| Google Sheets | `scaffold` |");
+    expect(strategy).toContain("Shopify, WooCommerce, and Google Sheets at **MVP-approved** depth");
+    expect(strategy).toContain("| Shopify | `mvp` |");
+    expect(strategy).toContain("| WooCommerce | `mvp` |");
+    expect(strategy).toContain("| Google Sheets | `mvp` |");
     expect(strategy).toContain("maximum 3 provider/network attempts per sync job");
     expect(strategy).toContain("Never write directly from a connector into canonical inventory");
   });

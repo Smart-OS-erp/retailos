@@ -1,12 +1,13 @@
 Next Task:
 Phase 0.5 — Integration Hub MVP:
-- After this record-type mapping work is reviewed and merged, apply the pending Phase 0.5 hosted migrations:
+- After this provider MVP promotion work is reviewed and merged, apply the pending Phase 0.5 hosted migrations:
   - `20260715133000_phase0_5_pipeline_handoff.sql`
   - `20260715143000_phase0_5_record_type_mappings.sql`
-- Run hosted schema/RLS verification after the migration is applied.
+  - `20260715152000_phase0_5_provider_mvp_promotion.sql`
+- Run hosted schema/RLS verification after the migrations are applied.
 - Run a hosted Import API ingestion + normalization acceptance smoke.
-- Then decide whether Phase 0.5 exits with scaffold-only Shopify/WooCommerce/Google Sheets, or explicitly approve one provider-specific MVP.
-- Keep Shopify, WooCommerce, and Google Sheets scaffold-only until a separate provider-specific MVP is explicitly approved.
+- Verify Shopify, WooCommerce, and Google Sheets create `mvp` data sources while remaining credential-gated.
+- Keep POS/ERP and custom backend scaffold/import-API paths unless a later phase explicitly approves direct connectors.
 - Keep the rule that RetailOS connects to the system behind a website, not to "a website" directly.
 
 Verified:
@@ -25,7 +26,7 @@ Verified:
 - Protected production root route renders the RetailOS login page.
 - Unauthenticated Import API POST fails closed with `401 authentication_required`.
 - Authenticated Import API smoke passed against production: tenant-scoped credential creation, external record acceptance/persistence, idempotent replay, and cleanup were verified.
-- Connector depth decisions are recorded: Shopify, WooCommerce, and Google Sheets remain scaffold-only; Import API is the approved live ingestion path.
+- Connector depth decisions are updated: Shopify, WooCommerce, and Google Sheets are MVP-approved but credential-gated; Import API is the approved live ingestion path.
 - Sync retry/rollback behavior is documented before scheduled sync workers are enabled.
 - Phase 0.5 pipeline handoff is implemented locally for `inventory_snapshot`, `product_master`, `store_master`, and `sales_history` external records and covered by integration tests.
 - Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.
