@@ -4,6 +4,7 @@ Phase 0.5 — Integration Hub MVP:
   - `20260715133000_phase0_5_pipeline_handoff.sql`
   - `20260715143000_phase0_5_record_type_mappings.sql`
   - `20260715152000_phase0_5_provider_mvp_promotion.sql`
+- Generate the exact pending hosted SQL with `npm run migration:hosted-phase0-5-pending-bundle`.
 - Run hosted schema/RLS verification after the migrations are applied.
 - Run a hosted Import API ingestion + normalization acceptance smoke.
 - Verify Shopify, WooCommerce, and Google Sheets create `mvp` data sources while remaining credential-gated.

@@ -106,6 +106,17 @@ SMTP credentials, or connection strings into chat.
    ignored by Git.
 3. Apply `.tmp/phase0-5-hosted-migration.sql` once through Supabase SQL Editor
    or an authenticated Supabase CLI session.
+
+   If the Integration Hub and Import API credential foundations are already
+   applied, generate only the currently pending Phase 0.5 hosted migrations:
+
+   ```bash
+   npm run migration:hosted-phase0-5-pending-bundle
+   ```
+
+   This writes `.tmp/phase0-5-pending-hosted-migration.sql` containing the
+   pipeline handoff, record-type mappings, and provider MVP promotion
+   migrations.
 4. After applying SQL, rerun the hosted schema/RLS checks that are updated for
    the Phase 0.5 migration set.
 5. Repair Supabase migration history for the applied Phase 0.5 migration with

@@ -27,12 +27,21 @@ const phase05Migrations = [
   "20260707100000_phase0_5_integration_hub.sql",
 ];
 
+const phase05PendingMigrations = [
+  "20260715133000_phase0_5_pipeline_handoff.sql",
+  "20260715143000_phase0_5_record_type_mappings.sql",
+  "20260715152000_phase0_5_provider_mvp_promotion.sql",
+];
+
 const args = process.argv.slice(2);
 const useFullPhase0Set = args.includes("--full-phase0");
 const useDataForwardOnly = args.includes("--data-forward-only");
 const usePhase05Set = args.includes("--phase0-5");
+const usePhase05PendingSet = args.includes("--phase0-5-pending");
 const selectedMigrations = useDataForwardOnly
   ? dataForwardMigrations
+  : usePhase05PendingSet
+  ? phase05PendingMigrations
   : usePhase05Set
   ? phase05Migrations
   : useFullPhase0Set
@@ -65,6 +74,8 @@ function readMigration(name) {
 function buildBundle(migrations) {
   const mode = useDataForwardOnly
     ? "Phase 0 data-forward migration set for a database where foundation expansion already exists"
+    : usePhase05PendingSet
+    ? "pending Phase 0.5 migration set for a database where Integration Hub and Import API credential foundations already exist"
     : usePhase05Set
     ? "Phase 0.5 Integration Hub migration set for a database where Phase 0 already exists"
     : useFullPhase0Set
@@ -121,6 +132,8 @@ try {
   report(
     useDataForwardOnly
       ? "Mode note: data-forward bundle assumes Phase 0 foundation expansion is already applied."
+      : usePhase05PendingSet
+      ? "Mode note: pending Phase 0.5 bundle assumes Integration Hub and Import API credential migrations are already applied."
       : usePhase05Set
       ? "Mode note: Phase 0.5 bundle assumes all Phase 0 migrations are already applied."
       : useFullPhase0Set
