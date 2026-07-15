@@ -1,6 +1,6 @@
 Next Task:
 Phase 0.5 — Integration Hub MVP:
-- Replace the deployed Vercel `DATABASE_URL` with the approved Supabase pooler/session-pooler connection string. The direct host currently fails in Vercel with `getaddrinfo ENOTFOUND db.djvqhjgkcljdiuicdtpx.supabase.co`.
+- Correct the deployed Vercel `DATABASE_URL` with the exact approved Supabase pooler/session-pooler username and password. The database host is now reachable, but Postgres rejects the credentials with `28P01 password authentication failed for user "postgres"`.
 - Redeploy production after `DATABASE_URL` is updated.
 - Rerun `npm run smoke:import-api -- --url <protected Vercel share URL> --env <ignored env file>` to smoke test `/api/import/v1/records` with a tenant-scoped Import API credential, idempotency key, external record payload, persistence verification, and idempotent replay.
 - Build Shopify, WooCommerce, and Google Sheets connector scaffold or MVP only within Phase 0.5 scope.
@@ -22,7 +22,7 @@ Verified:
 - Vercel production deployment `dpl_BUZbXGDfqxsezMevAY3jfqaR6mEG` is READY and aliased to `https://retailos-ten.vercel.app`.
 - Protected production root route renders the RetailOS login page.
 - Unauthenticated Import API POST fails closed with `401 authentication_required`.
-- Authenticated Import API smoke reaches app code but is blocked by `DATABASE_URL`: Vercel runtime logs for correlation `447898ef-0505-45c7-aaa5-1afe3364fa5e` show `getaddrinfo ENOTFOUND db.djvqhjgkcljdiuicdtpx.supabase.co`.
+- Authenticated Import API smoke reaches app code and the configured database host, but is blocked by `DATABASE_URL` authentication: Vercel runtime logs for deployment `dpl_6UuUssxFcTGKb9on9aKREtnuoXG7` and correlation `82fb1f6b-a406-4272-8783-cd9c99fd6c1c` show `28P01 password authentication failed for user "postgres"`.
 - Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.
 - Supabase migration history is repaired for the seven applied Phase 0 migrations plus the applied Phase 0.5 migration.
 - Current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only.
