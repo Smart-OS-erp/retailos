@@ -6,8 +6,8 @@
 - **Evidence:** Vercel runtime logs first showed `getaddrinfo ENOTFOUND db.djvqhjgkcljdiuicdtpx.supabase.co` for deployment `dpl_BUZbXGDfqxsezMevAY3jfqaR6mEG` and correlation `447898ef-0505-45c7-aaa5-1afe3364fa5e`. After the user updated `DATABASE_URL` and production was redeployed as `dpl_6UuUssxFcTGKb9on9aKREtnuoXG7`, logs for correlation `82fb1f6b-a406-4272-8783-cd9c99fd6c1c` showed `28P01 password authentication failed for user "postgres"`.
 - **Cause:** the original deployed `DATABASE_URL` pointed at an unreliable direct Supabase database host. The current deployed `DATABASE_URL` reaches Postgres, but the username/password portion is not accepted by Supabase pooler/Postgres.
 - **Impact:** `/api/import/v1/records` cannot complete the authenticated live smoke because `PostgresImportApiStore` cannot open its server-side database connection.
-- **Next action:** correct Vercel `DATABASE_URL` with the exact approved Supabase pooler/session-pooler username and password, redeploy production, then rerun `npm run smoke:import-api` against the protected deployment.
-- **Status:** blocked by environment configuration; app route/env/auth boundary is otherwise reachable.
+- **Resolution:** corrected Vercel `DATABASE_URL`, rotated `IMPORT_API_TOKEN_HASH_SECRET` for smoke verification, redeployed production as `dpl_DPMjtQr8GhR4fo2ft5Mt6BHkwAMo`, fixed the smoke script to replay the exact same request body, and reran `npm run smoke:import-api` against the protected deployment.
+- **Status:** resolved for Import API live smoke. The smoke passed with tenant-scoped credential creation, external record acceptance/persistence, idempotent replay, and cleanup. Security follow-up remains: rotate the database password because it was exposed in chat during the unblock.
 
 ## 2026-07-11 — Onboarding location save rejected uppercase retail codes
 
