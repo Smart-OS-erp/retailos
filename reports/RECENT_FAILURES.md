@@ -1,12 +1,12 @@
 # Recent Failures
 
-## 2026-07-15 — Import API authenticated smoke blocked by direct Supabase database host
+## 2026-07-15 — Import API authenticated smoke blocked by Supabase database URL configuration
 
 - **Observed:** after configuring required Vercel Production/Preview environment variables and redeploying production, the protected root route rendered the RetailOS login page and unauthenticated Import API POST failed closed with `401 authentication_required`. Authenticated tenant-scoped Import API smoke reached app code but returned `500 internal_error`.
-- **Evidence:** Vercel runtime logs for deployment `dpl_BUZbXGDfqxsezMevAY3jfqaR6mEG` and correlation `447898ef-0505-45c7-aaa5-1afe3364fa5e` showed `getaddrinfo ENOTFOUND db.djvqhjgkcljdiuicdtpx.supabase.co`.
-- **Cause:** the deployed `DATABASE_URL` points at the direct Supabase database host, which is not resolvable/reliable from the current local and Vercel execution environments.
+- **Evidence:** Vercel runtime logs first showed `getaddrinfo ENOTFOUND db.djvqhjgkcljdiuicdtpx.supabase.co` for deployment `dpl_BUZbXGDfqxsezMevAY3jfqaR6mEG` and correlation `447898ef-0505-45c7-aaa5-1afe3364fa5e`. After the user updated `DATABASE_URL` and production was redeployed as `dpl_6UuUssxFcTGKb9on9aKREtnuoXG7`, logs for correlation `82fb1f6b-a406-4272-8783-cd9c99fd6c1c` showed `28P01 password authentication failed for user "postgres"`.
+- **Cause:** the original deployed `DATABASE_URL` pointed at an unreliable direct Supabase database host. The current deployed `DATABASE_URL` reaches Postgres, but the username/password portion is not accepted by Supabase pooler/Postgres.
 - **Impact:** `/api/import/v1/records` cannot complete the authenticated live smoke because `PostgresImportApiStore` cannot open its server-side database connection.
-- **Next action:** replace Vercel `DATABASE_URL` with the approved Supabase pooler/session-pooler connection string, redeploy production, then rerun `npm run smoke:import-api` against the protected deployment.
+- **Next action:** correct Vercel `DATABASE_URL` with the exact approved Supabase pooler/session-pooler username and password, redeploy production, then rerun `npm run smoke:import-api` against the protected deployment.
 - **Status:** blocked by environment configuration; app route/env/auth boundary is otherwise reachable.
 
 ## 2026-07-11 — Onboarding location save rejected uppercase retail codes
