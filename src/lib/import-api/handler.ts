@@ -207,6 +207,16 @@ export async function authorizeImportApiRequest(
       });
     }
 
+    const unsafeError = error as { code?: unknown; message?: unknown; name?: unknown };
+    console.error("[import-api] unexpected ingestion failure", {
+      code: typeof unsafeError.code === "string" ? unsafeError.code : null,
+      correlation_id: correlationId,
+      message: typeof unsafeError.message === "string"
+        ? unsafeError.message.slice(0, 300)
+        : "Unknown import API failure",
+      name: typeof unsafeError.name === "string" ? unsafeError.name : null,
+    });
+
     return jsonResponse(500, {
       correlation_id: correlationId,
       error: "internal_error",
