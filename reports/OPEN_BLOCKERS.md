@@ -2,9 +2,9 @@
 
 ## Phase 0.5 implementation blockers
 
-- **Connector credential handling must be designed before any real connector authentication.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries.
-- **Connector depth must be selected per provider.** Phase 0.5 allows Shopify, WooCommerce, and Google Sheets connector scaffold or MVP. Owner/action: product/engineering must record whether each connector is scaffold-only or functional MVP before implementation.
-- **Sync retry/rollback behavior must be explicit before scheduled sync behavior.** Owner/action: engineering must define retry limits, worker rollback behavior, and downstream normalization failure handling before enabling scheduled sync workers.
+- **Connector credential handling must be designed before any real connector authentication.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries before moving Shopify, WooCommerce, or Google Sheets beyond scaffold-only.
+- **Provider MVP approval is still required before real Shopify/WooCommerce/Google Sheets sync.** Connector depth is now recorded as scaffold-only in `docs/PHASE_0_5_CONNECTOR_STRATEGY.md`. Owner/action: founder/product must explicitly approve a provider-specific MVP before engineering adds real provider auth or API calls.
+- **Pipeline handoff is not implemented yet.** Import API records persist as tenant-scoped `external_records`, but normalization into staging/validation is still pending. Owner/action: engineering must implement Phase 0.5 pipeline handoff next.
 - **Database password was exposed in chat during unblock.** The pooler `DATABASE_URL` now works for the protected demo, but the password was pasted into the agent conversation. Owner/action: rotate the Supabase database password, update Vercel `DATABASE_URL` with the rotated pooler/session-pooler string, redeploy, and rerun `npm run smoke:import-api`.
 
 ## Verified Phase 0 acceptance controls
@@ -21,6 +21,8 @@
 - Protected root route renders the RetailOS login page.
 - Unauthenticated Import API POST fails closed with `401 authentication_required`.
 - Authenticated Import API smoke passed against production: tenant-scoped credential creation, external record acceptance/persistence, idempotent replay, and cleanup were verified.
+- Connector depth decisions are recorded: Shopify, WooCommerce, and Google Sheets remain scaffold-only; Import API is the approved live ingestion path.
+- Sync retry/rollback behavior is documented before scheduled sync workers are enabled.
 - Supabase migration history is repaired for all seven applied Phase 0 migrations plus the applied Phase 0.5 migrations.
 - `npm run test:live-phase0-schema` passes against hosted Supabase after Import API credential migration: 43 relation/view endpoints and 15 RPC endpoints are visible.
 - `npm run test:live-supabase` passes against hosted Supabase after migration-history repair: Auth, atomic organization creation, onboarding, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.

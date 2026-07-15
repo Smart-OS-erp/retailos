@@ -1,9 +1,9 @@
 Next Task:
 Phase 0.5 — Integration Hub MVP:
-- Record connector depth decisions for Shopify, WooCommerce, and Google Sheets: scaffold-only or functional MVP.
-- Define retry limits, rollback behavior, and downstream normalization failure handling before enabling scheduled sync workers.
-- Build the next approved Shopify, WooCommerce, or Google Sheets connector scaffold/MVP only within Phase 0.5 scope.
-- Ensure sync output flows back through the existing validation, consolidation, and intelligence pipeline without writing directly to canonical inventory/intelligence tables.
+- After this connector strategy is reviewed and merged, build the Phase 0.5 pipeline handoff from tenant-scoped external records into staging/validation.
+- External records must normalize into the existing validation/consolidation/intelligence pipeline without writing directly to canonical inventory/intelligence tables.
+- Preserve Import API idempotency, tenant lineage, audit evidence, and safe error behavior.
+- Keep Shopify, WooCommerce, and Google Sheets scaffold-only until a separate provider-specific MVP is explicitly approved.
 - Keep the rule that RetailOS connects to the system behind a website, not to "a website" directly.
 
 Verified:
@@ -22,6 +22,8 @@ Verified:
 - Protected production root route renders the RetailOS login page.
 - Unauthenticated Import API POST fails closed with `401 authentication_required`.
 - Authenticated Import API smoke passed against production: tenant-scoped credential creation, external record acceptance/persistence, idempotent replay, and cleanup were verified.
+- Connector depth decisions are recorded: Shopify, WooCommerce, and Google Sheets remain scaffold-only; Import API is the approved live ingestion path.
+- Sync retry/rollback behavior is documented before scheduled sync workers are enabled.
 - Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.
 - Supabase migration history is repaired for the seven applied Phase 0 migrations plus the applied Phase 0.5 migration.
 - Current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only.

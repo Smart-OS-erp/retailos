@@ -238,11 +238,11 @@ export function IntegrationHub({
             </div>
             <div>
               <dt>Import API</dt>
-              <dd>Not built yet</dd>
+              <dd>Route deployed; credential setup remains server-side</dd>
             </div>
             <div>
               <dt>Next safe action</dt>
-              <dd>Create source, then review scaffold sync outcome.</dd>
+              <dd>Create source, then review scaffold sync or Import API outcome.</dd>
             </div>
           </dl>
         </aside>
