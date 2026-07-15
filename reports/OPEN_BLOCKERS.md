@@ -5,9 +5,8 @@
 - **Connector credential handling must be designed before any real connector authentication.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries.
 - **Connector depth must be selected per provider.** Phase 0.5 allows Shopify, WooCommerce, and Google Sheets connector scaffold or MVP. Owner/action: product/engineering must record whether each connector is scaffold-only or functional MVP before implementation.
 - **Sync retry/rollback behavior must be explicit before scheduled sync behavior.** Owner/action: engineering must define retry limits, worker rollback behavior, and downstream normalization failure handling before enabling scheduled sync workers.
-- **Deployed `main` currently returns 500 because Vercel production env vars are missing.** Owner/action: configure `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL`, and `IMPORT_API_TOKEN_HASH_SECRET` in Vercel for the deployed environment, then redeploy `main`.
-- **RetailOS Import API route live smoke test remains blocked until Vercel has `IMPORT_API_TOKEN_HASH_SECRET`.** Owner/action: configure a server-only token hash secret, then create a tenant-scoped Import API credential and test `/api/import/v1/records`.
-- **Local direct `DATABASE_URL` is IPv6-only in this environment.** Owner/action: prefer Supabase pooler/session-pooler connection strings for local and serverless route testing if direct DB DNS/connectivity fails.
+- **RetailOS Import API authenticated live smoke is blocked by the deployed `DATABASE_URL`.** Vercel Production/Preview env vars are now configured and the production login page renders, but authenticated Import API smoke returns `500 internal_error`. Vercel runtime logs for correlation `447898ef-0505-45c7-aaa5-1afe3364fa5e` show `getaddrinfo ENOTFOUND db.djvqhjgkcljdiuicdtpx.supabase.co`. Owner/action: replace Vercel `DATABASE_URL` with the approved Supabase pooler/session-pooler connection string, redeploy, then rerun `npm run smoke:import-api`.
+- **Direct `DATABASE_URL` is not reliable in this environment.** Local and Vercel direct-host checks fail against `db.djvqhjgkcljdiuicdtpx.supabase.co`. Owner/action: use Supabase pooler/session-pooler connection strings for local and serverless route testing.
 
 ## Verified Phase 0 acceptance controls
 
@@ -18,6 +17,10 @@
 - Integration Hub UI/data-source setup flow is merged in PR #13.
 - RetailOS Import API authentication/idempotency/security boundary is merged in PR #14.
 - RetailOS Import API credential/control-plane foundation is merged in PR #15, applied to hosted Supabase, and verified.
+- Required Vercel Production/Preview env vars are configured.
+- Vercel production deployment `dpl_BUZbXGDfqxsezMevAY3jfqaR6mEG` is READY, protected, and aliased to `https://retailos-ten.vercel.app`.
+- Protected root route renders the RetailOS login page.
+- Unauthenticated Import API POST fails closed with `401 authentication_required`.
 - Supabase migration history is repaired for all seven applied Phase 0 migrations plus the applied Phase 0.5 migrations.
 - `npm run test:live-phase0-schema` passes against hosted Supabase after Import API credential migration: 43 relation/view endpoints and 15 RPC endpoints are visible.
 - `npm run test:live-supabase` passes against hosted Supabase after migration-history repair: Auth, atomic organization creation, onboarding, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.

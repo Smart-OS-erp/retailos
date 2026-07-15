@@ -17,6 +17,7 @@
     "test:security": "vitest run tests/security",
     "test:live-supabase": "node scripts/security/live-supabase-isolation.ts",
     "test:live-phase0-schema": "node scripts/security/live-phase0-hosted-schema.ts",
+    "smoke:import-api": "node scripts/security/live-import-api-smoke.ts",
     "migration:hosted-bundle": "node scripts/build-hosted-migration-bundle.ts --write .tmp/phase0-hosted-migration.sql",
     "migration:hosted-phase0-5-bundle": "node scripts/build-hosted-migration-bundle.ts --phase0-5 --write .tmp/phase0-5-hosted-migration.sql",
     "security": "node scripts/verify-env.ts && node scripts/security/no-service-role-client.ts && node scripts/security/no-static-dashboard-data.ts && node scripts/security/no-unprotected-api-route.ts && node scripts/security/no-unscoped-supabase-query.ts && node scripts/security/verify-rls-policies.ts"

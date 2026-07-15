@@ -1,5 +1,14 @@
 # Recent Failures
 
+## 2026-07-15 — Import API authenticated smoke blocked by direct Supabase database host
+
+- **Observed:** after configuring required Vercel Production/Preview environment variables and redeploying production, the protected root route rendered the RetailOS login page and unauthenticated Import API POST failed closed with `401 authentication_required`. Authenticated tenant-scoped Import API smoke reached app code but returned `500 internal_error`.
+- **Evidence:** Vercel runtime logs for deployment `dpl_BUZbXGDfqxsezMevAY3jfqaR6mEG` and correlation `447898ef-0505-45c7-aaa5-1afe3364fa5e` showed `getaddrinfo ENOTFOUND db.djvqhjgkcljdiuicdtpx.supabase.co`.
+- **Cause:** the deployed `DATABASE_URL` points at the direct Supabase database host, which is not resolvable/reliable from the current local and Vercel execution environments.
+- **Impact:** `/api/import/v1/records` cannot complete the authenticated live smoke because `PostgresImportApiStore` cannot open its server-side database connection.
+- **Next action:** replace Vercel `DATABASE_URL` with the approved Supabase pooler/session-pooler connection string, redeploy production, then rerun `npm run smoke:import-api` against the protected deployment.
+- **Status:** blocked by environment configuration; app route/env/auth boundary is otherwise reachable.
+
 ## 2026-07-11 — Onboarding location save rejected uppercase retail codes
 
 - **Observed:** users could confirm email, create an organization, and reach
