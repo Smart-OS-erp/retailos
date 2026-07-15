@@ -15,7 +15,7 @@ Verified:
   - `20260715152000_phase0_5_provider_mvp_promotion.sql`
 - Hosted schema/RLS verification passes for 44 relation/view endpoints and 16 RPC endpoints.
 - Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.
-- Vercel production deployment `dpl_9u2u8YNU6z9u3FQCMydnna2ev3ip` is READY.
+- Vercel production deployment `dpl_BTqoLLktbEcaHZVMMWJULHQ3XWXe` is READY.
 - Live root route redirects safely to login.
 
 Do not build outside Phase 0.5. Do not add POS, finance, wholesale, forecasting, warehouse management, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
