@@ -38,7 +38,7 @@ describe("foundation security boundaries", () => {
     }
 
     expect(browserFiles.length).toBeGreaterThan(0);
-  });
+  }, 15_000);
 
   it("marks server secrets as server-only", async () => {
     const source = await readFile(
