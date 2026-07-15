@@ -57,6 +57,7 @@ const requiredRelations = [
   "integration_providers",
   "data_sources",
   "external_records",
+  "external_record_normalization_runs",
   "sync_jobs",
   "sync_errors",
   "webhook_events",
@@ -81,6 +82,7 @@ const requiredFunctions = [
   "enqueue_data_source_sync",
   "create_import_api_credential",
   "revoke_import_api_credential",
+  "normalize_external_records",
 ];
 
 function toRestUrl(baseUrl) {

@@ -1,8 +1,12 @@
 Next Task:
 Phase 0.5 — Integration Hub MVP:
-- After this connector strategy is reviewed and merged, build the Phase 0.5 pipeline handoff from tenant-scoped external records into staging/validation.
-- External records must normalize into the existing validation/consolidation/intelligence pipeline without writing directly to canonical inventory/intelligence tables.
-- Preserve Import API idempotency, tenant lineage, audit evidence, and safe error behavior.
+- After this pipeline handoff is reviewed and merged, apply `20260715133000_phase0_5_pipeline_handoff.sql` to hosted Supabase.
+- Run hosted schema/RLS verification after the migration is applied.
+- Then choose the next Phase 0.5 mapping or connector milestone:
+  - product master external-record mapping;
+  - sales history external-record mapping;
+  - store master external-record mapping;
+  - or one explicitly approved provider-specific connector MVP.
 - Keep Shopify, WooCommerce, and Google Sheets scaffold-only until a separate provider-specific MVP is explicitly approved.
 - Keep the rule that RetailOS connects to the system behind a website, not to "a website" directly.
 
@@ -24,6 +28,7 @@ Verified:
 - Authenticated Import API smoke passed against production: tenant-scoped credential creation, external record acceptance/persistence, idempotent replay, and cleanup were verified.
 - Connector depth decisions are recorded: Shopify, WooCommerce, and Google Sheets remain scaffold-only; Import API is the approved live ingestion path.
 - Sync retry/rollback behavior is documented before scheduled sync workers are enabled.
+- Phase 0.5 pipeline handoff is implemented locally for `inventory_snapshot` external records and covered by integration tests.
 - Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.
 - Supabase migration history is repaired for the seven applied Phase 0 migrations plus the applied Phase 0.5 migration.
 - Current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only.

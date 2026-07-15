@@ -141,6 +141,13 @@ Gate:
 - validation/consolidation/intelligence run on persisted tenant-scoped data;
 - audit trail connects source, sync job, staging row, and canonical output.
 
+Status:
+
+- First handoff implemented for `inventory_snapshot` records in
+  `public.normalize_external_records(target_sync_job_id uuid)`.
+- Product master, sales history, and store master mapping remain pending.
+- Canonical inventory still requires the existing consolidation approval path.
+
 ## Validation commands
 
 Before each implementation PR handoff:

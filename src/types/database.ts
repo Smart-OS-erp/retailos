@@ -67,10 +67,12 @@ export type SyncJobStatus =
   | "cancelled";
 export type ExternalRecordStatus =
   | "received"
-  | "validated"
+  | "mapped"
+  | "validation_blocked"
   | "normalized"
-  | "rejected"
-  | "quarantined";
+  | "ignored"
+  | "error";
+export type ExternalRecordNormalizationRunStatus = "completed" | "failed";
 export type WebhookEventStatus =
   | "received"
   | "verified"
@@ -1142,6 +1144,40 @@ export type Database = {
         };
         Relationships: [];
       };
+      external_record_normalization_runs: {
+        Row: {
+          id: string;
+          organization_id: string;
+          data_source_id: string;
+          sync_job_id: string;
+          upload_id: string;
+          status: ExternalRecordNormalizationRunStatus;
+          external_record_count: number;
+          normalized_count: number;
+          validation_blocked_count: number;
+          warning_count: number;
+          created_by: string;
+          created_at: string;
+          completed_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          data_source_id: string;
+          sync_job_id: string;
+          upload_id: string;
+          status: ExternalRecordNormalizationRunStatus;
+          external_record_count: number;
+          normalized_count?: number;
+          validation_blocked_count?: number;
+          warning_count?: number;
+          created_by: string;
+          created_at?: string;
+          completed_at?: string | null;
+        };
+        Update: never;
+        Relationships: [];
+      };
       sync_errors: {
         Row: {
           id: string;
@@ -1434,6 +1470,12 @@ export type Database = {
           target_credential_id: string;
         };
         Returns: undefined;
+      };
+      normalize_external_records: {
+        Args: {
+          target_sync_job_id: string;
+        };
+        Returns: string;
       };
     };
     Enums: {
