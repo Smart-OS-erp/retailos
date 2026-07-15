@@ -143,9 +143,11 @@ Gate:
 
 Status:
 
-- First handoff implemented for `inventory_snapshot` records in
+- Handoff implemented for `inventory_snapshot`, `product_master`,
+  `store_master`, and `sales_history` records in
   `public.normalize_external_records(target_sync_job_id uuid)`.
-- Product master, sales history, and store master mapping remain pending.
+- Product master, sales history, and store master canonical write approval flows
+  remain pending and are not silently implemented.
 - Canonical inventory still requires the existing consolidation approval path.
 
 ## Validation commands

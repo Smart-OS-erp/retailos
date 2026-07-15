@@ -20,11 +20,21 @@ It returns the created `data_uploads.id`.
 
 The function is idempotent for a completed sync job. A retry returns the original upload instead of duplicating staging rows.
 
-## Current supported record type
+## Supported record types
 
-This milestone supports `inventory_snapshot` external records for inventory staging.
+The mapper supports all approved Import API record types:
 
-Unsupported record types, including `product_master`, `sales_history`, and `store_master`, are preserved as raw rows and blocked with validation/sync error evidence until their mapping contracts are approved.
+- `inventory_snapshot`
+- `product_master`
+- `store_master`
+- `sales_history`
+
+`inventory_snapshot` records create `staging_inventory_rows` and can later move
+through the existing warning-acceptance and consolidation approval path.
+
+`product_master`, `store_master`, and `sales_history` records are mapped into
+raw upload and validation evidence for review. They do not directly create
+products, locations, SKUs, or sales facts in this phase.
 
 ## Validation and approval path
 
@@ -41,7 +51,10 @@ Rows with blocking issues keep the upload in `validation_blocked`.
 
 Rows with warnings keep the upload in `parsed` until warnings are accepted.
 
-Rows with no validation issues can make the upload `ready`, but canonical inventory still requires the existing consolidation function and digest check.
+Rows with no validation issues can make an inventory upload `ready`, but
+canonical inventory still requires the existing consolidation function and
+digest check. Non-inventory record types remain in `parsed` review state
+because product/location/sales canonical write flows are not implemented yet.
 
 ## Security controls
 
@@ -51,12 +64,14 @@ Rows with no validation issues can make the upload `ready`, but canonical invent
 - RLS remains enabled and forced on the new normalization run table.
 - Raw external-record evidence remains tenant-scoped and auditable.
 - The function does not use service-role credentials and does not bypass the approval path.
+- Product master, store master, and sales history mapping deliberately avoid
+  direct canonical writes.
 
 ## Not implemented
 
 - Provider workers.
 - Scheduled sync workers.
 - Shopify/WooCommerce/Google Sheets real credentials.
-- Product master, sales history, or store master mapping.
 - Automatic consolidation.
 - Intelligence recalculation after consolidation.
+- Product/location/sales canonical write approval flows.
