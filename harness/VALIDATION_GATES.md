@@ -19,3 +19,22 @@
 ## Evolution
 
 When `package.json` and the application scaffold are added, replace CI TODO steps with repository scripts in the same PR. When the first tenant table/API/upload/Copilot capability is added, replace the corresponding heuristic placeholder with tests capable of failing on a real regression.
+
+## M0.9 — RetailOS UI Foundation validation gate
+
+M0.9 is approved as a Phase 0 frontend-foundation milestone. It validates shared frontend architecture and visual-system readiness before broad Phase 0 feature expansion. It must not be used to finalize retail product requirements.
+
+Required M0.9 evidence:
+
+- shadcn/ui is the only approved component foundation; Ant Design is absent.
+- shared design tokens exist and are used by shared UI primitives.
+- a shared application shell exists for future pages.
+- navigation, dashboard configuration, status mappings, tenant market defaults, and formatting utilities are centralized.
+- Nigeria/en-NG/NGN/Africa-Lagos demo defaults are present, use the `Africa/Lagos` timezone identifier, and are overridden by tenant settings where available.
+- currency, date, locale, and timezone presentation use shared utilities; UI modules do not manually concatenate currency symbols.
+- new tables use RetailDataGrid unless an exception is documented.
+- loading, empty, error, forbidden, stale, and success states are available as shared presentation primitives.
+- responsive behavior and keyboard/focus accessibility are tested for foundation components.
+- placeholder dashboard/navigation/module/status/demo content is explicitly marked provisional and replaceable.
+
+M0.9 must be reported as blocked or incomplete if any placeholder navigation, KPI, card order, workflow term, role, supplier, warehouse/finance term, or demo record is presented as a final product requirement.

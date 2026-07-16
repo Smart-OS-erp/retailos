@@ -31,6 +31,23 @@
 - Vercel Git linkage, protected preview deployment, hosted setup/onboarding, hosted schema/RLS checks, and Supabase migration-history repair are verified for the protected non-production Phase 0 demo.
 - Current hosted Supabase confirmation email behavior is explicitly accepted for the protected non-production Phase 0 demo. Token-hash template activation through custom SMTP/eligible plan support remains a production-governance follow-up if required before production launch.
 
+## M0.9 UI foundation acceptance
+
+M0.9 acceptance applies only after implementation starts in a later PR. This harness update approves the milestone; it does not satisfy these checks yet.
+
+- shadcn/ui is installed/configured as the approved foundation and Ant Design is absent.
+- shared design tokens are documented, testable, and wired into shared UI primitives.
+- shared application shell, responsive navigation, topbar, organization switcher, user menu, and global search shell exist.
+- navigation and dashboard definitions are centralized and clearly marked provisional.
+- tenant market defaults include Nigeria, `en-NG`, `NGN`, and Africa-Lagos using the `Africa/Lagos` timezone identifier, with tenant-setting overrides where available.
+- currency, locale, date, and timezone formatting flows through shared utilities; manual currency-symbol concatenation is rejected by review or tests.
+- reusable KPI cards, chart cards, activity-feed primitives, stock-location primitives, RetailDataGrid, status presentation, loading states, empty states, error states, forbidden states, stale states, and success states exist.
+- RetailDataGrid is used for new tables unless an approved exception is documented.
+- accessibility baseline covers semantic structure, visible focus, keyboard operation, non-color status cues, and WCAG 2.2 AA contrast targets.
+- responsive behavior is validated for desktop and mobile foundation layouts.
+- placeholder navigation, KPIs, dashboard cards, chart selections, purchase-order content, finance navigation, EDI placement, roles, statuses, workflows, supplier terminology, warehouse terminology, demo businesses, demo values, and demo records are explicitly marked provisional and replaceable.
+- no placeholder content is presented as final product truth or consultant-validated retail requirements.
+
 ## Evidence rules
 
 Acceptance evidence must name the environment, commit, command or scenario, outcome, and retained artifact. Placeholder, skipped, or not-yet-applicable checks are reported honestly and cannot satisfy a later product gate.
