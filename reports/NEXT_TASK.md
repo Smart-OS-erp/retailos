@@ -1,23 +1,22 @@
 Next Task:
-Complete, review, and merge Phase 0.5 — WooCommerce MVP Worker.
+Complete, review, and merge Phase 0.5 — Scheduled Sync Worker.
 
 Required before acceptance:
 
-- Integration managers can trigger a server-side credential availability check for WooCommerce MVP data sources.
-- The check derives organization scope and data source details from server-side authorization, not trusted form fields.
-- The check uses approved server-side secret material only and never exposes provider tokens in browser UI, logs, fixtures, docs, or committed files.
-- Unsupported providers and non-MVP connectors continue to fail closed with safe UI messages.
-- Missing WooCommerce credentials fail closed and keep the data source in `configuration_required` with `credential_status = 'missing'`.
-- Available WooCommerce server credentials mark the data source `connected` with `credential_status = 'configured'` and safe non-secret metadata only.
-- WooCommerce manual sync reads server-side credentials only, calls the WooCommerce REST API through a bounded MVP worker, writes only raw `external_records`, and hands off to normalization.
-- Worker retries are bounded, authentication failures are non-retryable, provider/network failures are recorded in `sync_errors`, and no connector writes directly to canonical product, location, sales, inventory, intelligence, projectisation, or campaign tables.
-- Unit tests cover configured/missing credential checks, fail-closed worker behavior, raw record persistence, provider handoff, and WooCommerce product/inventory mapping.
-- Integration Hub UI tests confirm the credential action exists for approved MVP providers and secrets remain absent from browser-facing UI.
+- Vercel Cron is configured to call `/api/cron/integration-sync`.
+- The cron route fails closed unless `Authorization` matches `Bearer ${CRON_SECRET}`.
+- Scheduled sync metadata is tenant-scoped, RLS-protected, and audited.
+- The scheduled executor claims due schedules with a short lock before provider access.
+- Scheduled jobs use deterministic idempotency keys and `trigger = 'scheduled'`.
+- Only accepted MVP provider workers run through scheduled sync; currently Shopify and WooCommerce.
+- Scheduled sync writes provider data only to raw `external_records` through existing provider workers and then hands off to normalization.
+- No scheduled path writes directly to canonical product, location, sales, inventory, intelligence, projectisation, or campaign tables.
+- Missing unsupported providers fail closed and do not fake successful schedules.
+- Unit and integration tests cover route authorization, schedule RLS/audit, idempotency reuse, due-schedule claiming, and normalization handoff.
 - lint, typecheck, test, security, and build pass.
 
 Next Approved Phase 0.5 Work After Acceptance:
 
-- Add scheduled sync only after worker/idempotency/error behavior is accepted.
 - Add product/location/sales canonical write approval flows.
 - Add automatic intelligence recalculation after normalized imports.
 - Implement the Google Sheets provider worker only after scheduled sync/approval/recalculation priorities are explicitly ordered.

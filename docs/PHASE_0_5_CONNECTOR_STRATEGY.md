@@ -29,7 +29,10 @@ The provider credential onboarding milestone adds narrow Shopify and WooCommerce
 
 ## Sync retry and rollback contract
 
-No scheduled sync worker is enabled yet. When a worker is approved, it must follow this contract:
+The scheduled sync worker is now enabled through a protected Vercel Cron route
+for provider workers that have already passed MVP acceptance. The first
+approved scheduled providers are Shopify and WooCommerce. The worker follows
+this contract:
 
 1. Create or reuse a tenant-scoped `sync_jobs` row using an idempotency key before provider access.
 2. Re-check organization membership, RBAC, data-source status, connector depth, and credential status server-side.
@@ -66,8 +69,9 @@ and `sales_history` external records is documented in
 `docs/PHASE_0_5_PIPELINE_HANDOFF.md`. The Shopify and WooCommerce MVP workers
 write `product_master` and `inventory_snapshot` raw external records, then hand
 off to `normalize_external_records(sync_job_id)` through the authenticated
-server action. Google Sheets, scheduled workers, webhooks, browser credential
-entry, and OAuth flows are still not implemented.
+server action. The scheduled sync route can enqueue due Shopify/WooCommerce
+sync jobs and reuse the same provider handoff. Google Sheets, webhooks, browser
+credential entry, and OAuth flows are still not implemented.
 
 ## Phase leakage guardrails
 

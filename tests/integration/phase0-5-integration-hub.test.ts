@@ -452,6 +452,67 @@ describe("Phase 0.5 Integration Hub foundation", () => {
     expect(source.rows).toEqual([{ status: "syncing" }]);
   });
 
+  it("stores scheduled sync metadata with tenant-scoped RLS and audit evidence", async () => {
+    await authenticate(MERCH_A);
+    const schedule = await database.query<{ id: string }>(
+      `insert into public.data_source_sync_schedules (
+        organization_id,
+        data_source_id,
+        interval_minutes,
+        next_run_at
+      ) values ($1, $2, 1440, '2026-07-16T02:00:00Z')
+      returning id`,
+      [organizationA, shopifySourceA],
+    );
+    const scheduleId = schedule.rows[0]!.id;
+
+    const visible = await database.query<{
+      data_source_id: string;
+      interval_minutes: number;
+      status: string;
+    }>(
+      `select data_source_id, interval_minutes, status
+       from public.data_source_sync_schedules
+       where id = $1`,
+      [scheduleId],
+    );
+    expect(visible.rows).toEqual([
+      {
+        data_source_id: shopifySourceA,
+        interval_minutes: 1440,
+        status: "enabled",
+      },
+    ]);
+
+    await authenticate(OWNER_A);
+    const audits = await database.query<{ action: string }>(
+      "select action from public.audit_events where target_id = $1",
+      [scheduleId],
+    );
+    expect(audits.rows).toContainEqual({
+      action: "integration.data_source_sync_schedules.insert",
+    });
+
+    await authenticate(OWNER_B);
+    await expect(
+      database.query(
+        `insert into public.data_source_sync_schedules (
+          organization_id,
+          data_source_id,
+          interval_minutes,
+          next_run_at
+        ) values ($1, $2, 1440, '2026-07-16T02:00:00Z')`,
+        [organizationA, shopifySourceA],
+      ),
+    ).rejects.toThrow();
+
+    await authenticate(VIEWER_A);
+    const viewerRows = await database.query<{ id: string }>(
+      "select id from public.data_source_sync_schedules",
+    );
+    expect(viewerRows.rows).toEqual([]);
+  });
+
   it("normalizes external records into upload staging without canonical writes", async () => {
     await authenticate(OWNER_B);
     const jobId = (

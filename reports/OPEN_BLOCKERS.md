@@ -6,12 +6,12 @@
 - **GitHub `main` branch is unprotected.** GitHub API returned `Branch not protected` for `main`. Owner/action: enable branch protection requiring PRs, CI quality, security checks, no force-push, and no deletion where practical.
 - **Dependabot security updates are disabled.** GitHub repo security analysis reports secret scanning and push protection enabled, but Dependabot security updates disabled. Owner/action: enable Dependabot security updates or record founder-approved exception.
 - **Repository visibility decision remains open.** The repository is public. Owner/action: founder must decide whether to keep it public or convert it to private; do not treat obscurity as a security control, but document commercial/IP implications.
-- **Provider credential onboarding remains server-secret only.** Shopify exists on `main`; the current branch adds WooCommerce server-side availability checks and worker credentials through ignored env/secret management. Browser secret entry, OAuth, and Google Sheets credentials do not exist. Owner/action: accept this narrow server-side provider credential model before adding scheduled sync.
+- **Provider credential onboarding remains server-secret only.** Shopify and WooCommerce server-side availability checks exist. Browser secret entry, OAuth, and Google Sheets credentials do not exist. Owner/action: accept this narrow server-side provider credential model before adding any browser credential-entry flow.
 
 ## Phase 0.5 implementation blockers
 
 - **Google Sheets worker is not implemented.** Shopify exists on `main`; the current branch adds WooCommerce. Google Sheets data sources can be created as MVP-depth, but live Google Sheets API calls remain fail-closed until a worker and credential resolver are implemented.
-- **Scheduled sync workers are not implemented.** Manual sync exists; background scheduling remains future Phase 0.5 work.
+- **Scheduled sync worker is in progress on the current branch.** It must pass CI, migration review, and deployment checks before being accepted.
 - **Product/location/sales canonical write approval flows are not implemented.** External record normalization produces upload/raw/validation evidence, but product master, store master, and sales history do not directly mutate canonical products, locations, SKUs, or sales facts.
 - **Automatic intelligence recalculation after normalized imports is not implemented.** Existing intelligence remains based on approved persisted/consolidated data paths.
 

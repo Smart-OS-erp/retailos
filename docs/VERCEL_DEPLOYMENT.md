@@ -25,6 +25,7 @@ Production requires these names:
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `DATABASE_URL`
 - `IMPORT_API_TOKEN_HASH_SECRET`
+- `CRON_SECRET`
 
 Optional provider credentials must remain server-only:
 
@@ -58,6 +59,7 @@ Resolution:
 - Protect deployments and GitHub production permissions with least privilege and MFA-capable identities.
 - Treat previews as externally reachable: no production data, permissive callbacks, debug endpoints, or sensitive logs.
 - Run lint, typecheck, tests, build, security, and production smoke gates before promotion.
+- Vercel Cron invokes `/api/cron/integration-sync` on production only and the route must reject requests unless the `Authorization` header matches `Bearer ${CRON_SECRET}`.
 - Record deployment ID, commit SHA, env-status, runtime logs, and rollback target for every production-affecting milestone.
 - Add runtime failures discovered during validation to `reports/RECENT_FAILURES.md`.
 
