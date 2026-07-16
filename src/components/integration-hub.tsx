@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import {
   createIntegrationDataSource,
   requestDataSourceSync,
+  verifyProviderCredentials,
 } from "@/app/integrations/actions";
 import { FormField } from "@/components/form-field";
 import { Notice } from "@/components/notice";
@@ -61,6 +62,7 @@ type IntegrationHubProps = {
   organizationId: string;
   providers: Provider[];
   queryState?: {
+    credential?: string | undefined;
     created?: boolean;
     error?: string | undefined;
     sync?: string | undefined;
@@ -73,11 +75,42 @@ const errorMessages: Record<string, string> = {
   authorization: "RetailOS could not verify the active organization for this action.",
   "connector-depth": "That connector depth is not approved for this provider yet.",
   "create-failed": "RetailOS could not safely create the data source.",
+  "credential-update-failed": "RetailOS could not safely update credential status.",
   "duplicate-source": "A data source with that provider and name already exists.",
   "invalid-source": "Use a clear source name between 2 and 120 characters.",
   "permission-denied": "Your role cannot manage Integration Hub sources.",
   "sync-failed": "RetailOS could not enqueue the sync request safely.",
   "unsupported-provider": "That provider is not enabled for Phase 0.5.",
+};
+
+const credentialMessages: Record<
+  string,
+  { message: string; title: string; tone: "error" | "info" | "success" }
+> = {
+  "provider-credentials-missing": {
+    message:
+      "RetailOS could not find reviewed server-side credentials for this data source. Add them through ignored env or the approved secret manager, then verify again.",
+    title: "Provider credentials not available",
+    tone: "error",
+  },
+  "provider-credentials-not-mvp": {
+    message:
+      "This source is not an MVP connector source, so provider credential verification is not available.",
+    title: "Credential verification not available",
+    tone: "error",
+  },
+  "provider-credentials-unsupported": {
+    message:
+      "This provider does not yet have a Phase 0.5 credential verifier. It remains fail-closed.",
+    title: "Provider credential verifier missing",
+    tone: "info",
+  },
+  "provider-credentials-verified": {
+    message:
+      "RetailOS found reviewed server-side credential material for this data source. No secret value was displayed or stored in browser-readable UI.",
+    title: "Provider credentials verified",
+    tone: "success",
+  },
 };
 
 function dateLabel(value: string | null) {
@@ -169,20 +202,38 @@ export function IntegrationHub({
       render: (source) => {
         const provider = providerById.get(source.provider_id);
         const canRequestSync = Boolean(canSync && provider?.supports_manual_sync);
-
-        if (!canRequestSync) {
-          return <span className="table-meta">No manual sync</span>;
-        }
+        const canVerifyCredentials = Boolean(
+          canManage
+            && provider?.provider_key === "shopify"
+            && source.connector_depth === "mvp"
+            && source.credential_status !== "configured",
+        );
 
         return (
-          <form action={requestDataSourceSync}>
-            <input name="organizationId" type="hidden" value={organizationId} />
-            <input name="dataSourceId" type="hidden" value={source.id} />
-            <input name="returnPath" type="hidden" value={returnPath} />
-            <button className="button button-secondary" type="submit">
-              Request sync
-            </button>
-          </form>
+          <div className="table-action-stack">
+            {canVerifyCredentials ? (
+              <form action={verifyProviderCredentials}>
+                <input name="organizationId" type="hidden" value={organizationId} />
+                <input name="dataSourceId" type="hidden" value={source.id} />
+                <input name="returnPath" type="hidden" value={returnPath} />
+                <button className="button button-secondary" type="submit">
+                  Verify server credentials
+                </button>
+              </form>
+            ) : null}
+            {canRequestSync ? (
+              <form action={requestDataSourceSync}>
+                <input name="organizationId" type="hidden" value={organizationId} />
+                <input name="dataSourceId" type="hidden" value={source.id} />
+                <input name="returnPath" type="hidden" value={returnPath} />
+                <button className="button button-secondary" type="submit">
+                  Request sync
+                </button>
+              </form>
+            ) : (
+              <span className="table-meta">No manual sync</span>
+            )}
+          </div>
         );
       },
     },
@@ -190,6 +241,18 @@ export function IntegrationHub({
 
   return (
     <div className="content-grid">
+      {queryState?.credential ? (
+        <Notice
+          title={
+            credentialMessages[queryState.credential]?.title
+              ?? "Provider credential check recorded"
+          }
+          tone={credentialMessages[queryState.credential]?.tone ?? "info"}
+        >
+          {credentialMessages[queryState.credential]?.message
+            ?? "RetailOS recorded the provider credential check without exposing secret values."}
+        </Notice>
+      ) : null}
       {queryState?.created ? (
         <Notice title="Data source created" tone="success">
           RetailOS saved the source inside this organization. MVP connectors

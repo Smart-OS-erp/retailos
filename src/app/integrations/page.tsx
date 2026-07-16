@@ -7,6 +7,7 @@ import { requireOrganizationContext } from "@/lib/auth/require-organization-cont
 
 type IntegrationsPageProps = {
   searchParams: Promise<{
+    credential?: string;
     created?: string;
     error?: string;
     sync?: string;
@@ -81,6 +82,7 @@ export default async function IntegrationsPage({
         organizationId={organizationId}
         providers={providersResult.data ?? []}
         queryState={{
+          credential: params.credential,
           created: params.created === "1",
           error: params.error,
           sync: params.sync,

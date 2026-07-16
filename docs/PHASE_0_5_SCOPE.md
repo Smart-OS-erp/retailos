@@ -20,6 +20,7 @@ Phase 0.5 is about safe ingestion from external retail systems. It is not a gene
 - RetailOS Import API for tenant-scoped inbound records.
 - External record storage with provider/source identifiers.
 - Sync jobs with statuses, attempts, idempotency, audit, and errors.
+- Server-side credential availability checks for approved MVP providers, starting with Shopify.
 - Webhook event table for received provider events.
 - Normalization from raw external records into the existing canonical validation/consolidation pipeline.
 - Permission, RBAC, RLS, audit, and secret-management controls for every integration boundary.
@@ -65,6 +66,7 @@ RetailOS connects to the system behind the website:
 - Validation, consolidation, and intelligence pipeline can run after sync.
 - Unauthorized users cannot create, read, sync, update, or delete another tenant's data sources or external records.
 - Service-role credentials and provider secrets never enter client/browser code.
+- Provider credential checks fail closed and expose only safe status messages.
 - Failed syncs are visible, non-destructive, auditable, and retry-safe.
 - Connector scaffolds clearly identify unsupported actions instead of faking success.
 

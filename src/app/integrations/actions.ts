@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 
 import { hasPermission } from "@/lib/auth/authorization";
 import { requireOrganizationContext } from "@/lib/auth/require-organization-context";
+import { verifyProviderCredentialAvailability } from "@/lib/integrations/provider-credential-verification";
 import { runProviderSyncAfterEnqueue } from "@/lib/integrations/provider-sync";
 import type { IntegrationConnectorDepth } from "@/types/database";
 
@@ -22,6 +23,10 @@ function safeReturnPath(formData: FormData) {
 
 function redirectWithError(path: string, code: string): never {
   redirect(`${path}?error=${encodeURIComponent(code)}`);
+}
+
+function redirectWithCredentialState(path: string, code: string): never {
+  redirect(`${path}?credential=${encodeURIComponent(code)}`);
 }
 
 function validProviderKey(value: string) {
@@ -157,4 +162,103 @@ export async function requestDataSourceSync(formData: FormData) {
   revalidatePath("/integrations");
   revalidatePath("/onboarding/data-source");
   redirect(`${returnPath}?sync=requested`);
+}
+
+export async function verifyProviderCredentials(formData: FormData) {
+  const returnPath = safeReturnPath(formData);
+  const context = await requireOrganizationContext();
+  const submittedOrganizationId = String(formData.get("organizationId") ?? "");
+  const dataSourceId = String(formData.get("dataSourceId") ?? "").trim();
+
+  if (submittedOrganizationId !== context.membership.organization_id) {
+    redirectWithError(returnPath, "authorization");
+  }
+
+  if (!hasPermission(context.membership.role, "integration.manage")) {
+    redirectWithError(returnPath, "permission-denied");
+  }
+
+  if (!/^[0-9a-f-]{36}$/i.test(dataSourceId)) {
+    redirectWithError(returnPath, "invalid-source");
+  }
+
+  const { data: source, error: sourceError } = await context.supabase
+    .from("data_sources")
+    .select(
+      "id, organization_id, provider_id, source_key, connector_depth, status, credential_status",
+    )
+    .eq("organization_id", context.membership.organization_id)
+    .eq("id", dataSourceId)
+    .maybeSingle();
+
+  if (sourceError || !source) {
+    redirectWithError(returnPath, "invalid-source");
+  }
+
+  const { data: provider, error: providerError } = await context.supabase
+    .from("integration_providers")
+    .select("provider_key")
+    .eq("id", source.provider_id)
+    .maybeSingle();
+
+  if (providerError || !provider) {
+    redirectWithError(returnPath, "unsupported-provider");
+  }
+
+  const verification = await verifyProviderCredentialAvailability({
+    connectorDepth: source.connector_depth,
+    credentialStatus: source.credential_status,
+    dataSourceId: source.id,
+    dataSourceStatus: source.status,
+    organizationId: source.organization_id,
+    providerKey: provider.provider_key,
+    sourceKey: source.source_key,
+  });
+
+  if (verification.status !== "available") {
+    const { error: unavailableUpdateError } = await context.supabase
+      .from("data_sources")
+      .update({
+        credential_status: verification.credentialStatus,
+        last_error_at: new Date().toISOString(),
+        status: "configuration_required",
+      })
+      .eq("organization_id", context.membership.organization_id)
+      .eq("id", source.id);
+
+    if (unavailableUpdateError) {
+      redirectWithError(returnPath, "credential-update-failed");
+    }
+
+    const code =
+      verification.code === "provider.unsupported"
+        ? "provider-credentials-unsupported"
+        : verification.code === "connector.not_mvp"
+          ? "provider-credentials-not-mvp"
+          : "provider-credentials-missing";
+    redirectWithCredentialState(returnPath, code);
+  }
+
+  const { error: updateError } = await context.supabase
+    .from("data_sources")
+    .update({
+      connection_metadata: {
+        credential_method: "server_environment",
+        credential_verified_at: new Date().toISOString(),
+        provider_key: provider.provider_key,
+      },
+      credential_status: verification.credentialStatus,
+      last_error_at: null,
+      status: "connected",
+    })
+    .eq("organization_id", context.membership.organization_id)
+    .eq("id", source.id);
+
+  if (updateError) {
+    redirectWithError(returnPath, "credential-update-failed");
+  }
+
+  revalidatePath("/integrations");
+  revalidatePath("/onboarding/data-source");
+  redirectWithCredentialState(returnPath, "provider-credentials-verified");
 }
