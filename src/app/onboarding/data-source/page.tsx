@@ -10,6 +10,7 @@ import { confirmDataSourceReadiness } from "../actions";
 
 type DataSourcePageProps = {
   searchParams: Promise<{
+    credential?: string;
     created?: string;
     error?: string;
     sync?: string;
@@ -114,6 +115,7 @@ export default async function DataSourcePage({
           organizationId={organizationId}
           providers={providersResult.data ?? []}
           queryState={{
+            credential: params.credential,
             created: params.created === "1",
             error: params.error,
             sync: params.sync,

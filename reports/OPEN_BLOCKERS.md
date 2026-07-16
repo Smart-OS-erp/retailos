@@ -6,7 +6,7 @@
 - **GitHub `main` branch is unprotected.** GitHub API returned `Branch not protected` for `main`. Owner/action: enable branch protection requiring PRs, CI quality, security checks, no force-push, and no deletion where practical.
 - **Dependabot security updates are disabled.** GitHub repo security analysis reports secret scanning and push protection enabled, but Dependabot security updates disabled. Owner/action: enable Dependabot security updates or record founder-approved exception.
 - **Repository visibility decision remains open.** The repository is public. Owner/action: founder must decide whether to keep it public or convert it to private; do not treat obscurity as a security control, but document commercial/IP implications.
-- **Provider credential onboarding is not implemented.** Shopify worker exists but requires reviewed server-only credentials. WooCommerce and Google Sheets workers do not exist. Owner/action: implement provider credential management and one remaining provider worker at a time after M0-R.
+- **Provider credential onboarding is partial.** Shopify worker exists and the current provider-credential onboarding milestone adds a server-side availability check for reviewed Shopify env/secret-manager credentials. Browser secret entry, OAuth, WooCommerce credentials, and Google Sheets credentials do not exist. Owner/action: accept this narrow Shopify credential check, then implement one remaining provider worker/credential path at a time.
 
 ## Phase 0.5 implementation blockers
 

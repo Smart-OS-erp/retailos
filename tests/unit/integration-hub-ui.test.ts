@@ -13,6 +13,7 @@ describe("Integration Hub UI contract", () => {
 
     expect(actions).toContain("\"create_data_source\"");
     expect(actions).toContain("\"enqueue_data_source_sync\"");
+    expect(actions).toContain("verifyProviderCredentials");
     expect(actions).toContain("integration.manage");
     expect(actions).toContain("integration.sync");
     expect(actions).toContain("allowedReturnPaths");
@@ -24,6 +25,7 @@ describe("Integration Hub UI contract", () => {
     expect(ui).toContain("How do you currently manage inventory and sales?");
     expect(ui).toContain("RetailOS connects to the system behind the sales channel");
     expect(ui).toContain("Route deployed; credential setup remains server-side");
+    expect(ui).toContain("Verify server credentials");
     expect(ui).not.toContain("SUPABASE_SERVICE_ROLE_KEY");
     expect(ui).not.toContain("DATABASE_URL");
     expect(ui).not.toContain("SHOPIFY_ACCESS_TOKEN");

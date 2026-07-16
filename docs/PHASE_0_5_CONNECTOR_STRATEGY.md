@@ -16,13 +16,15 @@ Founder approval moved Shopify, WooCommerce, and Google Sheets to **MVP-approved
 
 The provider catalogue may expose Shopify, WooCommerce, and Google Sheets as MVP setup options, but it must not imply that any provider is connected until server-side credentials are configured and verified.
 
+The provider credential onboarding milestone adds a narrow Shopify server-side credential availability check. It verifies whether approved server environment/secret-manager material can be resolved for the data source, then updates the source status without exposing secret values. It does not add OAuth, browser secret entry, WooCommerce credentials, Google Sheets credentials, or live Shopify API proof beyond the subsequent sync worker run.
+
 ## Credential boundary
 
 - Provider access tokens, OAuth secrets, WooCommerce keys, Google credentials, webhook secrets, database credentials, and Supabase service-role keys must never be stored in `data_sources.connection_metadata`, client components, browser bundles, fixtures, screenshots, or committed files.
 - Provider credential implementation must be server-only and encrypted or otherwise protected according to the approved secret-management design before any MVP connector can perform live provider API access.
 - The Phase 0.5 Shopify MVP worker reads optional `SHOPIFY_CONNECTOR_CREDENTIALS_JSON` only from ignored server environment/secret management. The value must map a reviewed `data_source_id` or safe source key to a Shopify shop domain and Admin API token. Do not paste the value into chat, docs, screenshots, fixtures, Git, or client code.
 - Browser-facing Integration Hub UI may display provider status, credential status, and safe help text only.
-- MVP providers must keep `credential_status = 'missing'` until a reviewed provider-specific credential flow or approved server-side secret entry exists.
+- MVP providers must keep `credential_status = 'missing'` until a reviewed provider-specific credential flow or approved server-side secret entry exists and the server-side verifier records availability.
 
 ## Sync retry and rollback contract
 
