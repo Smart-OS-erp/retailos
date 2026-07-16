@@ -113,6 +113,8 @@ const credentialMessages: Record<
   },
 };
 
+const credentialVerifiableProviderKeys = new Set(["shopify", "woocommerce"]);
+
 function dateLabel(value: string | null) {
   return value ? formatRetailDateTime(value) : "Not yet";
 }
@@ -204,7 +206,8 @@ export function IntegrationHub({
         const canRequestSync = Boolean(canSync && provider?.supports_manual_sync);
         const canVerifyCredentials = Boolean(
           canManage
-            && provider?.provider_key === "shopify"
+            && provider
+            && credentialVerifiableProviderKeys.has(provider.provider_key)
             && source.connector_depth === "mvp"
             && source.credential_status !== "configured",
         );

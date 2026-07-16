@@ -1,10 +1,14 @@
 import "server-only";
 
 import { EnvShopifyCredentialResolver } from "@/lib/integrations/shopify-credentials";
+import { EnvWooCommerceCredentialResolver } from "@/lib/integrations/woocommerce-credentials";
 import type {
   ShopifyCredentialResolver,
   ShopifySyncEnvelope,
 } from "@/lib/integrations/shopify-worker";
+import type {
+  WooCommerceCredentialResolver,
+} from "@/lib/integrations/woocommerce-credentials";
 import type {
   DataSourceStatus,
   IntegrationConnectorDepth,
@@ -40,9 +44,10 @@ export async function verifyProviderCredentialAvailability(
   input: ProviderCredentialVerificationInput,
   dependencies?: {
     shopifyCredentials?: ShopifyCredentialResolver;
+    wooCommerceCredentials?: WooCommerceCredentialResolver;
   },
 ): Promise<ProviderCredentialVerificationResult> {
-  if (input.providerKey !== "shopify") {
+  if (!["shopify", "woocommerce"].includes(input.providerKey)) {
     return {
       code: "provider.unsupported",
       credentialStatus: "missing",
@@ -58,8 +63,9 @@ export async function verifyProviderCredentialAvailability(
     };
   }
 
-  const resolver =
-    dependencies?.shopifyCredentials ?? new EnvShopifyCredentialResolver();
+  const resolver = input.providerKey === "woocommerce"
+    ? dependencies?.wooCommerceCredentials ?? new EnvWooCommerceCredentialResolver()
+    : dependencies?.shopifyCredentials ?? new EnvShopifyCredentialResolver();
   const credentials = await resolver.resolve(toShopifyEnvelope(input));
 
   if (!credentials) {

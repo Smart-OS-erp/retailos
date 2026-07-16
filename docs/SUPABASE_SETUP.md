@@ -156,6 +156,7 @@ Use `.env.local` for local secrets and Vercel/Supabase secret management for dep
 - `DATABASE_URL`
 - `IMPORT_API_TOKEN_HASH_SECRET`
 - `SHOPIFY_CONNECTOR_CREDENTIALS_JSON`
+- `WOOCOMMERCE_CONNECTOR_CREDENTIALS_JSON`
 
 Only the two `NEXT_PUBLIC_` variables may be read by browser code. `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL`, `IMPORT_API_TOKEN_HASH_SECRET`, and provider credential variables are server-only and must never enter client modules, browser bundles, logs, screenshots, or committed files.
 

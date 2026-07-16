@@ -4,6 +4,7 @@ vi.mock("server-only", () => ({}));
 
 import { verifyProviderCredentialAvailability } from "@/lib/integrations/provider-credential-verification";
 import type { ShopifyCredentialResolver } from "@/lib/integrations/shopify-worker";
+import type { WooCommerceCredentialResolver } from "@/lib/integrations/woocommerce-credentials";
 
 const baseInput = {
   connectorDepth: "mvp",
@@ -21,6 +22,17 @@ const configuredResolver: ShopifyCredentialResolver = {
       adminAccessToken: "test-admin-token",
       apiVersion: "2026-07",
       shopDomain: "retailos-test.myshopify.com",
+    };
+  },
+};
+
+const configuredWooCommerceResolver: WooCommerceCredentialResolver = {
+  async resolve() {
+    return {
+      apiVersion: "wc/v3",
+      consumerKey: "ck_testconsumerkey",
+      consumerSecret: "cs_testconsumersecret",
+      siteUrl: "https://store.example.com",
     };
   },
 };
@@ -56,11 +68,27 @@ describe("provider credential availability verification", () => {
     });
   });
 
-  it("does not approve unsupported providers or non-MVP connectors", async () => {
+  it("marks WooCommerce credentials available only when server-side material resolves", async () => {
     await expect(
       verifyProviderCredentialAvailability({
         ...baseInput,
         providerKey: "woocommerce",
+        sourceKey: "lagos-woocommerce",
+      }, {
+        wooCommerceCredentials: configuredWooCommerceResolver,
+      }),
+    ).resolves.toEqual({
+      code: "credentials.available",
+      credentialStatus: "configured",
+      status: "available",
+    });
+  });
+
+  it("does not approve unsupported providers or non-MVP connectors", async () => {
+    await expect(
+      verifyProviderCredentialAvailability({
+        ...baseInput,
+        providerKey: "google_sheets",
       }),
     ).resolves.toMatchObject({
       code: "provider.unsupported",

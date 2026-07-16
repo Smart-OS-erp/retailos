@@ -26,6 +26,8 @@ describe("Integration Hub UI contract", () => {
     expect(ui).toContain("RetailOS connects to the system behind the sales channel");
     expect(ui).toContain("Route deployed; credential setup remains server-side");
     expect(ui).toContain("Verify server credentials");
+    expect(ui).toContain("credentialVerifiableProviderKeys");
+    expect(ui).toContain("\"woocommerce\"");
     expect(ui).not.toContain("SUPABASE_SERVICE_ROLE_KEY");
     expect(ui).not.toContain("DATABASE_URL");
     expect(ui).not.toContain("SHOPIFY_ACCESS_TOKEN");

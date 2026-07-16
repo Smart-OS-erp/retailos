@@ -20,7 +20,7 @@ Phase 0.5 is about safe ingestion from external retail systems. It is not a gene
 - RetailOS Import API for tenant-scoped inbound records.
 - External record storage with provider/source identifiers.
 - Sync jobs with statuses, attempts, idempotency, audit, and errors.
-- Server-side credential availability checks for approved MVP providers, starting with Shopify.
+- Server-side credential availability checks for approved MVP providers, starting with Shopify and WooCommerce.
 - Webhook event table for received provider events.
 - Normalization from raw external records into the existing canonical validation/consolidation pipeline.
 - Permission, RBAC, RLS, audit, and secret-management controls for every integration boundary.
@@ -88,10 +88,12 @@ Connector depth and retry/rollback rules are recorded in
 `docs/PHASE_0_5_CONNECTOR_STRATEGY.md`.
 
 Shopify, WooCommerce, and Google Sheets are now MVP-approved in Phase 0.5, but
-they remain credential-gated. They must not show a connected state or perform
-live provider API calls until server-side credential configuration and
-provider-specific workers are implemented and verified. POS/ERP and custom
-backend remain scaffold/import-API paths unless separately approved.
+they remain credential-gated. Shopify and WooCommerce have server-only MVP
+workers that can run after credential verification. Google Sheets must not show
+a connected state or perform live provider API calls until server-side
+credential configuration and a provider-specific worker are implemented and
+verified. POS/ERP and custom backend remain scaffold/import-API paths unless
+separately approved.
 
 ## Pipeline handoff
 

@@ -7,7 +7,7 @@ Founder approval moved Shopify, WooCommerce, and Google Sheets to **MVP-approved
 | Provider | Phase 0.5 depth | Manual sync behavior now | Real credentials now | Rationale |
 | --- | --- | --- | --- | --- |
 | Shopify | `mvp` | Runs the server-only Shopify MVP worker when the data source is credential-configured; fails closed while credentials are missing or unavailable | Server-side only via ignored environment/secret management; no browser or `connection_metadata` storage | Shopify may be configured as a Phase 0.5 MVP source, but provider OAuth/webhook secrets must stay server-only and rate-limited. |
-| WooCommerce | `mvp` | Allowed to request a sync envelope; fails closed while credentials are missing | Server-side only, not yet configured in repo | WooCommerce may be configured as a Phase 0.5 MVP source, but consumer keys/secrets must stay server-only and tenant-scoped. |
+| WooCommerce | `mvp` | Runs the server-only WooCommerce MVP worker when the data source is credential-configured; fails closed while credentials are missing or unavailable | Server-side only via ignored environment/secret management; no browser or `connection_metadata` storage | WooCommerce may be configured as a Phase 0.5 MVP source, but consumer keys/secrets must stay server-only and tenant-scoped. |
 | Google Sheets | `mvp` | Allowed to request a sync envelope; fails closed while credentials are missing | Server-side only, not yet configured in repo | Google Sheets may be configured as a Phase 0.5 MVP source, but OAuth/service-account credentials must stay server-only and tenant-scoped. |
 | RetailOS Import API | `api` | Accepted through the deployed Import API route after tenant-scoped bearer credential verification | Server-only token hash secret only | Import API is the approved Phase 0.5 live ingestion path for custom backends and feeds. |
 | CSV / Excel | `manual` | No Integration Hub sync worker | Not required | Existing upload flow remains manual and must continue through validation before consolidation. |
@@ -16,13 +16,14 @@ Founder approval moved Shopify, WooCommerce, and Google Sheets to **MVP-approved
 
 The provider catalogue may expose Shopify, WooCommerce, and Google Sheets as MVP setup options, but it must not imply that any provider is connected until server-side credentials are configured and verified.
 
-The provider credential onboarding milestone adds a narrow Shopify server-side credential availability check. It verifies whether approved server environment/secret-manager material can be resolved for the data source, then updates the source status without exposing secret values. It does not add OAuth, browser secret entry, WooCommerce credentials, Google Sheets credentials, or live Shopify API proof beyond the subsequent sync worker run.
+The provider credential onboarding milestone adds narrow Shopify and WooCommerce server-side credential availability checks. It verifies whether approved server environment/secret-manager material can be resolved for the data source, then updates the source status without exposing secret values. It does not add OAuth, browser secret entry, Google Sheets credentials, webhook authentication, or direct provider secret storage in application tables.
 
 ## Credential boundary
 
 - Provider access tokens, OAuth secrets, WooCommerce keys, Google credentials, webhook secrets, database credentials, and Supabase service-role keys must never be stored in `data_sources.connection_metadata`, client components, browser bundles, fixtures, screenshots, or committed files.
 - Provider credential implementation must be server-only and encrypted or otherwise protected according to the approved secret-management design before any MVP connector can perform live provider API access.
 - The Phase 0.5 Shopify MVP worker reads optional `SHOPIFY_CONNECTOR_CREDENTIALS_JSON` only from ignored server environment/secret management. The value must map a reviewed `data_source_id` or safe source key to a Shopify shop domain and Admin API token. Do not paste the value into chat, docs, screenshots, fixtures, Git, or client code.
+- The Phase 0.5 WooCommerce MVP worker reads optional `WOOCOMMERCE_CONNECTOR_CREDENTIALS_JSON` only from ignored server environment/secret management. The value must map a reviewed `data_source_id` or safe source key to an HTTPS WooCommerce site URL, consumer key, consumer secret, and optional REST API version. Do not paste the value into chat, docs, screenshots, fixtures, Git, or client code.
 - Browser-facing Integration Hub UI may display provider status, credential status, and safe help text only.
 - MVP providers must keep `credential_status = 'missing'` until a reviewed provider-specific credential flow or approved server-side secret entry exists and the server-side verifier records availability.
 
@@ -62,11 +63,11 @@ Provider/API payload
 The Import API currently implements the raw ingestion part of this path. The
 pipeline handoff for `inventory_snapshot`, `product_master`, `store_master`,
 and `sales_history` external records is documented in
-`docs/PHASE_0_5_PIPELINE_HANDOFF.md`. The Shopify MVP worker now writes
-`product_master` and `inventory_snapshot` raw external records, then hands off
-to `normalize_external_records(sync_job_id)` through the authenticated server
-action. WooCommerce, Google Sheets, scheduled workers, webhooks, and provider
-credential setup UI are still not implemented.
+`docs/PHASE_0_5_PIPELINE_HANDOFF.md`. The Shopify and WooCommerce MVP workers
+write `product_master` and `inventory_snapshot` raw external records, then hand
+off to `normalize_external_records(sync_job_id)` through the authenticated
+server action. Google Sheets, scheduled workers, webhooks, browser credential
+entry, and OAuth flows are still not implemented.
 
 ## Phase leakage guardrails
 

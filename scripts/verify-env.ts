@@ -11,6 +11,7 @@ const requiredKeys = [
 const optionalKeys = [
   "IMPORT_API_TOKEN_HASH_SECRET",
   "SHOPIFY_CONNECTOR_CREDENTIALS_JSON",
+  "WOOCOMMERCE_CONNECTOR_CREDENTIALS_JSON",
 ];
 const allowedKeySet = new Set([...requiredKeys, ...optionalKeys]);
 const examplePath = path.join(root, ".env.example");
