@@ -20,6 +20,7 @@ Phase 0.5 is about safe ingestion from external retail systems. It is not a gene
 - RetailOS Import API for tenant-scoped inbound records.
 - External record storage with provider/source identifiers.
 - Sync jobs with statuses, attempts, idempotency, audit, and errors.
+- Scheduled sync metadata and a protected cron executor for accepted MVP provider workers.
 - Server-side credential availability checks for approved MVP providers, starting with Shopify and WooCommerce.
 - Webhook event table for received provider events.
 - Normalization from raw external records into the existing canonical validation/consolidation pipeline.
@@ -89,11 +90,12 @@ Connector depth and retry/rollback rules are recorded in
 
 Shopify, WooCommerce, and Google Sheets are now MVP-approved in Phase 0.5, but
 they remain credential-gated. Shopify and WooCommerce have server-only MVP
-workers that can run after credential verification. Google Sheets must not show
-a connected state or perform live provider API calls until server-side
-credential configuration and a provider-specific worker are implemented and
-verified. POS/ERP and custom backend remain scaffold/import-API paths unless
-separately approved.
+workers that can run after credential verification, including through the
+protected scheduled sync executor when a tenant-scoped schedule exists. Google
+Sheets must not show a connected state or perform live provider API calls until
+server-side credential configuration and a provider-specific worker are
+implemented and verified. POS/ERP and custom backend remain scaffold/import-API
+paths unless separately approved.
 
 ## Pipeline handoff
 
@@ -112,6 +114,7 @@ write canonical products, locations, or sales facts in Phase 0.5.
 - Every integration row must carry `organization_id`.
 - Any location-specific record must carry location scope or be explicitly unresolved.
 - Sync jobs must be idempotent and replay-aware.
+- Scheduled sync routes must require `CRON_SECRET`, claim due schedules with a lock, and enqueue deterministic idempotency keys before provider access.
 - Webhook handlers must verify provider authenticity before trusting payloads.
 - API keys or tokens must be hashed/encrypted where appropriate and never logged.
 - All sensitive connector actions require audit logs.

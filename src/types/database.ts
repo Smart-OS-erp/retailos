@@ -1064,6 +1064,51 @@ export type Database = {
         };
         Relationships: [];
       };
+      data_source_sync_schedules: {
+        Row: {
+          id: string;
+          organization_id: string;
+          data_source_id: string;
+          status: "enabled" | "paused";
+          interval_minutes: number;
+          next_run_at: string;
+          locked_until: string | null;
+          last_enqueued_at: string | null;
+          last_sync_job_id: string | null;
+          failure_count: number;
+          run_as_user_id: string;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          data_source_id: string;
+          status?: "enabled" | "paused";
+          interval_minutes?: number;
+          next_run_at?: string;
+          locked_until?: string | null;
+          last_enqueued_at?: string | null;
+          last_sync_job_id?: string | null;
+          failure_count?: number;
+          run_as_user_id?: string;
+          created_by?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          status?: "enabled" | "paused";
+          interval_minutes?: number;
+          next_run_at?: string;
+          locked_until?: string | null;
+          last_enqueued_at?: string | null;
+          last_sync_job_id?: string | null;
+          failure_count?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       sync_jobs: {
         Row: {
           id: string;
