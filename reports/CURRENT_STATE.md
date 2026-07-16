@@ -1,6 +1,6 @@
 Project: RetailOS
 Active Phase: Phase 0.5 — Integration Hub MVP
-Active Milestone: M0-R — Harness Reconciliation and Production Hardening
+Active Milestone: M0-UI — RetailOS UI Foundation Implementation
 
 Current Production Commit: d19a4635d32bfc5b0d26916e3efbd8603e751372
 Current Production Deployment: dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE
@@ -9,8 +9,9 @@ Production URL: https://retailos-ten.vercel.app
 Implementation Status:
 - Phase 0 foundation routes, onboarding, data intake, validation, consolidation, inventory recovery, projectisation, deterministic Copilot, and workspaces exist in code.
 - Phase 0.5 Integration Hub setup UI, data-source RPCs, Import API route, Import API credential/control-plane, external-record storage, sync jobs/errors, normalization handoff, provider MVP promotion, and Shopify MVP worker exist in `main`.
-- Shopify worker is server-only and credential-gated. It writes `product_master` and `inventory_snapshot` records to `external_records`, then hands off to `normalize_external_records(sync_job_id)`.
-- WooCommerce worker, Google Sheets worker, scheduled workers, provider credential setup UI/OAuth, product/location/sales canonical write approval flows, and automatic intelligence recalculation from normalized uploads are not complete.
+- M0-UI foundation work is in progress on branch `m0-ui-foundation-implementation`.
+- M0-UI adds shared frontend primitives only: shadcn/ui-compatible foundation, design tokens, app shell/topbar/navigation primitives, tenant market formatting, status presentation, RetailDataGrid, reusable state/card/feed/location primitives, documentation, and tests.
+- Shopify worker is server-only and credential-gated. WooCommerce worker, Google Sheets worker, scheduled workers, provider credential setup UI/OAuth, product/location/sales canonical write approval flows, and automatic intelligence recalculation from normalized uploads are not complete.
 
 Verification Status:
 - Vercel production deployment `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE` is READY and aliased to `https://retailos-ten.vercel.app`.
@@ -21,12 +22,14 @@ Verification Status:
 - Vercel Node runtime setting is aligned to `22.x`.
 - `npm run test:live-phase0-schema` passed during M0-R for 44 relation/view endpoints and 16 RPC endpoints.
 - `npm run test:live-supabase` passed during M0-R for Auth, onboarding, audit, RBAC, and two-tenant RLS.
+- M0-UI local typecheck, focused unit tests, and lint have passed during implementation; full validation must pass before handoff.
 - GitHub `main` branch is currently unprotected; secret scanning and push protection are enabled; Dependabot security updates are disabled.
 
 Database Migration Status:
 - Repository contains 12 Supabase migrations from secure foundation through Phase 0.5 provider MVP promotion.
+- M0-UI does not add database migrations.
 - Hosted schema/RLS verification passed during M0-R.
-- Supabase CLI is not installed in this shell, so `supabase migration list`, `supabase db reset`, and CLI migration-history reconciliation are not verified in this M0-R run yet.
+- Supabase CLI is not installed in this shell, so `supabase migration list`, `supabase db reset`, and CLI migration-history reconciliation remain unverified.
 - No destructive production database operation is authorized or performed.
 
 Known Runtime Issues:
@@ -35,8 +38,9 @@ Known Runtime Issues:
 - Resolution: Production `DATABASE_URL` was replaced from ignored local secret management, production was redeployed as `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE`, and fresh Import API smoke passed.
 
 Current Mode:
-- Reconcile source-of-truth docs, AGENTS.md, harness rules, migration/deployment evidence, production smoke evidence, GitHub hygiene, and release checkpoint.
-- Do not implement UI Foundation, dashboards, product features, new providers, future phases, or new integrations during M0-R.
+- Implement the approved RetailOS UI Foundation milestone after M0-R acceptance.
+- Do not finalize navigation taxonomy, dashboard KPIs, roles, statuses, supplier/warehouse/finance terminology, demo businesses, demo values, or other retail-domain assumptions during M0-UI.
+- Do not add dashboards as final product screens, new providers, future phases, POS, finance, wholesale, warehouse management, forecasting, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
 
 Next Required Milestone:
-- M0-UI — RetailOS UI Foundation Implementation, only after M0-R PR is reviewed and accepted.
+- Review and accept M0-UI PR before broad Phase 0/0.5 UI expansion.

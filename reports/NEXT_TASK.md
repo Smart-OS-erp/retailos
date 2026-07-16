@@ -1,23 +1,20 @@
 Next Task:
-Complete and merge M0-R — Harness Reconciliation and Production Hardening.
+Complete, review, and merge M0-UI — RetailOS UI Foundation Implementation.
 
 Required before acceptance:
 
-- AGENTS.md renders correctly and has the operational start section.
-- README and source-of-truth reports match actual `main` and production state.
-- Production deployment, commit, environment names, and runtime evidence are recorded.
-- Import API production database failures are resolved and recorded.
-- Fresh production Import API smoke passes using synthetic data and cleanup.
-- Production runtime logs show no new relevant Import API 5xx after the smoke.
-- Vercel Node runtime setting is aligned with `package.json`.
-- Supabase migration history is reconciled if CLI access is available; otherwise exact owner action remains open.
-- GitHub stale merged branches are reconciled where safe.
-- Branch protection and repository visibility decisions are documented.
-- `reports/RELEASE_CHECKPOINT.md` is created.
-- Full validation suite is run or environment-dependent blockers are documented honestly.
-
-Next Approved Milestone After M0-R:
-M0-UI — RetailOS UI Foundation Implementation.
+- shadcn/ui-compatible foundation is configured and Ant Design remains absent.
+- shared design tokens are available through `src/app/globals.css` and foundation primitives.
+- shared application shell includes desktop sidebar, mobile navigation, topbar, organization switcher shell, user menu shell, global search shell, skip link, and main landmark.
+- navigation configuration is centralized and marked provisional.
+- dashboard/card configuration is centralized and marked provisional; it must not be presented as final product requirements.
+- tenant market defaults provide Nigeria, `en-NG`, `NGN`, and `Africa/Lagos`, with an override path.
+- currency/date/timezone formatting flows through shared utilities.
+- shared status presentation provides labels, tones, and non-color assistive labels.
+- RetailDataGrid exists and is used for the representative Integration Hub data-source table.
+- reusable KPI card, chart card, activity feed, stock-location, loading, empty, error, forbidden, stale, and success primitives exist.
+- tests cover M0-UI defaults, provisional config, status mapping, Ant Design absence, no manual currency symbol concatenation in UI modules, and representative RetailDataGrid reuse.
+- lint, typecheck, test, security, and build pass.
 
 M0-UI may implement:
 

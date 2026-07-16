@@ -129,3 +129,16 @@ The first M0.9 implementation PR should be a narrow foundation PR:
 6. document provisional placeholder boundaries.
 
 Do not expand into finished feature screens until the foundation is accepted.
+
+## Implementation evidence
+
+The M0-UI implementation PR establishes the shared foundation without adding final dashboards or future-phase product screens:
+
+- `components.json` records the shadcn/ui-compatible foundation and aliases.
+- `src/app/globals.css` exposes shared theme/design tokens and foundation primitive styles.
+- `src/lib/ui/market.ts` provides Nigeria/`en-NG`/`NGN`/`Africa/Lagos` defaults and tenant override formatting helpers.
+- `src/lib/ui/navigation-config.ts`, `src/lib/ui/dashboard-config.ts`, and `src/lib/ui/status.ts` centralize provisional navigation, provisional dashboard card slots, and status presentation.
+- `src/components/app-shell.tsx`, `src/components/mobile-navigation.tsx`, and `src/components/app-topbar.tsx` provide shared shell, responsive navigation, topbar, organization switcher shell, user menu shell, and global search shell.
+- `src/components/ui/*` provides shared button/card/badge/alert/skeleton/state/KPI/chart/activity/stock-location/DataGrid primitives.
+- `src/components/integration-hub.tsx` uses `RetailDataGrid`, shared status presentation, and shared date/time formatting as the representative migration.
+- `tests/unit/ui-foundation.test.ts` guards defaults, provisional boundaries, Ant Design absence, shared formatting, and RetailDataGrid reuse.

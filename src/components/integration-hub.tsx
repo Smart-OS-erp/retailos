@@ -1,11 +1,17 @@
 import type { ReactNode } from "react";
 
-import { FormField } from "@/components/form-field";
-import { Notice } from "@/components/notice";
 import {
   createIntegrationDataSource,
   requestDataSourceSync,
 } from "@/app/integrations/actions";
+import { FormField } from "@/components/form-field";
+import { Notice } from "@/components/notice";
+import {
+  RetailDataGrid,
+  type RetailDataGridColumn,
+} from "@/components/ui/retail-data-grid";
+import { StatusBadge } from "@/components/ui/status-badge";
+import { formatRetailDateTime } from "@/lib/ui/market";
 import type { Database } from "@/types/database";
 
 type Provider = Pick<
@@ -74,25 +80,8 @@ const errorMessages: Record<string, string> = {
   "unsupported-provider": "That provider is not enabled for Phase 0.5.",
 };
 
-function formatStatus(value: string) {
-  return value.replaceAll("_", " ");
-}
-
-function statusTone(value: string) {
-  if (["connected", "succeeded", "verified", "processed"].includes(value)) {
-    return "status-badge-success";
-  }
-  if (["error", "failed", "configuration_required"].includes(value)) {
-    return "status-badge-error";
-  }
-  if (["syncing", "queued", "running", "received"].includes(value)) {
-    return "status-badge-warning";
-  }
-  return "";
-}
-
 function dateLabel(value: string | null) {
-  return value ? new Date(value).toLocaleString("en-NG") : "Not yet";
+  return value ? formatRetailDateTime(value) : "Not yet";
 }
 
 export function IntegrationHub({
@@ -108,7 +97,9 @@ export function IntegrationHub({
   recentSyncJobs,
   returnPath,
 }: IntegrationHubProps) {
-  const providerById = new Map(providers.map((provider) => [provider.id, provider]));
+  const providerById = new Map(
+    providers.map((provider) => [provider.id, provider]),
+  );
   const latestJobBySource = new Map<string, SyncJob>();
   for (const job of recentSyncJobs) {
     if (!latestJobBySource.has(job.data_source_id)) {
@@ -122,6 +113,80 @@ export function IntegrationHub({
   const sourcesNeedingAttention = dataSources.filter((source) =>
     ["configuration_required", "error"].includes(source.status),
   ).length;
+
+  const columns: readonly RetailDataGridColumn<DataSource>[] = [
+    {
+      header: "Source",
+      id: "source",
+      render: (source) => (
+        <>
+          <strong>{source.name}</strong>
+          <span className="table-meta">{source.source_key}</span>
+        </>
+      ),
+    },
+    {
+      header: "Provider",
+      id: "provider",
+      render: (source) =>
+        providerById.get(source.provider_id)?.display_name ?? "Unknown provider",
+    },
+    {
+      header: "Status",
+      id: "status",
+      render: (source) => <StatusBadge status={source.status} />,
+    },
+    {
+      header: "Credentials",
+      id: "credentials",
+      render: (source) => <StatusBadge status={source.credential_status} />,
+    },
+    {
+      header: "Last sync",
+      id: "last-sync",
+      render: (source) => dateLabel(source.last_sync_requested_at),
+    },
+    {
+      header: "Latest job",
+      id: "latest-job",
+      render: (source) => {
+        const latestJob = latestJobBySource.get(source.id);
+        if (!latestJob) return <span className="table-meta">No sync jobs yet</span>;
+
+        return (
+          <>
+            <StatusBadge status={latestJob.status} />
+            {latestJob.error_summary ? (
+              <span className="table-meta">{latestJob.error_summary}</span>
+            ) : null}
+          </>
+        );
+      },
+    },
+    {
+      header: "Action",
+      id: "action",
+      render: (source) => {
+        const provider = providerById.get(source.provider_id);
+        const canRequestSync = Boolean(canSync && provider?.supports_manual_sync);
+
+        if (!canRequestSync) {
+          return <span className="table-meta">No manual sync</span>;
+        }
+
+        return (
+          <form action={requestDataSourceSync}>
+            <input name="organizationId" type="hidden" value={organizationId} />
+            <input name="dataSourceId" type="hidden" value={source.id} />
+            <input name="returnPath" type="hidden" value={returnPath} />
+            <button className="button button-secondary" type="submit">
+              Request sync
+            </button>
+          </form>
+        );
+      },
+    },
+  ];
 
   return (
     <div className="content-grid">
@@ -139,7 +204,8 @@ export function IntegrationHub({
       ) : null}
       {queryState?.error ? (
         <Notice title="Integration action needs attention" tone="error">
-          {errorMessages[queryState.error] ?? "RetailOS failed closed. Review the source and try again."}
+          {errorMessages[queryState.error] ??
+            "RetailOS failed closed. Review the source and try again."}
         </Notice>
       ) : null}
 
@@ -262,96 +328,13 @@ export function IntegrationHub({
           </span>
         </div>
 
-        {dataSources.length ? (
-          <div className="table-wrap">
-            <table className="data-table">
-              <thead>
-                <tr>
-                  <th>Source</th>
-                  <th>Provider</th>
-                  <th>Status</th>
-                  <th>Credentials</th>
-                  <th>Last sync</th>
-                  <th>Latest job</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {dataSources.map((source) => {
-                  const provider = providerById.get(source.provider_id);
-                  const latestJob = latestJobBySource.get(source.id);
-                  const canRequestSync = Boolean(
-                    canSync && provider?.supports_manual_sync,
-                  );
-
-                  return (
-                    <tr key={source.id}>
-                      <td>
-                        <strong>{source.name}</strong>
-                        <span className="table-meta">{source.source_key}</span>
-                      </td>
-                      <td>{provider?.display_name ?? "Unknown provider"}</td>
-                      <td>
-                        <span className={`status-badge ${statusTone(source.status)}`}>
-                          {formatStatus(source.status)}
-                        </span>
-                      </td>
-                      <td>{formatStatus(source.credential_status)}</td>
-                      <td>{dateLabel(source.last_sync_requested_at)}</td>
-                      <td>
-                        {latestJob ? (
-                          <>
-                            <span className={`status-badge ${statusTone(latestJob.status)}`}>
-                              {formatStatus(latestJob.status)}
-                            </span>
-                            {latestJob.error_summary ? (
-                              <span className="table-meta">
-                                {latestJob.error_summary}
-                              </span>
-                            ) : null}
-                          </>
-                        ) : (
-                          <span className="table-meta">No sync jobs yet</span>
-                        )}
-                      </td>
-                      <td>
-                        {canRequestSync ? (
-                          <form action={requestDataSourceSync}>
-                            <input
-                              name="organizationId"
-                              type="hidden"
-                              value={organizationId}
-                            />
-                            <input
-                              name="dataSourceId"
-                              type="hidden"
-                              value={source.id}
-                            />
-                            <input
-                              name="returnPath"
-                              type="hidden"
-                              value={returnPath}
-                            />
-                            <button className="button button-secondary" type="submit">
-                              Request sync
-                            </button>
-                          </form>
-                        ) : (
-                          <span className="table-meta">No manual sync</span>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <p className="empty-state">
-            No data source exists yet. Add CSV / Excel, Import API, or an
-            MVP-approved provider to begin Phase 0.5 setup.
-          </p>
-        )}
+        <RetailDataGrid
+          caption="Organization data sources"
+          columns={columns}
+          emptyTitle="No data source exists yet"
+          getRowKey={(source) => source.id}
+          rows={dataSources}
+        />
       </section>
 
       {footer}

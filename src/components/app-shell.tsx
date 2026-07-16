@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 
+import { AppTopbar } from "@/components/app-topbar";
 import { BrandLockup } from "@/components/brand-lockup";
 import { MobileNavigation } from "@/components/mobile-navigation";
 import type { OrganizationRole } from "@/lib/auth/authorization";
 import { roleWorkspaceLabel } from "@/lib/navigation/onboarding";
-import { workspaceNavigation } from "@/lib/navigation/workspace";
+import { retailNavigationForRole } from "@/lib/ui/navigation-config";
 
 type AppShellProps = {
   children: ReactNode;
@@ -33,14 +34,16 @@ export function AppShell({
             <strong>{organizationName}</strong>
           </div>
           <nav className="primary-nav" aria-label="Primary">
-            {workspaceNavigation(role).map((item) => (
-              <Link className="nav-link" href={item.href} key={item.href}>
+            {retailNavigationForRole(role).map((item) => (
+              <Link
+                className="nav-link"
+                data-provisional={item.provisional}
+                href={item.href}
+                key={item.href}
+              >
                 {item.label}
               </Link>
             ))}
-            <Link className="nav-link" href="/onboarding">
-              Setup status
-            </Link>
           </nav>
           <div className="session-card">
             <span>{roleWorkspaceLabel(role)}</span>
@@ -53,6 +56,11 @@ export function AppShell({
       </aside>
       <div className="app-main">
         <MobileNavigation
+          email={email}
+          organizationName={organizationName}
+          role={role}
+        />
+        <AppTopbar
           email={email}
           organizationName={organizationName}
           role={role}

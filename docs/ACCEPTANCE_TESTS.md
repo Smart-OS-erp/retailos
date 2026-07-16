@@ -32,10 +32,11 @@
 - Current hosted Supabase confirmation email behavior is explicitly accepted for the protected non-production Phase 0 demo. Token-hash template activation through custom SMTP/eligible plan support remains a production-governance follow-up if required before production launch.
 - M0-R production smoke evidence: production Import API smoke passed against `https://retailos-ten.vercel.app` on deployment `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE` after correcting Production `DATABASE_URL`; `/login` and `/signup` returned 200; `/workspace` redirected unauthenticated users to `/login`; post-smoke runtime error/fatal logs were empty for the inspected deployment window.
 - M0-R blocker: Supabase CLI migration-history verification and local `supabase db reset` were not run because the CLI is not installed in this shell.
+- M0-UI local evidence: `tests/unit/ui-foundation.test.ts` verifies Nigeria/`en-NG`/`NGN`/`Africa/Lagos` defaults, tenant market overrides, shared Intl formatting, provisional navigation/dashboard configuration, non-color status presentation, shadcn/ui configuration, Ant Design absence, no manual currency-symbol concatenation in UI modules, and representative `RetailDataGrid` reuse.
 
 ## M0.9 UI foundation acceptance
 
-M0.9 acceptance applies only after implementation starts in a later PR. This harness update approves the milestone; it does not satisfy these checks yet.
+M0.9 acceptance applies to the M0-UI implementation PR. The implementation must remain foundation-only and must not turn provisional placeholder configuration into final product truth.
 
 - shadcn/ui is installed/configured as the approved foundation and Ant Design is absent.
 - shared design tokens are documented, testable, and wired into shared UI primitives.
