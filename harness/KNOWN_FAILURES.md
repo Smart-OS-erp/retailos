@@ -25,6 +25,16 @@
 **Failure:** placeholder lint/test/build steps are read as product validation.
 **Prevention:** steps print explicit TODO/not-applicable notices and validation reports preserve that distinction.
 
+## UI foundation product drift
+
+**Failure:** M0.9 placeholder navigation, dashboard KPIs, module groups, roles, statuses, supplier/warehouse/finance terminology, locations, or demo records are treated as final product requirements.
+**Prevention:** mark M0.9 placeholders as provisional in configuration, documentation, tests, and UI copy until retail-consultant validation and product discovery approve them.
+
+## Component-library drift
+
+**Failure:** a second UI framework or one-off component pattern appears during the shared UI foundation.
+**Prevention:** shadcn/ui is the approved foundation, Ant Design is prohibited, and shared shell, RetailDataGrid, formatting, status, loading, empty, and error primitives must be reused by new UI work.
+
 ## Unreproducible platform state
 
 **Failure:** Supabase/Vercel dashboard settings exist without migrations/configuration/evidence.
