@@ -29,6 +29,7 @@ Production requires these names:
 Optional provider credentials must remain server-only:
 
 - `SHOPIFY_CONNECTOR_CREDENTIALS_JSON`
+- `WOOCOMMERCE_CONNECTOR_CREDENTIALS_JSON`
 
 Do not paste values into chat. Set them directly in Vercel environment settings or through authenticated CLI/API. `DATABASE_URL`, service-role keys, token secrets, and provider credentials must be sensitive/server-only.
 
