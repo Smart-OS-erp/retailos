@@ -2,10 +2,8 @@ Next Task:
 Choose one approved next implementation lane after the relevant harness PR is reviewed and merged.
 
 Lane A — Phase 0.5 Integration Hub MVP:
-- Restore the approved local smoke-test secret through ignored env/secret-management only; do not paste it into chat.
-- Rerun `npm run smoke:import-api -- --url https://retailos-ten.vercel.app`.
-- If smoke passes, document Phase 0.5 hosted acceptance evidence.
-- Then implement one provider-specific MVP worker at a time, starting with the highest-priority provider.
+- Implement one provider-specific MVP worker at a time, starting with the highest-priority provider.
+- Use server-only credential handling, retries, external record writes, normalization tests, and sync evidence.
 - Shopify, WooCommerce, and Google Sheets may create `mvp` data sources, but must remain credential-gated until server-side credential storage and provider workers are implemented.
 - Keep POS/ERP and custom backend scaffold/import-API paths unless a later phase explicitly approves direct connectors.
 - Keep the rule that RetailOS connects to the system behind a website, not to "a website" directly.
@@ -17,8 +15,9 @@ Verified:
   - `20260715152000_phase0_5_provider_mvp_promotion.sql`
 - Hosted schema/RLS verification passes for 44 relation/view endpoints and 16 RPC endpoints.
 - Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.
-- Vercel production deployment `dpl_BTqoLLktbEcaHZVMMWJULHQ3XWXe` is READY.
+- Vercel production deployment `dpl_D4MdYF9QRAQQwxa83GekhncvcCLZ` is READY.
 - Live root route redirects safely to login.
+- `npm run smoke:import-api -- --url https://retailos-ten.vercel.app` passes against production after Supabase DB password rotation and Vercel Production `DATABASE_URL` update to the working pooler URL on port `6543`.
 
 Do not build outside the selected approved lane. Do not add POS, finance, wholesale, forecasting, warehouse management, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
 

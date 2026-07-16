@@ -2,11 +2,10 @@
 
 ## Phase 0.5 implementation blockers
 
-- **Post-migration Import API smoke is blocked locally by a missing ignored smoke secret.** Hosted pending migrations are now applied and hosted schema/RLS checks pass, but `npm run smoke:import-api -- --url https://retailos-ten.vercel.app` is blocked because `IMPORT_API_TOKEN_HASH_SECRET` is not available in ignored local env. Vercel env pull returned protected secret placeholders, not usable values, and a 2026-07-15 local env presence check found no usable ignored local value. Owner/action: restore the approved smoke secret through ignored env/secret-management only, then rerun the smoke.
 - **Connector credential handling must be implemented before any live provider API access.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries before marking Shopify, WooCommerce, or Google Sheets connected.
 - **Provider workers are not implemented yet.** Shopify, WooCommerce, and Google Sheets can now be created as MVP-depth data sources, but live provider API calls and scheduled workers are not implemented. Owner/action: implement one provider-specific worker at a time with credential storage, retries, external record writes, and normalization tests.
 - **Product/location/sales canonical write approval flows are not implemented yet.** Import API record types now map into persisted evidence, but product master, store master, and sales history records do not directly mutate canonical products, locations, SKUs, or sales facts. Owner/action: keep as review-gated unless a later active phase approves canonical write workflows.
-- **Database password was exposed in chat during unblock.** The pooler `DATABASE_URL` now works for the protected demo, but the password was pasted into the agent conversation. Owner/action: rotate the Supabase database password, update Vercel `DATABASE_URL` with the rotated pooler/session-pooler string, redeploy, and rerun `npm run smoke:import-api`.
+- **Provider worker acceptance remains open.** Production Import API smoke now passes, but Shopify, WooCommerce, and Google Sheets live API workers are not implemented. Owner/action: implement one provider-specific worker at a time with server-only credential handling and sync evidence.
 
 ## Verified Phase 0 acceptance controls
 
@@ -18,10 +17,11 @@
 - RetailOS Import API authentication/idempotency/security boundary is merged in PR #14.
 - RetailOS Import API credential/control-plane foundation is merged in PR #15, applied to hosted Supabase, and verified.
 - Required Vercel Production/Preview env vars are configured.
-- Vercel production deployment `dpl_BTqoLLktbEcaHZVMMWJULHQ3XWXe` is READY, protected, and aliased to `https://retailos-ten.vercel.app`.
+- Vercel production deployment `dpl_D4MdYF9QRAQQwxa83GekhncvcCLZ` is READY, protected, and aliased to `https://retailos-ten.vercel.app`.
 - Protected root route renders the RetailOS login page.
 - Unauthenticated Import API POST fails closed with `401 authentication_required`.
-- Authenticated Import API smoke passed against production: tenant-scoped credential creation, external record acceptance/persistence, idempotent replay, and cleanup were verified.
+- Authenticated Import API smoke passed against production on 2026-07-16: tenant-scoped credential creation, one external record acceptance/persistence, idempotent replay, and cleanup were verified.
+- Supabase database password was rotated, Vercel Production `DATABASE_URL` was updated to the working Supabase pooler URL on port `6543`, production was redeployed, and ignored temporary secret files were removed after verification.
 - Connector depth decisions are updated: Shopify, WooCommerce, and Google Sheets are MVP-approved but credential-gated; Import API is the approved live ingestion path.
 - Sync retry/rollback behavior is documented before scheduled sync workers are enabled.
 - Local integration tests verify all approved Import API record types map into upload/raw/validation evidence without direct canonical writes.
