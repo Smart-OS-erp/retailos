@@ -15,6 +15,40 @@ This file records constraints for Phase 0 product implementation. The approved d
 
 Machine-readable starter tokens live in `figma-handoff/design-tokens.json`. They are documentation values, not a shipped UI theme. Token changes require design and accessibility review.
 
+## Approved UI foundation milestone
+
+M0.9 — RetailOS UI Foundation is approved as the shared frontend-system milestone for Phase 0. It is allowed to establish the visual language and component architecture before broad Phase 0 feature expansion.
+
+Stable M0.9 decisions:
+
+- shadcn/ui is the approved visual foundation.
+- Ant Design is prohibited.
+- shared design tokens are required.
+- a shared application shell is required.
+- shared responsive navigation and topbar primitives are required.
+- shared organization switcher, user menu, and global search shell are required.
+- central navigation and dashboard configuration are required.
+- shared RetailDataGrid is required for new tables unless an approved exception exists.
+- shared status mapping is required.
+- shared currency, date, locale, and timezone formatting utilities are required.
+- tenant-aware market configuration is required.
+- African-market demo defaults must use Nigeria, `en-NG`, `NGN`, and Africa-Lagos, implemented with the `Africa/Lagos` timezone identifier, unless tenant settings override them.
+- UI modules must not manually concatenate currency symbols.
+- new pages must use the shared shell.
+
+Provisional M0.9 decisions:
+
+- navigation labels, groups, and module ordering;
+- dashboard KPIs, card order, chart selection, and configurable placeholder dashboard content;
+- purchase-order placeholder content, finance navigation, and EDI placement;
+- user roles shown in demo UI;
+- statuses, workflows, supplier terminology, and warehouse terminology;
+- demo businesses, locations, suppliers, values, and records.
+
+The navigation structure, dashboard KPIs, card arrangement, module grouping, terminology, statuses, workflows, roles, locations, suppliers, and demo records introduced during the UI foundation milestone are provisional placeholders. They validate the design system and technical component architecture only. They are not final product requirements and must remain replaceable following retail-consultant validation and product-discovery decisions.
+
+The provided RetailOS visual reference may guide premium SaaS feel, density, spacing, and mobile/desktop responsiveness. It must not be treated as final information architecture, final metrics, final roles, final suppliers, final finance/purchasing/warehouse scope, or final product requirements.
+
 ## Component expectations
 
 Future components need documented states for loading, empty, partial, stale, error, offline/retry, forbidden, and success. Tables must remain understandable on mobile. Actions must distinguish proposal, approval, execution, and rollback state.
