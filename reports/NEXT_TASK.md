@@ -1,66 +1,43 @@
 Next Task:
-Choose one approved next implementation lane after the relevant harness PR is reviewed and merged.
+Complete and merge M0-R — Harness Reconciliation and Production Hardening.
 
-Lane A — Phase 0.5 Integration Hub MVP:
-- Validate, review, merge, and deploy the Shopify MVP worker branch.
-- After Shopify worker acceptance, implement one remaining provider-specific MVP worker at a time.
-- Use server-only credential handling, retries, external record writes, normalization tests, and sync evidence.
-- Shopify may run through the server-only MVP worker when a reviewed server-side credential entry exists. WooCommerce and Google Sheets may create `mvp` data sources, but must remain credential-gated until their provider workers are implemented.
-- Keep POS/ERP and custom backend scaffold/import-API paths unless a later phase explicitly approves direct connectors.
-- Keep the rule that RetailOS connects to the system behind a website, not to "a website" directly.
+Required before acceptance:
 
-Verified:
-- Hosted Phase 0.5 pending migrations are applied:
-  - `20260715133000_phase0_5_pipeline_handoff.sql`
-  - `20260715143000_phase0_5_record_type_mappings.sql`
-  - `20260715152000_phase0_5_provider_mvp_promotion.sql`
-- Hosted schema/RLS verification passes for 44 relation/view endpoints and 16 RPC endpoints.
-- Live Supabase Auth, onboarding, audit, RBAC, and two-tenant RLS verification passes.
-- Vercel production deployment `dpl_D4MdYF9QRAQQwxa83GekhncvcCLZ` is READY.
-- Live root route redirects safely to login.
-- `npm run smoke:import-api -- --url https://retailos-ten.vercel.app` passes against production after Supabase DB password rotation and Vercel Production `DATABASE_URL` update to the working pooler URL on port `6543`.
+- AGENTS.md renders correctly and has the operational start section.
+- README and source-of-truth reports match actual `main` and production state.
+- Production deployment, commit, environment names, and runtime evidence are recorded.
+- Import API production database failures are resolved and recorded.
+- Fresh production Import API smoke passes using synthetic data and cleanup.
+- Production runtime logs show no new relevant Import API 5xx after the smoke.
+- Vercel Node runtime setting is aligned with `package.json`.
+- Supabase migration history is reconciled if CLI access is available; otherwise exact owner action remains open.
+- GitHub stale merged branches are reconciled where safe.
+- Branch protection and repository visibility decisions are documented.
+- `reports/RELEASE_CHECKPOINT.md` is created.
+- Full validation suite is run or environment-dependent blockers are documented honestly.
 
-Do not build outside the selected approved lane. Do not add POS, finance, wholesale, forecasting, warehouse management, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
+Next Approved Milestone After M0-R:
+M0-UI — RetailOS UI Foundation Implementation.
 
-Approved Next Implementation Prompt — M0.9 RetailOS UI Foundation:
+M0-UI may implement:
 
-After this harness update is reviewed and merged, a human may explicitly start M0.9 with this prompt:
+- design tokens;
+- shadcn/ui foundation;
+- shared application shell;
+- responsive navigation/topbar primitives;
+- organization switcher;
+- user menu;
+- global search shell;
+- central navigation and dashboard configuration;
+- tenant market defaults;
+- shared currency/date/timezone formatting;
+- reusable KPI/chart/activity/status/loading/empty/error primitives;
+- stock-location primitives;
+- RetailDataGrid;
+- accessibility baseline;
+- responsive behavior;
+- documentation and tests.
 
-```text
-Implement M0.9 — RetailOS UI Foundation.
+M0-UI must not finalize retail-domain requirements that still require consultant validation and product discovery. Navigation labels, groups, KPIs, card order, chart choice, suppliers, warehouses, statuses, roles, EDI placement, finance navigation, report categories, demo businesses, demo values, and business terminology remain provisional and replaceable.
 
-Stay inside the approved Phase 0 UI foundation milestone.
-Do not finalize product requirements, module structure, workflow language, roles, statuses, suppliers, warehouse terminology, finance terminology, or demo records.
-Do not build broad product dashboards or product screens as final behavior.
-
-Implement the shared frontend foundation only:
-- design tokens
-- shadcn/ui foundation
-- shared application shell
-- responsive navigation and topbar primitives
-- organization switcher
-- user menu
-- global search shell
-- central navigation configuration
-- central dashboard configuration
-- tenant market defaults
-- Nigeria/en-NG/NGN/Africa-Lagos demo defaults, implemented with the `Africa/Lagos` timezone identifier, unless tenant settings override them
-- shared currency/date/timezone formatting utilities
-- reusable KPI cards
-- chart cards
-- activity feed primitives
-- stock-location primitives
-- RetailDataGrid
-- central status presentation
-- loading, empty, error, forbidden, stale, and success states
-- accessibility baseline
-- responsive behavior
-- documentation
-- tests
-
-Use shadcn/ui. Do not use Ant Design.
-New pages must use the shared shell.
-New tables must use RetailDataGrid unless an approved exception is documented.
-UI modules must not manually concatenate currency symbols.
-All placeholder navigation, KPIs, card ordering, statuses, workflows, roles, suppliers, locations, and demo records must be clearly marked provisional and replaceable after retail-consultant validation.
-```
+Do not start Phase 1. Do not add POS, finance, wholesale, forecasting, warehouse management, marketplace publishing, autonomous campaign execution, or real LLM agent execution.

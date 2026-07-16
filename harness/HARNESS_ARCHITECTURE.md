@@ -20,3 +20,13 @@ The harness must remain lightweight and executable before an app exists. Checks 
 ## Change rule
 
 Any change that weakens an invariant, changes a phase, introduces a new trust boundary, or suppresses a gate requires explicit human review and corresponding documentation/test updates.
+
+## Production reconciliation rules
+
+- README and `reports/CURRENT_STATE.md` must be updated in the same PR when a milestone materially changes runtime behavior.
+- A milestone cannot be accepted if deployed routes and source-of-truth documents materially disagree.
+- Every production-affecting milestone must record the deployed commit, deployment ID, rollback target, and runtime error check.
+- Every migration-affecting milestone must verify migration history or keep an explicit blocker with exact owner commands.
+- SQL Editor migration application must be reconciled with CLI migration history before later `db push` work is accepted.
+- Historical success evidence does not override current runtime errors.
+- Completion of one milestone must not block later explicitly approved milestones, but source-of-truth documents must show the actual state before moving on.

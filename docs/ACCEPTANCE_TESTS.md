@@ -23,13 +23,15 @@
 
 ## Current evidence
 
-- Local lint, strict TypeScript, unit, integration, security, dependency audit, and production build pass.
+- Local lint, strict TypeScript, unit, integration, security, dependency audit, and production build are required for every production-affecting milestone.
 - The embedded PostgreSQL integration suite creates two authenticated users and organizations, verifies own-tenant reads/updates, denies cross-tenant reads/updates, denies anonymous table access, denies direct membership writes, and verifies atomic onboarding/audit behavior.
 - Source-boundary tests verify that server-only variable names are unreachable from browser modules and protected onboarding code reauthorizes on the server.
 - The reviewed migration is applied to non-production `retailos-dev`; synthetic live Auth, onboarding, audit, RBAC, anonymous denial, and two-tenant RLS verification pass with cleanup.
 - Confirm-email signups, an eight-character minimum password, and exact local confirmation callback URLs are configured.
 - Vercel Git linkage, protected preview deployment, hosted setup/onboarding, hosted schema/RLS checks, and Supabase migration-history repair are verified for the protected non-production Phase 0 demo.
 - Current hosted Supabase confirmation email behavior is explicitly accepted for the protected non-production Phase 0 demo. Token-hash template activation through custom SMTP/eligible plan support remains a production-governance follow-up if required before production launch.
+- M0-R production smoke evidence: production Import API smoke passed against `https://retailos-ten.vercel.app` on deployment `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE` after correcting Production `DATABASE_URL`; `/login` and `/signup` returned 200; `/workspace` redirected unauthenticated users to `/login`; post-smoke runtime error/fatal logs were empty for the inspected deployment window.
+- M0-R blocker: Supabase CLI migration-history verification and local `supabase db reset` were not run because the CLI is not installed in this shell.
 
 ## M0.9 UI foundation acceptance
 
@@ -51,3 +53,14 @@ M0.9 acceptance applies only after implementation starts in a later PR. This har
 ## Evidence rules
 
 Acceptance evidence must name the environment, commit, command or scenario, outcome, and retained artifact. Placeholder, skipped, or not-yet-applicable checks are reported honestly and cannot satisfy a later product gate.
+
+Production-affecting milestones must also record:
+
+- production commit SHA;
+- Vercel deployment ID;
+- runtime error check result;
+- rollback target;
+- migration-history status;
+- whether smoke data was synthetic and cleaned up.
+
+Historical success evidence does not override current runtime errors. A milestone cannot be accepted while a current production 5xx caused by that milestone remains unresolved.

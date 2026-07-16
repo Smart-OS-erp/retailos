@@ -1,41 +1,35 @@
 # Open Blockers
 
+## M0-R production/harness blockers
+
+- **Supabase CLI migration-history reconciliation is not verified in this shell.** The `supabase` CLI is not installed, so `supabase migration list`, `supabase db reset`, and `supabase db push --dry-run` could not run. Owner/action: install and authenticate Supabase CLI, link the approved project, run the safe commands documented in `docs/SUPABASE_SETUP.md`, and record results before accepting migration-history reconciliation.
+- **GitHub `main` branch is unprotected.** GitHub API returned `Branch not protected` for `main`. Owner/action: enable branch protection requiring PRs, CI quality, security checks, no force-push, and no deletion where practical.
+- **Dependabot security updates are disabled.** GitHub repo security analysis reports secret scanning and push protection enabled, but Dependabot security updates disabled. Owner/action: enable Dependabot security updates or record founder-approved exception.
+- **Repository visibility decision remains open.** The repository is public. Owner/action: founder must decide whether to keep it public or convert it to private; do not treat obscurity as a security control, but document commercial/IP implications.
+- **Provider credential onboarding is not implemented.** Shopify worker exists but requires reviewed server-only credentials. WooCommerce and Google Sheets workers do not exist. Owner/action: implement provider credential management and one remaining provider worker at a time after M0-R.
+
 ## Phase 0.5 implementation blockers
 
-- **Connector credential handling must be implemented before any live provider API access.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries before marking Shopify, WooCommerce, or Google Sheets connected.
-- **Provider workers are not implemented yet.** Shopify, WooCommerce, and Google Sheets can now be created as MVP-depth data sources, but live provider API calls and scheduled workers are not implemented. Owner/action: implement one provider-specific worker at a time with credential storage, retries, external record writes, and normalization tests.
-- **Product/location/sales canonical write approval flows are not implemented yet.** Import API record types now map into persisted evidence, but product master, store master, and sales history records do not directly mutate canonical products, locations, SKUs, or sales facts. Owner/action: keep as review-gated unless a later active phase approves canonical write workflows.
-- **Provider worker acceptance remains open.** Production Import API smoke now passes, but Shopify, WooCommerce, and Google Sheets live API workers are not implemented. Owner/action: implement one provider-specific worker at a time with server-only credential handling and sync evidence.
+- **WooCommerce and Google Sheets workers are not implemented.** Their data sources can be created as MVP-depth, but live provider API calls remain fail-closed until workers and credentials are implemented.
+- **Scheduled sync workers are not implemented.** Manual sync exists; background scheduling remains future Phase 0.5 work.
+- **Product/location/sales canonical write approval flows are not implemented.** External record normalization produces upload/raw/validation evidence, but product master, store master, and sales history do not directly mutate canonical products, locations, SKUs, or sales facts.
+- **Automatic intelligence recalculation after normalized imports is not implemented.** Existing intelligence remains based on approved persisted/consolidated data paths.
 
-## Verified Phase 0 acceptance controls
+## Verified controls
 
-- Phase 0 foundation is implemented, deployed, and validated.
-- The reviewed foundation schema is applied to `retailos-dev`.
-- The reviewed Phase 0 expansion/data/consolidation/intelligence/projectisation/Copilot migrations are applied to `retailos-dev`.
-- The reviewed Phase 0.5 Integration Hub migration is applied to `retailos-dev`.
-- Integration Hub UI/data-source setup flow is merged in PR #13.
-- RetailOS Import API authentication/idempotency/security boundary is merged in PR #14.
-- RetailOS Import API credential/control-plane foundation is merged in PR #15, applied to hosted Supabase, and verified.
-- Required Vercel Production/Preview env vars are configured.
-- Vercel production deployment `dpl_D4MdYF9QRAQQwxa83GekhncvcCLZ` is READY, protected, and aliased to `https://retailos-ten.vercel.app`.
-- Protected root route renders the RetailOS login page.
-- Unauthenticated Import API POST fails closed with `401 authentication_required`.
-- Authenticated Import API smoke passed against production on 2026-07-16: tenant-scoped credential creation, one external record acceptance/persistence, idempotent replay, and cleanup were verified.
-- Supabase database password was rotated, Vercel Production `DATABASE_URL` was updated to the working Supabase pooler URL on port `6543`, production was redeployed, and ignored temporary secret files were removed after verification.
-- Connector depth decisions are updated: Shopify, WooCommerce, and Google Sheets are MVP-approved but credential-gated; Import API is the approved live ingestion path.
-- Sync retry/rollback behavior is documented before scheduled sync workers are enabled.
-- Local integration tests verify all approved Import API record types map into upload/raw/validation evidence without direct canonical writes.
-- Supabase migration history is repaired for all seven applied Phase 0 migrations plus the applied Phase 0.5 migrations.
-- `npm run test:live-phase0-schema` passes against hosted Supabase after Import API credential migration: 43 relation/view endpoints and 15 RPC endpoints are visible.
-- `npm run test:live-supabase` passes against hosted Supabase after migration-history repair: Auth, atomic organization creation, onboarding, audit visibility, RBAC denial, anonymous denial, and two-tenant RLS are verified.
-- PR #4, PR #5, PR #6, PR #7, PR #8, PR #9, PR #10, PR #11, PR #12, PR #13, PR #14, PR #15, PR #16, and PR #21 are merged.
-- Current Supabase hosted confirmation email behavior is accepted for the protected non-production demo only; custom SMTP/eligible plan support remains a production follow-up if the committed token-hash template is required.
-- Production governance is accepted by founder instruction on 2026-07-12.
-- Synthetic records created by live harness checks were removed by cleanup.
-- Vercel project protection reports protected preview behavior, and Git fork protection is enabled.
+- Production `DATABASE_URL` was replaced as a sensitive Vercel Production variable on July 16, 2026.
+- Production was redeployed as `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE`.
+- Fresh Import API production smoke passed after redeploy.
+- Production `/login` and `/signup` return 200.
+- Production `/workspace` redirects unauthenticated users to `/login`.
+- Post-smoke runtime error inspection found no error/fatal logs for the current production deployment in the inspected window.
+- Vercel project Node setting is aligned to `22.x`.
+- Stale merged remote branches visible locally were deleted.
 
 ## Deferred product decisions
 
-Inventory recovery thresholds, analysis windows, cost basis, confidence levels, and action catalog remain Phase 0 intelligence decisions. Phase 0.5 does not authorize changing them except as needed to consume newly synchronized validated data through the existing pipeline.
+Inventory recovery thresholds, analysis windows, cost basis, confidence levels, and action catalog remain Phase 0 intelligence decisions.
+
+M0-UI remains the next approved milestone but must keep navigation labels, dashboard KPIs, roles, statuses, supplier/warehouse/finance terminology, demo records, and business assumptions provisional until consultant validation.
 
 Phase 0.5 does not authorize POS, finance, wholesale, forecasting, warehouse management, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
