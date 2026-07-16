@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 import { BrandLockup } from "@/components/brand-lockup";
 import type { OrganizationRole } from "@/lib/auth/authorization";
-import { workspaceNavigation } from "@/lib/navigation/workspace";
+import { retailNavigationForRole } from "@/lib/ui/navigation-config";
 
 type MobileNavigationProps = {
   email: string;
@@ -46,9 +47,7 @@ export function MobileNavigation({
         ref={openButtonRef}
         type="button"
       >
-        <span className="muted" aria-hidden="true">
-          ☰
-        </span>
+        <Menu aria-hidden="true" className="topbar-icon" />
         <span className="sr-only">Open navigation</span>
       </button>
       <dialog
@@ -65,7 +64,7 @@ export function MobileNavigation({
             onClick={closeMenu}
             type="button"
           >
-            ×
+            <X aria-hidden="true" className="topbar-icon" />
           </button>
         </div>
         <div className="tenant-context">
@@ -73,17 +72,16 @@ export function MobileNavigation({
           <strong>{organizationName}</strong>
         </div>
         <nav aria-label="Primary">
-          {workspaceNavigation(role).map((item) => (
-            <Link className="nav-link" href={item.href} key={item.href}>
+          {retailNavigationForRole(role).map((item) => (
+            <Link
+              className="nav-link"
+              data-provisional={item.provisional}
+              href={item.href}
+              key={item.href}
+            >
               {item.label}
             </Link>
           ))}
-          <Link
-            className="nav-link"
-            href="/onboarding"
-          >
-            Setup status
-          </Link>
         </nav>
         <div className="session-card">
           <span>Signed in as</span>

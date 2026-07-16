@@ -53,6 +53,12 @@ The provided RetailOS visual reference may guide premium SaaS feel, density, spa
 
 Future components need documented states for loading, empty, partial, stale, error, offline/retry, forbidden, and success. Tables must remain understandable on mobile. Actions must distinguish proposal, approval, execution, and rollback state.
 
+## M0-UI implementation notes
+
+The M0-UI foundation implements shared primitives under `src/components/ui/` and shared UI configuration under `src/lib/ui/`.
+
+The shell and configuration work is architectural: placeholder navigation, dashboard card slots, statuses, roles, and module ordering remain provisional unless a later product-discovery decision promotes them. New tables should use `RetailDataGrid` unless an exception is documented. Currency, date, locale, and timezone presentation should use `src/lib/ui/market.ts`; UI modules must not manually concatenate currency symbols.
+
 ## Prohibition
 
 Do not generate static dashboards or screens to imply product progress. Build UI only when a phase-approved vertical slice has real authorization, data, states, and tests.

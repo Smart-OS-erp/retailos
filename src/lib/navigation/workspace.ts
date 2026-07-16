@@ -1,29 +1,15 @@
-import { hasPermission, type OrganizationRole } from "@/lib/auth/authorization";
+import type { OrganizationRole } from "@/lib/auth/authorization";
+import { retailNavigationForRole } from "@/lib/ui/navigation-config";
 
 export type NavigationItem = Readonly<{ label: string; href: string }>;
-
-const coreItems: readonly NavigationItem[] = [
-  { label: "Workspace", href: "/workspace" },
-  { label: "Data", href: "/data" },
-  { label: "Integration Hub", href: "/integrations" },
-  { label: "Consolidation Hub", href: "/consolidation" },
-  { label: "Inventory Recovery", href: "/inventory-recovery" },
-  { label: "Attention Queue", href: "/attention-queue" },
-  { label: "Projectisation", href: "/projectisation" },
-  { label: "Tasks", href: "/tasks" },
-  { label: "Retail Copilot", href: "/copilot" },
-];
 
 export function workspaceNavigation(
   role: OrganizationRole,
 ): readonly NavigationItem[] {
-  return coreItems.filter((item) => {
-    if (item.href === "/data" && role === "store_manager") return false;
-    if (item.href === "/integrations") {
-      return hasPermission(role, "integration.view");
-    }
-    return true;
-  });
+  return retailNavigationForRole(role).map((item) => ({
+    href: item.href,
+    label: item.label,
+  }));
 }
 
 export function workspacePathForRole(role: OrganizationRole) {
