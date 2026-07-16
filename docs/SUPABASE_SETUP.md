@@ -130,10 +130,23 @@ The Phase 0.5 migration creates Integration Hub foundation tables and RPCs only.
 It does not authenticate to Shopify, WooCommerce, Google Sheets, POS, ERP, or a
 custom backend.
 
-Current non-production status: the Phase 0.5 migration is applied to
-`retailos-dev`, hosted schema verification passes for 40 relation/view endpoints
-and 13 RPC endpoints, live Auth/onboarding/audit/RBAC/two-tenant RLS verification
-passes, and Supabase migration history includes the Phase 0.5 migration row.
+Current non-production status: the Phase 0.5 migrations have been applied and hosted schema/RLS checks passed during M0-R after the Integration Hub, Import API credential, pipeline handoff, record-type mapping, and provider MVP promotion migrations. `npm run test:live-phase0-schema` verified 44 relation/view endpoints and 16 RPC endpoints. `npm run test:live-supabase` verified Auth, onboarding, audit, RBAC, and two-tenant RLS.
+
+M0-R note: the `supabase` CLI is not installed in the current shell, so migration-history reconciliation could not be independently rerun through CLI during M0-R. Do not mark migration history fully reconciled for M0-R until an environment owner runs the commands below.
+
+Safe owner commands:
+
+```bash
+supabase --version
+supabase link --project-ref <approved-project-ref>
+supabase migration list
+supabase db reset
+supabase db push --dry-run
+npm run test:live-phase0-schema
+npm run test:live-supabase
+```
+
+If any migration was applied through SQL Editor but is absent from CLI history, use the reviewed Supabase CLI repair mechanism for the exact missing versions. Do not reset, drop, or destructively modify production.
 
 Use `.env.local` for local secrets and Vercel/Supabase secret management for deployed environments. The committed `.env.example` contains empty assignments for these names only:
 
@@ -141,8 +154,10 @@ Use `.env.local` for local secrets and Vercel/Supabase secret management for dep
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `DATABASE_URL`
+- `IMPORT_API_TOKEN_HASH_SECRET`
+- `SHOPIFY_CONNECTOR_CREDENTIALS_JSON`
 
-Only the two `NEXT_PUBLIC_` variables may be read by browser code. `SUPABASE_SERVICE_ROLE_KEY` and `DATABASE_URL` are server-only and must never enter client modules, browser bundles, logs, screenshots, or committed files.
+Only the two `NEXT_PUBLIC_` variables may be read by browser code. `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL`, `IMPORT_API_TOKEN_HASH_SECRET`, and provider credential variables are server-only and must never enter client modules, browser bundles, logs, screenshots, or committed files.
 
 ## Release requirements
 

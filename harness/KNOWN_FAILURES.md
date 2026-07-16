@@ -39,3 +39,28 @@
 
 **Failure:** Supabase/Vercel dashboard settings exist without migrations/configuration/evidence.
 **Prevention:** capture configuration as code where supported and maintain reviewed setup evidence.
+
+## Stale production source of truth
+
+**Failure:** README, reports, and docs describe an older phase while `main` and production contain newer routes or workers.
+**Prevention:** milestone PRs that materially change runtime behavior must update README, `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, blockers, recent failures, and release/checkpoint evidence.
+
+## Runtime error amnesia
+
+**Failure:** a production 5xx is found during smoke testing but later historical green evidence is treated as acceptance.
+**Prevention:** current runtime failures must be added to `reports/RECENT_FAILURES.md`, resolved or kept as blockers, and rechecked after smoke.
+
+## Migration-history drift
+
+**Failure:** migrations applied through SQL Editor are not present in Supabase CLI history, so a future push may replay or conflict.
+**Prevention:** every migration-affecting milestone must run `supabase migration list` or document the exact blocker and owner commands.
+
+## Runtime-version drift
+
+**Failure:** Vercel project runtime, CI Node version, package engine, and docs disagree.
+**Prevention:** production-affecting milestones must inspect runtime settings and align or document owner action before acceptance.
+
+## Repository governance drift
+
+**Failure:** branch protection, stale branches, dependency alerts, or repository visibility decisions are left implicit.
+**Prevention:** reconciliation milestones must audit these settings, safely delete definitely merged branches where permitted, and record founder decisions required for visibility/governance.

@@ -20,6 +20,29 @@
 
 When `package.json` and the application scaffold are added, replace CI TODO steps with repository scripts in the same PR. When the first tenant table/API/upload/Copilot capability is added, replace the corresponding heuristic placeholder with tests capable of failing on a real regression.
 
+## Production and migration gate addendum
+
+Production-affecting milestones must provide:
+
+- current production commit and deployment ID;
+- route smoke evidence for `/login`, `/signup`, and representative protected routes;
+- fresh production smoke evidence for affected APIs using synthetic data and cleanup;
+- post-smoke runtime error inspection;
+- rollback deployment or commit;
+- environment-variable presence verification without values;
+- Node runtime alignment across `package.json`, CI, docs, and Vercel;
+- updated README, `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, `reports/OPEN_BLOCKERS.md`, and `reports/RECENT_FAILURES.md`.
+
+Migration-affecting milestones must provide:
+
+- repository migration list;
+- hosted migration-history status;
+- local reset or an explicit blocker;
+- RLS/function/grant/enums verification after reset or hosted schema verification;
+- assurance that SQL Editor application has been reconciled with CLI history before later `db push`.
+
+No production smoke test may expose secrets. A milestone cannot be called complete while a current production 5xx caused by that milestone remains unresolved.
+
 ## M0.9 — RetailOS UI Foundation validation gate
 
 M0.9 is approved as a Phase 0 frontend-foundation milestone. It validates shared frontend architecture and visual-system readiness before broad Phase 0 feature expansion. It must not be used to finalize retail product requirements.

@@ -1,22 +1,24 @@
 # Vercel Deployment
 
-This is the deployment contract for the Phase 0 secure technical foundation.
+## Current production state
 
-## Current status
+- Project: `retailos`
+- Vercel project ID: `prj_t9osWPJzE94M0qYz3e2NMVNeE9vp`
+- Team ID: `team_fi0ihj3yuoE9FgMUuAbyy50i`
+- GitHub repository: `Smart-OS-erp/retailos`
+- Production branch: `main`
+- Production URL: `https://retailos-ten.vercel.app`
+- Current production commit: `d19a4635d32bfc5b0d26916e3efbd8603e751372`
+- Current production deployment: `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE`
+- Previous rollback candidate: `dpl_GRtstzmsa2uo5fd3XUdPyPU6VvZopfE`
 
-- The `retailos` Vercel project is linked to `Smart-OS-erp/retailos`.
-- The four foundation variables are configured for Preview; `SUPABASE_SERVICE_ROLE_KEY` and `DATABASE_URL` are sensitive, server-only values.
-- Phase 0.5 Import API previews also require server-only `IMPORT_API_TOKEN_HASH_SECRET` before `/api/import/v1/records` can accept bearer-token traffic.
-- Production variables were intentionally not populated with non-production credentials during the earlier foundation stage. After PR #16 merged, Vercel deployed `main` as production and runtime logs showed the deployment is blocked by missing `NEXT_PUBLIC_SUPABASE_URL`.
-- Git-linked Vercel deployments for the Phase 0 PRs and merged `main` have reached READY.
-- Vercel Authentication protects deployment URLs (`all_except_custom_domains`) and Git fork protection is enabled.
-- Production promotion, custom-domain exposure, and real tenant/personal data remain blocked until production governance is approved.
-- Earlier CLI deployments that Vercel unexpectedly classified as production targets were removed; use Git-linked deployments for preview verification.
+## Runtime alignment
 
-## Required environment variables for deployed smoke testing
+`package.json` requires Node `>=22 <23`. During M0-R, the Vercel project Node setting was aligned to `22.x`. Earlier build logs showed Vercel used Node 22 because the package engine overrode a stale project setting of `24.x`.
 
-Configure these in the intended deployed Vercel environment before smoke
-testing:
+## Required environment variables
+
+Production requires these names:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -24,26 +26,38 @@ testing:
 - `DATABASE_URL`
 - `IMPORT_API_TOKEN_HASH_SECRET`
 
-Do not paste values into chat. Set them directly in Vercel environment
-settings, then redeploy.
+Optional provider credentials must remain server-only:
 
-## Environment model
+- `SHOPIFY_CONNECTOR_CREDENTIALS_JSON`
 
-- Local development uses local configuration and a non-production Supabase project.
-- Preview deployments use isolated/non-production data and restricted integrations.
-- Production uses dedicated secrets, domains, data stores, monitoring, and release approval.
+Do not paste values into chat. Set them directly in Vercel environment settings or through authenticated CLI/API. `DATABASE_URL`, service-role keys, token secrets, and provider credentials must be sensitive/server-only.
+
+## M0-R production repair evidence
+
+Observed failure:
+
+- Deployment `dpl_GRtstzmsa2uo5fd3XUdPyPU6VvZopfE`
+- Import API smoke returned `500 internal_error`
+- Correlation ID `f9424e58-9bad-4b9e-8300-db956923fafa`
+- Runtime cause: Postgres `28P01`, password authentication failed for user `postgres`
+
+Resolution:
+
+- Production `DATABASE_URL` was removed and re-added as a sensitive variable from ignored local secret management.
+- Production was redeployed as `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE`.
+- Fresh Import API smoke passed.
+- `/login` and `/signup` returned 200.
+- `/workspace` redirected unauthenticated users to `/login`.
+- Post-smoke runtime error/fatal logs for the current deployment were empty in the inspected window.
 
 ## Required controls
 
-- Link the intended repository and project explicitly; do not infer production targets.
+- Link the intended repository and project explicitly.
 - Scope environment variables by environment and keep secrets out of `NEXT_PUBLIC_*`.
-- Protect deployment and GitHub production permissions with least privilege and MFA-capable identities.
+- Protect deployments and GitHub production permissions with least privilege and MFA-capable identities.
 - Treat previews as externally reachable: no production data, permissive callbacks, debug endpoints, or sensitive logs.
-- Run lint, typecheck, tests, build, and security gates before promotion.
-- Define CSP and other security headers in the application, then verify them against the deployed response.
-- Preserve deploy and audit logs according to policy without recording secrets or excessive personal data.
-- Document rollback and database compatibility before production release.
+- Run lint, typecheck, tests, build, security, and production smoke gates before promotion.
+- Record deployment ID, commit SHA, env-status, runtime logs, and rollback target for every production-affecting milestone.
+- Add runtime failures discovered during validation to `reports/RECENT_FAILURES.md`.
 
-Do not use a generic CLI deployment for this project until branch targeting is proven. Create previews from connected non-production branches, confirm each target is Preview before sharing a URL, and verify access protection before application smoke tests.
-
-See `docs/security/VERCEL_SECURITY.md` for the platform threat controls.
+See `docs/security/VERCEL_SECURITY.md` for platform threat controls.

@@ -6,7 +6,9 @@ Create a secure foundation for inventory recovery intelligence and, after the ha
 
 ## Current delivery mode
 
-The harness and secure technical foundation exist. Full Phase 0 is explicitly approved, but delivery remains milestone-gated. The current branch is design/architecture first; product implementation begins only after the combined UI/UX, engineering, security, permission, and business-rule handoff is accepted.
+Phase 0 product foundations exist in code and production. Phase 0.5 Integration Hub MVP is the active phase. The current milestone is M0-R — Harness Reconciliation and Production Hardening, which is documentation, verification, deployment-state, and harness hardening only.
+
+M0-R does not authorize new product features, dashboards, UI Foundation implementation, new providers, Phase 1 work, or future-phase implementation.
 
 ## In scope
 
@@ -20,13 +22,22 @@ The harness and secure technical foundation exist. Full Phase 0 is explicitly ap
 - Executive, Merchandising, Store Manager, and Viewer workspaces backed by persisted data.
 - Security, tenant/location isolation, acceptance, deployment, and rollback evidence for every milestone.
 
+## Implemented / deployed relationship
+
+Phase 0 routes and Phase 0.5 routes exist in the repository. Route existence is not the same as final product acceptance. Acceptance still depends on current validation evidence, tenant-isolation evidence, live deployment evidence, migration history, and known blockers.
+
+Current production deployment inspected during M0-R:
+
+- Commit: `d19a4635d32bfc5b0d26916e3efbd8603e751372`
+- Deployment: `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE`
+
 ## Out of scope
 
 - Seeded demo analytics presented as real intelligence.
 - Finalizing navigation structure, dashboard KPIs, card arrangement, module grouping, terminology, statuses, workflows, roles, locations, suppliers, demo records, purchase-order placeholder content, finance navigation, EDI placement, warehouse terminology, or other retail-domain assumptions without retail-consultant validation and product-discovery decisions.
 - Static dashboards or product screens presented as final product behavior during M0.9.
-- Shopify, WooCommerce, Google Sheets, marketplace, POS, finance, wholesale, accounting, warehouse management, forecasting, advanced agent execution, and autonomous Copilot actions.
-- Implementing any capability beyond the active Phase 0 boundary, including Phases 0.5–10.
+- POS, finance, wholesale, accounting, warehouse management, forecasting, advanced agent execution, marketplace publishing, and autonomous Copilot actions.
+- Implementing any capability beyond the active milestone.
 
 ## M0.9 UI foundation boundary
 

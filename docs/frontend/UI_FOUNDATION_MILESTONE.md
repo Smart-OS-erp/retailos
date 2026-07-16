@@ -6,6 +6,8 @@ M0.9 establishes the shared RetailOS frontend foundation before broad Phase 0 fe
 
 This milestone is not a product-requirements milestone. It must not finalize module structure, workflow language, statuses, roles, supplier terms, warehouse terms, finance terms, dashboard metrics, demo businesses, or retail-domain assumptions that still require consultant validation and product discovery.
 
+M0-UI may begin only after M0-R — Harness Reconciliation and Production Hardening is reviewed and accepted. The RetailOS UI Foundation validates frontend architecture, visual quality, component reuse, accessibility, responsive behaviour, tenant-aware formatting, and design-system consistency. It does not finalize retail-domain requirements that remain subject to consultant validation and product discovery.
+
 ## Implementation boundary
 
 Allowed in M0.9:
