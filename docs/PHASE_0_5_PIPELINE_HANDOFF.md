@@ -67,11 +67,25 @@ because product/location/sales canonical write flows are not implemented yet.
 - Product master, store master, and sales history mapping deliberately avoid
   direct canonical writes.
 
+## Provider worker status
+
+- RetailOS Import API can create `inventory_snapshot`, `product_master`,
+  `store_master`, and `sales_history` external records.
+- The Shopify Phase 0.5 MVP worker can create `product_master` and
+  `inventory_snapshot` external records from Shopify Admin GraphQL product,
+  variant, and inventory-level payloads when server-only credentials are
+  configured for the data source.
+- Shopify raw records still enter the same normalization and validation
+  evidence path. The worker does not write directly to canonical products,
+  SKUs, locations, inventory positions, sales facts, intelligence,
+  projectisation, or campaign tables.
+
 ## Not implemented
 
-- Provider workers.
 - Scheduled sync workers.
-- Shopify/WooCommerce/Google Sheets real credentials.
+- WooCommerce/Google Sheets provider workers.
+- Provider credential setup UI.
+- Provider OAuth flows.
 - Automatic consolidation.
 - Intelligence recalculation after consolidation.
 - Product/location/sales canonical write approval flows.

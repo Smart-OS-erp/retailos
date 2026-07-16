@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 
 import { hasPermission } from "@/lib/auth/authorization";
 import { requireOrganizationContext } from "@/lib/auth/require-organization-context";
+import { runProviderSyncAfterEnqueue } from "@/lib/integrations/provider-sync";
 import type { IntegrationConnectorDepth } from "@/types/database";
 
 const allowedReturnPaths = new Set([
@@ -104,6 +105,13 @@ export async function requestDataSourceSync(formData: FormData) {
     redirectWithError(returnPath, "permission-denied");
   }
 
+  if (
+    !hasPermission(context.membership.role, "integration.import")
+    || !hasPermission(context.membership.role, "data.manage")
+  ) {
+    redirectWithError(returnPath, "permission-denied");
+  }
+
   if (!/^[0-9a-f-]{36}$/i.test(dataSourceId)) {
     redirectWithError(returnPath, "invalid-source");
   }
@@ -117,6 +125,32 @@ export async function requestDataSourceSync(formData: FormData) {
   );
 
   if (error || !jobId) {
+    redirectWithError(returnPath, "sync-failed");
+  }
+
+  try {
+    await runProviderSyncAfterEnqueue({
+      jobId,
+      organizationId: context.membership.organization_id,
+      normalizeExternalRecords: async (targetSyncJobId) => {
+        const { error: normalizationError } = await context.supabase.rpc(
+          "normalize_external_records",
+          {
+            target_sync_job_id: targetSyncJobId,
+          },
+        );
+
+        return {
+          error: normalizationError
+            ? {
+                code: normalizationError.code,
+                message: normalizationError.message,
+              }
+            : null,
+        };
+      },
+    });
+  } catch {
     redirectWithError(returnPath, "sync-failed");
   }
 

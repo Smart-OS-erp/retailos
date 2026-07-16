@@ -2,9 +2,10 @@ Next Task:
 Choose one approved next implementation lane after the relevant harness PR is reviewed and merged.
 
 Lane A — Phase 0.5 Integration Hub MVP:
-- Implement one provider-specific MVP worker at a time, starting with the highest-priority provider.
+- Validate, review, merge, and deploy the Shopify MVP worker branch.
+- After Shopify worker acceptance, implement one remaining provider-specific MVP worker at a time.
 - Use server-only credential handling, retries, external record writes, normalization tests, and sync evidence.
-- Shopify, WooCommerce, and Google Sheets may create `mvp` data sources, but must remain credential-gated until server-side credential storage and provider workers are implemented.
+- Shopify may run through the server-only MVP worker when a reviewed server-side credential entry exists. WooCommerce and Google Sheets may create `mvp` data sources, but must remain credential-gated until their provider workers are implemented.
 - Keep POS/ERP and custom backend scaffold/import-API paths unless a later phase explicitly approves direct connectors.
 - Keep the rule that RetailOS connects to the system behind a website, not to "a website" directly.
 
