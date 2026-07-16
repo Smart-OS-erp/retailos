@@ -2,7 +2,7 @@
 
 ## Phase 0.5 implementation blockers
 
-- **Post-migration Import API smoke is blocked locally by a missing ignored smoke secret.** Hosted pending migrations are now applied and hosted schema/RLS checks pass, but `npm run smoke:import-api -- --url https://retailos-ten.vercel.app` is blocked because `IMPORT_API_TOKEN_HASH_SECRET` is not available in ignored local env. Vercel env pull returned protected secret placeholders, not usable values. Owner/action: restore the approved smoke secret through ignored env/secret-management only, then rerun the smoke.
+- **Post-migration Import API smoke is blocked locally by a missing ignored smoke secret.** Hosted pending migrations are now applied and hosted schema/RLS checks pass, but `npm run smoke:import-api -- --url https://retailos-ten.vercel.app` is blocked because `IMPORT_API_TOKEN_HASH_SECRET` is not available in ignored local env. Vercel env pull returned protected secret placeholders, not usable values, and a 2026-07-15 local env presence check found no usable ignored local value. Owner/action: restore the approved smoke secret through ignored env/secret-management only, then rerun the smoke.
 - **Connector credential handling must be implemented before any live provider API access.** Do not paste or commit Shopify, WooCommerce, Google, webhook, SMTP, Supabase, or database secrets. Owner/action: engineering must use managed environment variables and server-only boundaries before marking Shopify, WooCommerce, or Google Sheets connected.
 - **Provider workers are not implemented yet.** Shopify, WooCommerce, and Google Sheets can now be created as MVP-depth data sources, but live provider API calls and scheduled workers are not implemented. Owner/action: implement one provider-specific worker at a time with credential storage, retries, external record writes, and normalization tests.
 - **Product/location/sales canonical write approval flows are not implemented yet.** Import API record types now map into persisted evidence, but product master, store master, and sales history records do not directly mutate canonical products, locations, SKUs, or sales facts. Owner/action: keep as review-gated unless a later active phase approves canonical write workflows.
@@ -18,7 +18,7 @@
 - RetailOS Import API authentication/idempotency/security boundary is merged in PR #14.
 - RetailOS Import API credential/control-plane foundation is merged in PR #15, applied to hosted Supabase, and verified.
 - Required Vercel Production/Preview env vars are configured.
-- Vercel production deployment `dpl_DPMjtQr8GhR4fo2ft5Mt6BHkwAMo` is READY, protected, and aliased to `https://retailos-ten.vercel.app`.
+- Vercel production deployment `dpl_BTqoLLktbEcaHZVMMWJULHQ3XWXe` is READY, protected, and aliased to `https://retailos-ten.vercel.app`.
 - Protected root route renders the RetailOS login page.
 - Unauthenticated Import API POST fails closed with `401 authentication_required`.
 - Authenticated Import API smoke passed against production: tenant-scoped credential creation, external record acceptance/persistence, idempotent replay, and cleanup were verified.
