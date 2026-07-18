@@ -28,6 +28,7 @@ Verification Status:
 - Automatic intelligence recalculation PR #38 was merged with green Quality, Security, and Vercel checks.
 - Phase 1 inventory core foundation local validation passed: lint, typecheck, test, security, and build.
 - Phase 1 M6 local validation passed on this branch: lint, typecheck, test, security, build, and dependency audit.
+- Phase 1 M6 Vercel preview deployment is READY and protected; unauthenticated `/inventory` returned Vercel SSO 302 before app auth/schema access.
 - GitHub `main` branch is currently unprotected; secret scanning and push protection are enabled; Dependabot security updates are disabled.
 
 Database Migration Status:

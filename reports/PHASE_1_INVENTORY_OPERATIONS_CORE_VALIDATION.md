@@ -25,6 +25,7 @@ npm run typecheck
 npm run security
 npm run build
 npm audit --audit-level=moderate
+curl.exe -I https://retailos-git-phase-1-invento-ea6451-tonybabalola-1114s-projects.vercel.app/inventory
 ```
 
 ## Outcomes
@@ -36,15 +37,17 @@ npm audit --audit-level=moderate
 - Security script bundle: passed.
 - Production build: passed.
 - Dependency audit: passed with 0 vulnerabilities.
+- Vercel preview deployment: Ready.
+- Safe unauthenticated preview route check for `/inventory`: returned Vercel
+  SSO `302 Found`, confirming preview protection before application auth/schema
+  access.
 
 ## Not verified
 
 - Hosted Supabase migration `20260718103000_phase1_inventory_operations_core.sql`
   is not applied yet.
-- Vercel preview/production deployment for this branch has not been created in
-  this validation report.
-- Live browser smoke against hosted Phase 1 inventory pages has not run because
-  hosted schema is not migrated for M6 yet.
+- Authenticated browser smoke against hosted Phase 1 inventory pages has not
+  run because hosted schema is not migrated for M6 yet.
 
 ## Security notes
 
