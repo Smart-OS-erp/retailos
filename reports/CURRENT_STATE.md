@@ -2,8 +2,8 @@ Project: RetailOS
 Active Phase: Phase 1 — Core Inventory Operating System
 Active Milestone: Phase 1 — Inventory Core Foundations M1–M5
 
-Current Production Commit: 0d66382
-Current Production Deployment: dpl_7Lakn9cvcZu6TVuN6KwPTs3aL5Xp
+Current Production Commit: bd63760
+Current Production Deployment: dpl_3wpdtrf7JBbYuFDw1TwApsMnyXnF
 Production URL: https://retailos-ten.vercel.app
 
 Implementation Status:
@@ -11,23 +11,23 @@ Implementation Status:
 - Phase 0.5 Integration Hub setup UI, data-source RPCs, Import API route, Import API credential/control-plane, external-record storage, sync jobs/errors, normalization handoff, provider MVP promotion, Shopify MVP worker, provider credential onboarding, WooCommerce MVP worker, scheduled sync worker, canonical write approval flows, automatic intelligence recalculation evidence, and M0-UI shared frontend foundation exist in `main`.
 - Phase 0.5 automatic intelligence recalculation PR #38 was merged, hosted migration `20260716233000_phase0_5_auto_intelligence_recalculation.sql` was applied, and production deployment `dpl_7Lakn9cvcZu6TVuN6KwPTs3aL5Xp` is READY.
 - Human approval to promote to Phase 1 was given in chat before this branch.
-- Current branch `phase-1-inventory-ledger-foundation` adds five backend-only Phase 1 inventory core foundations: inventory movement ledger, stock adjustments, transfer approvals, stock counts/variance, and inventory search/barcode lookup.
+- Phase 1 Inventory Core Foundations M1–M5 were merged in PR #39 and deployed to production. The backend-only foundations include the inventory movement ledger, stock adjustments, transfer approvals, stock counts/variance, and inventory search/barcode lookup.
 - Shopify and WooCommerce credential checks read only approved server-side secret material through ignored env/secret management. They do not collect, display, store, or log provider secrets in browser-readable UI.
 - Google Sheets worker and OAuth/provider credential entry UI remain deferred Phase 0.5 follow-ups.
 - Product/store/sales approval flows record recalculation evidence as skipped because Phase 0 scoring reads approved inventory positions, not standalone canonical product/location/sales-fact changes.
 
 Verification Status:
-- Vercel production deployment `dpl_7Lakn9cvcZu6TVuN6KwPTs3aL5Xp` is READY and aliased to `https://retailos-ten.vercel.app`.
+- Vercel production deployment `dpl_3wpdtrf7JBbYuFDw1TwApsMnyXnF` is READY and aliased to `https://retailos-ten.vercel.app`.
 - Production `/login` and `/signup` returned 200 on July 18, 2026.
 - Production `/workspace` redirects unauthenticated users to `/login`.
 - Production `/api/cron/integration-sync` returned 401 without the cron secret on July 18, 2026.
 - Fresh Import API production smoke passed on July 16, 2026 after correcting Production `DATABASE_URL` and redeploying.
-- Runtime error log inspection for deployment `dpl_7Lakn9cvcZu6TVuN6KwPTs3aL5Xp` found no error logs in the inspected 10-minute window.
+- Runtime error log inspection for deployment `dpl_3wpdtrf7JBbYuFDw1TwApsMnyXnF` found no error logs in the inspected 10-minute window.
 - Vercel Node runtime setting is aligned to `22.x`.
 - M0-UI PR #33 was merged with green Quality, Security, and Vercel checks.
 - Canonical approval PR #37 was merged.
 - Automatic intelligence recalculation PR #38 was merged with green Quality, Security, and Vercel checks.
-- Phase 1 inventory core focused integration tests pass locally on the current branch; full validation must pass before handoff.
+- Phase 1 inventory core local validation passed: lint, typecheck, test, security, and build.
 - GitHub `main` branch is currently unprotected; secret scanning and push protection are enabled; Dependabot security updates are disabled.
 
 Database Migration Status:
@@ -35,7 +35,7 @@ Database Migration Status:
 - Scheduled sync migration `20260716214000_phase0_5_scheduled_sync.sql` was applied to hosted Supabase on July 16, 2026.
 - Canonical approval migration `20260716223000_phase0_5_canonical_approval_flows.sql` was applied to hosted Supabase on July 16, 2026.
 - Automatic intelligence recalculation migration `20260716233000_phase0_5_auto_intelligence_recalculation.sql` was applied to hosted Supabase on July 18, 2026.
-- Current branch adds migration `20260718093000_phase1_inventory_core_foundations.sql`.
+- Phase 1 migration `20260718093000_phase1_inventory_core_foundations.sql` was applied to hosted Supabase on July 18, 2026.
 - Hosted schema/RLS verification passed during M0-R.
 - Supabase CLI is not installed in this shell, so `supabase migration list`, `supabase db reset`, and CLI migration-history reconciliation remain unverified.
 - No destructive production database operation is authorized or performed.
@@ -46,10 +46,10 @@ Known Runtime Issues:
 - Resolution: Production `DATABASE_URL` was replaced from ignored local secret management, production was redeployed as `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE`, and fresh Import API smoke passed.
 
 Current Mode:
-- Implement Phase 1 inventory core foundations M1–M5.
+- Phase 1 inventory core foundations M1–M5 are implemented, merged, migrated, and deployed.
 - Do not ask users to paste secrets into chat or browser forms.
 - Do not store provider access tokens in `data_sources.connection_metadata`, client code, fixtures, screenshots, docs, or Git.
 - Do not add UI dashboards/screens, POS, finance, wholesale, warehouse-management expansion beyond Phase 1 inventory-control foundations, forecasting, marketplace publishing, autonomous campaign execution, or real LLM agent execution in this slice.
 
 Next Required Milestone:
-- Review and accept the Phase 1 Inventory Core Foundations M1–M5 PR before adding UI or additional inventory workflows.
+- Continue Phase 1 incremental workflow hardening: movement reversal/void governance, transfer receiving, stock-count review/closure, low/overstock watchlist, and API/server-action wrappers.
