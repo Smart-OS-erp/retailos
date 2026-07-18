@@ -671,6 +671,74 @@ describe("Phase 1 inventory core foundations", () => {
     });
   });
 
+  it("adds, updates, and removes saved watchlist items without cross-role mutation", async () => {
+    await authenticate(OWNER_A);
+    const watchlistId = (
+      await database.query<{ id: string }>(
+        "select public.add_inventory_watchlist_item($1, $2, $3, $4) as id",
+        [locationA1, skuA, "manual", "Owner follow-up"],
+      )
+    ).rows[0]!.id;
+    const duplicateId = (
+      await database.query<{ id: string }>(
+        "select public.add_inventory_watchlist_item($1, $2, $3, $4) as id",
+        [locationA1, skuA, "low_stock", "Updated owner follow-up"],
+      )
+    ).rows[0]!.id;
+
+    expect(duplicateId).toBe(watchlistId);
+
+    const saved = await database.query<{
+      active_count: string;
+      note: string;
+      watch_status: string;
+    }>(
+      `select
+        count(*)::text as active_count,
+        max(note) as note,
+        max(watch_status) as watch_status
+       from public.inventory_saved_watchlist
+       where organization_id = $1 and location_id = $2 and sku_id = $3`,
+      [organizationA, locationA1, skuA],
+    );
+
+    expect(saved.rows[0]).toEqual({
+      active_count: "1",
+      note: "Updated owner follow-up",
+      watch_status: "low_stock",
+    });
+
+    await authenticate(VIEWER_A);
+    await expect(
+      database.query(
+        "select public.add_inventory_watchlist_item($1, $2, $3, $4)",
+        [locationA1, skuA, "manual", "Viewer should fail"],
+      ),
+    ).rejects.toThrow(/permission_denied/);
+
+    await authenticate(STORE_A);
+    await expect(
+      database.query(
+        "select public.add_inventory_watchlist_item($1, $2, $3, $4)",
+        [locationA2, skuA, "manual", "Unassigned location should fail"],
+      ),
+    ).rejects.toThrow(/permission_denied/);
+
+    await authenticate(OWNER_A);
+    await database.query("select public.remove_inventory_watchlist_item($1)", [
+      watchlistId,
+    ]);
+
+    const removed = await database.query<{ active_count: string }>(
+      `select count(*)::text as active_count
+       from public.inventory_saved_watchlist
+       where organization_id = $1 and id = $2`,
+      [organizationA, watchlistId],
+    );
+
+    expect(removed.rows[0]!.active_count).toBe("0");
+  });
+
   it("searches inventory by SKU and barcode within effective location scope", async () => {
     await authenticate(STORE_A);
     const scoped = await database.query<{

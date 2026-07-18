@@ -133,6 +133,7 @@ export type StockCountStatus =
   | "cancelled";
 export type ReconciliationIssueStatus = "open" | "resolved" | "dismissed";
 export type StockWatchStatus =
+  | "manual"
   | "out_of_stock"
   | "low_stock"
   | "overstock"
@@ -1842,6 +1843,24 @@ export type Database = {
         Update: never;
         Relationships: [];
       };
+      inventory_watchlist_items: {
+        Row: {
+          id: string;
+          organization_id: string;
+          location_id: string;
+          sku_id: string;
+          watch_status: Exclude<StockWatchStatus, "healthy">;
+          note: string | null;
+          created_by: string;
+          removed_at: string | null;
+          removed_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
     };
     Views: {
       current_inventory_positions: {
@@ -1943,6 +1962,25 @@ export type Database = {
           approved_unit_cost: number | null;
           currency_code: string | null;
           last_movement_at: string | null;
+        };
+        Relationships: [];
+      };
+      inventory_saved_watchlist: {
+        Row: {
+          id: string;
+          organization_id: string;
+          location_id: string;
+          location_name: string;
+          location_code: string;
+          sku_id: string;
+          sku_code: string;
+          barcode: string | null;
+          product_name: string;
+          watch_status: Exclude<StockWatchStatus, "healthy">;
+          note: string | null;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
         };
         Relationships: [];
       };
@@ -2177,6 +2215,21 @@ export type Database = {
           barcode: string | null;
           on_hand_quantity: number;
         }[];
+      };
+      add_inventory_watchlist_item: {
+        Args: {
+          target_location_id: string;
+          target_sku_id: string;
+          target_watch_status?: string | null;
+          target_note?: string | null;
+        };
+        Returns: string;
+      };
+      remove_inventory_watchlist_item: {
+        Args: {
+          target_watchlist_item_id: string;
+        };
+        Returns: string;
       };
     };
     Enums: {

@@ -108,6 +108,11 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     label: "Low stock",
     tone: "warning",
   },
+  manual: {
+    assistiveLabel: "Watchlist status was saved manually",
+    label: "Manual",
+    tone: "info",
+  },
   medium: {
     assistiveLabel: "Severity is medium",
     label: "Medium",

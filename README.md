@@ -1,6 +1,6 @@
 # RetailOS
 
-RetailOS is secure operating intelligence for African fashion retail. The active build is **Phase 1 - Core Inventory Operating System**, with this branch implementing **M6 - Inventory Operations Core**.
+RetailOS is secure operating intelligence for African fashion retail. The active build is **Phase 1 - Core Inventory Operating System**, with the current branch recording **Phase 1 Visible Workflow Verification and Acceptance** before promotion to Phase 2.
 
 RetailOS is not a generic ERP, POS, dashboard, or chatbot. Its first wedge was inventory recovery intelligence: trustworthy retail data intake, validation, consolidation, inventory risk explanation, recovery opportunities, projectisation, campaign briefs, and permission-aware Copilot explanations.
 
@@ -17,56 +17,52 @@ RetailOS is not a generic ERP, POS, dashboard, or chatbot. Its first wedge was i
 - External-record normalization handoff for `inventory_snapshot`, `product_master`, `store_master`, and `sales_history`.
 - Shopify and WooCommerce Phase 0.5 MVP workers, scheduled sync, canonical approval flows, and automatic intelligence recalculation evidence.
 - M0-UI shared frontend foundation.
-- Phase 1 inventory core foundation tables/RPCs for movement ledger, stock adjustments, transfers, stock counts, reconciliation issues, and inventory search.
+- Phase 1 inventory core foundation tables/RPCs for movement ledger, stock adjustments, transfers, stock counts, reconciliation issues, inventory search, watchlist signals, stock-count closure, and inventory lookup/search UI.
 
-## Implemented on `phase-1-inventory-operations-core`
+## Implemented on this branch
 
-- Current inventory balances derived from approved snapshots plus movement ledger rows, transfer reservations, and in-transit quantities.
-- Stock adjustment request, approve, reject, execute, and reverse workflow with idempotency and audit evidence.
-- Transfer request, approve, reject, dispatch, partial receipt, full receipt, and discrepancy evidence workflow with idempotency and audit evidence.
-- Shared-shell Phase 1 pages for current positions, movement history, adjustments, and transfers using RetailDataGrid, shared status mapping, and shared market formatting.
+- User-saved inventory watchlist add/update/remove workflow layered on the existing persisted-evidence watchlist.
+- RLS-protected `inventory_watchlist_items` table and `inventory_saved_watchlist` view.
+- Permissioned `add_inventory_watchlist_item` and `remove_inventory_watchlist_item` RPCs with audit events.
+- Live hosted Phase 1 workflow smoke covering search, watchlist, adjustments, transfers, stock counts, RBAC/location denials, audit events, and synthetic cleanup.
+- Phase 1 acceptance matrix and evidence reports.
 
 ## Deployed
 
 Production alias: `https://retailos-ten.vercel.app`
 
-Current inspected production deployment:
+Current production commit before this acceptance branch:
 
-- Deployment: `dpl_J9F8LLaVC6AnEsa2bPZQFy86Gfqi`
-- Commit: `75ae416`
-- Source: merged `main`, after Phase 1 foundation PR #39
-- Runtime: Node 22 via `package.json` and Vercel project setting
+- Commit: `478db13070f5504ef5291374556a1751c7591280`
+- Source: merged `main`, after Phase 1 M1.9 PR #43
 
-Phase 1 M6 is not deployed yet.
+This acceptance branch still requires PR merge, Vercel deployment confirmation, and production route smoke.
 
 ## Verified
 
-- Local lint, typecheck, unit, integration, security, and build checks pass on recent merged milestones.
-- On this branch, lint, typecheck, and focused Phase 1 integration tests have passed; full final validation must run before PR handoff.
-- Production `/login` and `/signup` return 200.
-- Production `/workspace` redirects unauthenticated users to `/login`.
-- Fresh production Import API smoke passed on July 16, 2026 after replacing the Production `DATABASE_URL` with the approved Supabase pooler value and redeploying.
-- Post-smoke production runtime error check for the current production deployment found no error/fatal logs in the inspected window.
-- Vercel Git integration points to `Smart-OS-erp/retailos`, production branch `main`.
-- Vercel project Node setting is aligned to `22.x`.
+- `npm run lint` passed.
+- `npm run typecheck` passed.
+- `npm run test:integration -- --run tests/integration/phase1-inventory-core.test.ts` passed: 6 files, 49 tests.
+- Hosted migration `20260718210000_phase1_visible_workflow_acceptance.sql` was applied or reconciled without printing secrets.
+- `node scripts/security/live-phase1-hosted-schema.ts` passed: 15 relations/views, 16 functions.
+- `node scripts/security/live-phase1-workflow-smoke.ts` passed and synthetic cleanup passed.
 
 ## Not Verified
 
-- Supabase CLI migration history was not inspected in M0-R because the `supabase` CLI is not installed in this shell.
+- Supabase CLI migration history was not inspected because the `supabase` CLI is not installed/authenticated in this shell.
 - A local `supabase db reset` was not run because the CLI is unavailable.
-- Phase 1 M6 hosted migration has not been applied yet.
-- Phase 1 M6 has not been deployed yet.
+- This acceptance branch has not yet been merged/deployed to production.
+- Browser route smoke for this acceptance branch must run after Vercel deployment.
 - Live Shopify/WooCommerce provider API sync has not been run with real provider credentials.
 - Google Sheets worker is not implemented.
 
 ## Blocked / Owner Actions
 
 - Install/authenticate Supabase CLI and run migration-history reconciliation commands documented in `docs/SUPABASE_SETUP.md`.
-- Decide repository visibility: keep public or convert to private. Public visibility is not a security control; it does affect commercial/IP exposure.
 - Configure GitHub branch protection for `main`; it is currently unprotected.
 - Enable Dependabot security updates; secret scanning and push protection are enabled.
-- Provide reviewed server-only provider credentials before any live Shopify/WooCommerce/Google Sheets sync is accepted.
-- Review and apply Phase 1 M6 migration `20260718103000_phase1_inventory_operations_core.sql` before deploying the M6 UI/actions.
+- Decide repository visibility: keep public or convert to private. Public visibility is not a security control; it does affect commercial/IP exposure.
+- Merge/deploy this acceptance branch and run production route smoke before marking Phase 1 fully accepted.
 
 ## Local setup
 
@@ -113,6 +109,8 @@ Environment-dependent checks:
 npm run test:live-phase0-schema
 npm run test:live-supabase
 npm run smoke:import-api -- --url https://retailos-ten.vercel.app
+node scripts/security/live-phase1-hosted-schema.ts
+node scripts/security/live-phase1-workflow-smoke.ts
 ```
 
 Read `AGENTS.md`, `reports/CURRENT_STATE.md`, and `reports/NEXT_TASK.md` before making changes.
