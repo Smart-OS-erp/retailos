@@ -23,7 +23,9 @@ const requiredRelations = [
   "inventory_lookup_items",
   "inventory_movements",
   "inventory_operation_idempotency_keys",
+  "inventory_saved_watchlist",
   "inventory_stock_watchlist",
+  "inventory_watchlist_items",
   "reconciliation_issues",
   "stock_adjustment_items",
   "stock_adjustments",
@@ -37,6 +39,8 @@ const requiredRelations = [
 const requiredFunctions = [
   "approve_stock_adjustment",
   "approve_transfer_request",
+  "add_inventory_watchlist_item",
+  "close_stock_count",
   "create_stock_adjustment",
   "create_transfer_request",
   "dispatch_transfer_request",
@@ -44,11 +48,11 @@ const requiredFunctions = [
   "receive_transfer_request",
   "reject_stock_adjustment",
   "reject_transfer_request",
+  "remove_inventory_watchlist_item",
   "review_stock_count",
   "reverse_stock_adjustment",
   "search_inventory_items",
   "submit_stock_count",
-  "close_stock_count",
 ];
 
 async function main() {

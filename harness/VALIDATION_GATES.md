@@ -43,6 +43,28 @@ Migration-affecting milestones must provide:
 
 No production smoke test may expose secrets. A milestone cannot be called complete while a current production 5xx caused by that milestone remains unresolved.
 
+## Phase 1 Visible Workflow Acceptance validation gate
+
+Phase 1 acceptance is not satisfied by the existence of routes, migrations,
+tests, or deployments alone.
+
+Required evidence:
+
+- representative inventory users can complete visible inventory workflows using
+  persisted tenant data;
+- adjustment execution/reversal, transfer dispatch/receipt, and stock-count
+  closure/correction are idempotent and do not double-post ledger rows on retry;
+- saved watchlist add/remove is permissioned, audited, and does not suppress the
+  derived persisted-evidence stock signal;
+- viewer, suspended, cross-tenant, and unassigned-location operations fail
+  closed at the database/API boundary;
+- audit events exist for sensitive actions;
+- live hosted smoke uses synthetic data and confirms cleanup;
+- production deployment evidence records commit, Vercel deployment, route smoke,
+  runtime-error inspection, rollback target, and migration-history status;
+- any missing Supabase CLI, production smoke, or governance evidence is recorded
+  as conditional or blocked rather than treated as pass.
+
 ## M0.9 — RetailOS UI Foundation validation gate
 
 M0.9 is approved as a Phase 0 frontend-foundation milestone. It validates shared frontend architecture and visual-system readiness before broad Phase 0 feature expansion. It must not be used to finalize retail product requirements.

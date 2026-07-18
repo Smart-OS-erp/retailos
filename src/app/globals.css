@@ -307,6 +307,11 @@ input:disabled {
   gap: 10px;
 }
 
+.table-inline-form {
+  display: inline-flex;
+  margin: 0;
+}
+
 .actions {
   align-items: center;
   display: flex;

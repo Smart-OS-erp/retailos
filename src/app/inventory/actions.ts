@@ -398,3 +398,49 @@ export async function closeStockCount(formData: FormData) {
   revalidatePath(`/inventory/counts/${countId}`);
   redirect(`/inventory/counts/${countId}?closed=1`);
 }
+
+export async function addInventoryWatchlistItem(formData: FormData) {
+  const context = await requirePermission("inventory.manage", "/inventory/watchlist");
+  const locationId = readUuid(formData.get("locationId"));
+  const skuId = readUuid(formData.get("skuId"));
+  const watchStatus = readText(formData.get("watchStatus"), 3) ?? "manual";
+  const note = readText(formData.get("note"), 0);
+
+  if (!locationId || !skuId) {
+    redirect("/inventory/watchlist?error=invalid-watchlist-item");
+  }
+
+  const { error } = await context.supabase.rpc("add_inventory_watchlist_item", {
+    target_location_id: locationId,
+    target_note: note,
+    target_sku_id: skuId,
+    target_watch_status: watchStatus,
+  });
+
+  if (error) {
+    redirect("/inventory/watchlist?error=watchlist-add-failed");
+  }
+
+  revalidateInventoryRoutes();
+  redirect("/inventory/watchlist?watchlist_added=1");
+}
+
+export async function removeInventoryWatchlistItem(formData: FormData) {
+  const context = await requirePermission("inventory.manage", "/inventory/watchlist");
+  const watchlistItemId = readUuid(formData.get("watchlistItemId"));
+
+  if (!watchlistItemId) {
+    redirect("/inventory/watchlist?error=invalid-watchlist-item");
+  }
+
+  const { error } = await context.supabase.rpc("remove_inventory_watchlist_item", {
+    target_watchlist_item_id: watchlistItemId,
+  });
+
+  if (error) {
+    redirect("/inventory/watchlist?error=watchlist-remove-failed");
+  }
+
+  revalidateInventoryRoutes();
+  redirect("/inventory/watchlist?watchlist_removed=1");
+}

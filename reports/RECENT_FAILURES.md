@@ -1,5 +1,12 @@
 # Recent Failures
 
+## 2026-07-18 - Phase 1 hosted workflow smoke cleanup missed event log dependency
+
+- **Observed:** live Phase 1 workflow smoke passed its workflow assertions but exited non-zero during cleanup.
+- **Cause:** synthetic `event_log` rows referenced synthetic locations, so deleting locations before event-log cleanup violated a foreign-key constraint.
+- **Resolution:** added `event_log` to the synthetic cleanup order before deleting locations and reran the smoke.
+- **Status:** resolved. Rerun passed and reported synthetic cleanup passed.
+
 ## 2026-07-16 — Production Import API database authentication failure after Shopify worker merge
 
 - **Observed:** fresh production Import API smoke against `https://retailos-ten.vercel.app` returned `500 internal_error`.
