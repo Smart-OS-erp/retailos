@@ -8,10 +8,17 @@
 - **Repository visibility decision remains open.** The repository is public. Owner/action: founder must decide whether to keep it public or convert it to private; do not treat obscurity as a security control, but document commercial/IP implications.
 - **Provider credential onboarding remains server-secret only.** Shopify and WooCommerce server-side availability checks exist. Browser secret entry, OAuth, and Google Sheets credentials do not exist. Owner/action: accept this narrow server-side provider credential model before adding any browser credential-entry flow.
 
-## Phase 0.5 implementation blockers
+## Phase 0.5 deferred implementation blockers
 
 - **Google Sheets worker is not implemented.** Shopify and WooCommerce MVP workers exist. Google Sheets data sources can be created as MVP-depth, but live Google Sheets API calls remain fail-closed until a worker and credential resolver are implemented.
-- **Automatic intelligence recalculation after approved ingestion writes is in progress on the current branch.** Inventory consolidation should trigger the existing deterministic scoring engine after the approved snapshot is fully written. Product/location/sales approval flows should record honest skipped evidence until Phase 0 scoring consumes those canonical record types.
+
+## Phase 1 implementation blockers
+
+- **Phase 1 inventory core foundations are in progress on the current branch.** The branch must pass full local validation, CI, hosted migration application, production deployment, and live smoke before acceptance.
+- **No UI exists for Phase 1 inventory operations yet.** This is intentional for the backend-foundation slice. Owner/action: accept database/API contracts before adding screens.
+- **Movement ledger does not yet compute live stock balances or reverse/void movements.** Current scope records approved movement history and source lineage only. Owner/action: add reversal/balance governance in a later Phase 1 milestone.
+- **Transfer receiving workflow is not yet modeled.** Current scope records approved paired transfer movements. Owner/action: add receiving/variance workflow in a later Phase 1 milestone.
+- **Stock count review/closure workflow is not yet modeled.** Current scope records submitted counts and variance issues. Owner/action: add review/closure in a later Phase 1 milestone.
 
 ## Verified controls
 
@@ -30,4 +37,4 @@ Inventory recovery thresholds, analysis windows, cost basis, confidence levels, 
 
 M0-UI remains the next approved milestone but must keep navigation labels, dashboard KPIs, roles, statuses, supplier/warehouse/finance terminology, demo records, and business assumptions provisional until consultant validation.
 
-Phase 0.5 does not authorize POS, finance, wholesale, forecasting, warehouse management, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
+Phase 1 does not authorize POS, finance, wholesale, forecasting, warehouse-management expansion beyond inventory-control foundations, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
