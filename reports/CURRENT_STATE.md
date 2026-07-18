@@ -1,17 +1,18 @@
 Project: RetailOS
 Active Phase: Phase 0.5 — Integration Hub MVP
-Active Milestone: Phase 0.5 — Canonical Write Approval Flows
+Active Milestone: Phase 0.5 — Automatic Intelligence Recalculation
 
-Current Production Commit: 562e159594d66dfec594fb53d1aacfdc0a473191
+Current Production Commit: 900c9be
 Current Production Deployment: dpl_GfAHEeA1fDPgbZrNwYv6mat9LsvZ
 Production URL: https://retailos-ten.vercel.app
 
 Implementation Status:
 - Phase 0 foundation routes, onboarding, data intake, validation, consolidation, inventory recovery, projectisation, deterministic Copilot, and workspaces exist in code.
-- Phase 0.5 Integration Hub setup UI, data-source RPCs, Import API route, Import API credential/control-plane, external-record storage, sync jobs/errors, normalization handoff, provider MVP promotion, Shopify MVP worker, provider credential onboarding, WooCommerce MVP worker, scheduled sync worker, and M0-UI shared frontend foundation exist in `main`.
-- Current branch `phase-0-5-canonical-approval-flows` adds explicit approval RPCs for normalized product, store, and sales review records.
+- Phase 0.5 Integration Hub setup UI, data-source RPCs, Import API route, Import API credential/control-plane, external-record storage, sync jobs/errors, normalization handoff, provider MVP promotion, Shopify MVP worker, provider credential onboarding, WooCommerce MVP worker, scheduled sync worker, canonical write approval flows, and M0-UI shared frontend foundation exist in `main`.
+- Current branch `phase-0-5-auto-intelligence-recalc` adds automatic, auditable intelligence recalculation evidence after accepted ingestion pipeline writes.
 - Shopify and WooCommerce credential checks read only approved server-side secret material through ignored env/secret management. They do not collect, display, store, or log provider secrets in browser-readable UI.
-- Google Sheets worker, OAuth/provider credential entry UI, and automatic intelligence recalculation from normalized uploads are not complete.
+- Google Sheets worker and OAuth/provider credential entry UI are not complete.
+- Product/store/sales approval flows record recalculation evidence as skipped because Phase 0 scoring reads approved inventory positions, not standalone canonical product/location/sales-fact changes.
 
 Verification Status:
 - Vercel production deployment `dpl_GfAHEeA1fDPgbZrNwYv6mat9LsvZ` is READY and aliased to `https://retailos-ten.vercel.app`.
@@ -22,13 +23,15 @@ Verification Status:
 - Post-smoke runtime log inspection for the current production deployment found no error/fatal logs in the inspected window.
 - Vercel Node runtime setting is aligned to `22.x`.
 - M0-UI PR #33 was merged with green Quality, Security, and Vercel checks.
-- Canonical approval focused typecheck and integration tests passed during implementation; full validation must pass before handoff.
+- Canonical approval PR #37 was merged.
+- Automatic intelligence recalculation focused integration tests passed locally on the current branch; full validation must pass before handoff.
 - GitHub `main` branch is currently unprotected; secret scanning and push protection are enabled; Dependabot security updates are disabled.
 
 Database Migration Status:
-- Repository contains 12 Supabase migrations from secure foundation through Phase 0.5 provider MVP promotion.
+- Repository contains Supabase migrations from secure foundation through Phase 0.5 canonical write approval flows.
 - Scheduled sync migration `20260716214000_phase0_5_scheduled_sync.sql` was applied to hosted Supabase on July 16, 2026.
-- Current branch adds migration `20260716223000_phase0_5_canonical_approval_flows.sql`.
+- Canonical approval migration `20260716223000_phase0_5_canonical_approval_flows.sql` was applied to hosted Supabase on July 16, 2026.
+- Current branch adds migration `20260716233000_phase0_5_auto_intelligence_recalculation.sql`.
 - Hosted schema/RLS verification passed during M0-R.
 - Supabase CLI is not installed in this shell, so `supabase migration list`, `supabase db reset`, and CLI migration-history reconciliation remain unverified.
 - No destructive production database operation is authorized or performed.
@@ -39,10 +42,10 @@ Known Runtime Issues:
 - Resolution: Production `DATABASE_URL` was replaced from ignored local secret management, production was redeployed as `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE`, and fresh Import API smoke passed.
 
 Current Mode:
-- Implement canonical write approval flows for Phase 0.5 product, store, and sales review records.
+- Implement automatic intelligence recalculation for Phase 0.5 approved ingestion pipeline writes.
 - Do not ask users to paste secrets into chat or browser forms.
 - Do not store provider access tokens in `data_sources.connection_metadata`, client code, fixtures, screenshots, docs, or Git.
-- Do not add OAuth flows, Google Sheets worker, automatic intelligence recalculation, future phases, POS, finance, wholesale, warehouse management, forecasting, marketplace publishing, autonomous campaign execution, or real LLM agent execution in this slice.
+- Do not add OAuth flows, Google Sheets worker, future phases, POS, finance, wholesale, warehouse management, forecasting, marketplace publishing, autonomous campaign execution, or real LLM agent execution in this slice.
 
 Next Required Milestone:
-- Review and accept the Canonical Write Approval Flows PR before continuing to automatic intelligence recalculation.
+- Review and accept the Automatic Intelligence Recalculation PR before promoting the active phase to Phase 1.

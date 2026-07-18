@@ -1,20 +1,24 @@
 Next Task:
-Complete, review, and merge Phase 0.5 — Canonical Write Approval Flows.
+Complete, review, and merge Phase 0.5 — Automatic Intelligence Recalculation.
 
 Required before acceptance:
 
-- Product master review rows require explicit approval before products/SKUs are created or updated.
-- Store master review rows require explicit approval before locations are created or updated.
-- Sales history review rows require explicit approval before sales facts are created.
-- Approval requires authenticated `data.manage`, exact upload digest, review row-count consistency, and clear or accepted validation issues.
-- Approval runs are tenant-scoped, RLS-readable, audited, and idempotent.
-- No connector writes directly to canonical products, locations, sales facts, inventory, intelligence, projectisation, or campaign tables.
-- Integration tests cover product, store, and sales approval flows and product approval idempotency.
+- Approved inventory consolidation automatically records tenant-scoped recalculation evidence.
+- Approved inventory consolidation triggers the existing deterministic Inventory Recovery Intelligence engine only after the approved snapshot is fully written.
+- Recalculation attempts are RLS-protected, audit logged, idempotent per source event, and readable only to authorized tenant users.
+- Product master, store master, and sales history approval flows record honest skipped recalculation evidence until Phase 0 scoring consumes those canonical record types.
+- No connector writes directly to intelligence, projectisation, campaign, or future Phase 1 inventory-ledger tables.
+- Integration tests cover automatic inventory-consolidation recalculation and skipped product/store/sales recalculation evidence.
 - lint, typecheck, test, security, and build pass.
 
-Next Approved Phase 0.5 Work After Acceptance:
+Next Approved Work After Acceptance:
 
-- Add automatic intelligence recalculation after normalized imports.
-- Implement the Google Sheets provider worker only after scheduled sync/approval/recalculation priorities are explicitly ordered.
+- Human-approved promotion to Phase 1 — Core Inventory Operating System.
+- Start Phase 1 with small vertical milestones:
+  1. inventory ledger schema and RLS foundation;
+  2. stock adjustment request/approval foundation;
+  3. transfer request/approval foundation;
+  4. stock count and variance foundation;
+  5. inventory search/barcode lookup foundation.
 
-Do not start Phase 1. Do not add POS, finance, wholesale, forecasting, warehouse management, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
+Do not add POS, finance, wholesale, forecasting, warehouse management beyond the approved Phase 1 inventory-control scope, marketplace publishing, autonomous campaign execution, or real LLM agent execution.

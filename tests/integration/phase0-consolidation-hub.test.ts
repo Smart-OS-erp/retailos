@@ -283,6 +283,26 @@ describe("Phase 0 Consolidation Hub", () => {
       "select event_type from public.event_log where aggregate_id = $1",
       [runId],
     );
+    const recalculations = await database.query<{
+      has_intelligence_run: boolean;
+      source_type: string;
+      status: string;
+    }>(
+      `select source_type, status, intelligence_run_id is not null as has_intelligence_run
+       from public.intelligence_recalculation_runs
+       where source_id = $1`,
+      [runId],
+    );
+    const intelligence = await database.query<{ count: number }>(
+      `select count(*)::integer as count
+       from public.intelligence_runs
+       where snapshot_id = (
+         select snapshot_id
+         from public.consolidation_runs
+         where id = $1
+       )`,
+      [runId],
+    );
 
     expect(runs.rows).toEqual([
       { status: "completed", approval_evidence_sha256: DIGEST_A },
@@ -291,6 +311,14 @@ describe("Phase 0 Consolidation Hub", () => {
     expect(items.rows[0]!.source_evidence.upload_id).toBe(readyUploadA);
     expect(audits.rows).toEqual([{ action: "inventory_upload.consolidated" }]);
     expect(events.rows).toEqual([{ event_type: "inventory.consolidated" }]);
+    expect(recalculations.rows).toEqual([
+      {
+        has_intelligence_run: true,
+        source_type: "inventory_consolidation",
+        status: "completed",
+      },
+    ]);
+    expect(intelligence.rows).toEqual([{ count: 1 }]);
   });
 
   it("returns the original run on retry and rejects changed evidence", async () => {
@@ -319,14 +347,27 @@ describe("Phase 0 Consolidation Hub", () => {
 
   it("persists deterministic intelligence without mixing currencies", async () => {
     await database.exec("reset role");
+    await database.query(
+      "update public.inventory_snapshots set status = 'superseded' where organization_id = $1 and status = 'approved'",
+      [organizationA],
+    );
     const snapshot = (
       await database.query<{ snapshot_id: string }>(
-        `select snapshot_id
-         from public.consolidation_runs
-         where organization_id = $1 and upload_id = $2`,
-        [organizationA, readyUploadA],
+        `insert into public.inventory_snapshots (
+          organization_id, upload_id, observed_at, status, created_by
+        ) values (
+          $1, $2, timezone('utc', now()) + interval '1 minute', 'approved', $3
+        )
+        returning id as snapshot_id`,
+        [organizationA, readyUploadA, OWNER_A],
       )
     ).rows[0]!.snapshot_id;
+    const ngnSku = (
+      await database.query<{ id: string }>(
+        "select id from public.skus where organization_id = $1 and sku_code = 'CONSOLIDATE-1'",
+        [organizationA],
+      )
+    ).rows[0]!.id;
 
     const product = (
       await database.query<{ id: string }>(
@@ -362,9 +403,18 @@ describe("Phase 0 Consolidation Hub", () => {
         approved_unit_cost, currency_code, first_available_at,
         units_sold_90, units_sold_30
       ) values
-        ($1, $2, $3, $4, 3, 100, 'GHS', current_date - 200, 0, 0),
-        ($1, $2, $5, $4, 5, 100, null, null, null, null)`,
-      [organizationA, snapshot, ghsSku, locationA2, lowConfidenceSku],
+        ($1, $2, $3, $4, 3, 100000, 'NGN', current_date - 200, 0, 0),
+        ($1, $2, $5, $6, 3, 100, 'GHS', current_date - 200, 0, 0),
+        ($1, $2, $7, $6, 5, 100, null, null, null, null)`,
+      [
+        organizationA,
+        snapshot,
+        ngnSku,
+        locationA1,
+        ghsSku,
+        locationA2,
+        lowConfidenceSku,
+      ],
     );
 
     await authenticate(OWNER_A);
@@ -380,11 +430,16 @@ describe("Phase 0 Consolidation Hub", () => {
     }>(
       `select data_confidence_status, suppression_reason
        from public.inventory_risk_insights
+       where intelligence_run_id = $1
        order by data_confidence_score desc`,
+      [first.rows[0]!.id],
     );
     const briefing = await database.query<{
       summary: { totals_by_currency: Record<string, number> };
-    }>("select summary from public.executive_briefings");
+    }>(
+      "select summary from public.executive_briefings where intelligence_run_id = $1",
+      [first.rows[0]!.id],
+    );
 
     expect(retry.rows[0]!.id).toBe(first.rows[0]!.id);
     expect(insights.rows).toHaveLength(3);
