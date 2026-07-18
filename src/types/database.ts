@@ -1109,6 +1109,25 @@ export type Database = {
         };
         Relationships: [];
       };
+      external_record_approval_runs: {
+        Row: {
+          id: string;
+          organization_id: string;
+          upload_id: string;
+          record_type: "product_master" | "store_master" | "sales_history";
+          source_sha256: string;
+          source_row_count: number;
+          inserted_count: number;
+          updated_count: number;
+          status: "completed";
+          approved_by: string;
+          approved_at: string;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
       sync_jobs: {
         Row: {
           id: string;
@@ -1519,6 +1538,27 @@ export type Database = {
       normalize_external_records: {
         Args: {
           target_sync_job_id: string;
+        };
+        Returns: string;
+      };
+      approve_product_master_records: {
+        Args: {
+          target_upload_id: string;
+          expected_content_sha256: string;
+        };
+        Returns: string;
+      };
+      approve_store_master_records: {
+        Args: {
+          target_upload_id: string;
+          expected_content_sha256: string;
+        };
+        Returns: string;
+      };
+      approve_sales_history_records: {
+        Args: {
+          target_upload_id: string;
+          expected_content_sha256: string;
         };
         Returns: string;
       };

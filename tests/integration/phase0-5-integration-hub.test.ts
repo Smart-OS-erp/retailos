@@ -780,6 +780,198 @@ describe("Phase 0.5 Integration Hub foundation", () => {
     expect(afterLocations).toBe(beforeLocations);
   });
 
+  it("approves product, store, and sales review rows before canonical writes", async () => {
+    await authenticate(OWNER_B);
+    const productJobId = (
+      await database.query<{ id: string }>(
+        "select public.enqueue_data_source_sync($1, $2) as id",
+        [importApiSourceB, "tenant-b-product-approval"],
+      )
+    ).rows[0]!.id;
+
+    await database.query(
+      `insert into public.external_records (
+        organization_id, data_source_id, sync_job_id, record_type,
+        source_record_key, payload, payload_hash, received_by
+      ) values (
+        $1, $2, $3, 'product_master', 'product-approval',
+        '{"sku":"SKU-APPROVED","product_name":"Approved jacket","style_code":"STYLE-APPROVED","approved_unit_cost":15500,"currency_code":"NGN"}',
+        'hash:product-approval-v001', $4
+      )`,
+      [organizationB, importApiSourceB, productJobId, OWNER_B],
+    );
+
+    const productUploadId = (
+      await database.query<{ id: string }>(
+        "select public.normalize_external_records($1) as id",
+        [productJobId],
+      )
+    ).rows[0]!.id;
+    const productUpload = (
+      await database.query<{ content_sha256: string; upload_type: string }>(
+        "select content_sha256, upload_type from public.data_uploads where id = $1",
+        [productUploadId],
+      )
+    ).rows[0]!;
+
+    expect(productUpload.upload_type).toBe("product_csv");
+
+    const productRunId = (
+      await database.query<{ id: string }>(
+        "select public.approve_product_master_records($1, $2) as id",
+        [productUploadId, productUpload.content_sha256],
+      )
+    ).rows[0]!.id;
+    const productRetryRunId = (
+      await database.query<{ id: string }>(
+        "select public.approve_product_master_records($1, $2) as id",
+        [productUploadId, productUpload.content_sha256],
+      )
+    ).rows[0]!.id;
+
+    expect(productRetryRunId).toBe(productRunId);
+
+    const approvedSku = await database.query<{
+      approved_unit_cost: number;
+      currency_code: string;
+      product_name: string;
+      sku_code: string;
+    }>(
+      `select sku.sku_code, sku.approved_unit_cost::integer as approved_unit_cost,
+              sku.currency_code, product.name as product_name
+       from public.skus as sku
+       join public.products as product
+         on product.organization_id = sku.organization_id
+        and product.id = sku.product_id
+       where sku.organization_id = $1
+         and sku.sku_code = 'SKU-APPROVED'`,
+      [organizationB],
+    );
+    expect(approvedSku.rows).toEqual([
+      {
+        approved_unit_cost: 15500,
+        currency_code: "NGN",
+        product_name: "Approved jacket",
+        sku_code: "SKU-APPROVED",
+      },
+    ]);
+
+    const storeJobId = (
+      await database.query<{ id: string }>(
+        "select public.enqueue_data_source_sync($1, $2) as id",
+        [importApiSourceB, "tenant-b-store-approval"],
+      )
+    ).rows[0]!.id;
+    await database.query(
+      `insert into public.external_records (
+        organization_id, data_source_id, sync_job_id, record_type,
+        source_record_key, payload, payload_hash, received_by
+      ) values (
+        $1, $2, $3, 'store_master', 'store-approval',
+        '{"location_code":"accra-popup","location_name":"Accra Popup","timezone":"Africa/Accra"}',
+        'hash:store-approval-v001', $4
+      )`,
+      [organizationB, importApiSourceB, storeJobId, OWNER_B],
+    );
+    const storeUploadId = (
+      await database.query<{ id: string }>(
+        "select public.normalize_external_records($1) as id",
+        [storeJobId],
+      )
+    ).rows[0]!.id;
+    const storeUpload = (
+      await database.query<{ content_sha256: string; upload_type: string }>(
+        "select content_sha256, upload_type from public.data_uploads where id = $1",
+        [storeUploadId],
+      )
+    ).rows[0]!;
+    expect(storeUpload.upload_type).toBe("store_csv");
+
+    await database.query("select public.accept_inventory_upload_warnings($1)", [
+      storeUploadId,
+    ]);
+    const storeRunId = (
+      await database.query<{ id: string }>(
+        "select public.approve_store_master_records($1, $2) as id",
+        [storeUploadId, storeUpload.content_sha256],
+      )
+    ).rows[0]!.id;
+    expect(storeRunId).toMatch(/[0-9a-f-]{36}/);
+
+    const approvedLocation = await database.query<{
+      code: string;
+      name: string;
+      timezone: string;
+    }>(
+      "select code, name, timezone from public.locations where organization_id = $1 and code = 'accra-popup'",
+      [organizationB],
+    );
+    expect(approvedLocation.rows).toEqual([
+      { code: "accra-popup", name: "Accra Popup", timezone: "Africa/Accra" },
+    ]);
+
+    const salesJobId = (
+      await database.query<{ id: string }>(
+        "select public.enqueue_data_source_sync($1, $2) as id",
+        [importApiSourceB, "tenant-b-sales-approval"],
+      )
+    ).rows[0]!.id;
+    await database.query(
+      `insert into public.external_records (
+        organization_id, data_source_id, sync_job_id, record_type,
+        source_record_key, payload, payload_hash, received_by
+      ) values (
+        $1, $2, $3, 'sales_history', 'sales-approval',
+        '{"sku":"SKU-APPROVED","location_code":"accra-popup","quantity":3,"sold_at":"2026-07-15","gross_amount":75000,"currency_code":"NGN","source_record_key":"sale-approved-001"}',
+        'hash:sales-approval-v001', $4
+      )`,
+      [organizationB, importApiSourceB, salesJobId, OWNER_B],
+    );
+    const salesUploadId = (
+      await database.query<{ id: string }>(
+        "select public.normalize_external_records($1) as id",
+        [salesJobId],
+      )
+    ).rows[0]!.id;
+    const salesUpload = (
+      await database.query<{ content_sha256: string; upload_type: string }>(
+        "select content_sha256, upload_type from public.data_uploads where id = $1",
+        [salesUploadId],
+      )
+    ).rows[0]!;
+    expect(salesUpload.upload_type).toBe("sales_csv");
+
+    const salesRunId = (
+      await database.query<{ id: string }>(
+        "select public.approve_sales_history_records($1, $2) as id",
+        [salesUploadId, salesUpload.content_sha256],
+      )
+    ).rows[0]!.id;
+    expect(salesRunId).toMatch(/[0-9a-f-]{36}/);
+
+    const approvedSales = await database.query<{
+      currency_code: string;
+      gross_amount: number;
+      quantity: number;
+      source_record_key: string;
+    }>(
+      `select quantity, gross_amount::integer as gross_amount,
+              currency_code, source_record_key
+       from public.sales_facts
+       where organization_id = $1
+         and source_record_key = 'sale-approved-001'`,
+      [organizationB],
+    );
+    expect(approvedSales.rows).toEqual([
+      {
+        currency_code: "NGN",
+        gross_amount: 75000,
+        quantity: 3,
+        source_record_key: "sale-approved-001",
+      },
+    ]);
+  });
+
   it("stores external records with tenant lineage and denies cross-tenant lineage", async () => {
     await authenticate(MERCH_A);
     const record = await database.query<{ id: string }>(
