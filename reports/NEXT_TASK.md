@@ -1,24 +1,34 @@
 Next Task:
-Complete, review, and merge Phase 0.5 — Automatic Intelligence Recalculation.
+Complete, review, and merge Phase 1 — Inventory Core Foundations M1–M5.
+
+Milestones in this PR:
+
+1. Inventory movement ledger schema and RLS foundation.
+2. Stock adjustment request/approval foundation.
+3. Transfer request/approval foundation.
+4. Stock count and variance/reconciliation foundation.
+5. Inventory search and barcode/SKU lookup foundation.
 
 Required before acceptance:
 
-- Approved inventory consolidation automatically records tenant-scoped recalculation evidence.
-- Approved inventory consolidation triggers the existing deterministic Inventory Recovery Intelligence engine only after the approved snapshot is fully written.
-- Recalculation attempts are RLS-protected, audit logged, idempotent per source event, and readable only to authorized tenant users.
-- Product master, store master, and sales history approval flows record honest skipped recalculation evidence until Phase 0 scoring consumes those canonical record types.
-- No connector writes directly to intelligence, projectisation, campaign, or future Phase 1 inventory-ledger tables.
-- Integration tests cover automatic inventory-consolidation recalculation and skipped product/store/sales recalculation evidence.
+- All new tenant-owned tables have RLS enabled, FORCE RLS, authenticated select policies, anon revocation, and no direct browser/client write path.
+- All inventory-control writes go through permissioned database functions.
+- Location-scoped users can only read or act within assigned locations.
+- Cross-tenant stock adjustments, transfers, counts, movement reads, and search results are denied.
+- Stock adjustment approval writes audited `inventory_movements`.
+- Transfer approval writes paired `transfer_out`/`transfer_in` movement ledger rows.
+- Stock counts persist count items and create reconciliation issues for variance.
+- Inventory search uses approved current inventory positions and supports SKU/barcode/product-name lookup within effective location scope.
+- No dashboards, UI screens, POS, finance, wholesale, forecasting, warehouse-management expansion, marketplace publishing, autonomous campaign execution, or real LLM agent execution are added.
 - lint, typecheck, test, security, and build pass.
 
 Next Approved Work After Acceptance:
 
-- Human-approved promotion to Phase 1 — Core Inventory Operating System.
-- Start Phase 1 with small vertical milestones:
-  1. inventory ledger schema and RLS foundation;
-  2. stock adjustment request/approval foundation;
-  3. transfer request/approval foundation;
-  4. stock count and variance foundation;
-  5. inventory search/barcode lookup foundation.
+- Phase 1 incremental workflow hardening, likely:
+  - movement reversal/void governance;
+  - transfer receiving workflow;
+  - stock-count review/closure workflow;
+  - low/overstock watchlist from persisted inventory facts;
+  - API/server-action wrappers for the approved database contracts.
 
-Do not add POS, finance, wholesale, forecasting, warehouse management beyond the approved Phase 1 inventory-control scope, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
+Do not build UI dashboards or future phases until the backend contracts are accepted.
