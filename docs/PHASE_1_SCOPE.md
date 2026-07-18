@@ -9,15 +9,34 @@ transfers, counts, reconciliation, and lookup.
 Phase 1 remains inventory-control focused. It is not a full ERP, POS, finance,
 wholesale, warehouse-management, or forecasting phase.
 
-## Current approved milestones
+## Approved milestones
 
-This slice approves backend-only foundations for:
+### M1-M5 — Inventory core foundations
+
+The merged foundation slice approved backend contracts for:
 
 1. inventory movement ledger;
 2. stock adjustment request and approval;
 3. transfer request and approval;
 4. stock count and variance/reconciliation evidence;
 5. inventory search by SKU, barcode, product name, and effective location scope.
+
+### M6 — Inventory Operations Core
+
+This milestone extends the foundation into real operational workflows:
+
+1. current inventory balances by SKU and location, derived from approved
+   inventory snapshots plus movement ledger rows;
+2. stock adjustment request, approve, reject, execute, and reverse workflow;
+3. transfer request, approve, reject, dispatch, partial receive, full receive,
+   and discrepancy evidence workflow;
+4. idempotency evidence for stock-affecting execution, reversal, dispatch, and
+   receipt actions;
+5. shared-shell Phase 1 UI for current positions, movements, adjustments, and
+   transfers.
+
+M6 does not approve broad dashboards, POS, procurement, finance, wholesale,
+advanced forecasting, or warehouse-management expansion.
 
 ## Security rules
 
@@ -27,6 +46,9 @@ This slice approves backend-only foundations for:
 - Direct client/browser writes to operational inventory tables are not allowed.
 - Every approval or submitted operational action must be audit logged.
 - Movement ledger rows must retain source object lineage.
+- Stock-affecting actions must use transactional database functions with
+  idempotency keys and conservative movement-ledger locking.
+- Transfer receipts must keep discrepancy evidence visible until reconciled.
 - No service-role credential may be used for normal user inventory operations.
 
 ## Out of scope
@@ -36,7 +58,8 @@ This slice approves backend-only foundations for:
 - Full warehouse-management workflows.
 - Forecasting, reorder automation, or markdown optimization.
 - Autonomous Copilot execution.
-- Dashboards or product UI screens for this backend-foundation slice.
+- Dashboards or product UI screens outside the approved inventory-operations
+  workflow.
 - Fake current-stock mutation based on static constants.
 
 ## Acceptance
@@ -45,6 +68,8 @@ Phase 1 milestones are accepted only when:
 
 - migration contracts are RLS-protected and pass security checks;
 - positive and negative integration tests cover tenant and location boundaries;
+- operational tests cover adjustment execute/reverse idempotency and transfer
+  dispatch/partial/full receipt behavior;
 - lint, typecheck, tests, security, and build pass;
 - production deployment and hosted migration state are known;
 - reports and known blockers are updated honestly.

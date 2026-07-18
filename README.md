@@ -1,8 +1,8 @@
 # RetailOS
 
-RetailOS is secure operating intelligence for African fashion retail. The active build is **Phase 0.5 — Integration Hub MVP**, with the current milestone **M0-R — Harness Reconciliation and Production Hardening**.
+RetailOS is secure operating intelligence for African fashion retail. The active build is **Phase 1 - Core Inventory Operating System**, with this branch implementing **M6 - Inventory Operations Core**.
 
-RetailOS is not a generic ERP, POS, dashboard, or chatbot. Its first wedge is inventory recovery intelligence: trustworthy retail data intake, validation, consolidation, inventory risk explanation, recovery opportunities, projectisation, campaign briefs, and permission-aware Copilot explanations.
+RetailOS is not a generic ERP, POS, dashboard, or chatbot. Its first wedge was inventory recovery intelligence: trustworthy retail data intake, validation, consolidation, inventory risk explanation, recovery opportunities, projectisation, campaign briefs, and permission-aware Copilot explanations.
 
 ## Implemented in `main`
 
@@ -15,7 +15,16 @@ RetailOS is not a generic ERP, POS, dashboard, or chatbot. Its first wedge is in
 - Phase 0.5 Integration Hub setup UI and data-source RPCs.
 - RetailOS Import API route at `/api/import/v1/records` with bearer-token hashing, idempotency, tenant scope, and raw external-record persistence.
 - External-record normalization handoff for `inventory_snapshot`, `product_master`, `store_master`, and `sales_history`.
-- Shopify Phase 0.5 MVP worker code that is server-only, credential-gated, writes Shopify product/inventory payloads to `external_records`, and hands off to normalization.
+- Shopify and WooCommerce Phase 0.5 MVP workers, scheduled sync, canonical approval flows, and automatic intelligence recalculation evidence.
+- M0-UI shared frontend foundation.
+- Phase 1 inventory core foundation tables/RPCs for movement ledger, stock adjustments, transfers, stock counts, reconciliation issues, and inventory search.
+
+## Implemented on `phase-1-inventory-operations-core`
+
+- Current inventory balances derived from approved snapshots plus movement ledger rows, transfer reservations, and in-transit quantities.
+- Stock adjustment request, approve, reject, execute, and reverse workflow with idempotency and audit evidence.
+- Transfer request, approve, reject, dispatch, partial receipt, full receipt, and discrepancy evidence workflow with idempotency and audit evidence.
+- Shared-shell Phase 1 pages for current positions, movement history, adjustments, and transfers using RetailDataGrid, shared status mapping, and shared market formatting.
 
 ## Deployed
 
@@ -23,18 +32,21 @@ Production alias: `https://retailos-ten.vercel.app`
 
 Current inspected production deployment:
 
-- Deployment: `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE`
-- Commit: `d19a4635d32bfc5b0d26916e3efbd8603e751372`
-- Source: merged `main`, PR #31
+- Deployment: `dpl_J9F8LLaVC6AnEsa2bPZQFy86Gfqi`
+- Commit: `75ae416`
+- Source: merged `main`, after Phase 1 foundation PR #39
 - Runtime: Node 22 via `package.json` and Vercel project setting
+
+Phase 1 M6 is not deployed yet.
 
 ## Verified
 
-- Local lint, typecheck, unit, integration, security, and build checks pass on recent Phase 0.5 milestones.
+- Local lint, typecheck, unit, integration, security, and build checks pass on recent merged milestones.
+- On this branch, lint, typecheck, and focused Phase 1 integration tests have passed; full final validation must run before PR handoff.
 - Production `/login` and `/signup` return 200.
 - Production `/workspace` redirects unauthenticated users to `/login`.
 - Fresh production Import API smoke passed on July 16, 2026 after replacing the Production `DATABASE_URL` with the approved Supabase pooler value and redeploying.
-- Post-smoke production runtime error check for `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE` found no error/fatal logs in the inspected window.
+- Post-smoke production runtime error check for the current production deployment found no error/fatal logs in the inspected window.
 - Vercel Git integration points to `Smart-OS-erp/retailos`, production branch `main`.
 - Vercel project Node setting is aligned to `22.x`.
 
@@ -42,10 +54,10 @@ Current inspected production deployment:
 
 - Supabase CLI migration history was not inspected in M0-R because the `supabase` CLI is not installed in this shell.
 - A local `supabase db reset` was not run because the CLI is unavailable.
-- Live Shopify provider API sync has not been run with real Shopify credentials.
-- WooCommerce and Google Sheets workers are not implemented.
-- Product/location/sales canonical write approval flows are not implemented.
-- Automatic intelligence recalculation after normalized external records is not implemented.
+- Phase 1 M6 hosted migration has not been applied yet.
+- Phase 1 M6 has not been deployed yet.
+- Live Shopify/WooCommerce provider API sync has not been run with real provider credentials.
+- Google Sheets worker is not implemented.
 
 ## Blocked / Owner Actions
 
@@ -54,6 +66,7 @@ Current inspected production deployment:
 - Configure GitHub branch protection for `main`; it is currently unprotected.
 - Enable Dependabot security updates; secret scanning and push protection are enabled.
 - Provide reviewed server-only provider credentials before any live Shopify/WooCommerce/Google Sheets sync is accepted.
+- Review and apply Phase 1 M6 migration `20260718103000_phase1_inventory_operations_core.sql` before deploying the M6 UI/actions.
 
 ## Local setup
 
@@ -73,9 +86,11 @@ SUPABASE_SERVICE_ROLE_KEY
 DATABASE_URL
 IMPORT_API_TOKEN_HASH_SECRET
 SHOPIFY_CONNECTOR_CREDENTIALS_JSON
+WOOCOMMERCE_CONNECTOR_CREDENTIALS_JSON
+CRON_SECRET
 ```
 
-Only `NEXT_PUBLIC_*` variables may be used by browser code. `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL`, `IMPORT_API_TOKEN_HASH_SECRET`, and provider credential variables are server-only.
+Only `NEXT_PUBLIC_*` variables may be used by browser code. `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL`, `IMPORT_API_TOKEN_HASH_SECRET`, provider credential variables, and `CRON_SECRET` are server-only.
 
 ## Validation
 

@@ -220,7 +220,7 @@ describe("Phase 1 inventory core foundations", () => {
     await database.close();
   });
 
-  it("creates and approves stock adjustments into the movement ledger", async () => {
+  it("approves, executes, idempotently retries, and reverses stock adjustments", async () => {
     await authenticate(OWNER_A);
     const adjustmentId = (
       await database.query<{ id: string }>(
@@ -239,28 +239,79 @@ describe("Phase 1 inventory core foundations", () => {
         [adjustmentId],
       )
     ).rows[0]!.id;
-    const movement = await database.query<{
-      movement_type: string;
-      quantity_delta: number;
-      source_type: string;
-    }>(
-      `select movement_type, source_type, quantity_delta
+    const movementBeforeExecution = await database.query<{ count: string }>(
+      `select count(*)::text
        from public.inventory_movements
        where source_id = $1`,
       [adjustmentId],
     );
 
     expect(approvedId).toBe(adjustmentId);
+    expect(movementBeforeExecution.rows[0]!.count).toBe("0");
+
+    await database.query(
+      "select public.execute_stock_adjustment($1, $2)",
+      [adjustmentId, "adjustment-execute-test"],
+    );
+    await database.query(
+      "select public.execute_stock_adjustment($1, $2)",
+      [adjustmentId, "adjustment-execute-test"],
+    );
+
+    const movement = await database.query<{
+      movement_type: string;
+      quantity_after: number;
+      quantity_before: number;
+      quantity_delta: number;
+      source_type: string;
+    }>(
+      `select movement_type, source_type, quantity_delta, quantity_before, quantity_after
+       from public.inventory_movements
+       where source_id = $1`,
+      [adjustmentId],
+    );
     expect(movement.rows).toEqual([
       {
         movement_type: "adjustment",
+        quantity_after: 10,
+        quantity_before: 12,
         quantity_delta: -2,
         source_type: "stock_adjustment",
       },
     ]);
+
+    const executedBalance = await database.query<{ on_hand_quantity: number }>(
+      `select on_hand_quantity
+       from public.current_inventory_balances
+       where organization_id = $1 and sku_id = $2 and location_id = $3`,
+      [organizationA, skuA, locationA1],
+    );
+    expect(executedBalance.rows[0]!.on_hand_quantity).toBe(10);
+
+    await database.query(
+      "select public.reverse_stock_adjustment($1, $2, $3)",
+      [adjustmentId, "Reverse test correction", "adjustment-reverse-test"],
+    );
+
+    const reversed = await database.query<{
+      movement_count: string;
+      net_delta: number;
+      status: string;
+    }>(
+      `select
+        (select count(*)::text from public.inventory_movements where source_id = $1) as movement_count,
+        (select coalesce(sum(quantity_delta), 0)::integer from public.inventory_movements where source_id = $1) as net_delta,
+        (select status from public.stock_adjustments where id = $1) as status`,
+      [adjustmentId],
+    );
+    expect(reversed.rows[0]).toEqual({
+      movement_count: "2",
+      net_delta: 0,
+      status: "reversed",
+    });
   });
 
-  it("creates and approves transfers as paired ledger movements", async () => {
+  it("approves, dispatches, partially receives, and reconciles transfers", async () => {
     await authenticate(OWNER_A);
     const transferId = (
       await database.query<{ id: string }>(
@@ -277,12 +328,53 @@ describe("Phase 1 inventory core foundations", () => {
     await database.query("select public.approve_transfer_request($1)", [
       transferId,
     ]);
+    const movementsBeforeDispatch = await database.query<{ count: string }>(
+      `select count(*)::text
+       from public.inventory_movements
+       where source_id = $1`,
+      [transferId],
+    );
+    const reservedBalance = await database.query<{
+      available_quantity: number;
+      reserved_quantity: number;
+    }>(
+      `select reserved_quantity, available_quantity
+       from public.current_inventory_balances
+       where organization_id = $1 and sku_id = $2 and location_id = $3`,
+      [organizationA, skuA, locationA1],
+    );
+
+    expect(movementsBeforeDispatch.rows[0]!.count).toBe("0");
+    expect(reservedBalance.rows[0]).toEqual({
+      available_quantity: 9,
+      reserved_quantity: 3,
+    });
+
+    await database.query("select public.dispatch_transfer_request($1, $2)", [
+      transferId,
+      "transfer-dispatch-test",
+    ]);
+    await database.query("select public.dispatch_transfer_request($1, $2)", [
+      transferId,
+      "transfer-dispatch-test",
+    ]);
+
+    const transferItem = (
+      await database.query<{ id: string }>(
+        `select id
+         from public.transfer_items
+         where transfer_request_id = $1`,
+        [transferId],
+      )
+    ).rows[0]!;
     const movements = await database.query<{
       location_id: string;
       movement_type: string;
+      quantity_after: number;
+      quantity_before: number;
       quantity_delta: number;
     }>(
-      `select location_id, movement_type, quantity_delta
+      `select location_id, movement_type, quantity_delta, quantity_before, quantity_after
        from public.inventory_movements
        where source_id = $1
        order by quantity_delta`,
@@ -293,12 +385,135 @@ describe("Phase 1 inventory core foundations", () => {
       {
         location_id: locationA1,
         movement_type: "transfer_out",
+        quantity_after: 9,
+        quantity_before: 12,
+        quantity_delta: -3,
+      },
+    ]);
+
+    const inTransitBalance = await database.query<{
+      in_transit_quantity: number;
+      on_hand_quantity: number;
+    }>(
+      `select on_hand_quantity, in_transit_quantity
+       from public.current_inventory_balances
+       where organization_id = $1 and sku_id = $2 and location_id = $3`,
+      [organizationA, skuA, locationA2],
+    );
+    expect(inTransitBalance.rows[0]).toEqual({
+      in_transit_quantity: 3,
+      on_hand_quantity: 4,
+    });
+
+    await database.query(
+      "select public.receive_transfer_request($1, $2::jsonb, $3)",
+      [
+        transferId,
+        JSON.stringify([
+          { transfer_item_id: transferItem.id, received_quantity: 1 },
+        ]),
+        "transfer-receive-partial",
+      ],
+    );
+
+    const partial = await database.query<{
+      discrepancy_status: string;
+      in_transit_quantity: number;
+      on_hand_quantity: number;
+      status: string;
+      variance_quantity: number;
+    }>(
+      `select
+        balance.on_hand_quantity,
+        balance.in_transit_quantity,
+        request.status,
+        discrepancy.status as discrepancy_status,
+        discrepancy.variance_quantity
+       from public.current_inventory_balances balance
+       join public.transfer_requests request
+         on request.organization_id = balance.organization_id
+        and request.id = $4
+       join public.transfer_discrepancies discrepancy
+         on discrepancy.organization_id = request.organization_id
+        and discrepancy.transfer_request_id = request.id
+       where balance.organization_id = $1 and balance.sku_id = $2 and balance.location_id = $3
+         and discrepancy.discrepancy_type = 'short_receipt'`,
+      [organizationA, skuA, locationA2, transferId],
+    );
+    expect(partial.rows[0]).toEqual({
+      discrepancy_status: "open",
+      in_transit_quantity: 2,
+      on_hand_quantity: 5,
+      status: "partially_received",
+      variance_quantity: -2,
+    });
+
+    await database.query(
+      "select public.receive_transfer_request($1, $2::jsonb, $3)",
+      [
+        transferId,
+        JSON.stringify([
+          { transfer_item_id: transferItem.id, received_quantity: 2 },
+        ]),
+        "transfer-receive-final",
+      ],
+    );
+
+    const received = await database.query<{
+      discrepancy_status: string;
+      in_transit_quantity: number;
+      on_hand_quantity: number;
+      status: string;
+    }>(
+      `select
+        balance.on_hand_quantity,
+        balance.in_transit_quantity,
+        request.status,
+        discrepancy.status as discrepancy_status
+       from public.current_inventory_balances balance
+       join public.transfer_requests request
+         on request.organization_id = balance.organization_id
+        and request.id = $4
+       join public.transfer_discrepancies discrepancy
+         on discrepancy.organization_id = request.organization_id
+        and discrepancy.transfer_request_id = request.id
+       where balance.organization_id = $1 and balance.sku_id = $2 and balance.location_id = $3
+         and discrepancy.discrepancy_type = 'short_receipt'`,
+      [organizationA, skuA, locationA2, transferId],
+    );
+    expect(received.rows[0]).toEqual({
+      discrepancy_status: "resolved",
+      in_transit_quantity: 0,
+      on_hand_quantity: 7,
+      status: "received",
+    });
+
+    const allMovements = await database.query<{
+      location_id: string;
+      movement_type: string;
+      quantity_delta: number;
+    }>(
+      `select location_id, movement_type, quantity_delta
+       from public.inventory_movements
+       where source_id = $1
+       order by quantity_delta, created_at`,
+      [transferId],
+    );
+    expect(allMovements.rows).toEqual([
+      {
+        location_id: locationA1,
+        movement_type: "transfer_out",
         quantity_delta: -3,
       },
       {
         location_id: locationA2,
         movement_type: "transfer_in",
-        quantity_delta: 3,
+        quantity_delta: 1,
+      },
+      {
+        location_id: locationA2,
+        movement_type: "transfer_in",
+        quantity_delta: 2,
       },
     ]);
   });

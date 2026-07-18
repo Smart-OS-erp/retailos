@@ -3,6 +3,7 @@ import { hasPermission, type OrganizationRole } from "@/lib/auth/authorization";
 export type RetailNavigationGroup =
   | "data-foundation"
   | "execution"
+  | "inventory-core"
   | "intelligence"
   | "setup";
 
@@ -11,9 +12,9 @@ export type RetailNavigationItem = Readonly<{
   href: string;
   id: string;
   label: string;
-  phase: "phase-0" | "phase-0.5";
+  phase: "phase-0" | "phase-0.5" | "phase-1";
   provisional: true;
-  requiredPermission?: "integration.view";
+  requiredPermission?: "integration.view" | "inventory.view";
 }>;
 
 export const retailNavigationItems: readonly RetailNavigationItem[] = [
@@ -41,6 +42,15 @@ export const retailNavigationItems: readonly RetailNavigationItem[] = [
     phase: "phase-0.5",
     provisional: true,
     requiredPermission: "integration.view",
+  },
+  {
+    group: "inventory-core",
+    href: "/inventory",
+    id: "inventory-operations",
+    label: "Inventory Operations",
+    phase: "phase-1",
+    provisional: true,
+    requiredPermission: "inventory.view",
   },
   {
     group: "data-foundation",

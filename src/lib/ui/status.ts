@@ -23,6 +23,11 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     label: "Approved",
     tone: "success",
   },
+  adjustment: {
+    assistiveLabel: "Movement is a stock adjustment",
+    label: "Adjustment",
+    tone: "info",
+  },
   blocked: {
     assistiveLabel: "Status is blocked",
     label: "Blocked",
@@ -42,6 +47,16 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     assistiveLabel: "Status is connected",
     label: "Connected",
     tone: "success",
+  },
+  count_correction: {
+    assistiveLabel: "Movement is a count correction",
+    label: "Count correction",
+    tone: "info",
+  },
+  dispatched: {
+    assistiveLabel: "Status is dispatched",
+    label: "Dispatched",
+    tone: "info",
   },
   error: {
     assistiveLabel: "Status has an error",
@@ -68,6 +83,26 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     label: "Pending",
     tone: "warning",
   },
+  pending_approval: {
+    assistiveLabel: "Status is pending approval",
+    label: "Pending approval",
+    tone: "warning",
+  },
+  partially_received: {
+    assistiveLabel: "Status is partially received",
+    label: "Partially received",
+    tone: "warning",
+  },
+  received: {
+    assistiveLabel: "Status is received",
+    label: "Received",
+    tone: "success",
+  },
+  rejected: {
+    assistiveLabel: "Status is rejected",
+    label: "Rejected",
+    tone: "danger",
+  },
   queued: {
     assistiveLabel: "Status is queued",
     label: "Queued",
@@ -81,6 +116,21 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
   syncing: {
     assistiveLabel: "Status is syncing",
     label: "Syncing",
+    tone: "warning",
+  },
+  reversed: {
+    assistiveLabel: "Status is reversed",
+    label: "Reversed",
+    tone: "warning",
+  },
+  transfer_in: {
+    assistiveLabel: "Movement is a transfer receipt",
+    label: "Transfer in",
+    tone: "success",
+  },
+  transfer_out: {
+    assistiveLabel: "Movement is a transfer dispatch",
+    label: "Transfer out",
     tone: "warning",
   },
 };
