@@ -14,7 +14,6 @@
 
 ## Phase 1 implementation blockers
 
-- **Phase 1 inventory core foundations are in progress on the current branch.** The branch must pass full local validation, CI, hosted migration application, production deployment, and live smoke before acceptance.
 - **No UI exists for Phase 1 inventory operations yet.** This is intentional for the backend-foundation slice. Owner/action: accept database/API contracts before adding screens.
 - **Movement ledger does not yet compute live stock balances or reverse/void movements.** Current scope records approved movement history and source lineage only. Owner/action: add reversal/balance governance in a later Phase 1 milestone.
 - **Transfer receiving workflow is not yet modeled.** Current scope records approved paired transfer movements. Owner/action: add receiving/variance workflow in a later Phase 1 milestone.
