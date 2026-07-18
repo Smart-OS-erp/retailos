@@ -53,6 +53,11 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     label: "Count correction",
     tone: "info",
   },
+  closed: {
+    assistiveLabel: "Status is closed",
+    label: "Closed",
+    tone: "success",
+  },
   dispatched: {
     assistiveLabel: "Status is dispatched",
     label: "Dispatched",
@@ -73,10 +78,55 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     label: "Missing",
     tone: "attention",
   },
+  healthy: {
+    assistiveLabel: "Status is healthy",
+    label: "Healthy",
+    tone: "success",
+  },
+  high: {
+    assistiveLabel: "Severity is high",
+    label: "High",
+    tone: "danger",
+  },
+  in_transit: {
+    assistiveLabel: "Status is in transit",
+    label: "In transit",
+    tone: "info",
+  },
+  info: {
+    assistiveLabel: "Severity is informational",
+    label: "Info",
+    tone: "info",
+  },
+  low: {
+    assistiveLabel: "Severity is low",
+    label: "Low",
+    tone: "info",
+  },
+  low_stock: {
+    assistiveLabel: "Watchlist status is low stock",
+    label: "Low stock",
+    tone: "warning",
+  },
+  medium: {
+    assistiveLabel: "Severity is medium",
+    label: "Medium",
+    tone: "warning",
+  },
   open: {
     assistiveLabel: "Status is open",
     label: "Open",
     tone: "info",
+  },
+  out_of_stock: {
+    assistiveLabel: "Watchlist status is out of stock",
+    label: "Out of stock",
+    tone: "danger",
+  },
+  overstock: {
+    assistiveLabel: "Watchlist status is overstock",
+    label: "Overstock",
+    tone: "attention",
   },
   pending: {
     assistiveLabel: "Status is pending",
@@ -121,6 +171,16 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
   reversed: {
     assistiveLabel: "Status is reversed",
     label: "Reversed",
+    tone: "warning",
+  },
+  reviewed: {
+    assistiveLabel: "Status is reviewed",
+    label: "Reviewed",
+    tone: "info",
+  },
+  submitted: {
+    assistiveLabel: "Status is submitted",
+    label: "Submitted",
     tone: "warning",
   },
   transfer_in: {

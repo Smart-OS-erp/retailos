@@ -38,6 +38,24 @@ This milestone extends the foundation into real operational workflows:
 M6 does not approve broad dashboards, POS, procurement, finance, wholesale,
 advanced forecasting, or warehouse-management expansion.
 
+### M1.9 — Inventory Operating System Completion
+
+This final Phase 1 milestone completes the approved inventory-control slice:
+
+1. stock-count review and closure workflow;
+2. reconciliation issue resolution/dismissal decisions;
+3. optional approved count-correction movement posting;
+4. persisted-evidence inventory watchlist for out-of-stock, low-stock,
+   overstock, and in-transit follow-up;
+5. inventory lookup UI for SKU, barcode, and product search within effective
+   location scope;
+6. hosted schema verification coverage for the final Phase 1 objects.
+
+M1.9 remains inventory-control focused. Watchlist signals are rule-based from
+persisted balances and historical sales evidence; they are not demand
+forecasts, reorder automation, markdown optimization, POS, finance, procurement,
+or warehouse-management expansion.
+
 ## Security rules
 
 - Tenant isolation remains mandatory at database, API, and UI layers.
@@ -70,6 +88,8 @@ Phase 1 milestones are accepted only when:
 - positive and negative integration tests cover tenant and location boundaries;
 - operational tests cover adjustment execute/reverse idempotency and transfer
   dispatch/partial/full receipt behavior;
+- stock-count tests cover review, issue closure, count-correction idempotency,
+  and watchlist derivation from persisted balances;
 - lint, typecheck, tests, security, and build pass;
 - production deployment and hosted migration state are known;
 - reports and known blockers are updated honestly.

@@ -1,26 +1,22 @@
 Next Task:
-Continue Phase 1 - Core Inventory Operating System after M6 review.
+Finish the Phase 1 M1.9 release process:
 
-Recommended next milestones:
+1. Open and review the M1.9 PR.
+2. Confirm CI quality/security and Vercel preview checks pass.
+3. Merge the accepted PR into `main`.
+4. Confirm production Vercel deployment is ready.
+5. Smoke production routes:
+   - `/login`
+   - `/inventory`
+   - `/inventory/counts`
+   - `/inventory/search`
+   - `/inventory/watchlist`
+6. Inspect runtime errors where the available Vercel tooling permits it.
+7. Record final production deployment evidence.
 
-1. Finish M6 release process:
-   - review PR;
-   - apply hosted migration `20260718103000_phase1_inventory_operations_core.sql`;
-   - deploy accepted code;
-   - run production route/runtime smoke.
-2. Stock-count review and closure:
-   - review submitted counts;
-   - resolve/dismiss reconciliation issues;
-   - optionally create approved count-correction movements.
-3. Low/overstock watchlist:
-   - derive from persisted inventory facts;
-   - remain tenant/location scoped;
-   - do not invent demand forecasts.
-4. Inventory search/barcode UI:
-   - use persisted SKU/product/location data;
-   - respect location scope;
-   - avoid POS or checkout behavior.
+After Phase 1 M1.9 is accepted:
 
-Do not build dashboards or broad UI screens outside approved Phase 1 inventory-control workflows.
+- Hold for explicit product/founder approval before promoting to Phase 2.
+- Recommended non-feature follow-up: Supabase CLI migration-history reconciliation, GitHub branch protection, Dependabot security updates, and repository visibility decision.
 
-Do not add POS, finance, wholesale, forecasting, warehouse-management expansion beyond approved inventory-control scope, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
+Do not build Phase 2, POS, finance, procurement, wholesale, forecasting, autonomous Copilot execution, or broad dashboards without explicit phase promotion.

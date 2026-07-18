@@ -547,6 +547,130 @@ describe("Phase 1 inventory core foundations", () => {
     ]);
   });
 
+  it("reviews and closes stock counts with idempotent correction movements", async () => {
+    await authenticate(OWNER_A);
+    const current = (
+      await database.query<{ on_hand_quantity: number }>(
+        `select on_hand_quantity
+         from public.current_inventory_balances
+         where organization_id = $1 and sku_id = $2 and location_id = $3`,
+        [organizationA, skuA, locationA1],
+      )
+    ).rows[0]!.on_hand_quantity;
+    const countId = (
+      await database.query<{ id: string }>(
+        "select public.submit_stock_count($1, timezone('utc', now()), $2::jsonb) as id",
+        [
+          locationA1,
+          JSON.stringify([
+            {
+              counted_quantity: current + 2,
+              expected_quantity: current,
+              sku_id: skuA,
+            },
+          ]),
+        ],
+      )
+    ).rows[0]!.id;
+    const issueId = (
+      await database.query<{ id: string }>(
+        `select id
+         from public.reconciliation_issues
+         where stock_count_id = $1`,
+        [countId],
+      )
+    ).rows[0]!.id;
+
+    await database.query("select public.review_stock_count($1, $2)", [
+      countId,
+      "Reviewed against physical count sheet",
+    ]);
+    await database.query(
+      "select public.close_stock_count($1, $2::jsonb, true, $3, $4)",
+      [
+        countId,
+        JSON.stringify([
+          {
+            issue_id: issueId,
+            resolution_note: "Count verified by manager",
+            status: "resolved",
+          },
+        ]),
+        "stock-count-close-test",
+        "Closed with correction",
+      ],
+    );
+    await database.query(
+      "select public.close_stock_count($1, $2::jsonb, true, $3, $4)",
+      [countId, JSON.stringify([]), "stock-count-close-test", "Retry"],
+    );
+
+    const closed = await database.query<{
+      movement_count: string;
+      on_hand_quantity: number;
+      issue_status: string;
+      status: string;
+    }>(
+      `select
+        (select status from public.stock_counts where id = $1) as status,
+        (select status from public.reconciliation_issues where id = $2) as issue_status,
+        (select count(*)::text from public.inventory_movements where source_id = $1 and movement_type = 'count_correction') as movement_count,
+        (select on_hand_quantity from public.current_inventory_balances where organization_id = $3 and sku_id = $4 and location_id = $5) as on_hand_quantity`,
+      [countId, issueId, organizationA, skuA, locationA1],
+    );
+
+    expect(closed.rows[0]).toEqual({
+      issue_status: "resolved",
+      movement_count: "1",
+      on_hand_quantity: current + 2,
+      status: "closed",
+    });
+  });
+
+  it("derives low and out-of-stock watchlist signals from persisted balances", async () => {
+    await authenticate(OWNER_A);
+    const current = (
+      await database.query<{ on_hand_quantity: number }>(
+        `select on_hand_quantity
+         from public.current_inventory_balances
+         where organization_id = $1 and sku_id = $2 and location_id = $3`,
+        [organizationA, skuA, locationA2],
+      )
+    ).rows[0]!.on_hand_quantity;
+    const adjustmentId = (
+      await database.query<{ id: string }>(
+        "select public.create_stock_adjustment($1, $2, $3::jsonb) as id",
+        [
+          locationA2,
+          "Reduce to zero for watchlist test",
+          JSON.stringify([{ quantity_delta: -current, sku_id: skuA }]),
+        ],
+      )
+    ).rows[0]!.id;
+    await database.query("select public.approve_stock_adjustment($1)", [
+      adjustmentId,
+    ]);
+    await database.query("select public.execute_stock_adjustment($1, $2)", [
+      adjustmentId,
+      "watchlist-adjustment-test",
+    ]);
+
+    const watchlist = await database.query<{
+      severity: string;
+      watch_status: string;
+    }>(
+      `select severity, watch_status
+       from public.inventory_stock_watchlist
+       where organization_id = $1 and sku_id = $2 and location_id = $3`,
+      [organizationA, skuA, locationA2],
+    );
+
+    expect(watchlist.rows[0]).toEqual({
+      severity: "high",
+      watch_status: "out_of_stock",
+    });
+  });
+
   it("searches inventory by SKU and barcode within effective location scope", async () => {
     await authenticate(STORE_A);
     const scoped = await database.query<{

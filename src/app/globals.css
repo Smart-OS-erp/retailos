@@ -269,7 +269,8 @@ input:disabled {
 }
 
 .field input,
-.field select {
+.field select,
+.field textarea {
   background: var(--surface);
   border: 1px solid var(--border-strong);
   border-radius: 10px;
@@ -281,14 +282,29 @@ input:disabled {
 }
 
 .field input:hover,
-.field select:hover {
+.field select:hover,
+.field textarea:hover {
   border-color: #a8afbf;
 }
 
 .field input:focus,
-.field select:focus {
+.field select:focus,
+.field textarea:focus {
   border-color: var(--purple);
   box-shadow: 0 0 0 4px rgb(109 40 217 / 9%);
+}
+
+.field textarea {
+  min-height: 108px;
+  resize: vertical;
+}
+
+.checkbox-row {
+  align-items: center;
+  color: var(--text-muted);
+  display: flex;
+  font-weight: 650;
+  gap: 10px;
 }
 
 .actions {

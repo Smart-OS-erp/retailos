@@ -108,7 +108,14 @@ export default async function InventoryHome({ searchParams }: InventoryHomeProps
         }
 
         const organizationId = context.membership.organization_id;
-        const [balancesResult, adjustmentsResult, transfersResult, movementsResult] =
+        const [
+          balancesResult,
+          adjustmentsResult,
+          transfersResult,
+          countsResult,
+          watchlistResult,
+          movementsResult,
+        ] =
           await Promise.all([
             context.supabase
               .from("current_inventory_balances")
@@ -128,12 +135,27 @@ export default async function InventoryHome({ searchParams }: InventoryHomeProps
               .select("id, status")
               .eq("organization_id", organizationId),
             context.supabase
+              .from("stock_counts")
+              .select("id, status")
+              .eq("organization_id", organizationId),
+            context.supabase
+              .from("inventory_stock_watchlist")
+              .select("sku_id, location_id, watch_status")
+              .eq("organization_id", organizationId)
+              .neq("watch_status", "healthy"),
+            context.supabase
               .from("inventory_movements")
               .select("id", { count: "exact", head: true })
               .eq("organization_id", organizationId),
           ]);
 
-        if (balancesResult.error || adjustmentsResult.error || transfersResult.error) {
+        if (
+          balancesResult.error ||
+          adjustmentsResult.error ||
+          transfersResult.error ||
+          countsResult.error ||
+          watchlistResult.error
+        ) {
           redirect("/setup-error?error=setup-state");
         }
 
@@ -144,9 +166,10 @@ export default async function InventoryHome({ searchParams }: InventoryHomeProps
         const openTransfers = (transfersResult.data ?? []).filter(
           (row) => !["received", "rejected", "cancelled"].includes(row.status),
         ).length;
-        const atRiskPositions = balances.filter(
-          (row) => row.available_quantity <= 0 || row.in_transit_quantity > 0,
+        const openCounts = (countsResult.data ?? []).filter((row) =>
+          ["submitted", "reviewed"].includes(row.status),
         ).length;
+        const watchlistCount = (watchlistResult.data ?? []).length;
 
         return (
           <div className="content-grid">
@@ -161,8 +184,8 @@ export default async function InventoryHome({ searchParams }: InventoryHomeProps
                 <strong>{balances.length.toLocaleString()}</strong>
               </article>
               <article className="summary-card">
-                <span>Needs attention</span>
-                <strong>{atRiskPositions.toLocaleString()}</strong>
+                <span>Watchlist items</span>
+                <strong>{watchlistCount.toLocaleString()}</strong>
               </article>
               <article className="summary-card">
                 <span>Open adjustments</span>
@@ -171,6 +194,10 @@ export default async function InventoryHome({ searchParams }: InventoryHomeProps
               <article className="summary-card">
                 <span>Active transfers</span>
                 <strong>{openTransfers.toLocaleString()}</strong>
+              </article>
+              <article className="summary-card">
+                <span>Open counts</span>
+                <strong>{openCounts.toLocaleString()}</strong>
               </article>
               <article className="summary-card">
                 <span>Ledger entries</span>
@@ -188,6 +215,12 @@ export default async function InventoryHome({ searchParams }: InventoryHomeProps
                 <div className="actions">
                   <Link className="button button-secondary" href="/inventory/movements">
                     Movement history
+                  </Link>
+                  <Link className="button button-secondary" href="/inventory/watchlist">
+                    Watchlist
+                  </Link>
+                  <Link className="button button-secondary" href="/inventory/search">
+                    Lookup
                   </Link>
                   {hasPermission(context.membership.role, "inventory.manage") ? (
                     <Link className="button button-primary" href="/inventory/adjustments/new">
@@ -217,6 +250,15 @@ export default async function InventoryHome({ searchParams }: InventoryHomeProps
                 </Link>
                 <Link href="/inventory/transfers">
                   <StatusBadge status={openTransfers ? "pending" : "completed"} /> Transfers
+                </Link>
+                <Link href="/inventory/counts">
+                  <StatusBadge status={openCounts ? "pending" : "completed"} /> Store stock counts
+                </Link>
+                <Link href="/inventory/watchlist">
+                  <StatusBadge status={watchlistCount ? "warning" : "completed"} /> Low/overstock watchlist
+                </Link>
+                <Link href="/inventory/search">
+                  <StatusBadge status="active" /> SKU/barcode lookup
                 </Link>
               </div>
             </section>
