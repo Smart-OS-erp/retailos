@@ -2,8 +2,8 @@ Project: RetailOS
 Active Phase: Phase 1 — Core Inventory Operating System
 Active Milestone: Phase 1 — Inventory Core Foundations M1–M5
 
-Current Production Commit: bd63760
-Current Production Deployment: dpl_3wpdtrf7JBbYuFDw1TwApsMnyXnF
+Current Production Commit: 75ae416
+Current Production Deployment: dpl_J9F8LLaVC6AnEsa2bPZQFy86Gfqi
 Production URL: https://retailos-ten.vercel.app
 
 Implementation Status:
@@ -17,12 +17,12 @@ Implementation Status:
 - Product/store/sales approval flows record recalculation evidence as skipped because Phase 0 scoring reads approved inventory positions, not standalone canonical product/location/sales-fact changes.
 
 Verification Status:
-- Vercel production deployment `dpl_3wpdtrf7JBbYuFDw1TwApsMnyXnF` is READY and aliased to `https://retailos-ten.vercel.app`.
+- Vercel production deployment `dpl_J9F8LLaVC6AnEsa2bPZQFy86Gfqi` is READY and aliased to `https://retailos-ten.vercel.app`.
 - Production `/login` and `/signup` returned 200 on July 18, 2026.
 - Production `/workspace` redirects unauthenticated users to `/login`.
 - Production `/api/cron/integration-sync` returned 401 without the cron secret on July 18, 2026.
 - Fresh Import API production smoke passed on July 16, 2026 after correcting Production `DATABASE_URL` and redeploying.
-- Runtime error log inspection for deployment `dpl_3wpdtrf7JBbYuFDw1TwApsMnyXnF` found no error logs in the inspected 10-minute window.
+- Runtime error log inspection for deployment `dpl_J9F8LLaVC6AnEsa2bPZQFy86Gfqi` found no error logs in the inspected 10-minute window.
 - Vercel Node runtime setting is aligned to `22.x`.
 - M0-UI PR #33 was merged with green Quality, Security, and Vercel checks.
 - Canonical approval PR #37 was merged.

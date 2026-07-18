@@ -47,8 +47,8 @@ agent execution are included.
   - `20260718093000_phase1_inventory_core_foundations.sql`
   - Result: applied on July 18, 2026 through ignored local env/secret-management path. No secret values were printed.
 - Vercel production deployment:
-  - Deployment ID: `dpl_3wpdtrf7JBbYuFDw1TwApsMnyXnF`
-  - Deployment URL: `https://retailos-kl2ukk6qk-tonybabalola-1114s-projects.vercel.app`
+  - Deployment ID: `dpl_J9F8LLaVC6AnEsa2bPZQFy86Gfqi`
+  - Deployment URL: `https://retailos-1qzzvoskv-tonybabalola-1114s-projects.vercel.app`
   - Production alias: `https://retailos-ten.vercel.app`
   - Status: READY.
 - Live smoke:
@@ -56,5 +56,5 @@ agent execution are included.
   - `https://retailos-ten.vercel.app/signup` returned 200.
   - `https://retailos-ten.vercel.app/api/cron/integration-sync` returned 401 without `CRON_SECRET`.
 - Runtime logs:
-  - `npx vercel logs https://retailos-kl2ukk6qk-tonybabalola-1114s-projects.vercel.app --since 10m --level error`
+  - `npx vercel logs https://retailos-1qzzvoskv-tonybabalola-1114s-projects.vercel.app --since 10m --level error`
   - Result: no logs found in the inspected window.
