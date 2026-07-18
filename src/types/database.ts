@@ -97,6 +97,36 @@ export type ImportApiIdempotencyStatus =
   | "failed"
   | "expired";
 
+export type StockAdjustmentStatus =
+  | "pending_approval"
+  | "approved"
+  | "rejected"
+  | "cancelled"
+  | "executed"
+  | "reversed";
+export type TransferRequestStatus =
+  | "pending_approval"
+  | "approved"
+  | "rejected"
+  | "cancelled"
+  | "picking"
+  | "dispatched"
+  | "in_transit"
+  | "partially_received"
+  | "received"
+  | "exception";
+export type InventoryMovementType =
+  | "adjustment"
+  | "transfer_out"
+  | "transfer_in"
+  | "count_correction";
+export type InventoryMovementSourceType =
+  | "stock_adjustment"
+  | "transfer_request"
+  | "stock_count";
+export type TransferDiscrepancyStatus = "open" | "resolved" | "dismissed";
+export type TransferDiscrepancyType = "short_receipt" | "damaged_in_transit";
+
 export type DataUploadType =
   | "sample"
   | "inventory_csv"
@@ -1445,6 +1475,265 @@ export type Database = {
         };
         Relationships: [];
       };
+      inventory_movements: {
+        Row: {
+          id: string;
+          organization_id: string;
+          sku_id: string;
+          location_id: string;
+          movement_type: InventoryMovementType;
+          source_type: InventoryMovementSourceType;
+          source_id: string;
+          quantity_delta: number;
+          quantity_before: number | null;
+          quantity_after: number | null;
+          unit_cost: number | null;
+          currency_code: string | null;
+          occurred_at: string;
+          reason: string | null;
+          idempotency_key: string | null;
+          correlation_id: string;
+          reverses_movement_id: string | null;
+          created_by: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          sku_id: string;
+          location_id: string;
+          movement_type: InventoryMovementType;
+          source_type: InventoryMovementSourceType;
+          source_id: string;
+          quantity_delta: number;
+          quantity_before?: number | null;
+          quantity_after?: number | null;
+          unit_cost?: number | null;
+          currency_code?: string | null;
+          occurred_at?: string;
+          reason?: string | null;
+          idempotency_key?: string | null;
+          correlation_id?: string;
+          reverses_movement_id?: string | null;
+          created_by: string;
+          created_at?: string;
+        };
+        Update: never;
+        Relationships: [];
+      };
+      stock_adjustments: {
+        Row: {
+          id: string;
+          organization_id: string;
+          location_id: string;
+          status: StockAdjustmentStatus;
+          reason: string;
+          requested_by: string;
+          approved_by: string | null;
+          rejected_by: string | null;
+          executed_by: string | null;
+          reversed_by: string | null;
+          submitted_at: string;
+          approved_at: string | null;
+          rejected_at: string | null;
+          executed_at: string | null;
+          reversed_at: string | null;
+          rejection_reason: string | null;
+          reversal_reason: string | null;
+          correlation_id: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          location_id: string;
+          status?: StockAdjustmentStatus;
+          reason: string;
+          requested_by: string;
+          approved_by?: string | null;
+          rejected_by?: string | null;
+          executed_by?: string | null;
+          reversed_by?: string | null;
+          submitted_at?: string;
+          approved_at?: string | null;
+          rejected_at?: string | null;
+          executed_at?: string | null;
+          reversed_at?: string | null;
+          rejection_reason?: string | null;
+          reversal_reason?: string | null;
+          correlation_id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          status?: StockAdjustmentStatus;
+          approved_by?: string | null;
+          rejected_by?: string | null;
+          executed_by?: string | null;
+          reversed_by?: string | null;
+          approved_at?: string | null;
+          rejected_at?: string | null;
+          executed_at?: string | null;
+          reversed_at?: string | null;
+          rejection_reason?: string | null;
+          reversal_reason?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      stock_adjustment_items: {
+        Row: {
+          id: string;
+          organization_id: string;
+          stock_adjustment_id: string;
+          sku_id: string;
+          quantity_delta: number;
+          reason: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          stock_adjustment_id: string;
+          sku_id: string;
+          quantity_delta: number;
+          reason?: string | null;
+          created_at?: string;
+        };
+        Update: never;
+        Relationships: [];
+      };
+      transfer_requests: {
+        Row: {
+          id: string;
+          organization_id: string;
+          origin_location_id: string;
+          destination_location_id: string;
+          status: TransferRequestStatus;
+          reason: string;
+          requested_by: string;
+          approved_by: string | null;
+          rejected_by: string | null;
+          dispatched_by: string | null;
+          received_by: string | null;
+          submitted_at: string;
+          approved_at: string | null;
+          rejected_at: string | null;
+          dispatched_at: string | null;
+          received_at: string | null;
+          rejection_reason: string | null;
+          correlation_id: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          origin_location_id: string;
+          destination_location_id: string;
+          status?: TransferRequestStatus;
+          reason: string;
+          requested_by: string;
+          approved_by?: string | null;
+          rejected_by?: string | null;
+          dispatched_by?: string | null;
+          received_by?: string | null;
+          submitted_at?: string;
+          approved_at?: string | null;
+          rejected_at?: string | null;
+          dispatched_at?: string | null;
+          received_at?: string | null;
+          rejection_reason?: string | null;
+          correlation_id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          status?: TransferRequestStatus;
+          approved_by?: string | null;
+          rejected_by?: string | null;
+          dispatched_by?: string | null;
+          received_by?: string | null;
+          approved_at?: string | null;
+          rejected_at?: string | null;
+          dispatched_at?: string | null;
+          received_at?: string | null;
+          rejection_reason?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      transfer_items: {
+        Row: {
+          id: string;
+          organization_id: string;
+          transfer_request_id: string;
+          sku_id: string;
+          requested_quantity: number;
+          approved_quantity: number | null;
+          dispatched_quantity: number;
+          received_quantity: number;
+          damaged_quantity: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          transfer_request_id: string;
+          sku_id: string;
+          requested_quantity: number;
+          approved_quantity?: number | null;
+          dispatched_quantity?: number;
+          received_quantity?: number;
+          damaged_quantity?: number;
+          created_at?: string;
+        };
+        Update: {
+          approved_quantity?: number | null;
+          dispatched_quantity?: number;
+          received_quantity?: number;
+          damaged_quantity?: number;
+        };
+        Relationships: [];
+      };
+      inventory_operation_idempotency_keys: {
+        Row: {
+          id: string;
+          organization_id: string;
+          operation_type: string;
+          source_id: string;
+          idempotency_key: string;
+          result: Json;
+          created_by: string;
+          created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      transfer_discrepancies: {
+        Row: {
+          id: string;
+          organization_id: string;
+          transfer_request_id: string;
+          transfer_item_id: string;
+          sku_id: string;
+          discrepancy_type: TransferDiscrepancyType;
+          expected_quantity: number;
+          received_quantity: number;
+          damaged_quantity: number;
+          variance_quantity: number;
+          status: TransferDiscrepancyStatus;
+          created_by: string;
+          created_at: string;
+          resolved_by: string | null;
+          resolved_at: string | null;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
     };
     Views: {
       current_inventory_positions: {
@@ -1467,6 +1756,38 @@ export type Database = {
           first_available_at: string | null;
           units_sold_90: number | null;
           units_sold_30: number | null;
+        };
+        Relationships: [];
+      };
+      current_inventory_balances: {
+        Row: {
+          inventory_position_id: string;
+          organization_id: string;
+          sku_id: string;
+          sku_code: string;
+          barcode: string | null;
+          product_id: string;
+          product_name: string;
+          brand_id: string | null;
+          location_id: string;
+          location_name: string;
+          location_code: string;
+          snapshot_on_hand_quantity: number;
+          movement_delta: number;
+          on_hand_quantity: number;
+          reserved_quantity: number;
+          available_quantity: number;
+          in_transit_quantity: number;
+          damaged_quantity: number;
+          quarantined_quantity: number;
+          approved_unit_cost: number | null;
+          currency_code: string | null;
+          observed_at: string;
+          first_available_at: string | null;
+          units_sold_90: number | null;
+          units_sold_30: number | null;
+          last_movement_id: string | null;
+          last_movement_at: string | null;
         };
         Relationships: [];
       };
@@ -1589,6 +1910,75 @@ export type Database = {
         Args: {
           target_upload_id: string;
           expected_content_sha256: string;
+        };
+        Returns: string;
+      };
+      create_stock_adjustment: {
+        Args: {
+          target_location_id: string;
+          target_reason: string;
+          target_items: Json;
+        };
+        Returns: string;
+      };
+      approve_stock_adjustment: {
+        Args: { target_adjustment_id: string };
+        Returns: string;
+      };
+      reject_stock_adjustment: {
+        Args: {
+          target_adjustment_id: string;
+          target_rejection_reason?: string | null;
+        };
+        Returns: string;
+      };
+      execute_stock_adjustment: {
+        Args: {
+          target_adjustment_id: string;
+          target_idempotency_key: string;
+        };
+        Returns: string;
+      };
+      reverse_stock_adjustment: {
+        Args: {
+          target_adjustment_id: string;
+          target_reversal_reason: string;
+          target_idempotency_key: string;
+        };
+        Returns: string;
+      };
+      create_transfer_request: {
+        Args: {
+          origin_location_id: string;
+          destination_location_id: string;
+          target_reason: string;
+          target_items: Json;
+        };
+        Returns: string;
+      };
+      approve_transfer_request: {
+        Args: { target_transfer_id: string };
+        Returns: string;
+      };
+      reject_transfer_request: {
+        Args: {
+          target_transfer_id: string;
+          target_rejection_reason?: string | null;
+        };
+        Returns: string;
+      };
+      dispatch_transfer_request: {
+        Args: {
+          target_transfer_id: string;
+          target_idempotency_key: string;
+        };
+        Returns: string;
+      };
+      receive_transfer_request: {
+        Args: {
+          target_transfer_id: string;
+          target_receipts: Json;
+          target_idempotency_key: string;
         };
         Returns: string;
       };

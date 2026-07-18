@@ -64,3 +64,8 @@
 
 **Failure:** branch protection, stale branches, dependency alerts, or repository visibility decisions are left implicit.
 **Prevention:** reconciliation milestones must audit these settings, safely delete definitely merged branches where permitted, and record founder decisions required for visibility/governance.
+
+## Inventory lifecycle collapse
+
+**Failure:** transfer approval directly mutates destination stock, adjustment approval directly mutates on-hand quantity, or retries double-post movement ledger rows.
+**Prevention:** Phase 1 stock-affecting workflows must keep approval separate from execution/dispatch/receipt, use idempotency keys, keep source lineage, and test before/after balance behavior.

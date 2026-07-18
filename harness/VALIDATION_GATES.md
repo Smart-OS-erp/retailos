@@ -61,3 +61,22 @@ Required M0.9 evidence:
 - placeholder dashboard/navigation/module/status/demo content is explicitly marked provisional and replaceable.
 
 M0.9 must be reported as blocked or incomplete if any placeholder navigation, KPI, card order, workflow term, role, supplier, warehouse/finance term, or demo record is presented as a final product requirement.
+
+## Phase 1 M6 — Inventory Operations Core validation gate
+
+Required evidence:
+
+- migration adds operational lifecycle states without deleting accepted
+  foundation history;
+- current balances are calculated from approved snapshots plus movement ledger
+  deltas, reservations, and in-transit transfer quantities;
+- adjustment execute/reverse and transfer dispatch/receipt operations are
+  transactional, permissioned, idempotent, and audited;
+- partial transfer receipt records discrepancy evidence and final receipt
+  resolves short-receipt discrepancies;
+- Phase 1 UI uses the shared shell, RetailDataGrid, shared status mapping, and
+  shared formatting utilities;
+- tests cover positive flow, idempotent retry, cross-tenant denial,
+  under-privileged denial, and location-scope denial;
+- production release evidence records hosted migration status, deployment ID,
+  smoke route results, runtime errors, and rollback target.
