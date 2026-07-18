@@ -10,9 +10,8 @@
 
 ## Phase 0.5 implementation blockers
 
-- **Google Sheets worker is not implemented.** Shopify exists on `main`; the current branch adds WooCommerce. Google Sheets data sources can be created as MVP-depth, but live Google Sheets API calls remain fail-closed until a worker and credential resolver are implemented.
-- **Product/location/sales canonical write approval flows are in progress on the current branch.** They must pass CI, migration review, and deployment checks before being accepted.
-- **Automatic intelligence recalculation after normalized imports is not implemented.** Existing intelligence remains based on approved persisted/consolidated data paths.
+- **Google Sheets worker is not implemented.** Shopify and WooCommerce MVP workers exist. Google Sheets data sources can be created as MVP-depth, but live Google Sheets API calls remain fail-closed until a worker and credential resolver are implemented.
+- **Automatic intelligence recalculation after approved ingestion writes is in progress on the current branch.** Inventory consolidation should trigger the existing deterministic scoring engine after the approved snapshot is fully written. Product/location/sales approval flows should record honest skipped evidence until Phase 0 scoring consumes those canonical record types.
 
 ## Verified controls
 

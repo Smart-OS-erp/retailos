@@ -73,6 +73,17 @@ export type ExternalRecordStatus =
   | "ignored"
   | "error";
 export type ExternalRecordNormalizationRunStatus = "completed" | "failed";
+export type IntelligenceRecalculationRunStatus =
+  | "completed"
+  | "skipped"
+  | "failed";
+export type IntelligenceRecalculationSourceType =
+  | "inventory_consolidation"
+  | "external_record_approval";
+export type IntelligenceRecalculationSourceRecordType =
+  | "product_master"
+  | "store_master"
+  | "sales_history";
 export type WebhookEventStatus =
   | "received"
   | "verified"
@@ -708,6 +719,25 @@ export type Database = {
           evaluated_at: string;
           created_by: string;
           created_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      intelligence_recalculation_runs: {
+        Row: {
+          id: string;
+          organization_id: string;
+          source_type: IntelligenceRecalculationSourceType;
+          source_id: string;
+          source_record_type: IntelligenceRecalculationSourceRecordType | null;
+          trigger_mode: "automatic";
+          status: IntelligenceRecalculationRunStatus;
+          intelligence_run_id: string | null;
+          reason: string | null;
+          metadata: Json;
+          requested_by: string;
+          requested_at: string;
         };
         Insert: never;
         Update: never;

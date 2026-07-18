@@ -970,6 +970,37 @@ describe("Phase 0.5 Integration Hub foundation", () => {
         source_record_key: "sale-approved-001",
       },
     ]);
+
+    const recalculations = await database.query<{
+      reason: string;
+      source_record_type: string;
+      status: string;
+    }>(
+      `select source_record_type, status, reason
+       from public.intelligence_recalculation_runs
+       where organization_id = $1
+         and source_type = 'external_record_approval'
+         and source_id = any($2::uuid[])
+       order by source_record_type`,
+      [organizationB, [productRunId, storeRunId, salesRunId]],
+    );
+    expect(recalculations.rows).toEqual([
+      {
+        reason: "canonical_record_type_not_inventory_scored",
+        source_record_type: "product_master",
+        status: "skipped",
+      },
+      {
+        reason: "canonical_record_type_not_inventory_scored",
+        source_record_type: "sales_history",
+        status: "skipped",
+      },
+      {
+        reason: "canonical_record_type_not_inventory_scored",
+        source_record_type: "store_master",
+        status: "skipped",
+      },
+    ]);
   });
 
   it("stores external records with tenant lineage and denies cross-tenant lineage", async () => {

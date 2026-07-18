@@ -66,6 +66,8 @@ RetailOS connects to the system behind the website:
 - Records normalize into staging/validation/review tables.
 - Approved product, location, and sales review records can be written into canonical tables through explicit approval RPCs.
 - Validation, consolidation, and intelligence pipeline can run after sync where approved.
+- Approved inventory consolidation triggers automatic Inventory Recovery Intelligence recalculation after the approved snapshot is fully written.
+- Product/location/sales approval flows record skipped recalculation evidence until the scoring model explicitly consumes those canonical record types.
 - Unauthorized users cannot create, read, sync, update, or delete another tenant's data sources or external records.
 - Service-role credentials and provider secrets never enter client/browser code.
 - Provider credential checks fail closed and expose only safe status messages.
