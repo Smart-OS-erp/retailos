@@ -1,23 +1,19 @@
 Next Task:
-Complete, review, and merge Phase 0.5 — Scheduled Sync Worker.
+Complete, review, and merge Phase 0.5 — Canonical Write Approval Flows.
 
 Required before acceptance:
 
-- Vercel Cron is configured to call `/api/cron/integration-sync`.
-- The cron route fails closed unless `Authorization` matches `Bearer ${CRON_SECRET}`.
-- Scheduled sync metadata is tenant-scoped, RLS-protected, and audited.
-- The scheduled executor claims due schedules with a short lock before provider access.
-- Scheduled jobs use deterministic idempotency keys and `trigger = 'scheduled'`.
-- Only accepted MVP provider workers run through scheduled sync; currently Shopify and WooCommerce.
-- Scheduled sync writes provider data only to raw `external_records` through existing provider workers and then hands off to normalization.
-- No scheduled path writes directly to canonical product, location, sales, inventory, intelligence, projectisation, or campaign tables.
-- Missing unsupported providers fail closed and do not fake successful schedules.
-- Unit and integration tests cover route authorization, schedule RLS/audit, idempotency reuse, due-schedule claiming, and normalization handoff.
+- Product master review rows require explicit approval before products/SKUs are created or updated.
+- Store master review rows require explicit approval before locations are created or updated.
+- Sales history review rows require explicit approval before sales facts are created.
+- Approval requires authenticated `data.manage`, exact upload digest, review row-count consistency, and clear or accepted validation issues.
+- Approval runs are tenant-scoped, RLS-readable, audited, and idempotent.
+- No connector writes directly to canonical products, locations, sales facts, inventory, intelligence, projectisation, or campaign tables.
+- Integration tests cover product, store, and sales approval flows and product approval idempotency.
 - lint, typecheck, test, security, and build pass.
 
 Next Approved Phase 0.5 Work After Acceptance:
 
-- Add product/location/sales canonical write approval flows.
 - Add automatic intelligence recalculation after normalized imports.
 - Implement the Google Sheets provider worker only after scheduled sync/approval/recalculation priorities are explicitly ordered.
 

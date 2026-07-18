@@ -63,8 +63,9 @@ RetailOS connects to the system behind the website:
 - A user can see connection status.
 - A user can trigger an allowed sync.
 - Sync creates tenant-scoped raw external records.
-- Records normalize into canonical staging/validation tables.
-- Validation, consolidation, and intelligence pipeline can run after sync.
+- Records normalize into staging/validation/review tables.
+- Approved product, location, and sales review records can be written into canonical tables through explicit approval RPCs.
+- Validation, consolidation, and intelligence pipeline can run after sync where approved.
 - Unauthorized users cannot create, read, sync, update, or delete another tenant's data sources or external records.
 - Service-role credentials and provider secrets never enter client/browser code.
 - Provider credential checks fail closed and expose only safe status messages.
@@ -105,8 +106,8 @@ External-record pipeline handoff is documented in
 The supported handoff maps `inventory_snapshot`, `product_master`,
 `store_master`, and `sales_history` records into persisted upload/raw/validation
 evidence. Inventory snapshots can proceed to the existing consolidation approval
-path. Product, store, and sales records are review-gated and do not directly
-write canonical products, locations, or sales facts in Phase 0.5.
+path. Product, store, and sales records are review-gated and write canonical
+products/SKUs, locations, and sales facts only after explicit approval RPCs.
 
 ## Security baseline
 

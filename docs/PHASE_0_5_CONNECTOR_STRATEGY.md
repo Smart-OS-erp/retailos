@@ -70,8 +70,10 @@ and `sales_history` external records is documented in
 write `product_master` and `inventory_snapshot` raw external records, then hand
 off to `normalize_external_records(sync_job_id)` through the authenticated
 server action. The scheduled sync route can enqueue due Shopify/WooCommerce
-sync jobs and reuse the same provider handoff. Google Sheets, webhooks, browser
-credential entry, and OAuth flows are still not implemented.
+sync jobs and reuse the same provider handoff. Product, store, and sales review
+records can now be approved through explicit canonical write RPCs. Google
+Sheets, webhooks, browser credential entry, OAuth flows, and automatic
+intelligence recalculation are still not implemented.
 
 ## Phase leakage guardrails
 

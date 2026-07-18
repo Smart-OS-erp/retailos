@@ -11,8 +11,7 @@
 ## Phase 0.5 implementation blockers
 
 - **Google Sheets worker is not implemented.** Shopify exists on `main`; the current branch adds WooCommerce. Google Sheets data sources can be created as MVP-depth, but live Google Sheets API calls remain fail-closed until a worker and credential resolver are implemented.
-- **Scheduled sync worker is in progress on the current branch.** It must pass CI, migration review, and deployment checks before being accepted.
-- **Product/location/sales canonical write approval flows are not implemented.** External record normalization produces upload/raw/validation evidence, but product master, store master, and sales history do not directly mutate canonical products, locations, SKUs, or sales facts.
+- **Product/location/sales canonical write approval flows are in progress on the current branch.** They must pass CI, migration review, and deployment checks before being accepted.
 - **Automatic intelligence recalculation after normalized imports is not implemented.** Existing intelligence remains based on approved persisted/consolidated data paths.
 
 ## Verified controls
