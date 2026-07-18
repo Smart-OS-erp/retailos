@@ -126,6 +126,19 @@ export type InventoryMovementSourceType =
   | "stock_count";
 export type TransferDiscrepancyStatus = "open" | "resolved" | "dismissed";
 export type TransferDiscrepancyType = "short_receipt" | "damaged_in_transit";
+export type StockCountStatus =
+  | "submitted"
+  | "reviewed"
+  | "closed"
+  | "cancelled";
+export type ReconciliationIssueStatus = "open" | "resolved" | "dismissed";
+export type StockWatchStatus =
+  | "out_of_stock"
+  | "low_stock"
+  | "overstock"
+  | "in_transit"
+  | "healthy";
+export type StockWatchSeverity = "high" | "medium" | "low" | "info";
 
 export type DataUploadType =
   | "sample"
@@ -1697,6 +1710,101 @@ export type Database = {
         };
         Relationships: [];
       };
+      stock_counts: {
+        Row: {
+          id: string;
+          organization_id: string;
+          location_id: string;
+          status: StockCountStatus;
+          counted_at: string;
+          submitted_by: string;
+          reviewed_by: string | null;
+          reviewed_at: string | null;
+          review_notes: string | null;
+          closed_by: string | null;
+          closed_at: string | null;
+          closure_notes: string | null;
+          correction_idempotency_key: string | null;
+          correlation_id: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          location_id: string;
+          status?: StockCountStatus;
+          counted_at: string;
+          submitted_by: string;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          review_notes?: string | null;
+          closed_by?: string | null;
+          closed_at?: string | null;
+          closure_notes?: string | null;
+          correction_idempotency_key?: string | null;
+          correlation_id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          status?: StockCountStatus;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          review_notes?: string | null;
+          closed_by?: string | null;
+          closed_at?: string | null;
+          closure_notes?: string | null;
+          correction_idempotency_key?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      stock_count_items: {
+        Row: {
+          id: string;
+          organization_id: string;
+          stock_count_id: string;
+          sku_id: string;
+          expected_quantity: number;
+          counted_quantity: number;
+          variance_quantity: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          stock_count_id: string;
+          sku_id: string;
+          expected_quantity: number;
+          counted_quantity: number;
+          created_at?: string;
+        };
+        Update: never;
+        Relationships: [];
+      };
+      reconciliation_issues: {
+        Row: {
+          id: string;
+          organization_id: string;
+          stock_count_id: string;
+          stock_count_item_id: string;
+          location_id: string;
+          sku_id: string;
+          issue_type: "stock_variance";
+          severity: "low" | "medium" | "high";
+          status: ReconciliationIssueStatus;
+          variance_quantity: number;
+          created_by: string;
+          created_at: string;
+          resolved_by: string | null;
+          resolved_at: string | null;
+          resolution_note: string | null;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
       inventory_operation_idempotency_keys: {
         Row: {
           id: string;
@@ -1787,6 +1895,53 @@ export type Database = {
           units_sold_90: number | null;
           units_sold_30: number | null;
           last_movement_id: string | null;
+          last_movement_at: string | null;
+        };
+        Relationships: [];
+      };
+      inventory_stock_watchlist: {
+        Row: {
+          organization_id: string;
+          sku_id: string;
+          sku_code: string;
+          barcode: string | null;
+          product_id: string;
+          product_name: string;
+          location_id: string;
+          location_name: string;
+          location_code: string;
+          on_hand_quantity: number;
+          available_quantity: number;
+          reserved_quantity: number;
+          in_transit_quantity: number;
+          units_sold_30: number | null;
+          units_sold_90: number | null;
+          approved_unit_cost: number | null;
+          currency_code: string | null;
+          watch_status: StockWatchStatus;
+          severity: StockWatchSeverity;
+          evidence_summary: string;
+          calculated_at: string;
+        };
+        Relationships: [];
+      };
+      inventory_lookup_items: {
+        Row: {
+          organization_id: string;
+          sku_id: string;
+          sku_code: string;
+          barcode: string | null;
+          product_id: string;
+          product_name: string;
+          location_id: string;
+          location_name: string;
+          location_code: string;
+          on_hand_quantity: number;
+          available_quantity: number;
+          reserved_quantity: number;
+          in_transit_quantity: number;
+          approved_unit_cost: number | null;
+          currency_code: string | null;
           last_movement_at: string | null;
         };
         Relationships: [];
@@ -1981,6 +2136,47 @@ export type Database = {
           target_idempotency_key: string;
         };
         Returns: string;
+      };
+      submit_stock_count: {
+        Args: {
+          target_location_id: string;
+          target_counted_at: string;
+          target_items: Json;
+        };
+        Returns: string;
+      };
+      review_stock_count: {
+        Args: {
+          target_stock_count_id: string;
+          target_review_notes?: string | null;
+        };
+        Returns: string;
+      };
+      close_stock_count: {
+        Args: {
+          target_stock_count_id: string;
+          target_issue_decisions?: Json;
+          target_create_corrections?: boolean;
+          target_idempotency_key?: string | null;
+          target_closure_notes?: string | null;
+        };
+        Returns: string;
+      };
+      search_inventory_items: {
+        Args: {
+          search_term: string;
+          target_location_id?: string | null;
+          result_limit?: number;
+        };
+        Returns: {
+          location_id: string;
+          location_name: string;
+          product_name: string;
+          sku_code: string;
+          sku_id: string;
+          barcode: string | null;
+          on_hand_quantity: number;
+        }[];
       };
     };
     Enums: {

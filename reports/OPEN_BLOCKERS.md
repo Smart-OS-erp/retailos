@@ -14,9 +14,7 @@
 
 ## Phase 1 implementation blockers
 
-- **Phase 1 M6 hosted migration is not applied yet.** Local migration `20260718103000_phase1_inventory_operations_core.sql` exists and local integration tests pass, but hosted Supabase has not been migrated for this branch. Owner/action: after PR review, apply the reviewed migration through the approved migration path and record evidence.
-- **Phase 1 M6 is not deployed yet.** Inventory operations pages/actions exist locally, but production still serves the previous deployed commit. Owner/action: merge accepted PR, deploy, smoke affected routes, inspect runtime logs, and record deployment ID.
-- **Stock count review/closure workflow is not yet modeled.** Current Phase 1 scope records submitted counts and variance issues; M6 does not close stock counts or create count-correction movements. Owner/action: add review/closure in a later Phase 1 milestone.
+- **Phase 1 M1.9 production code deployment is pending.** The hosted M1.9 schema is applied/reconciled and local validation passes, but production code still needs the M1.9 PR merge and Vercel deployment verification. Owner/action: merge the accepted PR, smoke affected production routes, inspect runtime logs where tooling permits it, and record deployment evidence.
 
 ## Verified controls
 

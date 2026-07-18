@@ -31,6 +31,10 @@ function readIdempotencyKey(value: FormDataEntryValue | null) {
   return text.length >= 8 ? text : `form-${randomUUID()}`;
 }
 
+function readCheckbox(value: FormDataEntryValue | null) {
+  return value === "on" || value === "true" || value === "1";
+}
+
 async function requirePermission(permission: Permission, fallback = "/inventory") {
   const context = await requireOrganizationContext();
   if (!hasPermission(context.membership.role, permission)) {
@@ -43,6 +47,9 @@ function revalidateInventoryRoutes(recordId?: string, kind?: "adjustment" | "tra
   revalidatePath("/inventory");
   revalidatePath("/inventory/adjustments");
   revalidatePath("/inventory/transfers");
+  revalidatePath("/inventory/counts");
+  revalidatePath("/inventory/search");
+  revalidatePath("/inventory/watchlist");
   revalidatePath("/inventory/movements");
   if (recordId && kind === "adjustment") {
     revalidatePath(`/inventory/adjustments/${recordId}`);
@@ -276,4 +283,118 @@ export async function receiveTransferRequest(formData: FormData) {
 
   revalidateInventoryRoutes(transferId, "transfer");
   redirect(`/inventory/transfers/${transferId}?received=1`);
+}
+
+export async function submitStockCount(formData: FormData) {
+  const context = await requirePermission("stock_count.manage", "/inventory/counts/new");
+  const organizationId = String(formData.get("organizationId") ?? "");
+  const positionKey = String(formData.get("positionKey") ?? "");
+  const [positionLocationId, positionSkuId, positionExpectedQuantity] =
+    positionKey.split(":");
+  const locationId =
+    readUuid(formData.get("locationId")) ?? readUuid(positionLocationId ?? null);
+  const skuId = readUuid(formData.get("skuId")) ?? readUuid(positionSkuId ?? null);
+  const expectedQuantity =
+    readInteger(formData.get("expectedQuantity")) ??
+    readInteger(positionExpectedQuantity ?? null);
+  const countedQuantity = readInteger(formData.get("countedQuantity"));
+
+  if (organizationId !== context.membership.organization_id) {
+    redirect("/inventory/counts/new?error=authorization");
+  }
+  if (
+    !locationId ||
+    !skuId ||
+    expectedQuantity === null ||
+    expectedQuantity < 0 ||
+    countedQuantity === null ||
+    countedQuantity < 0
+  ) {
+    redirect("/inventory/counts/new?error=invalid-count");
+  }
+
+  const { data: countId, error } = await context.supabase.rpc(
+    "submit_stock_count",
+    {
+      target_counted_at: new Date().toISOString(),
+      target_items: [
+        {
+          counted_quantity: countedQuantity,
+          expected_quantity: expectedQuantity,
+          sku_id: skuId,
+        },
+      ],
+      target_location_id: locationId,
+    },
+  );
+
+  if (error || !countId) {
+    redirect("/inventory/counts/new?error=create-failed");
+  }
+
+  revalidateInventoryRoutes();
+  revalidatePath(`/inventory/counts/${countId}`);
+  redirect(`/inventory/counts/${countId}?created=1`);
+}
+
+export async function reviewStockCount(formData: FormData) {
+  const context = await requirePermission("stock_count.manage", "/inventory/counts");
+  const countId = readUuid(formData.get("countId"));
+  const notes = readText(formData.get("reviewNotes"), 0);
+
+  if (!countId) redirect("/inventory/counts?error=invalid-count");
+
+  const { error } = await context.supabase.rpc("review_stock_count", {
+    target_review_notes: notes,
+    target_stock_count_id: countId,
+  });
+  if (error) redirect(`/inventory/counts/${countId}?error=review-failed`);
+
+  revalidateInventoryRoutes();
+  revalidatePath(`/inventory/counts/${countId}`);
+  redirect(`/inventory/counts/${countId}?reviewed=1`);
+}
+
+export async function closeStockCount(formData: FormData) {
+  const context = await requirePermission("stock_count.manage", "/inventory/counts");
+  const countId = readUuid(formData.get("countId"));
+  const idempotencyKey = readIdempotencyKey(formData.get("idempotencyKey"));
+  const createCorrections = readCheckbox(formData.get("createCorrections"));
+  const closureNotes = readText(formData.get("closureNotes"), 0);
+  const issueIds = formData.getAll("issueId");
+  const issueStatuses = formData.getAll("issueStatus");
+  const issueNotes = formData.getAll("resolutionNote");
+
+  if (!countId) redirect("/inventory/counts?error=invalid-count");
+
+  const decisions = issueIds.map((rawIssueId, index) => {
+    const issueId = readUuid(rawIssueId);
+    const status = String(issueStatuses[index] ?? "");
+    const resolutionNote = readText(issueNotes[index] ?? null, 0);
+    if (!issueId || !["resolved", "dismissed"].includes(status)) {
+      return null;
+    }
+    return {
+      issue_id: issueId,
+      resolution_note: resolutionNote,
+      status,
+    };
+  });
+
+  if (decisions.some((decision) => decision === null)) {
+    redirect(`/inventory/counts/${countId}?error=invalid-issue-decision`);
+  }
+
+  const { error } = await context.supabase.rpc("close_stock_count", {
+    target_closure_notes: closureNotes,
+    target_create_corrections: createCorrections,
+    target_idempotency_key: idempotencyKey,
+    target_issue_decisions: decisions,
+    target_stock_count_id: countId,
+  });
+  if (error) redirect(`/inventory/counts/${countId}?error=close-failed`);
+
+  revalidateInventoryRoutes();
+  revalidatePath(`/inventory/counts/${countId}`);
+  redirect(`/inventory/counts/${countId}?closed=1`);
 }

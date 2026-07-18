@@ -38,16 +38,19 @@
 - Phase 0.5 scheduled sync evidence: `tests/unit/scheduled-sync.test.ts` covers deterministic scheduled idempotency keys, due-schedule claiming, scheduled enqueue behavior, normalization handoff, idempotency reuse, and fail-closed unsupported providers. `tests/unit/scheduled-sync-route.test.ts` covers `CRON_SECRET` authorization and missing-secret fail-closed behavior. `tests/integration/phase0-5-integration-hub.test.ts` covers tenant-scoped scheduled-sync metadata and audit evidence.
 - Phase 0.5 canonical approval evidence: `tests/integration/phase0-5-integration-hub.test.ts` covers explicit approval of normalized product master, store master, and sales history review rows into canonical products/SKUs, locations, and sales facts, including product approval idempotency.
 - Phase 0.5 automatic intelligence recalculation evidence: `tests/integration/phase0-consolidation-hub.test.ts` verifies approved inventory consolidation records a tenant-scoped `intelligence_recalculation_runs` row and creates a deterministic `intelligence_runs` record for the approved snapshot. `tests/integration/phase0-5-integration-hub.test.ts` verifies product, store, and sales approval flows record skipped recalculation evidence with `canonical_record_type_not_inventory_scored` instead of pretending standalone canonical writes changed inventory-risk scores.
-- Phase 1 inventory operations evidence: `tests/integration/phase1-inventory-core.test.ts` verifies stock adjustment approval does not mutate balances until execution, executed adjustments are idempotent, reversal writes compensating movement rows, transfer approval reserves stock without ledger mutation, dispatch writes outbound movement rows, partial receipt creates visible discrepancy evidence, final receipt reconciles discrepancy state, stock counts create variance reconciliation issues, inventory search works by SKU/barcode within effective location scope, and cross-tenant/under-privileged inventory operations are denied.
+- Phase 1 inventory operations evidence: `tests/integration/phase1-inventory-core.test.ts` verifies stock adjustment approval does not mutate balances until execution, executed adjustments are idempotent, reversal writes compensating movement rows, transfer approval reserves stock without ledger mutation, dispatch writes outbound movement rows, partial receipt creates visible discrepancy evidence, final receipt reconciles discrepancy state, stock counts create variance reconciliation issues, stock-count review/closure can post idempotent correction movements, watchlist signals derive from persisted balances, inventory search works by SKU/barcode within effective location scope, and cross-tenant/under-privileged inventory operations are denied.
 
 ## Phase 1 inventory operations acceptance
 
-Phase 1 M6 acceptance requires:
+Phase 1 M6-M1.9 acceptance requires:
 
 - current inventory positions are derived from approved snapshots plus persisted movement ledger rows;
 - approval, execution, reversal, dispatch, receipt, and discrepancy transitions are represented by database functions, not client-only state;
 - duplicate execute/reverse/dispatch/receipt submissions with the same idempotency key do not double-post stock movements;
 - transfer approval, dispatch, partial receipt, full receipt, and discrepancy reconciliation are auditable;
+- stock-count review, closure, issue decisions, and optional correction posting are auditable and idempotent;
+- low-stock, out-of-stock, overstock, and in-transit watchlist signals are derived from persisted balances and clearly not represented as forecasts;
+- SKU/barcode lookup works through location-scoped database permissions;
 - Phase 1 pages use the shared AppShell, RetailDataGrid, shared status mapping, and shared market formatting;
 - UI queries and actions are tenant scoped by active organization and rely on RBAC/RLS-protected records;
 - no POS, finance, procurement, forecasting, wholesale, or broad dashboard behavior is introduced.
