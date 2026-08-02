@@ -42,6 +42,8 @@ export const permissions = [
   "integration.manage",
   "integration.sync",
   "integration.import",
+  "merchandising.view",
+  "merchandising.manage",
 ] as const;
 
 export type Permission = (typeof permissions)[number];
@@ -69,6 +71,7 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "campaign_brief.approve",
     "copilot.use",
     "integration.view",
+    "merchandising.view",
   ]),
   merchandising_manager: new Set([
     "organization.view",
@@ -94,6 +97,8 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "integration.manage",
     "integration.sync",
     "integration.import",
+    "merchandising.view",
+    "merchandising.manage",
   ]),
   store_manager: new Set([
     "organization.view",
@@ -121,6 +126,7 @@ const rolePermissions: Record<OrganizationRole, ReadonlySet<Permission>> = {
     "task.view",
     "campaign_brief.view",
     "copilot.use",
+    "merchandising.view",
   ]),
 };
 

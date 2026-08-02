@@ -1,5 +1,12 @@
 # Recent Failures
 
+## 2026-07-18 - Phase 2 integration test exposed merchandising visibility and audit evidence gaps
+
+- **Observed:** first Phase 2 integration run failed because a location-scoped viewer had no location assignment and a merchandising manager could not read audit events.
+- **Cause:** the test setup did not model the intended location-scoped viewer path, and audit verification was attempted with a role that does not have `audit.view`.
+- **Resolution:** assigned the viewer to the test location and verified audit evidence as owner.
+- **Status:** resolved. Focused Phase 2 integration rerun passed.
+
 ## 2026-07-18 - Phase 1 hosted workflow smoke cleanup missed event log dependency
 
 - **Observed:** live Phase 1 workflow smoke passed its workflow assertions but exited non-zero during cleanup.

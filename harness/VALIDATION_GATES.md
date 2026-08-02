@@ -102,3 +102,23 @@ Required evidence:
   under-privileged denial, and location-scope denial;
 - production release evidence records hosted migration status, deployment ID,
   smoke route results, runtime errors, and rollback target.
+
+## Phase 2 M2.0-M2.6 — Merchandising & Planning validation gate
+
+Required evidence:
+
+- active phase is explicitly Phase 2 before implementation;
+- merchandising permission is enforced in app authorization, database policies,
+  and RPCs;
+- product productivity and group performance are derived from persisted inventory,
+  sales, product, category, brand, collection, and risk evidence;
+- sell-through and confidence labels are historical/directional and are not
+  presented as precise forecasts;
+- markdown drafts and plan approvals never execute prices, promotions, purchase
+  orders, transfers, supplier workflows, finance, POS, or campaign publishing;
+- recommendations require human review/conversion and include confidence labels;
+- under-privileged roles fail closed;
+- audit evidence exists for generated recommendations, markdown drafts, planning
+  cycles, and assortment item changes;
+- hosted schema verification covers Phase 2 relations/views/functions;
+- production route smoke and runtime-error inspection are recorded after merge.

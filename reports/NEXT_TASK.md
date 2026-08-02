@@ -1,35 +1,29 @@
 Next Task:
-Finish Phase 1 visible workflow acceptance, then promote to Phase 2 and proceed milestone-by-milestone through M2.6.
+Release Phase 2 M2.0-M2.6 and stop.
 
-Immediate Phase 1 acceptance release steps:
+Required release steps:
 
-1. Open and review the Phase 1 acceptance PR.
-2. Confirm CI quality/security and Vercel preview checks pass.
-3. Merge the accepted PR into `main`.
-4. Confirm production Vercel deployment is ready.
-5. Smoke affected production routes:
+1. Run full local validation:
+   - `npm run lint`
+   - `npm run typecheck`
+   - `npm run test`
+   - `npm run security`
+   - `npm run build`
+2. Confirm hosted Phase 2 schema verification:
+   - `node scripts/security/live-phase2-hosted-schema.ts`
+3. Open a PR for `phase-2-m0-m6-merchandising-planning`.
+4. Confirm CI and Vercel preview pass.
+5. Merge the accepted PR into `main`.
+6. Confirm production deployment is ready.
+7. Smoke affected production routes:
    - `/login`
-   - `/inventory`
-   - `/inventory/counts`
-   - `/inventory/search`
-   - `/inventory/watchlist`
-6. Inspect runtime errors where the available Vercel tooling permits it.
-7. Record final production deployment evidence.
+   - `/merchandising`
+   - `/merchandising/productivity`
+   - `/merchandising/performance`
+   - `/merchandising/recommendations`
+   - `/merchandising/markdowns`
+   - `/merchandising/plans`
+8. Inspect runtime errors where Vercel tooling permits it.
+9. Record deployment evidence.
 
-After Phase 1 acceptance is merged:
-
-- Update `reports/CURRENT_STATE.md` to Phase 2 - Merchandising & Planning OS.
-- Implement one Phase 2 milestone at a time.
-- Stop after M2.6 is implemented, validated, documented, and handed off.
-
-Approved Phase 2 sequence, subject to active-phase promotion:
-
-1. M2.0 - Merchandising scope, architecture, and secure data contracts.
-2. M2.1 - Product productivity metrics from persisted inventory/sales facts.
-3. M2.2 - Category, brand, and collection performance read models.
-4. M2.3 - Markdown planning drafts and approval-ready recommendations.
-5. M2.4 - Assortment and collection planning contracts.
-6. M2.5 - Allocation and replenishment recommendations with honest confidence.
-7. M2.6 - Phase 2 validation evidence, documentation, and acceptance matrix.
-
-Do not build POS, payments, finance/accounting, wholesale, autonomous Copilot execution, or fake forecasting precision.
+Stop after M2.6. Do not start M2.7, Phase 3, POS, payments, finance/accounting, wholesale, advanced forecasting, autonomous Copilot execution, or store-operations expansion without explicit phase promotion.
