@@ -5,6 +5,7 @@ export type RetailNavigationGroup =
   | "execution"
   | "inventory-core"
   | "intelligence"
+  | "merchandising"
   | "setup";
 
 export type RetailNavigationItem = Readonly<{
@@ -12,9 +13,9 @@ export type RetailNavigationItem = Readonly<{
   href: string;
   id: string;
   label: string;
-  phase: "phase-0" | "phase-0.5" | "phase-1";
+  phase: "phase-0" | "phase-0.5" | "phase-1" | "phase-2";
   provisional: true;
-  requiredPermission?: "integration.view" | "inventory.view";
+  requiredPermission?: "integration.view" | "inventory.view" | "merchandising.view";
 }>;
 
 export const retailNavigationItems: readonly RetailNavigationItem[] = [
@@ -51,6 +52,15 @@ export const retailNavigationItems: readonly RetailNavigationItem[] = [
     phase: "phase-1",
     provisional: true,
     requiredPermission: "inventory.view",
+  },
+  {
+    group: "merchandising",
+    href: "/merchandising",
+    id: "merchandising-planning",
+    label: "Merchandising",
+    phase: "phase-2",
+    provisional: true,
+    requiredPermission: "merchandising.view",
   },
   {
     group: "data-foundation",

@@ -140,6 +140,45 @@ export type StockWatchStatus =
   | "in_transit"
   | "healthy";
 export type StockWatchSeverity = "high" | "medium" | "low" | "info";
+export type MerchandisingConfidenceLevel =
+  | "insufficient_data"
+  | "low"
+  | "medium"
+  | "high";
+export type MerchandisingRecommendationType =
+  | "markdown"
+  | "allocation_review"
+  | "replenishment_watch"
+  | "assortment_review";
+export type MerchandisingRecommendationStatus =
+  | "proposed"
+  | "converted"
+  | "approved"
+  | "rejected"
+  | "archived";
+export type MerchandisingPlanCycleType =
+  | "assortment"
+  | "collection"
+  | "markdown"
+  | "allocation"
+  | "replenishment";
+export type MerchandisingPlanCycleStatus =
+  | "draft"
+  | "in_review"
+  | "approved"
+  | "archived";
+export type AssortmentProductRole =
+  | "core"
+  | "carry_forward"
+  | "test"
+  | "exit"
+  | "review";
+export type MarkdownPlanDraftStatus =
+  | "draft"
+  | "in_review"
+  | "approved"
+  | "rejected"
+  | "archived";
 
 export type DataUploadType =
   | "sample"
@@ -1861,6 +1900,115 @@ export type Database = {
         Update: never;
         Relationships: [];
       };
+      merchandising_collections: {
+        Row: {
+          id: string;
+          organization_id: string;
+          name: string;
+          season_label: string | null;
+          status: "planning" | "active" | "archived";
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      product_collection_assignments: {
+        Row: {
+          id: string;
+          organization_id: string;
+          collection_id: string;
+          product_id: string;
+          assigned_by: string;
+          assigned_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      merchandising_plan_cycles: {
+        Row: {
+          id: string;
+          organization_id: string;
+          cycle_type: MerchandisingPlanCycleType;
+          season_label: string;
+          status: MerchandisingPlanCycleStatus;
+          notes: string | null;
+          created_by: string;
+          approved_by: string | null;
+          approved_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      assortment_plan_items: {
+        Row: {
+          id: string;
+          organization_id: string;
+          plan_cycle_id: string;
+          product_id: string;
+          product_role: AssortmentProductRole;
+          target_location_count: number | null;
+          notes: string | null;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      merchandising_recommendations: {
+        Row: {
+          id: string;
+          organization_id: string;
+          recommendation_type: MerchandisingRecommendationType;
+          product_id: string;
+          sku_id: string | null;
+          location_id: string | null;
+          title: string;
+          rationale: string;
+          confidence_level: MerchandisingConfidenceLevel;
+          status: MerchandisingRecommendationStatus;
+          source_milestone: string;
+          source_metrics: Json;
+          created_by: string;
+          decided_by: string | null;
+          decided_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      markdown_plan_drafts: {
+        Row: {
+          id: string;
+          organization_id: string;
+          recommendation_id: string | null;
+          product_id: string;
+          sku_id: string | null;
+          location_id: string | null;
+          recommended_discount_percent: number;
+          reason: string;
+          status: MarkdownPlanDraftStatus;
+          confidence_level: MerchandisingConfidenceLevel;
+          created_by: string;
+          approved_by: string | null;
+          approved_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
     };
     Views: {
       current_inventory_positions: {
@@ -1981,6 +2129,70 @@ export type Database = {
           created_by: string;
           created_at: string;
           updated_at: string;
+        };
+        Relationships: [];
+      };
+      product_productivity_metrics: {
+        Row: {
+          organization_id: string;
+          product_id: string;
+          product_name: string;
+          style_code: string;
+          brand_id: string | null;
+          brand_name: string | null;
+          category_id: string | null;
+          category_name: string | null;
+          collection_id: string | null;
+          collection_name: string | null;
+          sku_id: string;
+          sku_code: string;
+          location_id: string;
+          location_name: string;
+          location_code: string;
+          on_hand_quantity: number;
+          available_quantity: number;
+          reserved_quantity: number;
+          in_transit_quantity: number;
+          units_sold_30: number;
+          units_sold_90: number;
+          gross_revenue_90: number;
+          currency_code: string | null;
+          inventory_value: number | null;
+          sell_through_rate_90: number | null;
+          inventory_risk_score: number | null;
+          inventory_risk_band: "low" | "moderate" | "high" | "critical" | null;
+          data_confidence_score: number;
+          productivity_band:
+            | "insufficient_data"
+            | "no_sales"
+            | "slow"
+            | "moderate"
+            | "high";
+          planning_signal:
+            | "markdown_review"
+            | "replenishment_watch"
+            | "allocation_review"
+            | "monitor";
+          calculated_at: string;
+        };
+        Relationships: [];
+      };
+      merchandising_group_performance: {
+        Row: {
+          organization_id: string;
+          group_type: "brand" | "category" | "collection";
+          group_id: string | null;
+          group_name: string;
+          product_count: number;
+          sku_count: number;
+          on_hand_quantity: number;
+          available_quantity: number;
+          units_sold_90: number;
+          gross_revenue_90: number;
+          inventory_value: number | null;
+          currency_code: string | null;
+          average_sell_through_rate_90: number | null;
+          calculated_at: string;
         };
         Relationships: [];
       };
@@ -2228,6 +2440,45 @@ export type Database = {
       remove_inventory_watchlist_item: {
         Args: {
           target_watchlist_item_id: string;
+        };
+        Returns: string;
+      };
+      generate_merchandising_recommendations: {
+        Args: {
+          target_organization_id: string;
+        };
+        Returns: number;
+      };
+      create_markdown_plan_draft: {
+        Args: {
+          target_recommendation_id: string;
+          target_discount_percent: number;
+          target_reason: string;
+        };
+        Returns: string;
+      };
+      create_merchandising_plan_cycle: {
+        Args: {
+          target_organization_id: string;
+          target_cycle_type: MerchandisingPlanCycleType;
+          target_season_label: string;
+          target_notes?: string | null;
+        };
+        Returns: string;
+      };
+      add_assortment_plan_item: {
+        Args: {
+          target_plan_cycle_id: string;
+          target_product_id: string;
+          target_product_role: AssortmentProductRole;
+          target_target_location_count?: number | null;
+          target_notes?: string | null;
+        };
+        Returns: string;
+      };
+      approve_merchandising_plan_cycle: {
+        Args: {
+          target_plan_cycle_id: string;
         };
         Returns: string;
       };

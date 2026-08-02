@@ -1,6 +1,6 @@
 # RetailOS
 
-RetailOS is secure operating intelligence for African fashion retail. The active build is **Phase 1 - Core Inventory Operating System**, with the current branch recording **Phase 1 Visible Workflow Verification and Acceptance** before promotion to Phase 2.
+RetailOS is secure operating intelligence for African fashion retail. The active build is **Phase 2 - Merchandising & Planning OS**, stopping at **M2.6 - Phase 2 validation evidence and acceptance**.
 
 RetailOS is not a generic ERP, POS, dashboard, or chatbot. Its first wedge was inventory recovery intelligence: trustworthy retail data intake, validation, consolidation, inventory risk explanation, recovery opportunities, projectisation, campaign briefs, and permission-aware Copilot explanations.
 
@@ -18,41 +18,45 @@ RetailOS is not a generic ERP, POS, dashboard, or chatbot. Its first wedge was i
 - Shopify and WooCommerce Phase 0.5 MVP workers, scheduled sync, canonical approval flows, and automatic intelligence recalculation evidence.
 - M0-UI shared frontend foundation.
 - Phase 1 inventory core foundation tables/RPCs for movement ledger, stock adjustments, transfers, stock counts, reconciliation issues, inventory search, watchlist signals, stock-count closure, and inventory lookup/search UI.
+- Phase 1 visible workflow acceptance was merged in PR #44 and deployed.
 
 ## Implemented on this branch
 
-- User-saved inventory watchlist add/update/remove workflow layered on the existing persisted-evidence watchlist.
-- RLS-protected `inventory_watchlist_items` table and `inventory_saved_watchlist` view.
-- Permissioned `add_inventory_watchlist_item` and `remove_inventory_watchlist_item` RPCs with audit events.
-- Live hosted Phase 1 workflow smoke covering search, watchlist, adjustments, transfers, stock counts, RBAC/location denials, audit events, and synthetic cleanup.
-- Phase 1 acceptance matrix and evidence reports.
+- M2.0 secure merchandising permissions, navigation, database contracts, and docs.
+- M2.1 `product_productivity_metrics` historical read model from persisted inventory, sales, and risk evidence.
+- M2.2 `merchandising_group_performance` brand/category/collection read model.
+- M2.3 markdown planning drafts from converted recommendations; no price/promotion execution.
+- M2.4 planning cycles and assortment plan items; approval records planning state only.
+- M2.5 permissioned recommendation generation with confidence labels.
+- M2.6 Phase 2 acceptance matrix, evidence, and hosted schema verifier.
 
 ## Deployed
 
 Production alias: `https://retailos-ten.vercel.app`
 
-Current production commit before this acceptance branch:
+Current production commit before this Phase 2 branch:
 
-- Commit: `478db13070f5504ef5291374556a1751c7591280`
-- Source: merged `main`, after Phase 1 M1.9 PR #43
+- Commit: `f224265fb7cc104ab7a844455ec1feebcd4feac0`
+- Deployment: `dpl_EByMzYEh8Cb3yLGtTQ7Muz2VjrJ1`
+- Source: merged `main`, after Phase 1 acceptance PR #44
 
-This acceptance branch still requires PR merge, Vercel deployment confirmation, and production route smoke.
+This Phase 2 branch still requires PR merge, Vercel deployment confirmation, and production route smoke.
 
 ## Verified
 
-- `npm run lint` passed.
-- `npm run typecheck` passed.
-- `npm run test:integration -- --run tests/integration/phase1-inventory-core.test.ts` passed: 6 files, 49 tests.
-- Hosted migration `20260718210000_phase1_visible_workflow_acceptance.sql` was applied or reconciled without printing secrets.
-- `node scripts/security/live-phase1-hosted-schema.ts` passed: 15 relations/views, 16 functions.
-- `node scripts/security/live-phase1-workflow-smoke.ts` passed and synthetic cleanup passed.
+- Phase 1 production route smoke passed after PR #44: `/login`, `/inventory`, `/inventory/counts`, `/inventory/search`, and `/inventory/watchlist` returned 200.
+- Phase 1 post-smoke Vercel error-log inspection found no errors in the inspected window.
+- `npm run test:integration -- --run tests/integration/phase2-merchandising-planning.test.ts` passed: 7 files, 52 tests.
+- `npm run typecheck` passed after Phase 2 UI/type wiring.
+- Hosted migration `20260718213000_phase2_merchandising_planning_m0_m6.sql` was applied or reconciled without printing secrets.
+- `node scripts/security/live-phase2-hosted-schema.ts` passed: 8 relations/views, 5 functions.
 
 ## Not Verified
 
 - Supabase CLI migration history was not inspected because the `supabase` CLI is not installed/authenticated in this shell.
 - A local `supabase db reset` was not run because the CLI is unavailable.
-- This acceptance branch has not yet been merged/deployed to production.
-- Browser route smoke for this acceptance branch must run after Vercel deployment.
+- This Phase 2 branch has not yet been merged/deployed to production.
+- Browser/HTTP route smoke for Phase 2 routes must run after Vercel deployment.
 - Live Shopify/WooCommerce provider API sync has not been run with real provider credentials.
 - Google Sheets worker is not implemented.
 
@@ -62,7 +66,7 @@ This acceptance branch still requires PR merge, Vercel deployment confirmation, 
 - Configure GitHub branch protection for `main`; it is currently unprotected.
 - Enable Dependabot security updates; secret scanning and push protection are enabled.
 - Decide repository visibility: keep public or convert to private. Public visibility is not a security control; it does affect commercial/IP exposure.
-- Merge/deploy this acceptance branch and run production route smoke before marking Phase 1 fully accepted.
+- Merge/deploy this Phase 2 branch and run production route smoke before marking M2.6 release accepted.
 
 ## Local setup
 
@@ -111,6 +115,7 @@ npm run test:live-supabase
 npm run smoke:import-api -- --url https://retailos-ten.vercel.app
 node scripts/security/live-phase1-hosted-schema.ts
 node scripts/security/live-phase1-workflow-smoke.ts
+node scripts/security/live-phase2-hosted-schema.ts
 ```
 
 Read `AGENTS.md`, `reports/CURRENT_STATE.md`, and `reports/NEXT_TASK.md` before making changes.

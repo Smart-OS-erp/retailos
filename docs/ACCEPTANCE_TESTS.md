@@ -40,6 +40,7 @@
 - Phase 0.5 automatic intelligence recalculation evidence: `tests/integration/phase0-consolidation-hub.test.ts` verifies approved inventory consolidation records a tenant-scoped `intelligence_recalculation_runs` row and creates a deterministic `intelligence_runs` record for the approved snapshot. `tests/integration/phase0-5-integration-hub.test.ts` verifies product, store, and sales approval flows record skipped recalculation evidence with `canonical_record_type_not_inventory_scored` instead of pretending standalone canonical writes changed inventory-risk scores.
 - Phase 1 inventory operations evidence: `tests/integration/phase1-inventory-core.test.ts` verifies stock adjustment approval does not mutate balances until execution, executed adjustments are idempotent, reversal writes compensating movement rows, transfer approval reserves stock without ledger mutation, dispatch writes outbound movement rows, partial receipt creates visible discrepancy evidence, final receipt reconciles discrepancy state, stock counts create variance reconciliation issues, stock-count review/closure can post idempotent correction movements, watchlist signals derive from persisted balances, saved watchlist add/remove is permissioned and audited, inventory search works by SKU/barcode within effective location scope, and cross-tenant/under-privileged inventory operations are denied.
 - Phase 1 visible workflow acceptance evidence: `reports/PHASE_1_ACCEPTANCE_MATRIX.md` and `reports/PHASE_1_ACCEPTANCE_EVIDENCE.md` record conditional Phase 1 acceptance. `node scripts/security/live-phase1-hosted-schema.ts` verifies 15 hosted relations/views and 16 functions. `node scripts/security/live-phase1-workflow-smoke.ts` creates a synthetic tenant, exercises inventory search, saved watchlist add/remove, adjustment execute/reverse, transfer partial/full receipt, stock-count close/correction, role/location denial, audit events, and cleanup.
+- Phase 2 M2.0-M2.6 evidence: `tests/integration/phase2-merchandising-planning.test.ts` verifies merchandising visibility, store-manager denial, recommendation generation, markdown draft conversion, planning cycle creation/approval, assortment item upsert, and audit evidence. `node scripts/security/live-phase2-hosted-schema.ts` verifies hosted Phase 2 relations/views/functions. `reports/PHASE_2_ACCEPTANCE_MATRIX.md` and `reports/PHASE_2_ACCEPTANCE_EVIDENCE.md` record the M2.0-M2.6 status.
 
 ## Phase 1 inventory operations acceptance
 
@@ -57,6 +58,21 @@ Phase 1 M6-M1.9 acceptance requires:
 - no POS, finance, procurement, forecasting, wholesale, or broad dashboard behavior is introduced.
 
 Phase 1 cannot be accepted merely because routes, migrations, tests, and deployments exist. Acceptance must show that representative users can safely complete visible workflows backed by persisted tenant data, that duplicate submissions do not double-post stock movements, that denied roles fail closed, that audit events are written, that synthetic live data is cleaned up, and that remaining release/migration blockers are recorded honestly.
+
+## Phase 2 M2.0-M2.6 merchandising acceptance
+
+Phase 2 M2.0-M2.6 acceptance requires:
+
+- merchandising permissions are enforced in UI, database policies, and RPCs;
+- product productivity metrics use persisted inventory, sales, and risk evidence;
+- sell-through is labeled as a historical proxy, not a forecast;
+- brand/category/collection performance remains explicit about unassigned collections;
+- markdown drafts do not execute prices, promotions, campaigns, POS, or ecommerce changes;
+- planning-cycle approvals do not execute buying, supplier, transfer, warehouse, or finance workflows;
+- recommendation generation displays confidence and can return `insufficient_data`;
+- store managers and under-privileged roles fail closed;
+- audit events exist for sensitive planning actions;
+- no POS, payments, finance/accounting, wholesale, advanced forecasting, autonomous Copilot execution, or Phase 3 store-operations scope is introduced.
 
 ## M0.9 UI foundation acceptance
 

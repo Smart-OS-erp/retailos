@@ -14,8 +14,12 @@
 
 ## Phase 1 acceptance blockers
 
-- **Phase 1 acceptance branch production deployment is pending.** Phase 1 M1.9 is merged/deployed and hosted workflow smoke passes, but this acceptance hardening branch still needs PR merge, Vercel deployment verification, affected-route smoke, and runtime-log inspection. Owner/action: merge the accepted PR, smoke `/login`, `/inventory`, `/inventory/counts`, `/inventory/search`, and `/inventory/watchlist`, inspect runtime logs where tooling permits it, and record deployment evidence.
+- **Phase 1 acceptance production release is verified.** PR #44 is merged/deployed, affected-route smoke passed, and runtime-log inspection found no errors in the inspected window.
 - **Supabase CLI migration-history reconciliation is still unverified.** Hosted SQL was applied/reconciled safely, but CLI migration history and local reset remain blocked until the Supabase CLI is installed/authenticated. Owner/action: install/authenticate Supabase CLI, link the approved project, and run the safe commands documented in `docs/SUPABASE_SETUP.md`.
+
+## Phase 2 release blockers
+
+- **Phase 2 M2.0-M2.6 production deployment is pending.** Local focused validation and hosted schema verification pass, but the Phase 2 branch still needs full validation, PR checks, Vercel deployment, route smoke, and runtime-log inspection. Owner/action: merge/deploy after checks, smoke Phase 2 routes, and record final evidence.
 
 ## Verified controls
 
@@ -29,6 +33,8 @@
 - Stale merged remote branches visible locally were deleted.
 - Phase 1 visible workflow hosted schema verification passed for 15 relations/views and 16 functions.
 - Live Phase 1 synthetic workflow smoke passed and cleaned up its synthetic tenant/users.
+- Phase 2 hosted schema verification passed for 8 relations/views and 5 functions.
+- Phase 2 focused integration validation passed: 7 files, 52 tests.
 
 ## Deferred product decisions
 
@@ -38,4 +44,4 @@ M0-UI remains the next approved milestone but must keep navigation labels, dashb
 
 Phase 1 does not authorize POS, finance, wholesale, forecasting, warehouse-management expansion beyond inventory-control foundations, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
 
-The founder/user has explicitly approved promotion into Phase 2 after Phase 1 acceptance is recorded, with implementation to proceed milestone-by-milestone and stop at M2.6.
+The founder/user explicitly approved promotion into Phase 2 after Phase 1 acceptance, with implementation to proceed milestone-by-milestone and stop at M2.6. Do not continue beyond M2.6 without a new explicit approval.

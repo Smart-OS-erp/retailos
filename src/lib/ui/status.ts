@@ -18,6 +18,26 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     label: "Active",
     tone: "success",
   },
+  allocation_review: {
+    assistiveLabel: "Planning signal is allocation review",
+    label: "Allocation review",
+    tone: "info",
+  },
+  archived: {
+    assistiveLabel: "Status is archived",
+    label: "Archived",
+    tone: "neutral",
+  },
+  assortment: {
+    assistiveLabel: "Plan type is assortment",
+    label: "Assortment",
+    tone: "info",
+  },
+  assortment_review: {
+    assistiveLabel: "Recommendation is assortment review",
+    label: "Assortment review",
+    tone: "info",
+  },
   approved: {
     assistiveLabel: "Status is approved",
     label: "Approved",
@@ -46,6 +66,11 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
   connected: {
     assistiveLabel: "Status is connected",
     label: "Connected",
+    tone: "success",
+  },
+  converted: {
+    assistiveLabel: "Status is converted",
+    label: "Converted",
     tone: "success",
   },
   count_correction: {
@@ -88,6 +113,11 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     label: "High",
     tone: "danger",
   },
+  insufficient_data: {
+    assistiveLabel: "Confidence is insufficient data",
+    label: "Insufficient data",
+    tone: "attention",
+  },
   in_transit: {
     assistiveLabel: "Status is in transit",
     label: "In transit",
@@ -113,6 +143,16 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     label: "Manual",
     tone: "info",
   },
+  markdown: {
+    assistiveLabel: "Recommendation is markdown planning",
+    label: "Markdown",
+    tone: "attention",
+  },
+  markdown_review: {
+    assistiveLabel: "Planning signal is markdown review",
+    label: "Markdown review",
+    tone: "attention",
+  },
   medium: {
     assistiveLabel: "Severity is medium",
     label: "Medium",
@@ -122,6 +162,16 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     assistiveLabel: "Status is open",
     label: "Open",
     tone: "info",
+  },
+  monitor: {
+    assistiveLabel: "Planning signal is monitor",
+    label: "Monitor",
+    tone: "info",
+  },
+  no_sales: {
+    assistiveLabel: "Productivity band has no sales",
+    label: "No sales",
+    tone: "attention",
   },
   out_of_stock: {
     assistiveLabel: "Watchlist status is out of stock",
@@ -163,6 +213,21 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     label: "Queued",
     tone: "warning",
   },
+  proposed: {
+    assistiveLabel: "Status is proposed",
+    label: "Proposed",
+    tone: "warning",
+  },
+  replenishment: {
+    assistiveLabel: "Plan type is replenishment",
+    label: "Replenishment",
+    tone: "info",
+  },
+  replenishment_watch: {
+    assistiveLabel: "Planning signal is replenishment watch",
+    label: "Replenishment watch",
+    tone: "warning",
+  },
   succeeded: {
     assistiveLabel: "Status succeeded",
     label: "Succeeded",
@@ -172,6 +237,11 @@ const statusPresentation: Record<string, RetailStatusPresentation> = {
     assistiveLabel: "Status is syncing",
     label: "Syncing",
     tone: "warning",
+  },
+  slow: {
+    assistiveLabel: "Productivity is slow",
+    label: "Slow",
+    tone: "attention",
   },
   reversed: {
     assistiveLabel: "Status is reversed",
