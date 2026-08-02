@@ -1,5 +1,12 @@
 # Recent Failures
 
+## 2026-08-02 - PR #45 security workflow failed on dependency audit
+
+- **Observed:** GitHub Security foundation checks failed on `npm audit --audit-level=moderate`.
+- **Cause:** current advisories flagged vulnerable transitive versions of `next`, `postcss`, `sharp`, and `brace-expansion`.
+- **Resolution:** upgraded `next` and `eslint-config-next` to `16.2.12`, raised the `postcss` override to `8.5.18`, forced `sharp` to `0.35.3`, refreshed `package-lock.json`, and reran validation.
+- **Status:** resolved locally. `npm audit --audit-level=moderate` now reports `found 0 vulnerabilities`.
+
 ## 2026-07-18 - Phase 2 integration test exposed merchandising visibility and audit evidence gaps
 
 - **Observed:** first Phase 2 integration run failed because a location-scoped viewer had no location assignment and a merchandising manager could not read audit events.

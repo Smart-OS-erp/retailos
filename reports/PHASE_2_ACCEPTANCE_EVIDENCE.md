@@ -8,6 +8,7 @@ Date: July 18, 2026
 | --- | --- |
 | `npm run test:integration -- --run tests/integration/phase2-merchandising-planning.test.ts` | Passed: 7 files, 52 tests |
 | `npm run typecheck` | Passed after Phase 2 UI/type wiring |
+| `npm audit --audit-level=moderate` | Passed after dependency security patch: 0 vulnerabilities |
 
 ## Hosted evidence
 

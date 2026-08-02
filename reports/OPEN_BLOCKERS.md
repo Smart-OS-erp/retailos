@@ -35,6 +35,7 @@
 - Live Phase 1 synthetic workflow smoke passed and cleaned up its synthetic tenant/users.
 - Phase 2 hosted schema verification passed for 8 relations/views and 5 functions.
 - Phase 2 focused integration validation passed: 7 files, 52 tests.
+- PR #45 dependency audit failure was resolved locally by patching Next/PostCSS/Sharp/brace-expansion transitive resolution; local audit now reports 0 vulnerabilities.
 
 ## Deferred product decisions
 
