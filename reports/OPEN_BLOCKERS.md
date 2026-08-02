@@ -19,7 +19,7 @@
 
 ## Phase 2 release blockers
 
-- **Phase 2 M2.0-M2.6 production deployment is pending.** Local focused validation and hosted schema verification pass, but the Phase 2 branch still needs full validation, PR checks, Vercel deployment, route smoke, and runtime-log inspection. Owner/action: merge/deploy after checks, smoke Phase 2 routes, and record final evidence.
+- **Phase 2 M2.0-M2.6 release is verified.** PR #45 and PR #46 are merged, production deployment `dpl_CzeC5JyAYJZegKAoLkBAvRWk6Xpc` is ready, affected-route smoke passed without 5xx errors, and runtime-log inspection found no error logs in the inspected window.
 
 ## Verified controls
 
@@ -36,6 +36,8 @@
 - Phase 2 hosted schema verification passed for 8 relations/views and 5 functions.
 - Phase 2 focused integration validation passed: 7 files, 52 tests.
 - PR #45 dependency audit failure was resolved locally by patching Next/PostCSS/Sharp/brace-expansion transitive resolution; local audit now reports 0 vulnerabilities.
+- PR #46 dependency/security patch passed GitHub Quality, Security, Vercel preview, and Vercel Preview Comments checks and was merged into `main`.
+- Phase 2 M2.0-M2.6 production smoke passed for `/`, `/login`, and all approved merchandising routes.
 
 ## Deferred product decisions
 
@@ -45,4 +47,4 @@ M0-UI remains the next approved milestone but must keep navigation labels, dashb
 
 Phase 1 does not authorize POS, finance, wholesale, forecasting, warehouse-management expansion beyond inventory-control foundations, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
 
-The founder/user explicitly approved promotion into Phase 2 after Phase 1 acceptance, with implementation to proceed milestone-by-milestone and stop at M2.6. Do not continue beyond M2.6 without a new explicit approval.
+The founder/user explicitly approved promotion into Phase 2 after Phase 1 acceptance, with implementation to proceed milestone-by-milestone and stop at M2.6. Phase 2 M2.0-M2.6 is now released and verified. Do not continue beyond M2.6 without a new explicit approval.
