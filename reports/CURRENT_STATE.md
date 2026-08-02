@@ -2,8 +2,8 @@ Project: RetailOS
 Active Phase: Phase 2 - Merchandising & Planning OS
 Active Milestone: M2.6 - Phase 2 validation evidence and acceptance
 
-Current Production Commit: f224265fb7cc104ab7a844455ec1feebcd4feac0
-Production Deployment: dpl_EByMzYEh8Cb3yLGtTQ7Muz2VjrJ1
+Current Production Commit: fd35afb3418c1c1e920ebe74796576c84adffd23
+Production Deployment: dpl_CzeC5JyAYJZegKAoLkBAvRWk6Xpc
 Production URL: https://retailos-ten.vercel.app
 
 Implementation Status:
@@ -11,7 +11,7 @@ Implementation Status:
 - Production route smoke after PR #44 passed for `/login`, `/inventory`, `/inventory/counts`, `/inventory/search`, and `/inventory/watchlist`.
 - Post-smoke Vercel error-log inspection found no errors in the inspected window.
 - Human approval to promote into Phase 2 and stop at M2.6 was given in chat.
-- Phase 2 M2.0-M2.6 is implemented on branch `phase-2-m0-m6-merchandising-planning`.
+- Phase 2 M2.0-M2.6 was merged through PR #45 and PR #46 and deployed to production on August 2, 2026.
 
 Phase 2 M2.0-M2.6 Scope Implemented:
 - M2.0: merchandising scope, role permissions, navigation, secure data contracts, and docs.
@@ -25,9 +25,13 @@ Phase 2 M2.0-M2.6 Scope Implemented:
 Verification Status:
 - Focused Phase 2 integration validation passed: 7 files passed, 52 tests passed.
 - `npm run typecheck` passed after Phase 2 UI/type wiring.
+- Full Phase 2 release validation passed locally: `npm run lint`, `npm run typecheck`, `npm run security`, `npm run test`, `npm run build`, and `npm audit --audit-level=moderate`.
 - Hosted Supabase migration `20260718213000_phase2_merchandising_planning_m0_m6.sql` was applied or reconciled without printing secrets.
 - `node scripts/security/live-phase2-hosted-schema.ts` passed for 8 required relations/views and 5 required functions.
-- Full final validation and production deployment for the Phase 2 branch remain pending until PR merge.
+- GitHub PR checks passed for PR #46: Quality, Security foundation checks, Vercel preview, and Vercel Preview Comments.
+- Production deployment `dpl_CzeC5JyAYJZegKAoLkBAvRWk6Xpc` is ready.
+- Production route smoke passed without 5xx errors for `/`, `/login`, `/merchandising`, `/merchandising/productivity`, `/merchandising/performance`, `/merchandising/recommendations`, `/merchandising/markdowns`, and `/merchandising/plans`.
+- Vercel production error-log inspection found no error logs in the inspected 10-minute window.
 
 Database Migration Status:
 - Repository contains Supabase migrations through Phase 2 M2.6.
@@ -41,4 +45,4 @@ Current Mode:
 - Phase 2 recommendations are directional and evidence-backed; they must not be presented as predictive precision.
 
 Next Required Milestone:
-- Open, review, merge, deploy, and production-smoke the Phase 2 M2.0-M2.6 PR. After that, hold for explicit approval before any post-M2.6 work.
+- Hold at M2.6. A human must explicitly approve the next milestone before any post-M2.6 work begins.
