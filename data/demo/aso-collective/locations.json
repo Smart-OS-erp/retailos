@@ -1,0 +1,38 @@
+[
+  {
+    "code": "LAG-ISL",
+    "country": "Nigeria",
+    "location_type": "store",
+    "name": "Lagos Island Flagship",
+    "timezone": "Africa/Lagos"
+  },
+  {
+    "code": "LAG-LEK",
+    "country": "Nigeria",
+    "location_type": "store",
+    "name": "Lekki Store",
+    "timezone": "Africa/Lagos"
+  },
+  {
+    "code": "ABV-001",
+    "country": "Nigeria",
+    "location_type": "store",
+    "name": "Abuja Store",
+    "timezone": "Africa/Lagos"
+  },
+  {
+    "code": "IBD-001",
+    "country": "Nigeria",
+    "location_type": "store",
+    "name": "Ibadan Store",
+    "timezone": "Africa/Lagos"
+  },
+  {
+    "code": "ECOM-NG",
+    "country": "Nigeria",
+    "location_type": "ecommerce_pool",
+    "name": "Ecommerce Pool",
+    "note": "Inventory location only; not full omnichannel orchestration.",
+    "timezone": "Africa/Lagos"
+  }
+]

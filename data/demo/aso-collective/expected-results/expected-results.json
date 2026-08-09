@@ -1,0 +1,67 @@
+{
+  "accepted_records": 13,
+  "canonical_products": 60,
+  "canonical_skus": 240,
+  "corrected_approved_records": 1,
+  "copilot_evidence_inputs": [
+    "inventory_position",
+    "validation_issue",
+    "inventory_risk_insight",
+    "recovery_opportunity",
+    "recovery_project",
+    "campaign_brief",
+    "recovery_project_task"
+  ],
+  "dataset_reference_date": "2026-07-31",
+  "dataset_version": "ASO_PHASE0_DATASET_V1",
+  "expected_risks": {
+    "high_priority_recovery_opportunities": 3,
+    "low_confidence_suppressed": 1,
+    "markdown_candidates": 2,
+    "transfer_first_candidates": 2
+  },
+  "formula_samples": {
+    "net_sell_through": {
+      "calculation_mode": "net_units_sold / (opening_available_inventory + receipts_during_period)",
+      "sku": "ASO-AA001-BLA-S",
+      "value": 0.8591
+    },
+    "weeks_of_cover": {
+      "calculation_mode": "available_inventory / weighted_average_weekly_net_sales",
+      "sku": "ASO-AA001-BLA-S",
+      "value": 2.38,
+      "weighted_average_weekly_net_sales": 17.25
+    }
+  },
+  "invalid_records": 2,
+  "inventory_positions": 1200,
+  "projectisation_eligible_opportunities": 2,
+  "raw_record_counts": {
+    "inventory_snapshot": 1200,
+    "manual_adjustment": 4,
+    "messy_source_records": 20,
+    "product_master": 240,
+    "sales_history": 12000,
+    "transfer_record": 4,
+    "woocommerce_product": 240
+  },
+  "records_requiring_review": 4,
+  "recovery_opportunity_ranking": [
+    "overstock_lagos_demand_abuja",
+    "high_value_at_risk_stock",
+    "markdown_candidate",
+    "hold_and_monitor_recommendation"
+  ],
+  "rejected_records": 2,
+  "retail_scenarios": 25,
+  "sku_aliases": 24,
+  "stock_age_bands": [
+    "0-4 weeks",
+    "5-8 weeks",
+    "9-12 weeks",
+    "13-26 weeks",
+    "over 26 weeks"
+  ],
+  "value_identified_ngn": 12485000,
+  "value_projectised_ngn": 7850000
+}

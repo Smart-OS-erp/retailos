@@ -1,0 +1,13 @@
+{
+  "ascii_identifier": "aso_collective",
+  "country": "Nigeria",
+  "currency": "NGN",
+  "data_classification": "Synthetic demo data only",
+  "dataset_version": "ASO_PHASE0_DATASET_V1",
+  "display_name": "Aṣọ Collective",
+  "industry": "Fashion apparel, footwear and accessories",
+  "legal_demo_label": "Aso Collective Demo Retail Ltd",
+  "locale": "en-NG",
+  "operating_model": "Private-label and selective multi-brand retailer",
+  "timezone": "Africa/Lagos"
+}

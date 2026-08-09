@@ -1,0 +1,34 @@
+{
+  "dataset_version": "ASO_PHASE0_DATASET_V1",
+  "records": [
+    {
+      "adjusted_at": "2026-07-24",
+      "location_code": "LAG-ISL",
+      "quantity_delta": 2,
+      "reason": "cycle_count_correction",
+      "sku": "ASO-AA001-BLA-S"
+    },
+    {
+      "adjusted_at": "2026-07-17",
+      "location_code": "LAG-LEK",
+      "quantity_delta": -1,
+      "reason": "damaged_stock",
+      "sku": "ASO-AC003-PAL-M"
+    },
+    {
+      "adjusted_at": "2026-07-10",
+      "location_code": "ABV-001",
+      "quantity_delta": -1,
+      "reason": "presentation_protection",
+      "sku": "ASO-AE005-BLA-L"
+    },
+    {
+      "adjusted_at": "2026-07-03",
+      "location_code": "IBD-001",
+      "quantity_delta": -1,
+      "reason": "return_reconciliation",
+      "sku": "ASO-AG007-PAL-XL"
+    }
+  ],
+  "source_system": "manual_adjustment_sheet"
+}

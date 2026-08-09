@@ -105,3 +105,15 @@ Production-affecting milestones must also record:
 - whether smoke data was synthetic and cleaned up.
 
 Historical success evidence does not override current runtime errors. A milestone cannot be accepted while a current production 5xx caused by that milestone remains unresolved.
+
+## Phase 0 final milestones
+
+M0.20 acceptance requires:
+
+- RetailOS African Fashion Retail Operating Model v0.9 exists and clearly marks interim, configurable, consultant-review, and pilot-validation assumptions.
+- Aso Collective synthetic dataset version `ASO_PHASE0_DATASET_V1` exists under `data/demo/aso-collective`.
+- The dataset includes one coherent retailer, 5 locations, 60 styles, 240 SKUs, 10 months of history, required messy-data scenarios, required retail scenarios, source-system fixtures, and machine-readable expected results.
+- `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup` perform deterministic checks and fail non-zero on mismatch.
+- No real retailer data, secrets, plaintext passwords, or production mutations are introduced.
+
+M0.21 acceptance requires the complete Phase 0 journey from raw source data through validation, correction, identity resolution, canonical approval, consolidation, operating view, confidence, aging, risk, Attention Queue, recovery opportunity, projectisation, campaign brief, tasks, and deterministic Copilot explanation. It must create `reports/PHASE_0_ACCEPTANCE_MATRIX.md`, `reports/PHASE_0_ACCEPTANCE_EVIDENCE.md`, and `reports/PHASE_0_FINAL_DECISION.md`.

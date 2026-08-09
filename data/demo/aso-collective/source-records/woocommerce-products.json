@@ -1,0 +1,1925 @@
+{
+  "dataset_version": "ASO_PHASE0_DATASET_V1",
+  "records": [
+    {
+      "external_id": "woo_aso_aa001_bla_s",
+      "price_ngn": 18000,
+      "sku": "aso-aa001-bla-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Wrap Dress Core"
+    },
+    {
+      "external_id": "woo_aso_aa001_ivo_m",
+      "price_ngn": 19500,
+      "sku": "aso-aa001-ivo-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Wrap Dress Core"
+    },
+    {
+      "external_id": "woo_aso_aa001_ind_l",
+      "price_ngn": 20500,
+      "sku": "aso-aa001-ind-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Wrap Dress Core"
+    },
+    {
+      "external_id": "woo_aso_aa001_pal_xl",
+      "price_ngn": 22000,
+      "sku": "aso-aa001-pal-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Wrap Dress Core"
+    },
+    {
+      "external_id": "woo_aso_ab002_ivo_s",
+      "price_ngn": 24500,
+      "sku": "aso-ab002-ivo-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Wrap Dress Edit"
+    },
+    {
+      "external_id": "woo_aso_ab002_ind_m",
+      "price_ngn": 26000,
+      "sku": "aso-ab002-ind-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Wrap Dress Edit"
+    },
+    {
+      "external_id": "woo_aso_ab002_pal_l",
+      "price_ngn": 27000,
+      "sku": "aso-ab002-pal-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Wrap Dress Edit"
+    },
+    {
+      "external_id": "woo_aso_ab002_ter_xl",
+      "price_ngn": 28500,
+      "sku": "aso-ab002-ter-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Wrap Dress Edit"
+    },
+    {
+      "external_id": "woo_aso_ac003_ind_s",
+      "price_ngn": 31000,
+      "sku": "aso-ac003-ind-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Column Dress Core"
+    },
+    {
+      "external_id": "woo_aso_ac003_pal_m",
+      "price_ngn": 32500,
+      "sku": "aso-ac003-pal-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Column Dress Core"
+    },
+    {
+      "external_id": "woo_aso_ac003_ter_l",
+      "price_ngn": 33500,
+      "sku": "aso-ac003-ter-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Column Dress Core"
+    },
+    {
+      "external_id": "woo_aso_ac003_gol_xl",
+      "price_ngn": 35000,
+      "sku": "aso-ac003-gol-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Column Dress Core"
+    },
+    {
+      "external_id": "woo_aso_ad004_pal_s",
+      "price_ngn": 37500,
+      "sku": "aso-ad004-pal-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Column Dress Edit"
+    },
+    {
+      "external_id": "woo_aso_ad004_ter_m",
+      "price_ngn": 39000,
+      "sku": "aso-ad004-ter-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Column Dress Edit"
+    },
+    {
+      "external_id": "woo_aso_ad004_gol_l",
+      "price_ngn": 40000,
+      "sku": "aso-ad004-gol-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Column Dress Edit"
+    },
+    {
+      "external_id": "woo_aso_ad004_bla_xl",
+      "price_ngn": 41500,
+      "sku": "aso-ad004-bla-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Column Dress Edit"
+    },
+    {
+      "external_id": "woo_aso_ae005_ter_s",
+      "price_ngn": 44000,
+      "sku": "aso-ae005-ter-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Pleated Midi Core"
+    },
+    {
+      "external_id": "woo_aso_ae005_gol_m",
+      "price_ngn": 45500,
+      "sku": "aso-ae005-gol-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Pleated Midi Core"
+    },
+    {
+      "external_id": "woo_aso_ae005_bla_l",
+      "price_ngn": 46500,
+      "sku": "aso-ae005-bla-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Pleated Midi Core"
+    },
+    {
+      "external_id": "woo_aso_ae005_ivo_xl",
+      "price_ngn": 48000,
+      "sku": "aso-ae005-ivo-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Pleated Midi Core"
+    },
+    {
+      "external_id": "woo_aso_af006_gol_s",
+      "price_ngn": 50500,
+      "sku": "aso-af006-gol-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Pleated Midi Edit"
+    },
+    {
+      "external_id": "woo_aso_af006_bla_m",
+      "price_ngn": 52000,
+      "sku": "aso-af006-bla-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Pleated Midi Edit"
+    },
+    {
+      "external_id": "woo_aso_af006_ivo_l",
+      "price_ngn": 53000,
+      "sku": "aso-af006-ivo-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Pleated Midi Edit"
+    },
+    {
+      "external_id": "woo_aso_af006_ind_xl",
+      "price_ngn": 54500,
+      "sku": "aso-af006-ind-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Pleated Midi Edit"
+    },
+    {
+      "external_id": "woo_aso_ag007_bla_s",
+      "price_ngn": 57000,
+      "sku": "aso-ag007-bla-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Linen Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_ag007_ivo_m",
+      "price_ngn": 58500,
+      "sku": "aso-ag007-ivo-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Linen Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_ag007_ind_l",
+      "price_ngn": 59500,
+      "sku": "aso-ag007-ind-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Linen Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_ag007_pal_xl",
+      "price_ngn": 61000,
+      "sku": "aso-ag007-pal-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Linen Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_ah008_ivo_s",
+      "price_ngn": 63500,
+      "sku": "aso-ah008-ivo-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Linen Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ah008_ind_m",
+      "price_ngn": 65000,
+      "sku": "aso-ah008-ind-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Linen Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ah008_pal_l",
+      "price_ngn": 66000,
+      "sku": "aso-ah008-pal-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Linen Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ah008_ter_xl",
+      "price_ngn": 67500,
+      "sku": "aso-ah008-ter-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Linen Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ai009_ind_s",
+      "price_ngn": 70000,
+      "sku": "aso-ai009-ind-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Silk Cami Core"
+    },
+    {
+      "external_id": "woo_aso_ai009_pal_m",
+      "price_ngn": 71500,
+      "sku": "aso-ai009-pal-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Silk Cami Core"
+    },
+    {
+      "external_id": "woo_aso_ai009_ter_l",
+      "price_ngn": 72500,
+      "sku": "aso-ai009-ter-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Silk Cami Core"
+    },
+    {
+      "external_id": "woo_aso_ai009_gol_xl",
+      "price_ngn": 74000,
+      "sku": "aso-ai009-gol-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Silk Cami Core"
+    },
+    {
+      "external_id": "woo_aso_aj010_pal_s",
+      "price_ngn": 18000,
+      "sku": "aso-aj010-pal-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Silk Cami Edit"
+    },
+    {
+      "external_id": "woo_aso_aj010_ter_m",
+      "price_ngn": 19500,
+      "sku": "aso-aj010-ter-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Silk Cami Edit"
+    },
+    {
+      "external_id": "woo_aso_aj010_gol_l",
+      "price_ngn": 20500,
+      "sku": "aso-aj010-gol-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Silk Cami Edit"
+    },
+    {
+      "external_id": "woo_aso_aj010_bla_xl",
+      "price_ngn": 22000,
+      "sku": "aso-aj010-bla-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Silk Cami Edit"
+    },
+    {
+      "external_id": "woo_aso_ak011_ter_s",
+      "price_ngn": 24500,
+      "sku": "aso-ak011-ter-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Knit Polo Core"
+    },
+    {
+      "external_id": "woo_aso_ak011_gol_m",
+      "price_ngn": 26000,
+      "sku": "aso-ak011-gol-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Knit Polo Core"
+    },
+    {
+      "external_id": "woo_aso_ak011_bla_l",
+      "price_ngn": 27000,
+      "sku": "aso-ak011-bla-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Knit Polo Core"
+    },
+    {
+      "external_id": "woo_aso_ak011_ivo_xl",
+      "price_ngn": 28500,
+      "sku": "aso-ak011-ivo-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Knit Polo Core"
+    },
+    {
+      "external_id": "woo_aso_al012_gol_s",
+      "price_ngn": 31000,
+      "sku": "aso-al012-gol-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Knit Polo Edit"
+    },
+    {
+      "external_id": "woo_aso_al012_bla_m",
+      "price_ngn": 32500,
+      "sku": "aso-al012-bla-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Knit Polo Edit"
+    },
+    {
+      "external_id": "woo_aso_al012_ivo_l",
+      "price_ngn": 33500,
+      "sku": "aso-al012-ivo-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Knit Polo Edit"
+    },
+    {
+      "external_id": "woo_aso_al012_ind_xl",
+      "price_ngn": 35000,
+      "sku": "aso-al012-ind-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Knit Polo Edit"
+    },
+    {
+      "external_id": "woo_aso_am013_bla_s",
+      "price_ngn": 37500,
+      "sku": "aso-am013-bla-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Wide Leg Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_am013_ivo_m",
+      "price_ngn": 39000,
+      "sku": "aso-am013-ivo-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Wide Leg Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_am013_ind_l",
+      "price_ngn": 40000,
+      "sku": "aso-am013-ind-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Wide Leg Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_am013_pal_xl",
+      "price_ngn": 41500,
+      "sku": "aso-am013-pal-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Wide Leg Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_an014_ivo_s",
+      "price_ngn": 44000,
+      "sku": "aso-an014-ivo-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Wide Leg Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_an014_ind_m",
+      "price_ngn": 45500,
+      "sku": "aso-an014-ind-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Wide Leg Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_an014_pal_l",
+      "price_ngn": 46500,
+      "sku": "aso-an014-pal-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Wide Leg Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_an014_ter_xl",
+      "price_ngn": 48000,
+      "sku": "aso-an014-ter-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Wide Leg Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_ao015_ind_s",
+      "price_ngn": 50500,
+      "sku": "aso-ao015-ind-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Cargo Skirt Core"
+    },
+    {
+      "external_id": "woo_aso_ao015_pal_m",
+      "price_ngn": 52000,
+      "sku": "aso-ao015-pal-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Cargo Skirt Core"
+    },
+    {
+      "external_id": "woo_aso_ao015_ter_l",
+      "price_ngn": 53000,
+      "sku": "aso-ao015-ter-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Cargo Skirt Core"
+    },
+    {
+      "external_id": "woo_aso_ao015_gol_xl",
+      "price_ngn": 54500,
+      "sku": "aso-ao015-gol-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Cargo Skirt Core"
+    },
+    {
+      "external_id": "woo_aso_ap016_pal_s",
+      "price_ngn": 57000,
+      "sku": "aso-ap016-pal-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Cargo Skirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ap016_ter_m",
+      "price_ngn": 58500,
+      "sku": "aso-ap016-ter-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Cargo Skirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ap016_gol_l",
+      "price_ngn": 59500,
+      "sku": "aso-ap016-gol-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Cargo Skirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ap016_bla_xl",
+      "price_ngn": 61000,
+      "sku": "aso-ap016-bla-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Cargo Skirt Edit"
+    },
+    {
+      "external_id": "woo_aso_aq017_ter_s",
+      "price_ngn": 63500,
+      "sku": "aso-aq017-ter-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Denim Culotte Core"
+    },
+    {
+      "external_id": "woo_aso_aq017_gol_m",
+      "price_ngn": 65000,
+      "sku": "aso-aq017-gol-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Denim Culotte Core"
+    },
+    {
+      "external_id": "woo_aso_aq017_bla_l",
+      "price_ngn": 66000,
+      "sku": "aso-aq017-bla-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Denim Culotte Core"
+    },
+    {
+      "external_id": "woo_aso_aq017_ivo_xl",
+      "price_ngn": 67500,
+      "sku": "aso-aq017-ivo-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Denim Culotte Core"
+    },
+    {
+      "external_id": "woo_aso_ar018_gol_s",
+      "price_ngn": 70000,
+      "sku": "aso-ar018-gol-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Denim Culotte Edit"
+    },
+    {
+      "external_id": "woo_aso_ar018_bla_m",
+      "price_ngn": 71500,
+      "sku": "aso-ar018-bla-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Denim Culotte Edit"
+    },
+    {
+      "external_id": "woo_aso_ar018_ivo_l",
+      "price_ngn": 72500,
+      "sku": "aso-ar018-ivo-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Denim Culotte Edit"
+    },
+    {
+      "external_id": "woo_aso_ar018_ind_xl",
+      "price_ngn": 74000,
+      "sku": "aso-ar018-ind-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Denim Culotte Edit"
+    },
+    {
+      "external_id": "woo_aso_as019_bla_s",
+      "price_ngn": 18000,
+      "sku": "aso-as019-bla-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Camp Collar Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_as019_ivo_m",
+      "price_ngn": 19500,
+      "sku": "aso-as019-ivo-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Camp Collar Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_as019_ind_l",
+      "price_ngn": 20500,
+      "sku": "aso-as019-ind-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Camp Collar Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_as019_pal_xl",
+      "price_ngn": 22000,
+      "sku": "aso-as019-pal-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Camp Collar Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_at020_ivo_s",
+      "price_ngn": 24500,
+      "sku": "aso-at020-ivo-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Camp Collar Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_at020_ind_m",
+      "price_ngn": 26000,
+      "sku": "aso-at020-ind-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Camp Collar Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_at020_pal_l",
+      "price_ngn": 27000,
+      "sku": "aso-at020-pal-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Camp Collar Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_at020_ter_xl",
+      "price_ngn": 28500,
+      "sku": "aso-at020-ter-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Camp Collar Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_au021_ind_s",
+      "price_ngn": 31000,
+      "sku": "aso-au021-ind-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Oxford Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_au021_pal_m",
+      "price_ngn": 32500,
+      "sku": "aso-au021-pal-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Oxford Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_au021_ter_l",
+      "price_ngn": 33500,
+      "sku": "aso-au021-ter-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Oxford Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_au021_gol_xl",
+      "price_ngn": 35000,
+      "sku": "aso-au021-gol-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Oxford Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_av022_pal_s",
+      "price_ngn": 37500,
+      "sku": "aso-av022-pal-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Oxford Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_av022_ter_m",
+      "price_ngn": 39000,
+      "sku": "aso-av022-ter-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Oxford Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_av022_gol_l",
+      "price_ngn": 40000,
+      "sku": "aso-av022-gol-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Oxford Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_av022_bla_xl",
+      "price_ngn": 41500,
+      "sku": "aso-av022-bla-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Oxford Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_aw023_ter_s",
+      "price_ngn": 44000,
+      "sku": "aso-aw023-ter-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Print Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_aw023_gol_m",
+      "price_ngn": 45500,
+      "sku": "aso-aw023-gol-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Print Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_aw023_bla_l",
+      "price_ngn": 46500,
+      "sku": "aso-aw023-bla-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Print Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_aw023_ivo_xl",
+      "price_ngn": 48000,
+      "sku": "aso-aw023-ivo-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Print Shirt Core"
+    },
+    {
+      "external_id": "woo_aso_ax024_gol_s",
+      "price_ngn": 50500,
+      "sku": "aso-ax024-gol-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Print Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ax024_bla_m",
+      "price_ngn": 52000,
+      "sku": "aso-ax024-bla-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Print Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ax024_ivo_l",
+      "price_ngn": 53000,
+      "sku": "aso-ax024-ivo-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Print Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ax024_ind_xl",
+      "price_ngn": 54500,
+      "sku": "aso-ax024-ind-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Print Shirt Edit"
+    },
+    {
+      "external_id": "woo_aso_ay025_bla_s",
+      "price_ngn": 57000,
+      "sku": "aso-ay025-bla-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Chino Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_ay025_ivo_m",
+      "price_ngn": 58500,
+      "sku": "aso-ay025-ivo-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Chino Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_ay025_ind_l",
+      "price_ngn": 59500,
+      "sku": "aso-ay025-ind-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Chino Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_ay025_pal_xl",
+      "price_ngn": 61000,
+      "sku": "aso-ay025-pal-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Chino Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_az026_ivo_s",
+      "price_ngn": 63500,
+      "sku": "aso-az026-ivo-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Chino Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_az026_ind_m",
+      "price_ngn": 65000,
+      "sku": "aso-az026-ind-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Chino Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_az026_pal_l",
+      "price_ngn": 66000,
+      "sku": "aso-az026-pal-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Chino Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_az026_ter_xl",
+      "price_ngn": 67500,
+      "sku": "aso-az026-ter-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Chino Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_ba027_ind_s",
+      "price_ngn": 70000,
+      "sku": "aso-ba027-ind-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Drawstring Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_ba027_pal_m",
+      "price_ngn": 71500,
+      "sku": "aso-ba027-pal-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Drawstring Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_ba027_ter_l",
+      "price_ngn": 72500,
+      "sku": "aso-ba027-ter-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Drawstring Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_ba027_gol_xl",
+      "price_ngn": 74000,
+      "sku": "aso-ba027-gol-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Drawstring Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_bb028_pal_s",
+      "price_ngn": 18000,
+      "sku": "aso-bb028-pal-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Drawstring Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_bb028_ter_m",
+      "price_ngn": 19500,
+      "sku": "aso-bb028-ter-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Drawstring Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_bb028_gol_l",
+      "price_ngn": 20500,
+      "sku": "aso-bb028-gol-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Drawstring Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_bb028_bla_xl",
+      "price_ngn": 22000,
+      "sku": "aso-bb028-bla-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Drawstring Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_bc029_ter_s",
+      "price_ngn": 24500,
+      "sku": "aso-bc029-ter-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Cargo Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_bc029_gol_m",
+      "price_ngn": 26000,
+      "sku": "aso-bc029-gol-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Cargo Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_bc029_bla_l",
+      "price_ngn": 27000,
+      "sku": "aso-bc029-bla-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Cargo Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_bc029_ivo_xl",
+      "price_ngn": 28500,
+      "sku": "aso-bc029-ivo-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Cargo Trouser Core"
+    },
+    {
+      "external_id": "woo_aso_bd030_gol_s",
+      "price_ngn": 31000,
+      "sku": "aso-bd030-gol-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Cargo Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_bd030_bla_m",
+      "price_ngn": 32500,
+      "sku": "aso-bd030-bla-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Cargo Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_bd030_ivo_l",
+      "price_ngn": 33500,
+      "sku": "aso-bd030-ivo-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Cargo Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_bd030_ind_xl",
+      "price_ngn": 35000,
+      "sku": "aso-bd030-ind-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Cargo Trouser Edit"
+    },
+    {
+      "external_id": "woo_aso_be031_bla_s",
+      "price_ngn": 37500,
+      "sku": "aso-be031-bla-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Utility Jacket Core"
+    },
+    {
+      "external_id": "woo_aso_be031_ivo_m",
+      "price_ngn": 39000,
+      "sku": "aso-be031-ivo-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Utility Jacket Core"
+    },
+    {
+      "external_id": "woo_aso_be031_ind_l",
+      "price_ngn": 40000,
+      "sku": "aso-be031-ind-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Utility Jacket Core"
+    },
+    {
+      "external_id": "woo_aso_be031_pal_xl",
+      "price_ngn": 41500,
+      "sku": "aso-be031-pal-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Utility Jacket Core"
+    },
+    {
+      "external_id": "woo_aso_bf032_ivo_s",
+      "price_ngn": 44000,
+      "sku": "aso-bf032-ivo-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Utility Jacket Edit"
+    },
+    {
+      "external_id": "woo_aso_bf032_ind_m",
+      "price_ngn": 45500,
+      "sku": "aso-bf032-ind-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Utility Jacket Edit"
+    },
+    {
+      "external_id": "woo_aso_bf032_pal_l",
+      "price_ngn": 46500,
+      "sku": "aso-bf032-pal-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Utility Jacket Edit"
+    },
+    {
+      "external_id": "woo_aso_bf032_ter_xl",
+      "price_ngn": 48000,
+      "sku": "aso-bf032-ter-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Utility Jacket Edit"
+    },
+    {
+      "external_id": "woo_aso_bg033_ind_s",
+      "price_ngn": 50500,
+      "sku": "aso-bg033-ind-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Bomber Jacket Core"
+    },
+    {
+      "external_id": "woo_aso_bg033_pal_m",
+      "price_ngn": 52000,
+      "sku": "aso-bg033-pal-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Bomber Jacket Core"
+    },
+    {
+      "external_id": "woo_aso_bg033_ter_l",
+      "price_ngn": 53000,
+      "sku": "aso-bg033-ter-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Bomber Jacket Core"
+    },
+    {
+      "external_id": "woo_aso_bg033_gol_xl",
+      "price_ngn": 54500,
+      "sku": "aso-bg033-gol-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Bomber Jacket Core"
+    },
+    {
+      "external_id": "woo_aso_bh034_pal_s",
+      "price_ngn": 57000,
+      "sku": "aso-bh034-pal-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Bomber Jacket Edit"
+    },
+    {
+      "external_id": "woo_aso_bh034_ter_m",
+      "price_ngn": 58500,
+      "sku": "aso-bh034-ter-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Bomber Jacket Edit"
+    },
+    {
+      "external_id": "woo_aso_bh034_gol_l",
+      "price_ngn": 59500,
+      "sku": "aso-bh034-gol-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Bomber Jacket Edit"
+    },
+    {
+      "external_id": "woo_aso_bh034_bla_xl",
+      "price_ngn": 61000,
+      "sku": "aso-bh034-bla-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Bomber Jacket Edit"
+    },
+    {
+      "external_id": "woo_aso_bi035_ter_s",
+      "price_ngn": 63500,
+      "sku": "aso-bi035-ter-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Overshirt Core"
+    },
+    {
+      "external_id": "woo_aso_bi035_gol_m",
+      "price_ngn": 65000,
+      "sku": "aso-bi035-gol-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Overshirt Core"
+    },
+    {
+      "external_id": "woo_aso_bi035_bla_l",
+      "price_ngn": 66000,
+      "sku": "aso-bi035-bla-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Overshirt Core"
+    },
+    {
+      "external_id": "woo_aso_bi035_ivo_xl",
+      "price_ngn": 67500,
+      "sku": "aso-bi035-ivo-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Overshirt Core"
+    },
+    {
+      "external_id": "woo_aso_bj036_gol_s",
+      "price_ngn": 70000,
+      "sku": "aso-bj036-gol-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Overshirt Edit"
+    },
+    {
+      "external_id": "woo_aso_bj036_bla_m",
+      "price_ngn": 71500,
+      "sku": "aso-bj036-bla-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Overshirt Edit"
+    },
+    {
+      "external_id": "woo_aso_bj036_ivo_l",
+      "price_ngn": 72500,
+      "sku": "aso-bj036-ivo-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Overshirt Edit"
+    },
+    {
+      "external_id": "woo_aso_bj036_ind_xl",
+      "price_ngn": 74000,
+      "sku": "aso-bj036-ind-xl",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Overshirt Edit"
+    },
+    {
+      "external_id": "woo_aso_bk037_bla_38",
+      "price_ngn": 18000,
+      "sku": "aso-bk037-bla-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Lagos Sandal Core"
+    },
+    {
+      "external_id": "woo_aso_bk037_ivo_39",
+      "price_ngn": 19500,
+      "sku": "aso-bk037-ivo-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Lagos Sandal Core"
+    },
+    {
+      "external_id": "woo_aso_bk037_ind_40",
+      "price_ngn": 20500,
+      "sku": "aso-bk037-ind-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Lagos Sandal Core"
+    },
+    {
+      "external_id": "woo_aso_bk037_pal_41",
+      "price_ngn": 22000,
+      "sku": "aso-bk037-pal-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Lagos Sandal Core"
+    },
+    {
+      "external_id": "woo_aso_bl038_ivo_38",
+      "price_ngn": 24500,
+      "sku": "aso-bl038-ivo-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Lagos Sandal Edit"
+    },
+    {
+      "external_id": "woo_aso_bl038_ind_39",
+      "price_ngn": 26000,
+      "sku": "aso-bl038-ind-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Lagos Sandal Edit"
+    },
+    {
+      "external_id": "woo_aso_bl038_pal_40",
+      "price_ngn": 27000,
+      "sku": "aso-bl038-pal-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Lagos Sandal Edit"
+    },
+    {
+      "external_id": "woo_aso_bl038_ter_41",
+      "price_ngn": 28500,
+      "sku": "aso-bl038-ter-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Lagos Sandal Edit"
+    },
+    {
+      "external_id": "woo_aso_bm039_ind_38",
+      "price_ngn": 31000,
+      "sku": "aso-bm039-ind-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Platform Mule Core"
+    },
+    {
+      "external_id": "woo_aso_bm039_pal_39",
+      "price_ngn": 32500,
+      "sku": "aso-bm039-pal-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Platform Mule Core"
+    },
+    {
+      "external_id": "woo_aso_bm039_ter_40",
+      "price_ngn": 33500,
+      "sku": "aso-bm039-ter-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Platform Mule Core"
+    },
+    {
+      "external_id": "woo_aso_bm039_gol_41",
+      "price_ngn": 35000,
+      "sku": "aso-bm039-gol-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Platform Mule Core"
+    },
+    {
+      "external_id": "woo_aso_bn040_pal_38",
+      "price_ngn": 37500,
+      "sku": "aso-bn040-pal-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Platform Mule Edit"
+    },
+    {
+      "external_id": "woo_aso_bn040_ter_39",
+      "price_ngn": 39000,
+      "sku": "aso-bn040-ter-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Platform Mule Edit"
+    },
+    {
+      "external_id": "woo_aso_bn040_gol_40",
+      "price_ngn": 40000,
+      "sku": "aso-bn040-gol-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Platform Mule Edit"
+    },
+    {
+      "external_id": "woo_aso_bn040_bla_41",
+      "price_ngn": 41500,
+      "sku": "aso-bn040-bla-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Platform Mule Edit"
+    },
+    {
+      "external_id": "woo_aso_bo041_ter_38",
+      "price_ngn": 44000,
+      "sku": "aso-bo041-ter-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Driving Loafer Core"
+    },
+    {
+      "external_id": "woo_aso_bo041_gol_39",
+      "price_ngn": 45500,
+      "sku": "aso-bo041-gol-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Driving Loafer Core"
+    },
+    {
+      "external_id": "woo_aso_bo041_bla_40",
+      "price_ngn": 46500,
+      "sku": "aso-bo041-bla-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Driving Loafer Core"
+    },
+    {
+      "external_id": "woo_aso_bo041_ivo_41",
+      "price_ngn": 48000,
+      "sku": "aso-bo041-ivo-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Driving Loafer Core"
+    },
+    {
+      "external_id": "woo_aso_bp042_gol_38",
+      "price_ngn": 50500,
+      "sku": "aso-bp042-gol-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Driving Loafer Edit"
+    },
+    {
+      "external_id": "woo_aso_bp042_bla_39",
+      "price_ngn": 52000,
+      "sku": "aso-bp042-bla-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Driving Loafer Edit"
+    },
+    {
+      "external_id": "woo_aso_bp042_ivo_40",
+      "price_ngn": 53000,
+      "sku": "aso-bp042-ivo-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Driving Loafer Edit"
+    },
+    {
+      "external_id": "woo_aso_bp042_ind_41",
+      "price_ngn": 54500,
+      "sku": "aso-bp042-ind-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Driving Loafer Edit"
+    },
+    {
+      "external_id": "woo_aso_bq043_bla_38",
+      "price_ngn": 57000,
+      "sku": "aso-bq043-bla-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Canvas Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bq043_ivo_39",
+      "price_ngn": 58500,
+      "sku": "aso-bq043-ivo-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Canvas Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bq043_ind_40",
+      "price_ngn": 59500,
+      "sku": "aso-bq043-ind-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Canvas Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bq043_pal_41",
+      "price_ngn": 61000,
+      "sku": "aso-bq043-pal-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Canvas Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_br044_ivo_38",
+      "price_ngn": 63500,
+      "sku": "aso-br044-ivo-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Canvas Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_br044_ind_39",
+      "price_ngn": 65000,
+      "sku": "aso-br044-ind-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Canvas Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_br044_pal_40",
+      "price_ngn": 66000,
+      "sku": "aso-br044-pal-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Canvas Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_br044_ter_41",
+      "price_ngn": 67500,
+      "sku": "aso-br044-ter-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Canvas Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_bs045_ind_38",
+      "price_ngn": 70000,
+      "sku": "aso-bs045-ind-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Court Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bs045_pal_39",
+      "price_ngn": 71500,
+      "sku": "aso-bs045-pal-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Court Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bs045_ter_40",
+      "price_ngn": 72500,
+      "sku": "aso-bs045-ter-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Court Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bs045_gol_41",
+      "price_ngn": 74000,
+      "sku": "aso-bs045-gol-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Court Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bt046_pal_38",
+      "price_ngn": 18000,
+      "sku": "aso-bt046-pal-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Court Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_bt046_ter_39",
+      "price_ngn": 19500,
+      "sku": "aso-bt046-ter-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Court Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_bt046_gol_40",
+      "price_ngn": 20500,
+      "sku": "aso-bt046-gol-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Court Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_bt046_bla_41",
+      "price_ngn": 22000,
+      "sku": "aso-bt046-bla-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Court Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_bu047_ter_38",
+      "price_ngn": 24500,
+      "sku": "aso-bu047-ter-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Slip-On Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bu047_gol_39",
+      "price_ngn": 26000,
+      "sku": "aso-bu047-gol-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Slip-On Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bu047_bla_40",
+      "price_ngn": 27000,
+      "sku": "aso-bu047-bla-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Slip-On Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bu047_ivo_41",
+      "price_ngn": 28500,
+      "sku": "aso-bu047-ivo-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Slip-On Sneaker Core"
+    },
+    {
+      "external_id": "woo_aso_bv048_gol_38",
+      "price_ngn": 31000,
+      "sku": "aso-bv048-gol-38",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Slip-On Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_bv048_bla_39",
+      "price_ngn": 32500,
+      "sku": "aso-bv048-bla-39",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Slip-On Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_bv048_ivo_40",
+      "price_ngn": 33500,
+      "sku": "aso-bv048-ivo-40",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Slip-On Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_bv048_ind_41",
+      "price_ngn": 35000,
+      "sku": "aso-bv048-ind-41",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Slip-On Sneaker Edit"
+    },
+    {
+      "external_id": "woo_aso_bw049_bla_os",
+      "price_ngn": 37500,
+      "sku": "aso-bw049-bla-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Market Tote Core"
+    },
+    {
+      "external_id": "woo_aso_bw049_ivo_s",
+      "price_ngn": 39000,
+      "sku": "aso-bw049-ivo-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Market Tote Core"
+    },
+    {
+      "external_id": "woo_aso_bw049_ind_m",
+      "price_ngn": 40000,
+      "sku": "aso-bw049-ind-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Market Tote Core"
+    },
+    {
+      "external_id": "woo_aso_bw049_pal_l",
+      "price_ngn": 41500,
+      "sku": "aso-bw049-pal-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Market Tote Core"
+    },
+    {
+      "external_id": "woo_aso_bx050_ivo_os",
+      "price_ngn": 44000,
+      "sku": "aso-bx050-ivo-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Market Tote Edit"
+    },
+    {
+      "external_id": "woo_aso_bx050_ind_s",
+      "price_ngn": 45500,
+      "sku": "aso-bx050-ind-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Market Tote Edit"
+    },
+    {
+      "external_id": "woo_aso_bx050_pal_m",
+      "price_ngn": 46500,
+      "sku": "aso-bx050-pal-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Market Tote Edit"
+    },
+    {
+      "external_id": "woo_aso_bx050_ter_l",
+      "price_ngn": 48000,
+      "sku": "aso-bx050-ter-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Market Tote Edit"
+    },
+    {
+      "external_id": "woo_aso_by051_ind_os",
+      "price_ngn": 50500,
+      "sku": "aso-by051-ind-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Mini Crossbody Core"
+    },
+    {
+      "external_id": "woo_aso_by051_pal_s",
+      "price_ngn": 52000,
+      "sku": "aso-by051-pal-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Mini Crossbody Core"
+    },
+    {
+      "external_id": "woo_aso_by051_ter_m",
+      "price_ngn": 53000,
+      "sku": "aso-by051-ter-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Mini Crossbody Core"
+    },
+    {
+      "external_id": "woo_aso_by051_gol_l",
+      "price_ngn": 54500,
+      "sku": "aso-by051-gol-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Mini Crossbody Core"
+    },
+    {
+      "external_id": "woo_aso_bz052_pal_os",
+      "price_ngn": 57000,
+      "sku": "aso-bz052-pal-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Mini Crossbody Edit"
+    },
+    {
+      "external_id": "woo_aso_bz052_ter_s",
+      "price_ngn": 58500,
+      "sku": "aso-bz052-ter-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Mini Crossbody Edit"
+    },
+    {
+      "external_id": "woo_aso_bz052_gol_m",
+      "price_ngn": 59500,
+      "sku": "aso-bz052-gol-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Mini Crossbody Edit"
+    },
+    {
+      "external_id": "woo_aso_bz052_bla_l",
+      "price_ngn": 61000,
+      "sku": "aso-bz052-bla-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Mini Crossbody Edit"
+    },
+    {
+      "external_id": "woo_aso_ca053_ter_os",
+      "price_ngn": 63500,
+      "sku": "aso-ca053-ter-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Structured Satchel Core"
+    },
+    {
+      "external_id": "woo_aso_ca053_gol_s",
+      "price_ngn": 65000,
+      "sku": "aso-ca053-gol-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Structured Satchel Core"
+    },
+    {
+      "external_id": "woo_aso_ca053_bla_m",
+      "price_ngn": 66000,
+      "sku": "aso-ca053-bla-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Structured Satchel Core"
+    },
+    {
+      "external_id": "woo_aso_ca053_ivo_l",
+      "price_ngn": 67500,
+      "sku": "aso-ca053-ivo-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Structured Satchel Core"
+    },
+    {
+      "external_id": "woo_aso_cb054_gol_os",
+      "price_ngn": 70000,
+      "sku": "aso-cb054-gol-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Structured Satchel Edit"
+    },
+    {
+      "external_id": "woo_aso_cb054_bla_s",
+      "price_ngn": 71500,
+      "sku": "aso-cb054-bla-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Structured Satchel Edit"
+    },
+    {
+      "external_id": "woo_aso_cb054_ivo_m",
+      "price_ngn": 72500,
+      "sku": "aso-cb054-ivo-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Structured Satchel Edit"
+    },
+    {
+      "external_id": "woo_aso_cb054_ind_l",
+      "price_ngn": 74000,
+      "sku": "aso-cb054-ind-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Structured Satchel Edit"
+    },
+    {
+      "external_id": "woo_aso_cc055_bla_os",
+      "price_ngn": 18000,
+      "sku": "aso-cc055-bla-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Silk Scarf Core"
+    },
+    {
+      "external_id": "woo_aso_cc055_ivo_s",
+      "price_ngn": 19500,
+      "sku": "aso-cc055-ivo-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Silk Scarf Core"
+    },
+    {
+      "external_id": "woo_aso_cc055_ind_m",
+      "price_ngn": 20500,
+      "sku": "aso-cc055-ind-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Silk Scarf Core"
+    },
+    {
+      "external_id": "woo_aso_cc055_pal_l",
+      "price_ngn": 22000,
+      "sku": "aso-cc055-pal-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Silk Scarf Core"
+    },
+    {
+      "external_id": "woo_aso_cd056_ivo_os",
+      "price_ngn": 24500,
+      "sku": "aso-cd056-ivo-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Silk Scarf Edit"
+    },
+    {
+      "external_id": "woo_aso_cd056_ind_s",
+      "price_ngn": 26000,
+      "sku": "aso-cd056-ind-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Silk Scarf Edit"
+    },
+    {
+      "external_id": "woo_aso_cd056_pal_m",
+      "price_ngn": 27000,
+      "sku": "aso-cd056-pal-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 3,
+      "title": "Silk Scarf Edit"
+    },
+    {
+      "external_id": "woo_aso_cd056_ter_l",
+      "price_ngn": 28500,
+      "sku": "aso-cd056-ter-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 4,
+      "title": "Silk Scarf Edit"
+    },
+    {
+      "external_id": "woo_aso_ce057_ind_os",
+      "price_ngn": 31000,
+      "sku": "aso-ce057-ind-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 5,
+      "title": "Leather Belt Core"
+    },
+    {
+      "external_id": "woo_aso_ce057_pal_s",
+      "price_ngn": 32500,
+      "sku": "aso-ce057-pal-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 6,
+      "title": "Leather Belt Core"
+    },
+    {
+      "external_id": "woo_aso_ce057_ter_m",
+      "price_ngn": 33500,
+      "sku": "aso-ce057-ter-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 7,
+      "title": "Leather Belt Core"
+    },
+    {
+      "external_id": "woo_aso_ce057_gol_l",
+      "price_ngn": 35000,
+      "sku": "aso-ce057-gol-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 8,
+      "title": "Leather Belt Core"
+    },
+    {
+      "external_id": "woo_aso_cf058_pal_os",
+      "price_ngn": 37500,
+      "sku": "aso-cf058-pal-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 9,
+      "title": "Leather Belt Edit"
+    },
+    {
+      "external_id": "woo_aso_cf058_ter_s",
+      "price_ngn": 39000,
+      "sku": "aso-cf058-ter-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 10,
+      "title": "Leather Belt Edit"
+    },
+    {
+      "external_id": "woo_aso_cf058_gol_m",
+      "price_ngn": 40000,
+      "sku": "aso-cf058-gol-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 11,
+      "title": "Leather Belt Edit"
+    },
+    {
+      "external_id": "woo_aso_cf058_bla_l",
+      "price_ngn": 41500,
+      "sku": "aso-cf058-bla-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 12,
+      "title": "Leather Belt Edit"
+    },
+    {
+      "external_id": "woo_aso_cg059_ter_os",
+      "price_ngn": 44000,
+      "sku": "aso-cg059-ter-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 13,
+      "title": "Beaded Cap Core"
+    },
+    {
+      "external_id": "woo_aso_cg059_gol_s",
+      "price_ngn": 45500,
+      "sku": "aso-cg059-gol-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 14,
+      "title": "Beaded Cap Core"
+    },
+    {
+      "external_id": "woo_aso_cg059_bla_m",
+      "price_ngn": 46500,
+      "sku": "aso-cg059-bla-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 15,
+      "title": "Beaded Cap Core"
+    },
+    {
+      "external_id": "woo_aso_cg059_ivo_l",
+      "price_ngn": 48000,
+      "sku": "aso-cg059-ivo-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 16,
+      "title": "Beaded Cap Core"
+    },
+    {
+      "external_id": "woo_aso_ch060_gol_os",
+      "price_ngn": 50500,
+      "sku": "aso-ch060-gol-os",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 17,
+      "title": "Beaded Cap Edit"
+    },
+    {
+      "external_id": "woo_aso_ch060_bla_s",
+      "price_ngn": 52000,
+      "sku": "aso-ch060-bla-s",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 18,
+      "title": "Beaded Cap Edit"
+    },
+    {
+      "external_id": "woo_aso_ch060_ivo_m",
+      "price_ngn": 53000,
+      "sku": "aso-ch060-ivo-m",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 19,
+      "title": "Beaded Cap Edit"
+    },
+    {
+      "external_id": "woo_aso_ch060_ind_l",
+      "price_ngn": 54500,
+      "sku": "aso-ch060-ind-l",
+      "source_system": "woocommerce",
+      "stock_quantity_hint": 20,
+      "title": "Beaded Cap Edit"
+    }
+  ]
+}

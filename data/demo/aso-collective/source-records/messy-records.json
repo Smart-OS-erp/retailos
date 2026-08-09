@@ -1,0 +1,125 @@
+{
+  "dataset_version": "ASO_PHASE0_DATASET_V1",
+  "records": [
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "same_sku_represented_differently",
+      "source_record_id": "messy_01"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "style_colour_size_identity_mismatch",
+      "source_record_id": "messy_02"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "duplicate_source_record",
+      "source_record_id": "messy_03"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "rejected",
+      "scenario": "invalid_location",
+      "source_record_id": "messy_04"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "missing_size",
+      "source_record_id": "messy_05"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "inconsistent_colour_name",
+      "source_record_id": "messy_06"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "missing_receipt_date",
+      "source_record_id": "messy_07"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "requires_review",
+      "scenario": "missing_cost",
+      "source_record_id": "messy_08"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "stale_inventory_snapshot",
+      "source_record_id": "messy_09"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "negative_imported_inventory_discrepancy",
+      "source_record_id": "messy_10"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "unrecorded_transfer_implication",
+      "source_record_id": "messy_11"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "return_not_reflected_in_one_source",
+      "source_record_id": "messy_12"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "wrong_variant_sold",
+      "source_record_id": "messy_13"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "product_name_spelling_inconsistency",
+      "source_record_id": "messy_14"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "accepted",
+      "scenario": "duplicate_external_identifiers",
+      "source_record_id": "messy_15"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "requires_review",
+      "scenario": "low_confidence_canonical_match",
+      "source_record_id": "messy_16"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "requires_review",
+      "scenario": "record_requiring_human_approval",
+      "source_record_id": "messy_17"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "rejected",
+      "scenario": "record_that_must_be_rejected",
+      "source_record_id": "messy_18"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "corrected_approved",
+      "scenario": "record_corrected_then_approved",
+      "source_record_id": "messy_19"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "expected_status": "requires_review",
+      "scenario": "canonical_alias_mapping_reused",
+      "source_record_id": "messy_20"
+    }
+  ]
+}

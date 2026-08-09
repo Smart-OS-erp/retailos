@@ -14,6 +14,27 @@ Before every task:
 8. Update repository reports before completion.
 9. Do not claim completion without evidence.
 
+## AUTONOMOUS CONTINUATION COMMAND
+
+The repository owner instruction `continue autonomously` is a persistent repository command for future Codex sessions. Treat the instruction case-insensitively and ignore surrounding whitespace or final punctuation, so `continue autonomously`, `Continue autonomously`, `continue autonomously.`, and `CONTINUE AUTONOMOUSLY` all activate the same behavior.
+
+When this command is received, do not ask whether to continue. Execute against the current authoritative roadmap and milestone source rather than hardcoded milestone IDs:
+
+1. Read `AGENTS.md` completely.
+2. Read the authoritative roadmap and milestone definitions.
+3. Read `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, `reports/OPEN_BLOCKERS.md`, and `reports/RECENT_FAILURES.md`.
+4. Inspect `main`, open pull requests, workflow results, migrations, hosted database state where accessible, preview deployment, production deployment, runtime errors, and unresolved blockers.
+5. Resolve the next eligible milestone using this order of authority: canonical roadmap or milestone source, explicit dependency status, `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, open blockers/failed gates, then Git/migration/deployment/runtime evidence.
+6. Confirm milestone dependencies are complete.
+7. Create the appropriate branch, implement the milestone, run required validation gates, open a pull request, review preview deployment, merge only when checks and repository policies allow it, verify production deployment, record evidence tied to the actual commit/deployment, update authoritative current state, then resolve the next eligible milestone again.
+8. Continue through subsequent eligible milestones automatically until a mandatory stop condition or human gate is reached.
+
+Mandatory human gates include destructive production migration, deletion of real production/customer data, paid service or plan upgrade, missing secret or external account credential, legal/privacy/terms/pricing/contract acceptance, original consultant confirmation, customer pilot acceptance, production external-system write-back, payment processing, POS fiscal/tax decisions, lowering a security boundary, irreversible repository/infrastructure change not already approved, or a product-owner decision with multiple valid options.
+
+Mandatory technical stop conditions include failed cross-tenant/location-isolation tests, double-posted inventory/financial effects, migration history disagreement, modified already-applied migration, destructive migration requirement, production data risk, unavailable backup/rollback path, critical or high unresolved security issue, broken GitHub Actions or Vercel integration, failed production smoke, real retailer data in a synthetic path, unexplained deterministic calculation mismatch, unavailable required infrastructure access, or an insufficiently defined next milestone.
+
+When stopping, report the exact blocker, affected milestone, evidence, actions attempted, safest remediation, owner action required, and whether the repository remains deployable and safe.
+
 ## 0. Product Name
 
 The demo/project name is RetailOS.

@@ -1,0 +1,130 @@
+{
+  "dataset_version": "ASO_PHASE0_DATASET_V1",
+  "records": [
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_01",
+      "scenario": "fast_seller_approaching_stockout"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_02",
+      "scenario": "strong_seller_low_weeks_of_cover"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_03",
+      "scenario": "slow_moving_seasonal_style"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_04",
+      "scenario": "aged_inventory_over_26_weeks"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_05",
+      "scenario": "overstock_lagos_demand_abuja"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_06",
+      "scenario": "overstock_abuja_ecommerce_demand"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_07",
+      "scenario": "size_imbalance"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_08",
+      "scenario": "colour_imbalance"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_09",
+      "scenario": "high_value_at_risk_stock"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_10",
+      "scenario": "new_product_not_dead"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_11",
+      "scenario": "core_product_long_tail_demand"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_12",
+      "scenario": "low_confidence_risk_suppressed"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_13",
+      "scenario": "markdown_candidate"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_14",
+      "scenario": "transfer_first_candidate"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_15",
+      "scenario": "campaign_candidate"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_16",
+      "scenario": "hold_and_monitor_recommendation"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_17",
+      "scenario": "recommendation_not_generated"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_18",
+      "scenario": "missing_cost_case"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_19",
+      "scenario": "estimated_cost_case"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_20",
+      "scenario": "inventory_freshness_warning"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_21",
+      "scenario": "high_priority_recovery_opportunity"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_22",
+      "scenario": "lower_value_below_project_threshold"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_23",
+      "scenario": "opportunity_converted_to_project"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_24",
+      "scenario": "campaign_brief_generated"
+    },
+    {
+      "dataset_version": "ASO_PHASE0_DATASET_V1",
+      "evidence_key": "retail_25",
+      "scenario": "tasks_generated_from_recovery_action"
+    }
+  ]
+}
