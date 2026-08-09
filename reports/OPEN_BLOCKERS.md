@@ -52,5 +52,5 @@ The founder/user explicitly approved promotion into Phase 2 after Phase 1 accept
 ## M0.20 / M0.21 campaign status
 
 - **M0.20 release is verified.** PR #48 is merged, production deployment `dpl_EoD82JboiPDxMDLR2SzYGvaisejA` is ready, production smoke passed for `/`, `/login`, and `/setup-error`, and Vercel error logs were empty in the inspected window.
-- **M0.21 release is pending.** Focused integration acceptance and full local validation pass on the working branch, but PR checks, preview, merge, production deployment, production smoke, and final evidence remain pending.
+- **M0.21 release is verified.** PR #50 is merged, production deployment `dpl_9Roz2J2P3MgKfBpSzcsGsRxqD5AT` is ready, production smoke passed without 5xx errors for Phase 0 routes, and runtime logs were empty in the inspected window.
 - **Phase 2B is explicitly out of scope for this campaign.** Do not begin Phase 2B, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, or POS during M0.20/M0.21.
