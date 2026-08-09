@@ -3,8 +3,8 @@ Active Phase: Phase 0 - Foundation: Inventory Recovery Intelligence
 Active Milestone: M0.21 - Phase 0 End-to-End Acceptance and Hardening
 Current Mode: M0.21 implementation branch
 
-Current Production Commit: 1da884ba5357bf3214f4e7cb9c108d845fe687a4
-Production Deployment: dpl_EoD82JboiPDxMDLR2SzYGvaisejA
+Current Production Commit: 7a8bd27e926410360846175294ac523b5195c202
+Production Deployment: dpl_9Roz2J2P3MgKfBpSzcsGsRxqD5AT
 Production URL: https://retailos-ten.vercel.app
 
 Roadmap Reconciliation:
@@ -52,6 +52,13 @@ Current Campaign Non-Goals:
 - Do not claim Phase 0 accepted before M0.21 passes.
 - Do not perform destructive production migration or external-system write-back.
 
+M0.21 Release Status:
+- M0.21 was merged through PR #50.
+- Production deployment `dpl_9Roz2J2P3MgKfBpSzcsGsRxqD5AT` is ready.
+- Production smoke passed without 5xx errors for `/`, `/login`, `/setup-error`, `/data`, `/consolidation`, `/inventory-recovery`, `/projectisation`, and `/copilot`.
+- Vercel production error logs were empty in the inspected window.
+- Phase 0 final decision is `PHASE_0_CONDITIONALLY_ACCEPTED`.
+
 Verification Status:
 - M0.20 local dataset lifecycle has passed once on this branch: `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup`.
 - Full M0.20 local validation passed on this branch: `git diff --check`, `npm run lint`, `npm run typecheck`, `npm run test`, `npm run security`, `npm run build`, `npm audit --audit-level=moderate`, `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup`.
@@ -59,7 +66,8 @@ Verification Status:
 - M0.20 production deployment and smoke are verified.
 - Focused M0.21 integration acceptance passed locally: `npm run test:integration -- --run tests/integration/phase0-end-to-end-acceptance.test.ts`.
 - Full M0.21 local validation passed on this branch: `git diff --check`, `npm run lint`, `npm run typecheck`, `npm run test`, `npm run test:unit`, `npm run test:integration`, `npm run test:security`, `npm run security`, `npm run build`, `npm audit --audit-level=moderate`, `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup`.
-- M0.21 PR checks, preview review, merge, production deployment, production smoke, and final evidence remain pending.
+- PR #50 checks passed: Quality, Security foundation checks, Vercel preview, and Vercel Preview Comments.
+- M0.21 production deployment and unauthenticated route smoke are verified.
 
 Database Migration Status:
 - Repository contains migrations through Phase 2 M2.6.
@@ -67,4 +75,4 @@ Database Migration Status:
 - Supabase CLI migration-history/reset remains unverified in this shell.
 
 Next Required Milestone:
-- Complete M0.21 release workflow, then stop before Phase 2B.
+- Stop. The next eligible milestone is the first incomplete Phase 2B engineering-reconciliation milestone, but this campaign explicitly prohibits starting it.
