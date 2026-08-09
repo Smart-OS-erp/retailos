@@ -14,6 +14,13 @@
 - **Resolution:** pinned patched transitive versions through package overrides: `postcss@8.5.26`, `js-yaml@4.3.1`, and `nanoid@3.3.17`, then refreshed `package-lock.json`.
 - **Status:** resolved. `npm audit --audit-level=moderate` reports `found 0 vulnerabilities`.
 
+## 2026-08-09 - M0.20 evidence update removed command literal from NEXT_TASK
+
+- **Observed:** `tests/unit/m0-20-aso-dataset.test.ts` failed because `reports/NEXT_TASK.md` no longer contained the literal `continue autonomously` command after the M0.20 evidence update.
+- **Cause:** the evidence update replaced `NEXT_TASK.md` for M0.21 and omitted the autonomous command reminder.
+- **Resolution:** restored the literal command in `reports/NEXT_TASK.md`.
+- **Status:** resolved locally; validation rerun required.
+
 ## 2026-08-02 - PR #45 security workflow failed on dependency audit
 
 - **Observed:** GitHub Security foundation checks failed on `npm audit --audit-level=moderate`.

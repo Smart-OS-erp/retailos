@@ -51,6 +51,6 @@ The founder/user explicitly approved promotion into Phase 2 after Phase 1 accept
 
 ## M0.20 / M0.21 campaign status
 
-- **M0.20 release is pending.** Aso Collective dataset lifecycle and full local validation passed on the working branch, but PR checks, preview, merge, production deployment, and evidence remain pending.
-- **M0.21 is dependent on M0.20.** Do not start Phase 0 final end-to-end acceptance until M0.20 is released and verified.
+- **M0.20 release is verified.** PR #48 is merged, production deployment `dpl_EoD82JboiPDxMDLR2SzYGvaisejA` is ready, production smoke passed for `/`, `/login`, and `/setup-error`, and Vercel error logs were empty in the inspected window.
+- **M0.21 is active and pending.** Phase 0 final end-to-end acceptance and hardening has not yet been implemented.
 - **Phase 2B is explicitly out of scope for this campaign.** Do not begin Phase 2B, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, or POS during M0.20/M0.21.

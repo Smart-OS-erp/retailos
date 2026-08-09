@@ -1,10 +1,10 @@
 Project: RetailOS
 Active Phase: Phase 0 - Foundation: Inventory Recovery Intelligence
-Active Milestone: M0.20 - Aso Collective Phase 0 Demo Dataset
-Current Mode: Autonomous continuation campaign
+Active Milestone: M0.21 - Phase 0 End-to-End Acceptance and Hardening
+Current Mode: Autonomous continuation campaign - M0.20 released, M0.21 next
 
-Current Production Commit: b70be160a96f30e5a36fe4052c2b191c40700e87
-Production Deployment: dpl_BZZu9rv9r9hES2qGLPVozWWNkCTq
+Current Production Commit: 1da884ba5357bf3214f4e7cb9c108d845fe687a4
+Production Deployment: dpl_EoD82JboiPDxMDLR2SzYGvaisejA
 Production URL: https://retailos-ten.vercel.app
 
 Roadmap Reconciliation:
@@ -25,7 +25,14 @@ Historical Implementation Status:
 - Phase 1 inventory core and visible workflow acceptance were merged and deployed.
 - Phase 2 M2.0-M2.6 merchandising/planning work was merged and deployed before this roadmap reconciliation.
 
-Current M0.20 Scope:
+M0.20 Release Status:
+- M0.20 was merged through PR #48.
+- Production deployment `dpl_EoD82JboiPDxMDLR2SzYGvaisejA` is ready.
+- Production route smoke passed: `/` returned 307, `/login` returned 200, and `/setup-error` returned 200.
+- Vercel production error logs were empty in the inspected window.
+- Aso Collective dataset version `ASO_PHASE0_DATASET_V1` is repository-stored synthetic data only.
+
+Completed M0.20 Scope:
 - Establish the persistent `continue autonomously` command in repository operating instructions.
 - Reconcile the roadmap so Phase 0 ends with M0.20 and M0.21.
 - Create RetailOS African Fashion Retail Operating Model v0.9.
@@ -33,7 +40,12 @@ Current M0.20 Scope:
 - Add `demo:seed`, `demo:verify`, `demo:reset`, and `demo:cleanup` commands.
 - Use synthetic data only.
 
-Current M0.20 Non-Goals:
+Current M0.21 Scope:
+- Prove Phase 0 works as one coherent product journey using Aso Collective.
+- Validate raw source data through validation, correction, identity resolution, canonical approval, consolidation, Operating View, confidence, aging, risk, Attention Queue, recovery opportunity, projectisation, campaign brief, tasks, and deterministic Copilot explanation.
+- Create `reports/PHASE_0_ACCEPTANCE_MATRIX.md`, `reports/PHASE_0_ACCEPTANCE_EVIDENCE.md`, and `reports/PHASE_0_FINAL_DECISION.md`.
+
+Current Campaign Non-Goals:
 - Do not start Phase 2B, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, or POS.
 - Do not use real retailer data.
 - Do not claim original consultant approval.
@@ -43,7 +55,9 @@ Current M0.20 Non-Goals:
 Verification Status:
 - M0.20 local dataset lifecycle has passed once on this branch: `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup`.
 - Full M0.20 local validation passed on this branch: `git diff --check`, `npm run lint`, `npm run typecheck`, `npm run test`, `npm run security`, `npm run build`, `npm audit --audit-level=moderate`, `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup`.
-- PR checks, preview review, merge, production deployment, and production evidence remain pending for M0.20.
+- PR #48 checks passed: Quality, Security foundation checks, Vercel preview, and Vercel Preview Comments.
+- M0.20 production deployment and smoke are verified.
+- M0.21 validation remains pending.
 
 Database Migration Status:
 - Repository contains migrations through Phase 2 M2.6.
@@ -51,4 +65,4 @@ Database Migration Status:
 - Supabase CLI migration-history/reset remains unverified in this shell.
 
 Next Required Milestone:
-- Complete M0.20, then proceed to M0.21 only after M0.20 passes completely.
+- Complete M0.21, then stop before Phase 2B.
