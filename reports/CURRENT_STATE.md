@@ -1,7 +1,7 @@
 Project: RetailOS
 Active Phase: Phase 0 - Foundation: Inventory Recovery Intelligence
 Active Milestone: M0.21 - Phase 0 End-to-End Acceptance and Hardening
-Current Mode: Autonomous continuation campaign - M0.20 released, M0.21 next
+Current Mode: M0.21 implementation branch
 
 Current Production Commit: 1da884ba5357bf3214f4e7cb9c108d845fe687a4
 Production Deployment: dpl_EoD82JboiPDxMDLR2SzYGvaisejA
@@ -57,7 +57,9 @@ Verification Status:
 - Full M0.20 local validation passed on this branch: `git diff --check`, `npm run lint`, `npm run typecheck`, `npm run test`, `npm run security`, `npm run build`, `npm audit --audit-level=moderate`, `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup`.
 - PR #48 checks passed: Quality, Security foundation checks, Vercel preview, and Vercel Preview Comments.
 - M0.20 production deployment and smoke are verified.
-- M0.21 validation remains pending.
+- Focused M0.21 integration acceptance passed locally: `npm run test:integration -- --run tests/integration/phase0-end-to-end-acceptance.test.ts`.
+- Full M0.21 local validation passed on this branch: `git diff --check`, `npm run lint`, `npm run typecheck`, `npm run test`, `npm run test:unit`, `npm run test:integration`, `npm run test:security`, `npm run security`, `npm run build`, `npm audit --audit-level=moderate`, `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup`.
+- M0.21 PR checks, preview review, merge, production deployment, production smoke, and final evidence remain pending.
 
 Database Migration Status:
 - Repository contains migrations through Phase 2 M2.6.
@@ -65,4 +67,4 @@ Database Migration Status:
 - Supabase CLI migration-history/reset remains unverified in this shell.
 
 Next Required Milestone:
-- Complete M0.21, then stop before Phase 2B.
+- Complete M0.21 release workflow, then stop before Phase 2B.
