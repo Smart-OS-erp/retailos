@@ -17,6 +17,10 @@
     "test:security": "vitest run tests/security",
     "test:live-supabase": "node scripts/security/live-supabase-isolation.ts",
     "test:live-phase0-schema": "node scripts/security/live-phase0-hosted-schema.ts",
+    "demo:seed": "node scripts/demo/aso-collective.ts seed",
+    "demo:verify": "node scripts/demo/aso-collective.ts verify",
+    "demo:reset": "node scripts/demo/aso-collective.ts reset",
+    "demo:cleanup": "node scripts/demo/aso-collective.ts cleanup",
     "smoke:import-api": "node scripts/security/live-import-api-smoke.ts",
     "migration:hosted-bundle": "node scripts/build-hosted-migration-bundle.ts --write .tmp/phase0-hosted-migration.sql",
     "migration:hosted-phase0-5-bundle": "node scripts/build-hosted-migration-bundle.ts --phase0-5 --write .tmp/phase0-5-hosted-migration.sql",
@@ -48,7 +52,9 @@
     "vitest": "4.1.9"
   },
   "overrides": {
-    "postcss": "8.5.18",
+    "js-yaml": "4.3.1",
+    "nanoid": "3.3.17",
+    "postcss": "8.5.26",
     "sharp": "0.35.3"
   }
 }

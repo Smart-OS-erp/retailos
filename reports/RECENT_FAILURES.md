@@ -1,5 +1,19 @@
 # Recent Failures
 
+## 2026-08-09 - M0.20 dataset generator expected-count mismatches
+
+- **Observed:** first `npm run demo:*` lifecycle run failed because the generator created 60 styles and 240 SKUs while fixed assertions still expected 54 styles and 216 SKUs.
+- **Cause:** stale expected constants after using the final catalogue hierarchy.
+- **Resolution:** updated the fixed assertions to the generated deterministic counts, which remain within the required 40-80 styles and 150-350 SKUs range.
+- **Status:** resolved. `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup` pass.
+
+## 2026-08-09 - M0.20 validation exposed new dependency advisories
+
+- **Observed:** `npm audit --audit-level=moderate` reported current advisories for `postcss`, `js-yaml`, and `nanoid`.
+- **Cause:** new advisory data affected transitive dependency versions in the lockfile.
+- **Resolution:** pinned patched transitive versions through package overrides: `postcss@8.5.26`, `js-yaml@4.3.1`, and `nanoid@3.3.17`, then refreshed `package-lock.json`.
+- **Status:** resolved. `npm audit --audit-level=moderate` reports `found 0 vulnerabilities`.
+
 ## 2026-08-02 - PR #45 security workflow failed on dependency audit
 
 - **Observed:** GitHub Security foundation checks failed on `npm audit --audit-level=moderate`.

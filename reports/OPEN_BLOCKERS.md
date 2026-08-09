@@ -48,3 +48,9 @@ M0-UI remains the next approved milestone but must keep navigation labels, dashb
 Phase 1 does not authorize POS, finance, wholesale, forecasting, warehouse-management expansion beyond inventory-control foundations, marketplace publishing, autonomous campaign execution, or real LLM agent execution.
 
 The founder/user explicitly approved promotion into Phase 2 after Phase 1 acceptance, with implementation to proceed milestone-by-milestone and stop at M2.6. Phase 2 M2.0-M2.6 is now released and verified. Do not continue beyond M2.6 without a new explicit approval.
+
+## M0.20 / M0.21 campaign status
+
+- **M0.20 release is pending.** Aso Collective dataset lifecycle and full local validation passed on the working branch, but PR checks, preview, merge, production deployment, and evidence remain pending.
+- **M0.21 is dependent on M0.20.** Do not start Phase 0 final end-to-end acceptance until M0.20 is released and verified.
+- **Phase 2B is explicitly out of scope for this campaign.** Do not begin Phase 2B, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, or POS during M0.20/M0.21.

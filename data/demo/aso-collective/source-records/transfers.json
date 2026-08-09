@@ -1,0 +1,37 @@
+{
+  "dataset_version": "ASO_PHASE0_DATASET_V1",
+  "records": [
+    {
+      "from_location": "LAG-ISL",
+      "quantity": 8,
+      "requested_at": "2026-07-17",
+      "sku": "ASO-AB002-IVO-S",
+      "source_system": "transfer_record",
+      "to_location": "ABV-001"
+    },
+    {
+      "from_location": "ABV-001",
+      "quantity": 6,
+      "requested_at": "2026-07-10",
+      "sku": "ASO-AC003-IND-S",
+      "source_system": "transfer_record",
+      "to_location": "ECOM-NG"
+    },
+    {
+      "from_location": "IBD-001",
+      "quantity": 3,
+      "requested_at": "2026-07-03",
+      "sku": "ASO-AE005-TER-S",
+      "source_system": "transfer_record",
+      "to_location": "LAG-LEK"
+    },
+    {
+      "from_location": "LAG-LEK",
+      "quantity": 2,
+      "requested_at": "2026-06-26",
+      "sku": "ASO-AG007-BLA-S",
+      "source_system": "transfer_record",
+      "to_location": "LAG-ISL"
+    }
+  ]
+}

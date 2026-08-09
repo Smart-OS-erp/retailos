@@ -7,6 +7,20 @@
 3. Read the specialized docs and current blockers relevant to the change.
 4. Inspect branch/status before editing; preserve unrelated work.
 
+## Autonomous continuation command
+
+The exact owner command `continue autonomously` activates continuous milestone progression. Interpret it case-insensitively and ignore surrounding whitespace or final punctuation.
+
+On activation:
+
+1. Read `AGENTS.md`, the canonical roadmap/milestone source, `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, `reports/OPEN_BLOCKERS.md`, and `reports/RECENT_FAILURES.md`.
+2. Inspect `main`, open pull requests, workflow results, migrations, hosted database state where accessible, preview deployment, production deployment, runtime errors, and unresolved blockers.
+3. Resolve the earliest incomplete eligible milestone from the authoritative roadmap, dependency status, current-state reports, blockers, and actual Git/migration/deployment evidence.
+4. Implement, validate, PR, preview-review, merge when checks allow, verify production, record evidence, and update current state.
+5. Repeat for the next eligible milestone until a human gate or mandatory technical stop condition is reached.
+
+Do not ask whether to continue when the contract permits the next action. Do stop for destructive production actions, missing secrets, paid-plan requirements, legal/privacy/pricing/contract decisions, original consultant or customer-pilot acceptance, production external-system write-back, payment/POS fiscal decisions, security-boundary reductions, failed tenant/location isolation, migration-history disagreement, critical/high security defects, failed production smoke, real retailer data in synthetic paths, or insufficient milestone definition.
+
 ## Plan and implement
 
 1. State the smallest outcome and affected gate(s).

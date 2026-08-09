@@ -1,48 +1,54 @@
 Project: RetailOS
-Active Phase: Phase 2 - Merchandising & Planning OS
-Active Milestone: M2.6 - Phase 2 validation evidence and acceptance
+Active Phase: Phase 0 - Foundation: Inventory Recovery Intelligence
+Active Milestone: M0.20 - Aso Collective Phase 0 Demo Dataset
+Current Mode: Autonomous continuation campaign
 
-Current Production Commit: fd35afb3418c1c1e920ebe74796576c84adffd23
-Production Deployment: dpl_CzeC5JyAYJZegKAoLkBAvRWk6Xpc
+Current Production Commit: b70be160a96f30e5a36fe4052c2b191c40700e87
+Production Deployment: dpl_BZZu9rv9r9hES2qGLPVozWWNkCTq
 Production URL: https://retailos-ten.vercel.app
 
-Implementation Status:
-- Phase 1 visible workflow acceptance was merged in PR #44 and deployed to production on July 18, 2026.
-- Production route smoke after PR #44 passed for `/login`, `/inventory`, `/inventory/counts`, `/inventory/search`, and `/inventory/watchlist`.
-- Post-smoke Vercel error-log inspection found no errors in the inspected window.
-- Human approval to promote into Phase 2 and stop at M2.6 was given in chat.
-- Phase 2 M2.0-M2.6 was merged through PR #45 and PR #46 and deployed to production on August 2, 2026.
+Roadmap Reconciliation:
+- Phase 0 remains the foundational inventory recovery phase.
+- The historical Phase 0.5 label is retained in reports and migrations for development history.
+- Former Phase 0.5 capabilities are now treated as Phase 0 integration and data-foundation milestones.
+- This reconciliation is not a claim that Phase 0.5 work was rebuilt.
+- The end of Phase 0 is now:
+  - M0.20 - Aso Collective Phase 0 Demo Dataset.
+  - M0.21 - Phase 0 End-to-End Acceptance and Hardening.
+- M0.21 depends on M0.20.
+- The next milestone after M0.21 remains the first incomplete Phase 2B engineering-reconciliation milestone defined by the current roadmap.
+- Do not start Phase 2B in this campaign.
 
-Phase 2 M2.0-M2.6 Scope Implemented:
-- M2.0: merchandising scope, role permissions, navigation, secure data contracts, and docs.
-- M2.1: `product_productivity_metrics` historical read model from persisted inventory, sales, and risk evidence.
-- M2.2: `merchandising_group_performance` brand/category/collection read model.
-- M2.3: markdown planning drafts from converted recommendations; drafts do not execute prices or promotions.
-- M2.4: merchandising planning cycles and assortment plan items; approval records the plan but does not execute buying, transfers, supplier, or warehouse workflows.
-- M2.5: permissioned recommendation generation with confidence labels and no automatic execution.
-- M2.6: integration evidence, hosted schema verification, acceptance matrix, and updated harness gates.
+Historical Implementation Status:
+- Phase 0 secure foundation, data foundation, consolidation, inventory recovery intelligence, projectisation, campaign briefs, tasks, deterministic Copilot, and UI foundation exist.
+- Historical Phase 0.5 integration/data-foundation work exists: Integration Hub, Import API, Shopify/WooCommerce MVP workers, scheduled sync, canonical approval flows, and automatic intelligence recalculation evidence.
+- Phase 1 inventory core and visible workflow acceptance were merged and deployed.
+- Phase 2 M2.0-M2.6 merchandising/planning work was merged and deployed before this roadmap reconciliation.
+
+Current M0.20 Scope:
+- Establish the persistent `continue autonomously` command in repository operating instructions.
+- Reconcile the roadmap so Phase 0 ends with M0.20 and M0.21.
+- Create RetailOS African Fashion Retail Operating Model v0.9.
+- Create deterministic synthetic Aso Collective Phase 0 dataset version `ASO_PHASE0_DATASET_V1`.
+- Add `demo:seed`, `demo:verify`, `demo:reset`, and `demo:cleanup` commands.
+- Use synthetic data only.
+
+Current M0.20 Non-Goals:
+- Do not start Phase 2B, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, or POS.
+- Do not use real retailer data.
+- Do not claim original consultant approval.
+- Do not claim Phase 0 accepted before M0.21 passes.
+- Do not perform destructive production migration or external-system write-back.
 
 Verification Status:
-- Focused Phase 2 integration validation passed: 7 files passed, 52 tests passed.
-- `npm run typecheck` passed after Phase 2 UI/type wiring.
-- Full Phase 2 release validation passed locally: `npm run lint`, `npm run typecheck`, `npm run security`, `npm run test`, `npm run build`, and `npm audit --audit-level=moderate`.
-- Hosted Supabase migration `20260718213000_phase2_merchandising_planning_m0_m6.sql` was applied or reconciled without printing secrets.
-- `node scripts/security/live-phase2-hosted-schema.ts` passed for 8 required relations/views and 5 required functions.
-- GitHub PR checks passed for PR #46: Quality, Security foundation checks, Vercel preview, and Vercel Preview Comments.
-- Production deployment `dpl_CzeC5JyAYJZegKAoLkBAvRWk6Xpc` is ready.
-- Production route smoke passed without 5xx errors for `/`, `/login`, `/merchandising`, `/merchandising/productivity`, `/merchandising/performance`, `/merchandising/recommendations`, `/merchandising/markdowns`, and `/merchandising/plans`.
-- Vercel production error-log inspection found no error logs in the inspected 10-minute window.
+- M0.20 local dataset lifecycle has passed once on this branch: `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup`.
+- Full M0.20 local validation passed on this branch: `git diff --check`, `npm run lint`, `npm run typecheck`, `npm run test`, `npm run security`, `npm run build`, `npm audit --audit-level=moderate`, `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup`.
+- PR checks, preview review, merge, production deployment, and production evidence remain pending for M0.20.
 
 Database Migration Status:
-- Repository contains Supabase migrations through Phase 2 M2.6.
-- Phase 2 hosted SQL application succeeded on July 18, 2026.
-- Supabase CLI is not installed in this shell, so `supabase migration list`, `supabase db reset`, and CLI migration-history reconciliation remain unverified.
-- No destructive production database operation was performed.
-
-Current Mode:
-- Stop at M2.6. Do not continue to M2.7, Phase 3, POS, payments, finance/accounting, wholesale, advanced forecasting, autonomous Copilot execution, or workforce/store-operations expansion.
-- Do not ask users to paste secrets into chat or browser forms.
-- Phase 2 recommendations are directional and evidence-backed; they must not be presented as predictive precision.
+- Repository contains migrations through Phase 2 M2.6.
+- No new M0.20 database migration is planned; the dataset is repository-stored synthetic fixture data and local ignored seed state.
+- Supabase CLI migration-history/reset remains unverified in this shell.
 
 Next Required Milestone:
-- Hold at M2.6. A human must explicitly approve the next milestone before any post-M2.6 work begins.
+- Complete M0.20, then proceed to M0.21 only after M0.20 passes completely.
