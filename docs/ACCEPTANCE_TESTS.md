@@ -31,7 +31,7 @@
 - Vercel Git linkage, protected preview deployment, hosted setup/onboarding, hosted schema/RLS checks, and Supabase migration-history repair are verified for the protected non-production Phase 0 demo.
 - Current hosted Supabase confirmation email behavior is explicitly accepted for the protected non-production Phase 0 demo. Token-hash template activation through custom SMTP/eligible plan support remains a production-governance follow-up if required before production launch.
 - M0-R production smoke evidence: production Import API smoke passed against `https://retailos-ten.vercel.app` on deployment `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE` after correcting Production `DATABASE_URL`; `/login` and `/signup` returned 200; `/workspace` redirected unauthenticated users to `/login`; post-smoke runtime error/fatal logs were empty for the inspected deployment window.
-- M0-R blocker: Supabase CLI migration-history verification and local `supabase db reset` were not run because the CLI is not installed in this shell.
+- Pre-M2.12 blocker: Supabase CLI `2.113.0` is installed, but the current CLI account cannot access project `djvqhjgkcljdiuicdtpx`, and local `supabase db reset` cannot run because Docker/Podman is unavailable on PATH.
 - M0-UI local evidence: `tests/unit/ui-foundation.test.ts` verifies Nigeria/`en-NG`/`NGN`/`Africa/Lagos` defaults, tenant market overrides, shared Intl formatting, provisional navigation/dashboard configuration, non-color status presentation, shadcn/ui configuration, Ant Design absence, no manual currency-symbol concatenation in UI modules, and representative `RetailDataGrid` reuse.
 - Phase 0.5 provider credential onboarding evidence: `tests/unit/provider-credential-verification.test.ts` covers configured, missing, unsupported-provider, and non-MVP Shopify credential availability outcomes. It also covers WooCommerce configured credential availability through the server-only resolver boundary. `tests/unit/integration-hub-ui.test.ts` verifies the browser-facing Integration Hub exposes only safe credential actions/messages and no provider secret values.
 - Phase 0.5 WooCommerce worker evidence: `tests/unit/woocommerce-worker.test.ts` covers fail-closed missing credentials, raw record persistence before normalization, provider-sync handoff into `normalize_external_records(sync_job_id)`, and WooCommerce product-to-`product_master`/`inventory_snapshot` mapping.
@@ -111,7 +111,7 @@ Historical success evidence does not override current runtime errors. A mileston
 M0.20 acceptance requires:
 
 - RetailOS African Fashion Retail Operating Model v0.9 exists and clearly marks interim, configurable, consultant-review, and pilot-validation assumptions.
-- Aso Collective synthetic dataset version `ASO_PHASE0_DATASET_V1` exists under `data/demo/aso-collective`.
+- Aso Collective synthetic dataset lineage is `ASO_PHASE0_DATASET_V1` → `ASO_INVENTORY_OPERATIONS_V2` → `ASO_MERCHANDISING_PILOT_V3`.
 - The dataset includes one coherent retailer, 5 locations, 60 styles, 240 SKUs, 10 months of history, required messy-data scenarios, required retail scenarios, source-system fixtures, and machine-readable expected results.
 - `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup` perform deterministic checks and fail non-zero on mismatch.
 - No real retailer data, secrets, plaintext passwords, or production mutations are introduced.

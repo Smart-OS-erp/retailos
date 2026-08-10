@@ -1,5 +1,5 @@
 Next Task:
-Stop after Phase 2B M2.11.
+Stop before Phase 2B M2.12 domain validation.
 
 Autonomy:
 The command `continue autonomously` remains valid for already-approved canonical milestones, but the current instruction is to stop after M2.11.
@@ -13,6 +13,7 @@ Approved Work:
 Required Outcomes:
 - M2.7-M2.9 have been independently reviewed and accepted.
 - M2.11 has been implemented and accepted.
+- Pre-M2.12 technical closure has provisioned a hosted synthetic Aso demo and strengthened rule/drift evidence.
 - Do not begin M2.12 without the required domain/human evidence.
 
 Mandatory Validation:

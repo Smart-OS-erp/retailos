@@ -2,7 +2,7 @@
 
 Status: active through M2.6 only.
 
-Phase 2 turns RetailOS inventory and sales evidence into merchandising planning workflows. It is not a POS, finance system, wholesale module, purchase-order system, or forecasting engine.
+Phase 2 turns RetailOS inventory and sales evidence into merchandising planning workflows. It is not positioned as a generic POS, finance system, wholesale module, purchase-order system, or forecasting engine. Later approved phases may add execution capabilities, but Phase 2 planning must not silently become purchasing, supplier, physical inventory, finance, POS, or external-system execution.
 
 ## Approved milestones in this slice
 

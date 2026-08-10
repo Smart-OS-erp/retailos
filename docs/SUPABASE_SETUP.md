@@ -132,16 +132,16 @@ custom backend.
 
 Current non-production status: the Phase 0.5 migrations have been applied and hosted schema/RLS checks passed during M0-R after the Integration Hub, Import API credential, pipeline handoff, record-type mapping, and provider MVP promotion migrations. `npm run test:live-phase0-schema` verified 44 relation/view endpoints and 16 RPC endpoints. `npm run test:live-supabase` verified Auth, onboarding, audit, RBAC, and two-tenant RLS.
 
-M0-R note: the `supabase` CLI is not installed in the current shell, so migration-history reconciliation could not be independently rerun through CLI during M0-R. Do not mark migration history fully reconciled for M0-R until an environment owner runs the commands below.
+Pre-M2.12 note: the project-scoped Supabase CLI is installed and `npx supabase --version` reports `2.113.0`. The current CLI account cannot access project `djvqhjgkcljdiuicdtpx`, so `npx supabase link --project-ref djvqhjgkcljdiuicdtpx` fails with an access-control error. Docker/Podman is not available on PATH, so local `supabase db reset` cannot run in this shell. Do not mark migration history fully reconciled until an authorized Supabase session and local disposable runtime complete the commands below.
 
 Safe owner commands:
 
 ```bash
-supabase --version
-supabase link --project-ref <approved-project-ref>
-supabase migration list
-supabase db reset
-supabase db push --dry-run
+npx supabase --version
+npx supabase link --project-ref <approved-project-ref>
+npx supabase migration list
+npx supabase db reset
+npx supabase db push --dry-run
 npm run test:live-phase0-schema
 npm run test:live-supabase
 ```
