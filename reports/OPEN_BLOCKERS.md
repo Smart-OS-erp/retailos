@@ -12,19 +12,17 @@ Owner action: install/authenticate Supabase CLI, link the approved project, run 
 
 ### Main branch protection
 
-Status: open until verified enabled.
+Status: closed.
 
-Evidence: GitHub branch protection API returned `404 Not Found` for `main` during Phase 2B start inspection. This means protection is absent or unavailable to the current token.
-
-Owner/action: enable or verify branch protection requiring PRs, Quality check, Security foundation checks, no force-push, and no deletion where practical.
+Evidence: GitHub branch protection was enabled by API on 2026-08-10 with required `Quality` and `Security foundation checks`, required PR review, stale review dismissal, no force-push, and no branch deletion.
 
 ### Repository security automation
 
-Status: partially addressed.
+Status: closed for current baseline.
 
-Evidence: `.github/dependabot.yml` now configures weekly npm and GitHub Actions dependency PRs. GitHub vulnerability-alert API returned `404 Not Found` during inspection, so repository-level Dependabot/security alert enablement is not verified through API.
+Evidence: `.github/dependabot.yml` configures weekly npm and GitHub Actions dependency PRs; Dependabot opened PRs #53-#59. GitHub vulnerability alerts were enabled by API on 2026-08-10.
 
-Owner/action: verify GitHub repository security settings in the web UI or with an admin token.
+Owner/action: periodically triage Dependabot PRs. PR #57 currently has a failing Quality check and should not be merged blindly.
 
 ## Active product/domain gates
 
@@ -51,6 +49,14 @@ Status: deferred.
 
 Shopify and WooCommerce MVP-depth workers exist. Google Sheets remains deferred and is not part of Phase 2B M2.7-M2.9.
 
+## Phase 2B stop gate
+
+### M2.12 Retail Domain Validation
+
+Status: human/domain gate.
+
+M2.12 cannot be accepted without original consultant or approved independent domain reviewer evidence. Internal deterministic tests and synthetic Aso data are not enough.
+
 ## Verified controls
 
 - Production URL: https://retailos-ten.vercel.app.
@@ -59,7 +65,8 @@ Shopify and WooCommerce MVP-depth workers exist. Google Sheets remains deferred 
 - Phase 0 M0.21 is `CONDITIONALLY_ACCEPTED`.
 - Phase 1 inventory core exists and was deployed.
 - Phase 2A M2.0-M2.6 exists and was deployed.
-- Phase 2B M2.7-M2.9 is explicitly approved.
+- Phase 2B M2.7-M2.11 is accepted.
+- M2.12 is the exact next milestone and is gated by domain review.
 
 ## Historical notes
 

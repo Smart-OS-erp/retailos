@@ -32,9 +32,9 @@ phases:
   - id: P2B
     phase: P2
     name: "Phase 2B - Engineering Reconciliation, Domain Validation and Pilot Readiness"
-    status: IN_PROGRESS
+    status: ACCEPTED
     active: true
-    notes: "Current approved campaign. This campaign may complete M2.7-M2.9 only."
+    notes: "M2.7-M2.11 completed. Stop before M2.12, which requires original consultant or approved domain-review evidence."
   - id: P2C
     phase: P2
     name: "Phase 2C - Full Merchandise Planning Suite"

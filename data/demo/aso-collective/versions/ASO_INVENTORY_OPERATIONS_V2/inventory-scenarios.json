@@ -1,0 +1,106 @@
+{
+  "dataset_version": "ASO_INVENTORY_OPERATIONS_V2",
+  "synthetic_only": true,
+  "records": [
+    {
+      "id": "v2-normal-receipt-selling",
+      "scenario": "Normal receipt and selling lifecycle",
+      "sku": "ASO-AA001-BLA-S",
+      "location_code": "LAG-ISL",
+      "events": ["receipt", "sale", "return"],
+      "expected_state": "balanced"
+    },
+    {
+      "id": "v2-fast-seller-stockout",
+      "scenario": "Fast-selling item approaching stockout",
+      "sku": "ASO-AA001-IVO-M",
+      "location_code": "LAG-LEK",
+      "events": ["sale_velocity", "low_available"],
+      "expected_state": "stockout_risk"
+    },
+    {
+      "id": "v2-zero-available",
+      "scenario": "Zero available inventory after reservations/protection",
+      "sku": "ASO-AA001-IND-L",
+      "location_code": "ECOM-NG",
+      "events": ["reservation", "committed_outbound"],
+      "expected_state": "stockout_risk"
+    },
+    {
+      "id": "v2-lagos-overstock",
+      "scenario": "Wrong-door excess in Lagos with Abuja demand",
+      "sku": "ASO-AB002-GOL-S",
+      "location_code": "LAG-ISL",
+      "receiving_location_code": "ABV-001",
+      "events": ["overstock", "receiving_location_demand", "transfer_candidate"],
+      "expected_state": "transfer_first"
+    },
+    {
+      "id": "v2-abuja-ecommerce-transfer",
+      "scenario": "Abuja to Ecommerce Pool transfer candidate",
+      "sku": "ASO-AC003-IND-S",
+      "location_code": "ABV-001",
+      "receiving_location_code": "ECOM-NG",
+      "events": ["overstock", "ecommerce_demand", "transfer_candidate"],
+      "expected_state": "transfer_first"
+    },
+    {
+      "id": "v2-transfer-approved-dispatched-received",
+      "scenario": "Transfer requested, approved, dispatched and received",
+      "sku": "ASO-AB002-GOL-S",
+      "location_code": "LAG-ISL",
+      "receiving_location_code": "ABV-001",
+      "events": ["transfer_requested", "transfer_approved", "transfer_dispatched", "transfer_received"],
+      "expected_state": "received"
+    },
+    {
+      "id": "v2-partial-transfer-receipt",
+      "scenario": "Partial transfer receipt",
+      "sku": "ASO-AC003-IND-S",
+      "location_code": "ABV-001",
+      "receiving_location_code": "ECOM-NG",
+      "events": ["transfer_dispatched", "partial_receipt", "discrepancy"],
+      "expected_state": "discrepancy_review"
+    },
+    {
+      "id": "v2-cycle-count-variance",
+      "scenario": "Cycle count variance and recount",
+      "sku": "ASO-AE005-TER-S",
+      "location_code": "IBD-001",
+      "events": ["stock_count", "variance", "recount", "closure"],
+      "expected_state": "reconciled"
+    },
+    {
+      "id": "v2-damaged-quarantined",
+      "scenario": "Damaged and quarantined stock lowers availability",
+      "sku": "ASO-AF006-GOL-M",
+      "location_code": "LAG-LEK",
+      "events": ["damage_report", "quarantine"],
+      "expected_state": "reduced_available"
+    },
+    {
+      "id": "v2-negative-import-discrepancy",
+      "scenario": "Imported negative inventory preserved as reconciliation evidence",
+      "sku": "ASO-AD004-PAL-S",
+      "location_code": "IBD-001",
+      "events": ["negative_import", "reconciliation_issue"],
+      "expected_state": "blocked_for_review"
+    },
+    {
+      "id": "v2-size-imbalance",
+      "scenario": "M/L sell rapidly while XS/S remain",
+      "sku": "ASO-AG007-BLA-S",
+      "location_code": "LAG-LEK",
+      "events": ["size_imbalance", "store_specific_velocity"],
+      "expected_state": "assortment_review"
+    },
+    {
+      "id": "v2-healthy-balanced",
+      "scenario": "Healthy balanced inventory requiring no action",
+      "sku": "ASO-AH008-IVO-M",
+      "location_code": "LAG-ISL",
+      "events": ["normal_sales", "healthy_cover"],
+      "expected_state": "balanced"
+    }
+  ]
+}

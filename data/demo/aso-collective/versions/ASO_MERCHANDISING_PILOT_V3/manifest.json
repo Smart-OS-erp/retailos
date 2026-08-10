@@ -1,0 +1,31 @@
+{
+  "dataset_version": "ASO_MERCHANDISING_PILOT_V3",
+  "extends": "ASO_INVENTORY_OPERATIONS_V2",
+  "reference_date": "2026-07-31",
+  "synthetic_only": true,
+  "purpose": "Phase 2A merchandising intelligence and action-planning coverage for Aso Collective without claiming pilot/customer validation.",
+  "scale": {
+    "locations": 5,
+    "styles": 60,
+    "sku_variants": 240,
+    "active_selling_location_pools": 5,
+    "commercial_history_months": 10
+  },
+  "supported_modules": [
+    "product_productivity_metrics",
+    "merchandising_group_performance",
+    "merchandising_recommendations",
+    "markdown_plan_drafts",
+    "merchandising_plan_cycles"
+  ],
+  "unsupported_modules": [
+    "advanced_forecasting",
+    "automatic_markdown_execution",
+    "purchase_orders",
+    "supplier_management",
+    "finance",
+    "pos"
+  ],
+  "rule_version": "retailos-operating-model-v0.9.0",
+  "domain_validation_level": "INTERIM_DOMAIN_BASELINE"
+}

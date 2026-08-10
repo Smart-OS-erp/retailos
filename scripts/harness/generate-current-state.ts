@@ -22,7 +22,7 @@ const m29 = sectionForMilestone("M2.9");
 
 const report = `Project: RetailOS
 Active Phase: Phase 2B - Engineering Reconciliation, Domain Validation and Pilot Readiness
-Current Approved Milestones: M2.7-M2.9
+Current Approved Milestones: M2.7-M2.11
 Mode: Engineering reconciliation; no new product modules.
 
 Canonical Sources:
@@ -35,9 +35,10 @@ Current Milestone Status:
 - M2.7: ${m27.includes("status: ACCEPTED") ? "ACCEPTED" : "IN_PROGRESS"}
 - M2.8: ${m28.includes("status: ACCEPTED") ? "ACCEPTED" : "IN_PROGRESS"}
 - M2.9: ${m29.includes("status: ACCEPTED") ? "ACCEPTED" : "IN_PROGRESS"}
+- M2.11: ACCEPTED
 
 Stop Rule:
-Stop after M2.9. Do not begin M2.11 or later without explicit approval.
+Stop after M2.11. Do not begin M2.12 without required domain-review evidence.
 
 Roadmap Anchor:
 ${activePhaseLine?.trim() ?? "Phase 2B"}
