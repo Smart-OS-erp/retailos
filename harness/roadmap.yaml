@@ -1,0 +1,78 @@
+schema_version: 1
+product: RetailOS
+canonical: true
+status_values:
+  - NOT_STARTED
+  - IN_PROGRESS
+  - BLOCKED
+  - CONDITIONALLY_ACCEPTED
+  - ACCEPTED
+  - REGRESSED
+validation_levels:
+  - FORMULA_VERIFIED
+  - INTERNALLY_VALIDATED
+  - INTERIM_DOMAIN_BASELINE
+  - ORIGINAL_CONSULTANT_CONFIRMED
+  - PILOT_VALIDATED
+  - CUSTOMER_VALIDATED
+phases:
+  - id: P0
+    name: "Phase 0 - Retail Intelligence, Data and Integration Foundation"
+    status: CONDITIONALLY_ACCEPTED
+    notes: "Includes historical Phase 0.5 integration/data-foundation milestones. M0.20 is complete; M0.21 is conditionally accepted."
+  - id: P1
+    name: "Phase 1 - Core Inventory Operating System"
+    status: ACCEPTED
+    notes: "Inventory core implementation exists and was deployed."
+  - id: P2A
+    phase: P2
+    name: "Phase 2A - Light Merchandising Intelligence and Action Planning"
+    status: ACCEPTED
+    notes: "M2.0-M2.6 exists and was deployed."
+  - id: P2B
+    phase: P2
+    name: "Phase 2B - Engineering Reconciliation, Domain Validation and Pilot Readiness"
+    status: IN_PROGRESS
+    active: true
+    notes: "Current approved campaign. This campaign may complete M2.7-M2.9 only."
+  - id: P2C
+    phase: P2
+    name: "Phase 2C - Full Merchandise Planning Suite"
+    status: NOT_STARTED
+    notes: "Not approved for implementation."
+  - id: P3
+    name: "Phase 3 - Store Operations"
+    status: NOT_STARTED
+  - id: P4
+    name: "Phase 4 - Purchasing and Supplier Management"
+    status: NOT_STARTED
+  - id: P5
+    name: "Phase 5 - Warehouse Management System"
+    status: NOT_STARTED
+  - id: P6
+    name: "Phase 6 - Omnichannel and Order Management"
+    status: NOT_STARTED
+  - id: P7
+    name: "Phase 7 - POS"
+    status: NOT_STARTED
+    human_gate: true
+  - id: P8
+    name: "Phase 8 - Finance"
+    status: NOT_STARTED
+  - id: P9
+    name: "Phase 9 - Wholesale/B2B"
+    status: NOT_STARTED
+  - id: P10
+    name: "Phase 10 - Intelligent Control Plane"
+    status: NOT_STARTED
+  - id: P11
+    name: "Phase 11 - Platform/Ecosystem/Enterprise"
+    status: NOT_STARTED
+  - id: P12
+    name: "Phase 12 - Optional Retail Network and Embedded Services"
+    status: NOT_STARTED
+    human_gate: true
+history:
+  - label: "Phase 0.5"
+    current_mapping: "Phase 0 integration/data-foundation history"
+    rule: "Preserve in migrations/reports as historical evidence; do not treat as a conflicting current roadmap phase."

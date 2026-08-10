@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RetailOS Release Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "commit_sha",
+    "environment",
+    "created_at",
+    "verification_type",
+    "verifier",
+    "result"
+  ],
+  "properties": {
+    "commit_sha": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{7,40}$"
+    },
+    "deployment_id": {
+      "type": ["string", "null"]
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["local", "preview", "production", "hosted-database", "github"]
+    },
+    "migration_hash": {
+      "type": ["string", "null"]
+    },
+    "dataset_version": {
+      "type": ["string", "null"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verification_type": {
+      "type": "string",
+      "enum": [
+        "STATIC",
+        "UNIT",
+        "INTEGRATION",
+        "DATABASE",
+        "SECURITY",
+        "BROWSER",
+        "PRODUCTION",
+        "DOMAIN",
+        "HUMAN",
+        "COMMERCIAL"
+      ]
+    },
+    "verifier": {
+      "type": "string"
+    },
+    "result": {
+      "type": "string",
+      "enum": ["passed", "failed", "blocked", "not_applicable"]
+    },
+    "evidence_uri": {
+      "type": ["string", "null"]
+    },
+    "notes": {
+      "type": ["string", "null"]
+    }
+  }
+}

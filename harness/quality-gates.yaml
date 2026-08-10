@@ -1,0 +1,56 @@
+schema_version: 1
+canonical: true
+roles:
+  - BUILDER
+  - REPOSITORY_REVIEWER
+  - DOMAIN_REVIEWER
+  - SECURITY_REVIEWER
+  - RELEASE_VERIFIER
+  - HUMAN_APPROVER
+evidence_classes:
+  - STATIC
+  - UNIT
+  - INTEGRATION
+  - DATABASE
+  - SECURITY
+  - BROWSER
+  - PRODUCTION
+  - DOMAIN
+  - HUMAN
+  - COMMERCIAL
+rules:
+  - id: builder-no-self-certification
+    description: "The builder supplies evidence but cannot self-certify milestone acceptance."
+    required: true
+  - id: evidence-class-boundary
+    description: "One evidence class must not silently substitute for another."
+    required: true
+  - id: route-smoke-boundary
+    description: "A 307/200 production route smoke is production availability evidence, not authenticated workflow acceptance."
+    required: true
+  - id: no-future-module-leakage
+    description: "Do not implement future modules outside the active milestone."
+    required: true
+commands:
+  mandatory_when_supported:
+    - "git diff --check"
+    - "npm run lint"
+    - "npm run typecheck"
+    - "npm run test"
+    - "npm run test:unit"
+    - "npm run test:integration"
+    - "npm run test:security"
+    - "npm run security"
+    - "npm run build"
+    - "npm audit --audit-level=moderate"
+  aso_dataset_when_applicable:
+    - "npm run demo:seed"
+    - "npm run demo:verify"
+    - "npm run demo:reset"
+    - "npm run demo:cleanup"
+migration_safety:
+  applied_migrations_are_immutable: true
+  prefer_expand_contract: true
+  destructive_migration_requires_human_gate: true
+  migration_history_disagreement_is_stop: true
+  app_rollback_does_not_revert_database: true

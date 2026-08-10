@@ -1,0 +1,10 @@
+# RetailOS ownership baseline.
+# GitHub users/teams can replace these placeholders when formal teams exist.
+
+* @Smart-OS-erp
+
+/supabase/ @Smart-OS-erp
+/scripts/security/ @Smart-OS-erp
+/docs/security/ @Smart-OS-erp
+/.github/ @Smart-OS-erp
+/harness/ @Smart-OS-erp

@@ -13,7 +13,7 @@ The final Phase 0 milestones are:
 - M0.20 - Aso Collective Phase 0 Demo Dataset.
 - M0.21 - Phase 0 End-to-End Acceptance and Hardening.
 
-M0.20 is the active implementation milestone. M0.21 depends on M0.20.
+M0.20 is accepted. M0.21 is conditionally accepted. Current active work has moved to Phase 2B M2.7-M2.9 under `harness/milestones.yaml`.
 
 ## In scope
 
@@ -34,10 +34,10 @@ M0.20 is the active implementation milestone. M0.21 depends on M0.20.
 
 Phase 0, historical Phase 0.5, Phase 1, and Phase 2 M2.0-M2.6 routes and migrations exist in the repository. Route existence is not final product acceptance. Acceptance depends on current validation evidence, tenant-isolation evidence, live deployment evidence, migration history, and known blockers.
 
-Current production deployment before M0.20:
+Latest inspected production deployment before Phase 2B:
 
-- Commit: `b70be160a96f30e5a36fe4052c2b191c40700e87`
-- Deployment: `dpl_BZZu9rv9r9hES2qGLPVozWWNkCTq`
+- Commit: `d7f730d8c29f7923df701c5e41cf99f036fa0b57`
+- Deployment: `dpl_bggBQ7SmTeTymHkacYpqiBS1LNSp`
 - URL: `https://retailos-ten.vercel.app`
 
 ## Out of scope
@@ -45,7 +45,7 @@ Current production deployment before M0.20:
 - Seeded demo analytics presented as real recovered customer value.
 - Static dashboards or product screens presented as final product behavior.
 - Finalizing navigation structure, dashboard KPIs, module grouping, terminology, statuses, workflows, roles, suppliers, warehouse/finance terminology, demo records, or other retail-domain assumptions without consultant validation and product-discovery decisions.
-- Phase 2B, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, POS, payments, wholesale, accounting, advanced forecasting, advanced agent execution, marketplace publishing, autonomous Copilot actions, or production external-system write-back during the M0.20/M0.21 campaign.
+- Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, POS, payments, wholesale, accounting, advanced forecasting, advanced agent execution, marketplace publishing, autonomous Copilot actions, or production external-system write-back during the current Phase 2B M2.7-M2.9 campaign.
 - Implementing any capability beyond the active milestone.
 
 ## M0.9 UI foundation boundary

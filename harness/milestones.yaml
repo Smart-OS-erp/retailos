@@ -1,0 +1,234 @@
+schema_version: 1
+canonical: true
+milestones:
+  - id: M0.20
+    phase: P0
+    name: "Aso Collective Phase 0 Demo Dataset"
+    status: ACCEPTED
+    validation_level: INTERIM_DOMAIN_BASELINE
+    evidence:
+      - reports/M0_20_ACCEPTANCE_EVIDENCE.md
+      - docs/demo/ASO_COLLECTIVE_DATASET.md
+      - data/demo/aso-collective/manifest.json
+    acceptance_criteria:
+      - "Synthetic Aso Collective dataset exists and is deterministic."
+      - "Dataset is clearly labeled synthetic and not customer value proof."
+      - "Demo seed/verify/reset/cleanup commands exist."
+    validation_requirements:
+      - STATIC
+      - UNIT
+      - DOMAIN
+    risk_tier: medium
+    required_reviewers:
+      - DOMAIN_REVIEWER
+      - REPOSITORY_REVIEWER
+    human_gates:
+      - "Original consultant confirmation remains pending."
+
+  - id: M0.21
+    phase: P0
+    name: "Phase 0 End-to-End Acceptance and Hardening"
+    status: CONDITIONALLY_ACCEPTED
+    validation_level: INTERNALLY_VALIDATED
+    evidence:
+      - reports/PHASE_0_ACCEPTANCE_EVIDENCE.md
+      - reports/PHASE_0_FINAL_DECISION.md
+    acceptance_criteria:
+      - "Phase 0 acceptance evidence is recorded."
+      - "Known conditional-acceptance gaps are explicit."
+    validation_requirements:
+      - STATIC
+      - INTEGRATION
+      - SECURITY
+      - PRODUCTION
+    risk_tier: high
+    required_reviewers:
+      - SECURITY_REVIEWER
+      - RELEASE_VERIFIER
+      - HUMAN_APPROVER
+    human_gates:
+      - "Authenticated browser acceptance incomplete."
+      - "Authenticated production synthetic workflow incomplete."
+      - "Original consultant review pending."
+      - "Real retailer pilot pending."
+
+  - id: M1.9
+    phase: P1
+    name: "Core Inventory Operating System Acceptance"
+    status: ACCEPTED
+    validation_level: INTERNALLY_VALIDATED
+    evidence:
+      - reports/PHASE_1_ACCEPTANCE_EVIDENCE.md
+      - reports/PHASE_1_M1_9_COMPLETION_VALIDATION.md
+    acceptance_criteria:
+      - "Inventory core implementation exists."
+      - "Visible inventory workflow acceptance was deployed."
+    validation_requirements:
+      - INTEGRATION
+      - DATABASE
+      - SECURITY
+      - PRODUCTION
+    risk_tier: high
+    required_reviewers:
+      - REPOSITORY_REVIEWER
+      - SECURITY_REVIEWER
+      - RELEASE_VERIFIER
+
+  - id: M2.0-M2.6
+    phase: P2A
+    name: "Light Merchandising Intelligence and Action Planning"
+    status: ACCEPTED
+    validation_level: INTERNALLY_VALIDATED
+    evidence:
+      - reports/PHASE_2_ACCEPTANCE_EVIDENCE.md
+      - reports/PHASE_2_ACCEPTANCE_MATRIX.md
+    acceptance_criteria:
+      - "Merchandising productivity, performance, recommendations, markdown drafts, and planning cycles exist."
+      - "Recommendations are directional and do not execute sensitive actions."
+      - "Hosted schema verification passed."
+    validation_requirements:
+      - INTEGRATION
+      - DATABASE
+      - SECURITY
+      - PRODUCTION
+    risk_tier: high
+    required_reviewers:
+      - REPOSITORY_REVIEWER
+      - SECURITY_REVIEWER
+      - RELEASE_VERIFIER
+
+  - id: M2.7
+    phase: P2B
+    name: "Repository Governance and Release Discipline"
+    status: CONDITIONALLY_ACCEPTED
+    dependencies:
+      - M2.0-M2.6
+    acceptance_criteria:
+      - "Contributing rules and CODEOWNERS exist."
+      - "Branch protection and Dependabot/security configuration are inspected and enabled where safely permitted."
+      - "Release-evidence schema exists."
+      - "Repository visibility remains unchanged."
+    validation_requirements:
+      - STATIC
+      - SECURITY
+      - HUMAN
+    risk_tier: medium
+    required_reviewers:
+      - REPOSITORY_REVIEWER
+      - SECURITY_REVIEWER
+      - RELEASE_VERIFIER
+    human_gates:
+      - "Repository visibility changes."
+      - "Commercial/legal security-setting decisions."
+
+  - id: M2.8
+    phase: P2B
+    name: "Harness Simplification and Product Reconciliation"
+    status: CONDITIONALLY_ACCEPTED
+    dependencies:
+      - M2.7
+    acceptance_criteria:
+      - "Machine-readable canonical roadmap, milestones, gates, and human gates exist."
+      - "AGENTS.md is reduced to operational invariants and source pointers."
+      - "README and reports no longer contradict active product state."
+      - "Reports can be generated or validated from canonical state."
+    validation_requirements:
+      - STATIC
+      - UNIT
+      - INTEGRATION
+    risk_tier: medium
+    required_reviewers:
+      - REPOSITORY_REVIEWER
+      - RELEASE_VERIFIER
+
+  - id: M2.9
+    phase: P2B
+    name: "Senior SWE Codebase Readiness Review"
+    status: CONDITIONALLY_ACCEPTED
+    dependencies:
+      - M2.8
+    acceptance_criteria:
+      - "Senior SWE review report exists with P0/P1/P2/P3 findings."
+      - "Codebase health report exists with measured baseline."
+      - "Product reconciliation report exists."
+      - "Safe P0 and obvious low-risk P1 remediations are applied or explicitly blocked."
+    validation_requirements:
+      - STATIC
+      - UNIT
+      - INTEGRATION
+      - SECURITY
+      - DATABASE
+    risk_tier: high
+    required_reviewers:
+      - REPOSITORY_REVIEWER
+      - SECURITY_REVIEWER
+      - DOMAIN_REVIEWER
+
+  - id: M2.10
+    phase: P2B
+    name: "Retail Operating Model v0.9"
+    status: ACCEPTED
+    validation_level: INTERIM_DOMAIN_BASELINE
+    satisfied_by:
+      - M0.20
+    evidence:
+      - docs/domain/RETAIL_OPERATING_MODEL_V0_9.md
+      - reports/M0_20_ACCEPTANCE_EVIDENCE.md
+    acceptance_criteria:
+      - "Interim operating model exists and is not represented as original consultant or customer validation."
+    validation_requirements:
+      - DOMAIN
+      - HUMAN
+    risk_tier: medium
+    required_reviewers:
+      - DOMAIN_REVIEWER
+
+  - id: M2.11
+    phase: P2B
+    name: "Aso Inventory + Merchandising Dataset Expansion"
+    status: NOT_STARTED
+    dependencies:
+      - M2.9
+    human_gates:
+      - "Explicit approval required after M2.9."
+
+  - id: M2.12
+    phase: P2B
+    name: "Retail Domain Validation"
+    status: NOT_STARTED
+    dependencies:
+      - M2.11
+    human_gates:
+      - "Original consultant or approved domain reviewer required."
+
+  - id: M2.13
+    phase: P2B
+    name: "Internal Controlled Pilot"
+    status: NOT_STARTED
+    dependencies:
+      - M2.12
+    human_gates:
+      - "Explicit pilot approval required."
+
+  - id: M2.14
+    phase: P2B
+    name: "Pilot-grade Operations"
+    status: NOT_STARTED
+    dependencies:
+      - M2.13
+
+  - id: M2.15
+    phase: P2B
+    name: "Authenticated Production Pilot Acceptance"
+    status: NOT_STARTED
+    dependencies:
+      - M2.14
+    human_gates:
+      - "Authenticated production pilot acceptance required."
+
+  - id: M2.16
+    phase: P2B
+    name: "Pilot Candidate Release"
+    status: NOT_STARTED
+    dependencies:
+      - M2.15
