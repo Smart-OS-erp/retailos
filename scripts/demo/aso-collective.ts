@@ -30,6 +30,13 @@ type Sku = Product & {
 };
 
 const DATASET_VERSION = "ASO_PHASE0_DATASET_V1";
+const INVENTORY_DATASET_VERSION = "ASO_INVENTORY_OPERATIONS_V2";
+const MERCHANDISING_DATASET_VERSION = "ASO_MERCHANDISING_PILOT_V3";
+const ACTIVE_DATASET_VERSIONS = [
+  DATASET_VERSION,
+  INVENTORY_DATASET_VERSION,
+  MERCHANDISING_DATASET_VERSION,
+] as const;
 const REFERENCE_DATE = "2026-07-31";
 const ROOT = process.cwd();
 const DATASET_DIR = path.join(ROOT, "data", "demo", "aso-collective");
@@ -595,6 +602,24 @@ function verifyDataset() {
   const sales = readJson<{ records: ReturnType<typeof generateSales> }>("sales/sales-history.json");
   const messy = readJson<{ records: ReturnType<typeof messyScenarios> }>("source-records/messy-records.json");
   const expected = readJson<ReturnType<typeof computeExpected>>("expected-results/expected-results.json");
+  const inventoryVersion = readJson<{
+    dataset_version: string;
+    extends: string;
+    scale: { locations: number; sku_variants: number; styles: number };
+    synthetic_only: boolean;
+  }>("versions/ASO_INVENTORY_OPERATIONS_V2/manifest.json");
+  const merchandisingVersion = readJson<{
+    dataset_version: string;
+    domain_validation_level: string;
+    extends: string;
+    synthetic_only: boolean;
+  }>("versions/ASO_MERCHANDISING_PILOT_V3/manifest.json");
+  const golden = readJson<{
+    dataset_version: string;
+    records: unknown[];
+    rule_version: string;
+    synthetic_only: boolean;
+  }>("versions/ASO_MERCHANDISING_PILOT_V3/golden-outcomes.json");
   assert(manifest.dataset_version === DATASET_VERSION, "manifest dataset version mismatch");
   assert(manifest.synthetic_only === true, "manifest must be synthetic-only");
   assert(storedOrganization.ascii_identifier === "aso_collective", "organisation identifier mismatch");
@@ -607,6 +632,17 @@ function verifyDataset() {
   assert(sales.records.length === 12_000, "expected 12000 sales history rows");
   assert(messy.records.length === 20, "expected 20 messy-data scenarios");
   assert(expected.dataset_version === DATASET_VERSION, "expected result version mismatch");
+  assert(inventoryVersion.dataset_version === INVENTORY_DATASET_VERSION, "inventory operations dataset version mismatch");
+  assert(inventoryVersion.extends === DATASET_VERSION, "inventory operations dataset must extend V1");
+  assert(inventoryVersion.synthetic_only === true, "inventory operations dataset must be synthetic-only");
+  assert(inventoryVersion.scale.styles === 60, "inventory operations dataset style count mismatch");
+  assert(inventoryVersion.scale.sku_variants === 240, "inventory operations dataset sku count mismatch");
+  assert(merchandisingVersion.dataset_version === MERCHANDISING_DATASET_VERSION, "merchandising dataset version mismatch");
+  assert(merchandisingVersion.extends === INVENTORY_DATASET_VERSION, "merchandising dataset must extend V2");
+  assert(merchandisingVersion.domain_validation_level === "INTERIM_DOMAIN_BASELINE", "merchandising dataset must remain interim");
+  assert(golden.dataset_version === MERCHANDISING_DATASET_VERSION, "golden outcome version mismatch");
+  assert(golden.synthetic_only === true, "golden outcomes must be synthetic-only");
+  assert(golden.records.length >= 3, "expected at least three golden outcomes");
   assert(expected.raw_record_counts.inventory_snapshot === inventory.records.length, "inventory count mismatch");
   assert(expected.raw_record_counts.sales_history === sales.records.length, "sales count mismatch");
   assert(expected.raw_record_counts.product_master === catalogue.skus.length, "product master count mismatch");
@@ -626,6 +662,7 @@ function writeVerificationReport(status: "cleaned" | "passed" | "reset" | "seede
     "# Aso Collective Phase 0 Dataset Verification",
     "",
     `Dataset Version: ${DATASET_VERSION}`,
+    `Active Dataset Versions: ${ACTIVE_DATASET_VERSIONS.join(", ")}`,
     `Reference Date: ${REFERENCE_DATE}`,
     `Status: ${status}`,
     `Organisation: ${organization.display_name}`,
@@ -663,6 +700,7 @@ function seed() {
   console.log(
     JSON.stringify({
       dataset_version: DATASET_VERSION,
+      active_dataset_versions: ACTIVE_DATASET_VERSIONS,
       idempotent: previous === null || previous === fs.readFileSync(STATE_FILE, "utf8"),
       organisation: organization.display_name,
       status: "seeded",
@@ -693,7 +731,14 @@ try {
   if (command === "seed") seed();
   else if (command === "verify") {
     const expected = verifyDataset();
-    console.log(JSON.stringify({ dataset_version: DATASET_VERSION, status: "passed", ...expected.raw_record_counts }));
+    console.log(
+      JSON.stringify({
+        dataset_version: DATASET_VERSION,
+        active_dataset_versions: ACTIVE_DATASET_VERSIONS,
+        status: "passed",
+        ...expected.raw_record_counts,
+      }),
+    );
   } else if (command === "reset") reset();
   else if (command === "cleanup") cleanup();
   else throw new Error("Usage: node scripts/demo/aso-collective.ts <seed|verify|reset|cleanup>");

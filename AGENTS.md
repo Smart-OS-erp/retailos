@@ -27,9 +27,9 @@ The active work must match the canonical harness files and `reports/CURRENT_STAT
 
 Current approved campaign: Phase 2B — Engineering Reconciliation, Domain Validation and Pilot Readiness.
 
-Approved campaign scope: M2.7, M2.8, and M2.9 only.
+Approved campaign scope: M2.7, M2.8, M2.9, and M2.11.
 
-Stop after M2.9. Do not begin M2.11 or later without explicit approval.
+Stop after M2.11. Do not begin M2.12 or later without explicit approval and required domain-review evidence.
 
 ## Autonomy contract
 

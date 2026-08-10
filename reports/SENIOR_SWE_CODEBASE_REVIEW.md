@@ -28,6 +28,7 @@ No evidence was found of committed secrets, client-side service-role usage, or a
 - Recommended remediation: install/authenticate Supabase CLI, link approved project, run safe migration-history/reset commands, and record evidence.
 - Risk of remediation: medium; must avoid destructive production commands.
 - Test/evidence required: `supabase migration list`, local reset output, and recorded migration-history agreement.
+- Status after M2.11 campaign: still open; `supabase` CLI is not installed in this shell.
 
 #### P1-2 — Main branch protection could not be verified or enabled from current token
 
@@ -37,6 +38,7 @@ No evidence was found of committed secrets, client-side service-role usage, or a
 - Recommended remediation: repository admin enables branch protection in GitHub UI or with an admin token.
 - Risk of remediation: low if configured with existing required checks.
 - Test/evidence required: successful branch protection API read showing required checks and force-push/delete blocks.
+- Status after M2.11 campaign: remediated; branch protection was enabled and verified by API.
 
 #### P1-3 — Business-rule authority is still split across SQL, TypeScript, UI, and tests
 
@@ -46,6 +48,7 @@ No evidence was found of committed secrets, client-side service-role usage, or a
 - Recommended remediation: create rule registry/versioning for inventory position, sell-through, weeks of cover, aging, risk, confidence, recovery recommendations, merchandising productivity, and markdown decisions.
 - Risk of remediation: medium/high; requires careful compatibility tests.
 - Test/evidence required: deterministic fixtures proving SQL and TypeScript agree on key formulas.
+- Status after M2.11 campaign: remediated to pre-pilot baseline with `docs/domain/BUSINESS_RULE_CONTRACT.md`, `src/lib/business-rules/retail-rules.ts`, V3 golden outcomes, and domain consistency tests.
 
 #### P1-4 — Large action/test modules increase regression risk before pilot
 

@@ -1,0 +1,31 @@
+{
+  "dataset_version": "ASO_MERCHANDISING_PILOT_V3",
+  "synthetic_only": true,
+  "records": [
+    { "id": "v3-strong-sell-through", "scenario": "Strong sell-through", "expected_signal": "replenishment_watch" },
+    { "id": "v3-average-sell-through", "scenario": "Average sell-through", "expected_signal": "hold_monitor" },
+    { "id": "v3-weak-sell-through", "scenario": "Weak sell-through", "expected_signal": "campaign_review" },
+    { "id": "v3-healthy-cover", "scenario": "Healthy weeks of cover", "expected_signal": "hold_monitor" },
+    { "id": "v3-stockout-cover", "scenario": "Stockout-risk weeks of cover", "expected_signal": "replenishment_watch" },
+    { "id": "v3-overstock-cover", "scenario": "Overstock weeks of cover", "expected_signal": "transfer_first" },
+    { "id": "v3-newness-protection", "scenario": "Newness protection from dead-stock classification", "expected_signal": "hold_monitor" },
+    { "id": "v3-core-basic-protection", "scenario": "Core/basic long-tail protection", "expected_signal": "hold_monitor" },
+    { "id": "v3-aged-seasonal", "scenario": "Aged seasonal inventory", "expected_signal": "markdown_review" },
+    { "id": "v3-26-week-inventory", "scenario": "26+ week inventory", "expected_signal": "markdown_review" },
+    { "id": "v3-high-value-risk", "scenario": "High-value inventory risk", "expected_signal": "transfer_first" },
+    { "id": "v3-ecommerce-exposure", "scenario": "Ecommerce exposure opportunity", "expected_signal": "campaign_review" },
+    { "id": "v3-controlled-markdown", "scenario": "Controlled markdown opportunity", "expected_signal": "markdown_review" },
+    { "id": "v3-campaign-opportunity", "scenario": "Campaign opportunity", "expected_signal": "campaign_review" },
+    { "id": "v3-no-recommendation", "scenario": "No recommendation", "expected_signal": "none" },
+    { "id": "v3-missing-cost", "scenario": "Missing cost suppresses margin-sensitive precision", "expected_signal": "campaign_review" },
+    { "id": "v3-estimated-cost", "scenario": "Estimated cost weakens confidence", "expected_signal": "markdown_review" },
+    { "id": "v3-high-confidence-recovery", "scenario": "High-confidence actionable recovery opportunity", "expected_signal": "transfer_first" },
+    { "id": "v3-below-project-threshold", "scenario": "Opportunity below projectisation threshold", "expected_signal": "hold_monitor" },
+    { "id": "v3-projectised-opportunity", "scenario": "Projectised recovery opportunity", "expected_signal": "transfer_first" },
+    { "id": "v3-campaign-brief", "scenario": "Campaign brief", "expected_signal": "campaign_review" },
+    { "id": "v3-follow-up-tasks", "scenario": "Follow-up tasks", "expected_signal": "campaign_review" },
+    { "id": "v3-merchandising-recommendation", "scenario": "Merchandising recommendation", "expected_signal": "transfer_first" },
+    { "id": "v3-markdown-draft", "scenario": "Markdown draft", "expected_signal": "markdown_review" },
+    { "id": "v3-merchandising-plan", "scenario": "Merchandising plan", "expected_signal": "hold_monitor" }
+  ]
+}
