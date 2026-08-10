@@ -1,53 +1,112 @@
 # RetailOS
 
-RetailOS is secure operating intelligence for African fashion retail. Its first wedge is inventory recovery intelligence: trustworthy retail data intake, validation, consolidation, inventory risk explanation, recovery opportunities, projectisation, campaign briefs, tasks, and permission-aware Copilot explanations.
+RetailOS is secure operating intelligence for African fashion retail. It helps retailers move from fragmented inventory, sales, integration, and merchandising data to trusted operating decisions.
 
-RetailOS is not a generic ERP, POS, static dashboard, or chatbot.
+The first wedge is inventory recovery intelligence: validate messy retail data, consolidate it, identify inventory risk, explain recovery opportunities, projectise action, and support permission-aware operating workflows.
 
-## Current campaign
+RetailOS is not a generic ERP, POS, accounting package, WMS, static dashboard, or chatbot.
 
-Active phase: Phase 0 - Foundation: Inventory Recovery Intelligence.
+## Current maturity
 
-Active milestone: M0.20 - Aso Collective Phase 0 Demo Dataset.
+Current campaign: Phase 2B — Engineering Reconciliation, Domain Validation and Pilot Readiness.
 
-Next milestone: M0.21 - Phase 0 End-to-End Acceptance and Hardening.
+Approved scope for this campaign:
 
-The historical Phase 0.5 label remains in migrations and reports for development history. Its capabilities are now treated as Phase 0 integration and data-foundation milestones.
+- M2.7 — Repository Governance and Release Discipline.
+- M2.8 — Harness Simplification and Product Reconciliation.
+- M2.9 — Senior SWE Codebase Readiness Review.
 
-Do not start Phase 2B, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, or POS during this campaign.
+Stop after M2.9. Do not begin M2.11 or later without explicit approval.
 
-## Autonomous continuation
+Current verified product state:
 
-The repository owner command:
+- Phase 0 M0.20 Aso Collective dataset is accepted as an `INTERIM_DOMAIN_BASELINE`.
+- Phase 0 M0.21 is `CONDITIONALLY_ACCEPTED`.
+- Phase 1 core inventory operating workflows exist and were deployed.
+- Phase 2A M2.0-M2.6 light merchandising intelligence and action planning exists and was deployed.
+- M2.10 Retail Operating Model v0.9 is already satisfied by M0.20 evidence.
+
+## Stack
+
+- Next.js App Router
+- React
+- TypeScript strict mode
+- Supabase Auth/Postgres/RLS
+- Vitest
+- GitHub Actions
+- Vercel
+
+## Architecture overview
+
+RetailOS is a modular Next.js/Supabase SaaS:
+
+- `src/app/` contains routes, route handlers, and server actions.
+- `src/components/` contains shared UI and workflow page components.
+- `src/lib/auth/` contains authorization and organization-context helpers.
+- `src/lib/intelligence/` contains deterministic intelligence logic.
+- `src/lib/integrations/` contains provider and sync workers.
+- `src/lib/import-api/` contains import API contracts, hashing, and storage boundaries.
+- `supabase/migrations/` contains immutable schema evolution.
+- `tests/` contains unit, integration, and security coverage.
+- `harness/` contains canonical roadmap, milestone, gate, and workflow control.
+
+Business rules must not be silently duplicated across SQL, TypeScript, UI, and Copilot paths.
+
+## Repository structure
 
 ```text
-continue autonomously
+.github/              CI, security workflows, CODEOWNERS, Dependabot
+data/demo/            Synthetic Aso Collective fixtures
+docs/                 Product, security, domain, setup, and acceptance docs
+harness/              Canonical machine-readable roadmap and gates
+reports/              Current state, blockers, failures, and acceptance evidence
+scripts/              Validation, security, migration, demo, and harness scripts
+src/                  Application source
+supabase/             Supabase migrations, seed, and setup notes
+tests/                Unit, integration, e2e placeholder, and security tests
 ```
 
-is a persistent repository command. Future Codex sessions must resolve the next eligible milestone from the authoritative roadmap and current evidence, then continue automatically until a mandatory human gate or technical stop condition is reached. See `AGENTS.md` and `harness/AGENT_WORKFLOW.md`.
+## Local setup
 
-## Implemented foundation
+Use Node 22.x:
 
-- Next.js App Router with strict TypeScript and security headers.
-- Supabase SSR clients for browser, server, and proxy boundaries.
-- Email/password auth, signup, login, confirmation, logout, and server-side user verification.
-- Organization creation, onboarding, company/location/brand/team/data-source setup, and role-aware protected routes.
-- Organizations, memberships, RBAC, audit events, tenant-scoped tables, forced RLS, and deny-by-default grants.
-- Phase 0 data intake, staging, validation, consolidation, Operating View, inventory recovery, projectisation, task, campaign brief, workspace, and deterministic Retail Copilot routes.
-- Historical Phase 0.5 Integration Hub, Import API, Shopify/WooCommerce MVP workers, scheduled sync, canonical approval flows, and automatic intelligence recalculation evidence.
-- M0-UI shared frontend foundation.
-- Phase 1 inventory core and visible workflow acceptance.
-- Phase 2 M2.0-M2.6 merchandising/planning work was merged before the Phase 0 roadmap reconciliation.
+```bash
+npm ci
+cp .env.example .env.local
+```
 
-## Aso Collective synthetic dataset
+Fill `.env.local` locally. Do not paste or commit secrets.
 
-Dataset documentation:
+Required variable names:
 
-- `docs/demo/ASO_COLLECTIVE_DATASET.md`
-- `docs/demo/ASO_COLLECTIVE_DEMO_SCRIPT.md`
-- `docs/domain/RETAIL_OPERATING_MODEL_V0_9.md`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `DATABASE_URL`
 
-Dataset version: `ASO_PHASE0_DATASET_V1`.
+`SUPABASE_SERVICE_ROLE_KEY` must never be exposed to client/browser code.
+
+## Supabase and migrations
+
+Migrations live in `supabase/migrations/` and are immutable once applied.
+
+Rules:
+
+- prefer expand-contract migrations;
+- do not edit applied migrations;
+- destructive migrations require a human gate;
+- Vercel rollback does not roll back database state;
+- migration history disagreement is a technical stop.
+
+Supabase CLI migration-history/reset verification remains an explicit open gap until the CLI is installed/authenticated and results are recorded.
+
+## Aso Collective dataset
+
+Aso Collective is a deterministic synthetic African fashion retailer dataset.
+
+- Dataset version: `ASO_PHASE0_DATASET_V1`
+- Data classification: synthetic demo data only
+- Domain validation level: `INTERIM_DOMAIN_BASELINE`
 
 Commands:
 
@@ -58,60 +117,64 @@ npm run demo:reset
 npm run demo:cleanup
 ```
 
-The demo commands use deterministic synthetic data only. They must not use real retailer data, secrets, plaintext passwords, destructive production actions, or external-system write-back.
-
-## Production
-
-Production alias: `https://retailos-ten.vercel.app`
-
-Current production state is recorded in `reports/CURRENT_STATE.md`.
-
-## Local setup
-
-1. Use Node 22.
-2. Run `npm ci`.
-3. Create ignored `.env.local` from `.env.example`.
-4. Keep real values local or in managed deployment settings; never commit or paste them into chat, logs, screenshots, or fixtures.
-5. Apply reviewed migrations to a non-production Supabase environment before exercising hosted workflows.
-6. Run `npm run dev`.
-
-Required variable names:
-
-```text
-NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY
-SUPABASE_SERVICE_ROLE_KEY
-DATABASE_URL
-IMPORT_API_TOKEN_HASH_SECRET
-SHOPIFY_CONNECTOR_CREDENTIALS_JSON
-WOOCOMMERCE_CONNECTOR_CREDENTIALS_JSON
-CRON_SECRET
-```
-
-`SUPABASE_SERVICE_ROLE_KEY` must never appear in browser/client code.
+These commands write local ignored state under `.tmp/demo/aso-collective`.
 
 ## Validation
 
-Run relevant checks before handoff:
+Run all supported checks before release:
 
 ```bash
+git diff --check
+npm run harness:validate
 npm run lint
 npm run typecheck
 npm run test
+npm run test:unit
+npm run test:integration
+npm run test:security
 npm run security
 npm run build
 npm audit --audit-level=moderate
 ```
 
-For M0.20 also run:
+For dataset changes, also run the Aso demo commands.
 
-```bash
-npm run demo:seed
-npm run demo:verify
-npm run demo:reset
-npm run demo:cleanup
+## Deployment
+
+Production is hosted on Vercel:
+
+```text
+https://retailos-ten.vercel.app
 ```
 
-## Known blockers
+Every release should record structured evidence with commit SHA, deployment ID, environment, migration hash where applicable, dataset version where applicable, timestamp, verification type, verifier, and result.
 
-See `reports/OPEN_BLOCKERS.md`. Current standing blockers include Supabase CLI migration-history/reset verification, GitHub `main` branch protection, Dependabot security updates, repository visibility decision, and Google Sheets worker deferral.
+## Business-rule pointers
+
+- Product source: `docs/PRODUCT_SOURCE_OF_TRUTH.md`
+- Phase 0 scope: `docs/PHASE_0_SCOPE.md`
+- Phase 1 scope: `docs/PHASE_1_SCOPE.md`
+- Phase 2 scope: `docs/PHASE_2_SCOPE.md`
+- Retail operating model: `docs/domain/RETAIL_OPERATING_MODEL_V0_9.md`
+- Aso dataset: `docs/demo/ASO_COLLECTIVE_DATASET.md`
+- Security architecture: `docs/security/SECURITY_ARCHITECTURE.md`
+
+## Roadmap pointer
+
+The canonical roadmap is machine-readable:
+
+- `harness/roadmap.yaml`
+- `harness/milestones.yaml`
+- `harness/quality-gates.yaml`
+- `harness/human-gates.yaml`
+
+Do not treat README as the project database.
+
+## Known limitations
+
+- Phase 0 is conditionally accepted, not fully pilot/customer validated.
+- Authenticated browser acceptance and authenticated production synthetic workflow acceptance remain incomplete.
+- Original consultant review and real retailer pilot validation remain pending.
+- Supabase CLI migration-history/reset verification remains pending.
+- Phase 2A recommendations are directional; they are not advanced forecasting or autonomous execution.
+- Purchasing, WMS, omnichannel, POS, finance, wholesale, payments, and Phase 2C are not approved in the current campaign.

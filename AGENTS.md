@@ -1,396 +1,156 @@
-# RetailOS — Agent Operating Manual
+# RetailOS Agent Operating Contract
 
-## Agent Start Here
+## Product identity
 
-Before every task:
+RetailOS is secure operating intelligence for African fashion retail. It helps retailers turn fragmented inventory, sales, location, integration, and merchandising data into trusted operating decisions.
 
-1. Read `reports/CURRENT_STATE.md`.
-2. Confirm the active phase and active milestone.
-3. Read `reports/NEXT_TASK.md`.
-4. Read the relevant acceptance, security, and architecture documents.
-5. Inspect the current implementation before proposing changes.
-6. Implement only the approved milestone.
-7. Run all required validation.
-8. Update repository reports before completion.
-9. Do not claim completion without evidence.
+RetailOS is not a generic ERP, POS, accounting system, static dashboard, or chatbot. Product principles and domain assumptions live in `docs/`, especially `docs/domain/RETAIL_OPERATING_MODEL_V0_9.md`.
+
+## Authoritative sources
+
+Use this precedence order:
+
+1. `harness/roadmap.yaml`
+2. `harness/milestones.yaml`
+3. `harness/quality-gates.yaml`
+4. `harness/human-gates.yaml`
+5. `reports/CURRENT_STATE.md`
+6. `reports/NEXT_TASK.md`
+7. code, migrations, tests, CI, and deployment evidence
+8. supporting docs in `docs/`, `reports/`, and `plans/`
+
+Do not duplicate the full roadmap into prompts or prose docs. Preserve historical labels such as Phase 0.5 only as history when they appear in migrations and reports.
+
+## Current phase control
+
+The active work must match the canonical harness files and `reports/CURRENT_STATE.md`.
+
+Current approved campaign: Phase 2B — Engineering Reconciliation, Domain Validation and Pilot Readiness.
+
+Approved campaign scope: M2.7, M2.8, and M2.9 only.
+
+Stop after M2.9. Do not begin M2.11 or later without explicit approval.
+
+## Autonomy contract
 
 ## AUTONOMOUS CONTINUATION COMMAND
 
-The repository owner instruction `continue autonomously` is a persistent repository command for future Codex sessions. Treat the instruction case-insensitively and ignore surrounding whitespace or final punctuation, so `continue autonomously`, `Continue autonomously`, `continue autonomously.`, and `CONTINUE AUTONOMOUSLY` all activate the same behavior.
-
-When this command is received, do not ask whether to continue. Execute against the current authoritative roadmap and milestone source rather than hardcoded milestone IDs:
-
-1. Read `AGENTS.md` completely.
-2. Read the authoritative roadmap and milestone definitions.
-3. Read `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, `reports/OPEN_BLOCKERS.md`, and `reports/RECENT_FAILURES.md`.
-4. Inspect `main`, open pull requests, workflow results, migrations, hosted database state where accessible, preview deployment, production deployment, runtime errors, and unresolved blockers.
-5. Resolve the next eligible milestone using this order of authority: canonical roadmap or milestone source, explicit dependency status, `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, open blockers/failed gates, then Git/migration/deployment/runtime evidence.
-6. Confirm milestone dependencies are complete.
-7. Create the appropriate branch, implement the milestone, run required validation gates, open a pull request, review preview deployment, merge only when checks and repository policies allow it, verify production deployment, record evidence tied to the actual commit/deployment, update authoritative current state, then resolve the next eligible milestone again.
-8. Continue through subsequent eligible milestones automatically until a mandatory stop condition or human gate is reached.
-
-Mandatory human gates include destructive production migration, deletion of real production/customer data, paid service or plan upgrade, missing secret or external account credential, legal/privacy/terms/pricing/contract acceptance, original consultant confirmation, customer pilot acceptance, production external-system write-back, payment processing, POS fiscal/tax decisions, lowering a security boundary, irreversible repository/infrastructure change not already approved, or a product-owner decision with multiple valid options.
-
-Mandatory technical stop conditions include failed cross-tenant/location-isolation tests, double-posted inventory/financial effects, migration history disagreement, modified already-applied migration, destructive migration requirement, production data risk, unavailable backup/rollback path, critical or high unresolved security issue, broken GitHub Actions or Vercel integration, failed production smoke, real retailer data in a synthetic path, unexplained deterministic calculation mismatch, unavailable required infrastructure access, or an insufficiently defined next milestone.
-
-When stopping, report the exact blocker, affected milestone, evidence, actions attempted, safest remediation, owner action required, and whether the repository remains deployable and safe.
-
-## 0. Product Name
-
-The demo/project name is RetailOS.
-
-RetailOS is not necessarily the final commercial product name. Use RetailOS throughout this repository unless a later naming decision changes it.
-
-## 1. Mission
-
-RetailOS is the operating system for African fashion retail.
-
-It helps fashion retailers:
-
-- understand inventory;
-- improve inventory productivity;
-- recover margin;
-- reduce dead stock;
-- optimize merchandising decisions;
-- coordinate store execution;
-- connect online/offline retail data;
-- eventually run inventory, merchandising, store operations, wholesale, finance, and execution workflows from one intelligent system.
-
-RetailOS is not a generic ERP. It should feel like a retail analyst, merchandiser, inventory planner, operations manager, and business co-pilot combined into one operating system.
-
-## 2. Core Product Insight
-
-Fashion retailers already manually “projectise” inventory problems. They bundle slow movers, markdown aged stock, transfer products between stores, reposition products in campaigns, create capsule edits, and ask merchandisers to turn dead stock into commercial action.
-
-RetailOS turns this manual behavior into a structured operating system.
-
-Core loop:
-
-```text
-Messy retail data
-→ validated data
-→ consolidated operating view
-→ inventory risk insight
-→ recovery opportunity
-→ projectisation plan
-→ campaign brief
-→ execution tracking
-→ Retail Copilot explanation
-```
-
-Every screen must answer: what requires attention right now?
-
-## 3. Target Market
-
-Primary geography:
-
-- Nigeria;
-- Ghana;
-- Kenya;
-- South Africa;
-- broader African fashion retail markets over time.
-
-Target customers:
-
-- multi-store fashion retailers;
-- multi-brand retail groups;
-- luxury fashion retailers;
-- omnichannel fashion operators;
-- streetwear brands;
-- boutiques scaling into retail groups;
-- retailers selling through store, web, Instagram, WhatsApp, marketplace, and pop-up channels.
-
-Primary users:
-
-- `ORG_OWNER`;
-- `EXECUTIVE`;
-- `MERCHANDISING_MANAGER`;
-- `STORE_MANAGER`;
-- `VIEWER`.
-
-Future users:
-
-- `INVENTORY_PLANNER`;
-- `OPERATIONS_MANAGER`;
-- `FINANCE_MANAGER`;
-- `WHOLESALE_MANAGER`;
-- `BUYER`;
-- `ECOMMERCE_MANAGER`;
-- `WAREHOUSE_MANAGER`;
-- `RETAIL_ANALYST`;
-- `SYSTEM_ADMIN`;
-- `EXTERNAL_CONSULTANT`.
-
-## 4. Product Category
-
-RetailOS belongs to the category: Fashion Retail Operating Intelligence.
-
-Long-term category: Fashion Retail OS.
-
-RetailOS should not be positioned as generic ERP, generic POS, generic dashboard, generic AI chatbot, generic inventory tracker, accounting software, or warehouse-only software.
-
-## 5. Current Build Discipline
-
-The agent may understand the full RetailOS roadmap, but must only build the approved active phase and milestone.
-
-Do not expand scope silently. Do not add POS, finance, wholesale, forecasting, warehouse management, marketplace publishing, autonomous campaign execution, or real LLM agent execution unless explicitly approved for the active phase.
-
-Every phase must be implemented, tested, secured, documented, deployed, and accepted before the next phase begins. The active phase must always be declared in `reports/CURRENT_STATE.md`.
-
-## 6. Full RetailOS Roadmap
-
-### Phase 0 — Foundation: Inventory Recovery Intelligence
-
-Goal: create the secure SaaS foundation and prove the core wedge from upload/connect retail data to validated data, consolidated operating view, inventory risk insight, recovery opportunity, projectisation plan, campaign brief, and Retail Copilot explanation.
-
-Phase 0 includes authentication, signup, login, organization creation, onboarding, company/location/brand/team setup, RBAC, tenant isolation, Supabase RLS, secure API patterns, audit logging, CSV upload, staging, validation, consolidation, Operating View, inventory recovery intelligence, Attention Queue, projectisation, campaign brief generation, role-aware workspaces, and deterministic/template-based Retail Copilot.
-
-Phase 0 does not include full POS, accounting, purchase orders, supplier management, full warehouse management, advanced forecasting, automatic campaign publishing, WhatsApp integration, autonomous markdown execution, real LLM agent execution, marketplace integrations, wholesale management, or finance modules.
-
-### Phase 0.5 — Integration Hub MVP
-
-Goal: move RetailOS beyond manual upload into connected retail data.
-
-Phase 0.5 includes Integration Hub, data source setup, Shopify/WooCommerce/Google Sheets connector scaffold or MVP, RetailOS Import API, scheduled sync architecture, external record storage, sync jobs, sync errors, and webhook event table.
-
-RetailOS does not connect to “a website” directly as the primary source. It connects to the system behind the website: Shopify, WooCommerce, Magento/Adobe Commerce, BigCommerce, custom backend, POS, ERP, spreadsheet feed, or Import API.
-
-Phase 0.5 acceptance requires users to create a data source, see connection status, trigger sync, create tenant-scoped raw external records, and run validation/consolidation/intelligence pipeline steps after sync where approved.
-
-### Phase 1 — Core Inventory Operating System
-
-Goal: turn RetailOS into the core inventory operating layer.
-
-Adds inventory ledger, stock movement history, adjustments, transfers, approvals, store stock counts, warehouse/store reconciliation, audit trail, inventory search, barcode/SKU lookup, variance tracking, store inventory health, replenishment watchlist, low stock alerts, and overstock alerts.
-
-### Phase 2 — Merchandising & Planning OS
-
-Goal: help merchandising teams plan, buy, allocate, markdown, and improve inventory productivity.
-
-Adds assortment planning, collection planning, buying plan support, allocation planning, replenishment recommendations, size/color curve analysis, category/brand/collection performance, markdown planning, lifecycle tracking, new arrival monitoring, repeat/reorder signals, product productivity metrics, and directional open-to-buy advisory if validated.
-
-Forecasting may begin here but must be labeled directional unless validated with sufficient sales history.
-
-### Phase 3 — Store Operations OS
-
-Goal: coordinate store-level execution around inventory, merchandising, and recovery actions.
-
-Adds store task management, daily briefing, store manager action cards, stock count workflows, transfer receiving, merchandising instructions, campaign execution checklists, visual merchandising tasks, stock issue reporting, store performance review, compliance tracking, and mobile-first store workspace.
-
-This is not full workforce management.
-
-### Phase 4 — Omnichannel Sales & Customer Operations
-
-Goal: unify retail activity across store, ecommerce, Instagram, WhatsApp, and other channels.
-
-Adds order ingestion, online/offline reconciliation, channel performance, customer/order signals, returns/refunds, discount usage, campaign performance, customer segment signals, omnichannel inventory exposure, Instagram/WhatsApp manual order import, and ecommerce connector expansion.
-
-Do not build a full CRM too early; customer intelligence should support merchandising and inventory decisions first.
-
-### Phase 5 — POS / Transaction Layer, If Validated
-
-Goal: add or deeply integrate POS only if strategically justified.
-
-Possible paths include POS Integration Layer, POS Companion, Lightweight POS, or Full RetailOS POS. This phase requires explicit founder approval and dedicated security review before payments or POS are built.
-
-### Phase 6 — Finance & Profitability Intelligence
-
-Goal: translate retail operations into margin, cash, and profitability intelligence.
-
-Adds cost tracking, gross margin analysis, markdown impact, inventory value, dead stock capital tied up, recovered margin, campaign/category/store/brand profitability, purchase cost analysis, cash tied in inventory, finance export, and accountant-facing reports.
-
-This is not full accounting software at first.
-
-### Phase 7 — Wholesale / B2B / Distribution OS
-
-Goal: support brands and retail groups that sell wholesale or distribute to partners.
-
-Adds wholesale customers, B2B price lists, wholesale orders, allocations, partner inventory, consignment tracking, wholesale campaign planning, line sheets, B2B order forms, and showroom support.
-
-### Phase 8 — Advanced Intelligence & Forecasting
-
-Goal: move from descriptive/recovery intelligence into predictive and prescriptive intelligence.
-
-Adds demand forecasting, replenishment forecasting, markdown optimization, sell-through prediction, size curve prediction, transfer/allocation optimization, campaign outcome prediction, buying recommendations, lifecycle forecasting, anomaly detection, and scenario simulation.
-
-Forecasting must be honest: if data is insufficient, RetailOS must say so. Forecasts must show confidence, assumptions, historical basis, data quality, and uncertainty range.
-
-### Phase 9 — Retail Copilot to Retail Agent System
-
-Goal: evolve Retail Copilot from explanation assistant into permissioned workflow agent.
-
-Execution model:
-
-```text
-Recommend
-→ explain
-→ draft
-→ request approval
-→ execute only after permission
-→ audit everything
-```
-
-Agent actions require permission checks, approval checks, audit logs, rollback paths where possible, source references, and confidence display.
-
-### Phase 10 — RetailOS Platform Ecosystem
-
-Goal: RetailOS becomes a platform.
-
-Adds public API, webhooks, developer documentation, integration marketplace, partner connectors, app extensions, custom dashboards, custom workflows, consultant workspace, implementation partner tools, external BI export, and enterprise admin controls.
-
-Security and governance become enterprise-grade.
-
-## 7. Phase Gates
-
-A phase is not complete until all gates pass:
-
-1. Product acceptance: scoped workflows, empty/error states, role flows, no fake static final behavior.
-2. Security acceptance: auth, tenant isolation, RBAC, RLS, secure APIs, safe uploads, audit logs, service-role boundary, security tests.
-3. Quality acceptance: lint, typecheck, unit, integration, e2e where relevant, build, no critical runtime errors.
-4. Data acceptance: persisted data, no hardcoded live metrics, validation records, canonical records where approved, scoring from persisted data.
-5. Deployment acceptance: GitHub branch/PR, CI, preview, production only after approval, env vars, migration path.
-6. Documentation acceptance: README/current state/blockers/docs/acceptance/security decisions updated.
-
-## 8. Security Standard
-
-RetailOS targets Security Grade AAA+:
-
-- secure-by-design;
-- tenant isolation by default;
-- RBAC enforced in UI, API, and database;
-- Supabase RLS on tenant tables;
-- no service role in browser code;
-- no secrets committed;
-- secure upload handling;
-- safe error responses;
-- audit logs for sensitive actions;
-- security tests for critical roles;
-- CI gates for security checks.
-
-Reference baselines: OWASP ASVS, OWASP Web Top 10, OWASP API Security Top 10, and NIST Secure Software Development Framework.
-
-If a feature is not secure, it is not complete.
-
-## 9. Harness Engineering Standard
-
-RetailOS must be built with an agent harness, not one-shot prompts.
-
-The repository must support planning, implementation, validation, review, security checks, documentation updates, current state reports, and known failure tracking.
-
-Required folders include `plans/`, `reports/`, `harness/`, `scripts/`, `tests/`, `docs/`, and `.github/workflows/`.
-
-Every major task should produce plan, implementation, validation report, review report, and PR. Do not call work complete just because files changed.
-
-## 10. Source of Truth
-
-The repo is the source of truth. Do not rely on stale chats, screenshots, prompts, or memory.
-
-Important product knowledge must be stored in `docs/`, `reports/`, `plans/`, and `tests/`.
-
-Runtime truth comes from actual code, merged commits, database state, deployment state, and live validation evidence.
-
-## 11. Design Direction
-
-RetailOS should use the approved premium SaaS visual direction:
-
-- dark navy/near-black sidebar;
-- purple active navigation;
-- white card surfaces;
-- clean tables;
-- soft borders and subtle shadows;
-- premium spacing;
-- calm analytical UI;
-- role-aware workspaces;
-- mobile-first store manager experience;
-- Copilot panel integrated into workflows.
-
-The UI should not look like a generic Tailwind starter, ERP clone, Odoo clone, SAP clone, Bootstrap admin, or random AI dashboard.
-
-Design should feel like a sharp retail analyst reviewed the business overnight and prepared the next actions.
-
-## 12. Naming System
-
-Use these names unless updated by product decision:
-
-- RetailOS;
-- Fashion Retail Operating Intelligence;
-- Consolidation Hub;
-- Operating View;
-- Inventory Recovery Intelligence;
-- Attention Queue;
-- Projectisation Engine;
-- Retail Copilot;
-- Data Confidence Score;
-- Inventory Risk Score;
-- Recovery Opportunity Score;
-- Attention Priority Score;
-- Recovery Index;
-- Inventory Productivity Score.
-
-Do not casually rename modules.
-
-## 13. Active Phase Control
-
-The active phase and active milestone must be declared in `reports/CURRENT_STATE.md`.
-
-The agent must not build outside the active phase. Future phase work may be documented as TODO, but not implemented unless explicitly approved.
-
-## 14. Completion Rule
-
-Never say “complete” unless code is committed or ready for PR, tests pass, build passes, acceptance criteria pass, security gates pass, deployment state is known, and limitations are clearly listed.
-
-Use honest status language such as:
-
-- Implemented but not verified.
-- Verified locally but not deployed.
-- Deployed but not connected to database.
-- Blocked by missing env vars.
-- Blocked by missing GitHub access.
-- Ready for review.
-- Accepted.
-
-Do not overclaim.
-
-## 15. Hard Prohibitions
-
-Do not:
-
-- expose secrets;
-- commit `.env`;
-- use service-role key in client code;
-- bypass RLS;
-- build static dashboards as final working product;
-- silently add future-scope features;
-- create fake “working” flows backed only by constants;
-- deploy without knowing env status;
-- call a protected preview publicly accessible;
-- ignore failing tests, TypeScript errors, lint errors, or runtime 5xxs;
-- remove security checks to pass build;
-- force push without approval;
-- delete large directories without explicit approval.
-
-## 16. Minimum Validation Commands
-
-Before final response on implementation tasks, run:
+The command `continue autonomously` is a persistent repository command. It means continue through the next eligible canonical milestone without asking for permission between already-approved milestones.
+
+When instructed to proceed autonomously:
+
+1. Read this file and the canonical harness YAML.
+2. Inspect `reports/CURRENT_STATE.md`, `reports/NEXT_TASK.md`, blockers, failures, Git history, open PRs, CI, migrations, deployment state, and runtime errors where accessible.
+3. Resolve the next eligible milestone from the canonical sources.
+4. Implement only that milestone.
+5. Run validation appropriate to the change.
+6. Open a PR, wait for CI/preview, merge only when policies permit, and record evidence.
+7. Continue only until the approved stop condition or a mandatory human/technical gate.
+
+The builder supplies evidence but cannot self-certify milestone acceptance.
+
+## Security invariants
+
+- Tenant isolation is mandatory.
+- RBAC must be enforced in UI, API, and database layers where implemented.
+- Supabase RLS must protect tenant tables.
+- `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL`, tokens, and real secrets must never enter browser/client code or commits.
+- Normal user requests must not bypass RLS with service-role access.
+- Public API routes must be explicitly allowlisted and justified.
+- Uploads and imports must be tenant-scoped and fail closed.
+- Copilot must consume permissioned deterministic evidence; it must not become the authoritative calculation engine.
+- High/critical security issues block release unless a human-approved exception exists.
+
+## Engineering invariants
+
+- Applied migrations are immutable.
+- Prefer expand-contract migrations.
+- Destructive migrations require a human gate.
+- Production app rollback does not imply database rollback.
+- Migration history disagreement is a technical stop.
+- Important business rules need one authoritative implementation.
+- Do not introduce fake working flows, fake analytics, fake validation, or static final product data.
+- Do not build Phase 2C, Phase 3, purchasing, WMS, omnichannel, POS, finance, wholesale, payments, or other new modules unless explicitly approved.
+- Do not change repository visibility without explicit human approval.
+
+## Risk routing
+
+Roles are defined in `harness/quality-gates.yaml`:
+
+- `BUILDER`
+- `REPOSITORY_REVIEWER`
+- `DOMAIN_REVIEWER`
+- `SECURITY_REVIEWER`
+- `RELEASE_VERIFIER`
+- `HUMAN_APPROVER`
+
+Evidence classes are defined in `harness/quality-gates.yaml`:
+
+- `STATIC`
+- `UNIT`
+- `INTEGRATION`
+- `DATABASE`
+- `SECURITY`
+- `BROWSER`
+- `PRODUCTION`
+- `DOMAIN`
+- `HUMAN`
+- `COMMERCIAL`
+
+One evidence class must not silently substitute for another. A production route returning `307` is production availability evidence, not authenticated production workflow acceptance.
+
+## Mandatory stop conditions
+
+Stop and report exact evidence if any of these occur:
+
+- failed tenant/location isolation test;
+- double-posted inventory/financial/workflow effect;
+- migration history disagreement;
+- modified already-applied migration;
+- destructive migration requirement;
+- production data risk;
+- unavailable backup or rollback path for a risky operation;
+- critical/high unresolved security issue;
+- broken GitHub Actions, Vercel integration, deployment, or production smoke;
+- real retailer data in synthetic/demo paths;
+- unexplained deterministic calculation mismatch;
+- missing required external credentials or infrastructure access;
+- insufficiently defined next milestone.
+
+Human gates are canonical in `harness/human-gates.yaml`.
+
+## Required commands
+
+Run all supported commands relevant to the change:
 
 ```bash
+git diff --check
+npm run harness:validate
 npm run lint
 npm run typecheck
 npm run test
+npm run test:unit
+npm run test:integration
+npm run test:security
+npm run security
 npm run build
+npm audit --audit-level=moderate
 ```
 
-If security scripts exist, also run:
+For Aso Collective dataset changes, also run:
 
 ```bash
-npm run security
+npm run demo:seed
+npm run demo:verify
+npm run demo:reset
+npm run demo:cleanup
 ```
 
-If e2e/smoke tests exist and are relevant, run the approved smoke tests or explain why they cannot run.
+If a command cannot run, record why. Do not mark it passed.
 
-## 17. Final Response Format
+## Final response format
 
-Every final agent response must include:
+Use:
 
 ```text
 Status:
@@ -405,5 +165,3 @@ GitHub:
 Deployment:
 Next Step:
 ```
-
-Do not hide blockers. Do not invent links. Do not invent successful tests.

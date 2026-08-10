@@ -1,25 +1,33 @@
 Next Task:
-Stop after M0.21.
+Stop after Phase 2B M2.7-M2.9.
 
-Campaign Status:
-- M0.20 - Aso Collective Phase 0 Demo Dataset is released and production-smoked.
-- M0.21 - Phase 0 End-to-End Acceptance and Hardening is released and production-smoked.
-- Phase 0 final decision is `PHASE_0_CONDITIONALLY_ACCEPTED`.
+Autonomy:
+The command `continue autonomously` remains valid for already-approved canonical milestones, but the current instruction is to stop after M2.9.
 
-Autonomous Continuation:
-- The persistent repository command is `continue autonomously`.
-- Future sessions must use that command to resolve and progress the next eligible milestone automatically until a mandatory stop condition is reached.
+Approved Work:
+1. M2.7 - Repository Governance and Release Discipline.
+2. M2.8 - Harness Simplification and Product Reconciliation.
+3. M2.9 - Senior SWE Codebase Readiness Review.
 
-Next Eligible Milestone:
-- The next eligible milestone is the first incomplete Phase 2B engineering-reconciliation milestone defined by the current roadmap.
+Required Outcomes:
+- M2.7-M2.9 have been implemented and are conditionally accepted pending independent reviewer certification.
+- Do not begin the next product milestone until this review boundary is explicitly cleared.
 
-Campaign Stop:
-- Do not start Phase 2B in this campaign.
-- Do not start Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, POS, payments, or production external-system write-back without a new explicit instruction that satisfies the autonomous continuation contract and current phase gates.
+Mandatory Validation:
+- git diff --check
+- npm run harness:validate
+- npm run lint
+- npm run typecheck
+- npm run test
+- npm run test:unit
+- npm run test:integration
+- npm run test:security
+- npm run security
+- npm run build
+- npm audit --audit-level=moderate
 
-Known Carry-Forward Conditions:
-- Supabase CLI migration-history comparison and local `supabase db reset` remain unverified in this shell.
-- Authenticated browser acceptance for the complete Phase 0 journey remains conditional.
-- Authenticated production synthetic workflow remains conditional.
-- Original consultant review remains pending.
-- Real retailer pilot validation remains pending.
+Aso Dataset Validation:
+- Run demo seed/verify/reset/cleanup only if dataset files or dataset logic change.
+
+Stop Rule:
+Stop after M2.9. Do not begin M2.11, Phase 2C, Phase 3, purchasing, WMS, omnichannel, POS, finance, wholesale, payments, or other new product modules without explicit approval.

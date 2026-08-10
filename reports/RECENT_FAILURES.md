@@ -1,100 +1,29 @@
 # Recent Failures
 
-## 2026-08-09 - M0.20 dataset generator expected-count mismatches
+## Active recent failures
 
-- **Observed:** first `npm run demo:*` lifecycle run failed because the generator created 60 styles and 240 SKUs while fixed assertions still expected 54 styles and 216 SKUs.
-- **Cause:** stale expected constants after using the final catalogue hierarchy.
-- **Resolution:** updated the fixed assertions to the generated deterministic counts, which remain within the required 40-80 styles and 150-350 SKUs range.
-- **Status:** resolved. `npm run demo:seed`, `npm run demo:verify`, `npm run demo:reset`, and `npm run demo:cleanup` pass.
+None currently active.
 
-## 2026-08-09 - M0.20 validation exposed new dependency advisories
+## Historical failures retained for context
 
-- **Observed:** `npm audit --audit-level=moderate` reported current advisories for `postcss`, `js-yaml`, and `nanoid`.
-- **Cause:** new advisory data affected transitive dependency versions in the lockfile.
-- **Resolution:** pinned patched transitive versions through package overrides: `postcss@8.5.26`, `js-yaml@4.3.1`, and `nanoid@3.3.17`, then refreshed `package-lock.json`.
-- **Status:** resolved. `npm audit --audit-level=moderate` reports `found 0 vulnerabilities`.
+### PR #45 dependency audit failure
 
-## 2026-08-09 - M0.20 evidence update removed command literal from NEXT_TASK
+Status: resolved.
 
-- **Observed:** `tests/unit/m0-20-aso-dataset.test.ts` failed because `reports/NEXT_TASK.md` no longer contained the literal `continue autonomously` command after the M0.20 evidence update.
-- **Cause:** the evidence update replaced `NEXT_TASK.md` for M0.21 and omitted the autonomous command reminder.
-- **Resolution:** restored the literal command in `reports/NEXT_TASK.md`.
-- **Status:** resolved locally; validation rerun required.
+Evidence: dependency audit failed during Phase 2A release and was resolved by patching Next/PostCSS/Sharp/transitive dependency resolution. Later validation reported `npm audit --audit-level=moderate` with 0 vulnerabilities.
 
-## 2026-08-02 - PR #45 security workflow failed on dependency audit
+### Authentication redirect/setup-state failures
 
-- **Observed:** GitHub Security foundation checks failed on `npm audit --audit-level=moderate`.
-- **Cause:** current advisories flagged vulnerable transitive versions of `next`, `postcss`, `sharp`, and `brace-expansion`.
-- **Resolution:** upgraded `next` and `eslint-config-next` to `16.2.12`, raised the `postcss` override to `8.5.18`, forced `sharp` to `0.35.3`, refreshed `package-lock.json`, and reran validation.
-- **Status:** resolved locally. `npm audit --audit-level=moderate` now reports `found 0 vulnerabilities`.
+Status: resolved for the tested setup path.
 
-## 2026-07-18 - Phase 2 integration test exposed merchandising visibility and audit evidence gaps
+Evidence: earlier Supabase hosted confirmation URL/configuration caused redirect/setup-state failures. Later setup testing succeeded after configuration and application fixes.
 
-- **Observed:** first Phase 2 integration run failed because a location-scoped viewer had no location assignment and a merchandising manager could not read audit events.
-- **Cause:** the test setup did not model the intended location-scoped viewer path, and audit verification was attempted with a role that does not have `audit.view`.
-- **Resolution:** assigned the viewer to the test location and verified audit evidence as owner.
-- **Status:** resolved. Focused Phase 2 integration rerun passed.
+### Import API production smoke 500
 
-## 2026-07-18 - Phase 1 hosted workflow smoke cleanup missed event log dependency
+Status: resolved for the tested Import API smoke.
 
-- **Observed:** live Phase 1 workflow smoke passed its workflow assertions but exited non-zero during cleanup.
-- **Cause:** synthetic `event_log` rows referenced synthetic locations, so deleting locations before event-log cleanup violated a foreign-key constraint.
-- **Resolution:** added `event_log` to the synthetic cleanup order before deleting locations and reran the smoke.
-- **Status:** resolved. Rerun passed and reported synthetic cleanup passed.
+Evidence: production Import API smoke initially returned 500 and later passed after secret/env alignment and redeploy.
 
-## 2026-07-16 — Production Import API database authentication failure after Shopify worker merge
+## Failure classification rule
 
-- **Observed:** fresh production Import API smoke against `https://retailos-ten.vercel.app` returned `500 internal_error`.
-- **Correlation ID:** `f9424e58-9bad-4b9e-8300-db956923fafa`.
-- **Deployment:** `dpl_GRtstzmsa2uo5fd3XUdPyPU6VvZL`.
-- **Runtime evidence:** Vercel runtime logs showed Postgres error `28P01` with message `password authentication failed for user "postgres"`.
-- **Cause:** Production `DATABASE_URL` value was stale/invalid for Supabase pooler authentication.
-- **Resolution:** replaced Production `DATABASE_URL` from ignored local secret management without printing the value, redeployed production as `dpl_4CqnHGwofAfUMYKrM8ezBYWZopfE`, reran smoke, and verified success.
-- **Status:** resolved. Fresh smoke passed and post-smoke runtime error logs for the current deployment showed no error/fatal entries in the inspected window.
-
-## 2026-07-16 — First M0-R smoke attempt failed before Import API due local TLS/Supabase identity setup
-
-- **Observed:** first M0-R smoke attempt failed while creating the synthetic Supabase smoke identity with `ERR_SSL_SSL/TLS_ALERT_BAD_RECORD_MAC`.
-- **Cause:** transient local TLS/fetch failure before the Import API request reached production.
-- **Resolution:** reran the smoke. The second run reached production and exposed the real Import API database-auth failure recorded above.
-- **Status:** resolved as a transient local attempt; not counted as Import API application success or failure.
-
-## 2026-07-15 — Hosted Phase 0.5 migration blocked by direct Supabase database host
-
-- **Observed:** applying Phase 0.5 pipeline handoff and record-type mapping SQL from the local machine failed before SQL execution with DNS resolution error for the direct Supabase database host.
-- **Cause:** local ignored `DATABASE_URL` pointed at the direct `db.<project>.supabase.co` host instead of the working pooler/session-pooler host.
-- **Resolution:** use Supabase pooler/session-pooler URL in ignored env or apply reviewed SQL through Supabase SQL Editor, then run hosted checks. Later hosted Phase 0.5 schema/RLS verification passed.
-- **Status:** resolved for hosted verification; CLI migration-history reconciliation remains blocked until Supabase CLI is installed/authenticated in this shell.
-
-## 2026-07-15 — Import API authenticated smoke blocked by Supabase database URL configuration
-
-- **Observed:** unauthenticated Import API POST failed closed with `401 authentication_required`, but authenticated smoke returned `500 internal_error`.
-- **Evidence:** runtime logs showed both direct-host lookup failures and later password authentication failures for user `postgres`.
-- **Cause:** deployed `DATABASE_URL` used invalid/unreliable Supabase database connection details.
-- **Resolution:** corrected Vercel `DATABASE_URL`, rotated smoke secret, redeployed production, fixed the smoke script idempotency replay, and reran production smoke.
-- **Status:** resolved in PR #30; regression recurred on July 16 and was resolved again during M0-R.
-
-## 2026-07-11 — Onboarding location save rejected uppercase retail codes
-
-- **Observed:** users could confirm email, create organization, and reach Location step, but values like `LAG-LEK` returned “Location needs attention.”
-- **Cause:** server action uppercased codes while database constraints required lowercase internal codes.
-- **Resolution:** normalize submitted location/brand codes to lowercase before persistence, render readable uppercase, make duplicate-code retry idempotent, add tenant-scoped reads, and add back/clickable stepper navigation.
-- **Status:** resolved.
-
-## 2026-07-11 — Hosted Phase 0 schema verification confirmed missing migrations
-
-- **Observed:** hosted Supabase was missing Phase 0 relation/view and RPC endpoints.
-- **Cause:** secure foundation schema was present but later Phase 0 migrations were not applied/visible.
-- **Resolution:** generated and applied reviewed hosted migration bundle, reran hosted schema/RLS verification, and completed setup/onboarding verification.
-- **Status:** resolved for hosted schema/setup-state; CLI history was later repaired through SQL fallback, but M0-R still needs CLI history verification.
-
-## 2026-07-10 — Preview signup confirmation used localhost and onboarding looped
-
-- **Observed:** hosted preview signup sent confirmation links to `localhost:3000`, and authenticated preview reached `/onboarding?error=setup-state` with redirect loops.
-- **Cause:** signup did not provide deployed `emailRedirectTo`, confirmation route only handled `token_hash`, `/` discarded `code`, and setup-state errors redirected into pages that re-triggered setup-state failures.
-- **Resolution:** signup now supplies deployed `/auth/confirm`, confirmation exchanges PKCE `code` links and `token_hash`, `/` forwards confirmation parameters, and setup-state failures render `/setup-error`.
-- **Status:** resolved.
-
-## Older resolved failures
-
-Historical local timeout, audit, phase-leak, and scaffold validation failures remain resolved. Do not remove this file; every validation, migration, deployment, tenant-isolation, or security failure must record date, environment, observed result, cause if known, owner/action, and status without secrets.
+Keep active failures separate from historical resolved failures. Do not let old milestone names drive the current roadmap; use `harness/*.yaml`.

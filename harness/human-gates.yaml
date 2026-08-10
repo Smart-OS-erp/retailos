@@ -1,0 +1,40 @@
+schema_version: 1
+canonical: true
+mandatory_human_gates:
+  - id: repository-visibility
+    description: "Changing repository public/private visibility."
+  - id: destructive-production-migration
+    description: "Dropping, rewriting, or destructively transforming production schema/data."
+  - id: production-customer-data
+    description: "Deleting, exporting, importing, or materially changing real production/customer data."
+  - id: paid-service-or-plan
+    description: "Accepting paid service terms, plan upgrades, marketplace subscriptions, or commercial contracts."
+  - id: legal-privacy-terms
+    description: "Legal, privacy, pricing, contract, or terms-of-service acceptance."
+  - id: external-writeback
+    description: "Writing to external production systems such as ecommerce, POS, payments, accounting, or messaging."
+  - id: payment-or-pos
+    description: "Payment processing, POS fiscal/tax decisions, or payment-provider integration."
+  - id: lower-security-boundary
+    description: "Weakening tenant isolation, auth, RLS, RBAC, secret handling, branch protection, or CI gates."
+  - id: original-consultant-confirmation
+    description: "Claiming ORIGINAL_CONSULTANT_CONFIRMED validation."
+  - id: pilot-or-customer-validation
+    description: "Claiming PILOT_VALIDATED or CUSTOMER_VALIDATED validation."
+technical_stop_conditions:
+  - id: cross-tenant-failure
+    description: "Failed tenant or location isolation test."
+  - id: double-posting
+    description: "Double-posted inventory, financial, or workflow effect."
+  - id: migration-history-disagreement
+    description: "Supabase/local migration history disagreement."
+  - id: modified-applied-migration
+    description: "Modification to an already-applied migration."
+  - id: critical-security-issue
+    description: "Unresolved critical or high security issue."
+  - id: broken-ci-or-deployment
+    description: "Broken GitHub Actions, Vercel integration, production smoke, or runtime deployment health."
+  - id: real-data-in-synthetic-path
+    description: "Real retailer data appearing in synthetic fixtures or demo paths."
+  - id: deterministic-mismatch
+    description: "Unexplained deterministic calculation mismatch."

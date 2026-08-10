@@ -6,16 +6,17 @@ RetailOS is a secure operating system for African fashion retail. It converts fr
 
 ## Active product outcome
 
-The active campaign is the reconciled end of Phase 0 - Foundation: Inventory Recovery Intelligence.
+The active campaign is Phase 2B - Engineering Reconciliation, Domain Validation and Pilot Readiness.
 
-The final Phase 0 milestones are:
+The approved Phase 2B milestones for the current campaign are:
 
-- M0.20 - Aso Collective Phase 0 Demo Dataset.
-- M0.21 - Phase 0 End-to-End Acceptance and Hardening.
+- M2.7 - Repository Governance and Release Discipline.
+- M2.8 - Harness Simplification and Product Reconciliation.
+- M2.9 - Senior SWE Codebase Readiness Review.
 
 The historical Phase 0.5 label remains represented in migrations, reports, and docs for development history. Its capabilities are now treated as Phase 0 integration and data-foundation milestones. This is a roadmap reconciliation, not a claim that the work was rebuilt.
 
-The next milestone after M0.21 must remain the first incomplete Phase 2B engineering-reconciliation milestone defined by the current roadmap. Do not start Phase 2B during the M0.20/M0.21 campaign.
+M0.20 is accepted. M0.21 is conditionally accepted. M2.10 Retail Operating Model v0.9 is satisfied by M0.20 evidence and remains at `INTERIM_DOMAIN_BASELINE`.
 
 ## Product principles
 
@@ -34,18 +35,20 @@ The next milestone after M0.21 must remain the first incomplete Phase 2B enginee
 
 When documents disagree, use this order:
 
-1. The canonical roadmap or milestone source defined by the repository.
-2. Explicit milestone dependency status.
-3. `reports/CURRENT_STATE.md`.
-4. `reports/NEXT_TASK.md`.
-5. `reports/OPEN_BLOCKERS.md` and `reports/RECENT_FAILURES.md`.
-6. Git, migration, deployment, runtime, and validation evidence.
-7. `AGENTS.md` for implementation and security constraints.
-8. This document for product intent.
-9. Specialized business, intelligence, security, and design documents.
+1. `harness/roadmap.yaml`.
+2. `harness/milestones.yaml`.
+3. `harness/quality-gates.yaml`.
+4. `harness/human-gates.yaml`.
+5. `reports/CURRENT_STATE.md`.
+6. `reports/NEXT_TASK.md`.
+7. `reports/OPEN_BLOCKERS.md` and `reports/RECENT_FAILURES.md`.
+8. Git, migration, deployment, runtime, and validation evidence.
+9. `AGENTS.md` for implementation and security constraints.
+10. This document for product intent.
+11. Specialized business, intelligence, security, and design documents.
 
 Contradictions must be reconciled when safe and clearly supported by repository evidence. If reconciliation requires a commercial, legal, product-owner, destructive, or consultant decision, stop and report the blocker.
 
 ## Roadmap boundary
 
-Future phases are context, not blanket implementation authority. Do not start Phase 2B, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, POS, payments, external-system write-back, or later-platform work unless the active milestone explicitly authorizes it.
+Future phases are context, not blanket implementation authority. Do not start M2.11, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, POS, payments, external-system write-back, or later-platform work unless the active milestone explicitly authorizes it.
