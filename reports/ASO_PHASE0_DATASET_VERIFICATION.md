@@ -1,6 +1,7 @@
 # Aso Collective Phase 0 Dataset Verification
 
 Dataset Version: ASO_PHASE0_DATASET_V1
+Active Dataset Versions: ASO_PHASE0_DATASET_V1, ASO_INVENTORY_OPERATIONS_V2, ASO_MERCHANDISING_PILOT_V3
 Reference Date: 2026-07-31
 Status: passed
 Organisation: Aṣọ Collective
