@@ -15,8 +15,9 @@ Approved scope for this campaign:
 - M2.7 — Repository Governance and Release Discipline.
 - M2.8 — Harness Simplification and Product Reconciliation.
 - M2.9 — Senior SWE Codebase Readiness Review.
+- M2.11 — Aso Inventory + Merchandising Dataset Expansion.
 
-Stop after M2.9. Do not begin M2.11 or later without explicit approval.
+Stop after M2.11. M2.12 requires original consultant or approved independent domain-review evidence.
 
 Current verified product state:
 
@@ -25,6 +26,7 @@ Current verified product state:
 - Phase 1 core inventory operating workflows exist and were deployed.
 - Phase 2A M2.0-M2.6 light merchandising intelligence and action planning exists and was deployed.
 - M2.10 Retail Operating Model v0.9 is already satisfied by M0.20 evidence.
+- M2.11 Aso Inventory + Merchandising Dataset Expansion is accepted.
 
 ## Stack
 
@@ -152,6 +154,7 @@ Every release should record structured evidence with commit SHA, deployment ID, 
 ## Business-rule pointers
 
 - Product source: `docs/PRODUCT_SOURCE_OF_TRUTH.md`
+- Business rule contract: `docs/domain/BUSINESS_RULE_CONTRACT.md`
 - Phase 0 scope: `docs/PHASE_0_SCOPE.md`
 - Phase 1 scope: `docs/PHASE_1_SCOPE.md`
 - Phase 2 scope: `docs/PHASE_2_SCOPE.md`
@@ -177,4 +180,5 @@ Do not treat README as the project database.
 - Original consultant review and real retailer pilot validation remain pending.
 - Supabase CLI migration-history/reset verification remains pending.
 - Phase 2A recommendations are directional; they are not advanced forecasting or autonomous execution.
+- M2.12 is not approved without domain-review evidence.
 - Purchasing, WMS, omnichannel, POS, finance, wholesale, payments, and Phase 2C are not approved in the current campaign.

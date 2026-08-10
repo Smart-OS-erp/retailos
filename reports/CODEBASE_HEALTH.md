@@ -10,8 +10,8 @@ Measured with `npm run code-health`.
 
 | Metric | Value |
 | --- | ---: |
-| Tracked source/test/script files | 205 |
-| Total tracked lines | 29,558 |
+| Tracked source/test/script files | 209 |
+| Total tracked lines | 30,219 |
 | Files >= 250 lines | 25 |
 | `any` occurrences | 9 |
 | `@ts-ignore` / `@ts-expect-error` occurrences | 2 |
@@ -27,8 +27,8 @@ Measured with `npm run code-health`.
 | 1,349 | `src/app/globals.css` |
 | 1,060 | `tests/integration/phase0-5-integration-hub.test.ts` |
 | 806 | `tests/integration/phase1-inventory-core.test.ts` |
+| 749 | `scripts/demo/aso-collective.ts` |
 | 743 | `tests/integration/phase0-consolidation-hub.test.ts` |
-| 704 | `scripts/demo/aso-collective.ts` |
 | 519 | `tests/integration/phase0-end-to-end-acceptance.test.ts` |
 | 516 | `scripts/security/live-phase1-workflow-smoke.ts` |
 | 447 | `src/app/inventory/actions.ts` |
@@ -37,6 +37,7 @@ Measured with `npm run code-health`.
 | 390 | `src/lib/integrations/scheduled-sync.ts` |
 | 372 | `src/app/inventory/transfers/[transferId]/page.tsx` |
 | 358 | `src/app/inventory/counts/[countId]/page.tsx` |
+| 344 | `src/lib/business-rules/retail-rules.ts` |
 | 340 | `tests/integration/phase0-foundation-expansion.test.ts` |
 
 ## Largest migrations

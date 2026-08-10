@@ -1,6 +1,10 @@
 # Aso Collective Phase 0 Demo Dataset
 
-Dataset version: `ASO_PHASE0_DATASET_V1`
+Dataset versions:
+
+- `ASO_PHASE0_DATASET_V1` - original Phase 0 dataset.
+- `ASO_INVENTORY_OPERATIONS_V2` - Phase 1 inventory-operations expansion.
+- `ASO_MERCHANDISING_PILOT_V3` - Phase 2A merchandising-intelligence expansion.
 
 Reference date: `2026-07-31`
 
@@ -9,6 +13,8 @@ Data classification: synthetic demo data only.
 ## Purpose
 
 Aso Collective is one coherent deterministic synthetic African fashion retailer for exercising the Phase 0 data and intelligence path. It is not real retailer data and must not be used as proof of recovered commercial value.
+
+The later V2/V3 files extend the same synthetic retailer. They do not replace V1 and do not create a second demo company.
 
 ## Organisation
 
@@ -34,7 +40,7 @@ The Ecommerce Pool is modelled as an inventory location only. It does not imply 
 
 ## Dataset shape
 
-- 5 locations.
+- 5 locations / active selling-location pools.
 - 6 brands/collections.
 - 60 styles/products.
 - 240 style-colour-size SKUs.
@@ -73,7 +79,61 @@ data/demo/aso-collective/
   inventory/
   sales/
   expected-results/
+  versions/
+    ASO_INVENTORY_OPERATIONS_V2/
+    ASO_MERCHANDISING_PILOT_V3/
 ```
+
+## V2 inventory operations coverage
+
+`ASO_INVENTORY_OPERATIONS_V2` covers Phase 1 behavior with deterministic synthetic scenarios:
+
+- receipt and selling lifecycle;
+- fast seller approaching stockout;
+- zero/near-zero available inventory;
+- overstock and wrong-door stock;
+- Lagos to Abuja and Abuja to Ecommerce Pool transfer candidates;
+- transfer requested/approved/dispatched/received evidence;
+- partial transfer receipt and discrepancy review;
+- adjustment and count/recount/closure evidence;
+- damaged/quarantined stock;
+- imported negative inventory discrepancy;
+- returns mismatch, size imbalance, colour imbalance, and healthy balanced inventory.
+
+This is not WMS, purchasing, POS, or omnichannel order management.
+
+## V3 merchandising coverage
+
+`ASO_MERCHANDISING_PILOT_V3` covers Phase 2A merchandising evidence:
+
+- strong/average/weak sell-through;
+- stockout, healthy, and overstock weeks-of-cover scenarios;
+- newness/core/basic protection;
+- aged seasonal and 26+ week inventory;
+- high-value risk;
+- transfer-before-markdown, ecommerce exposure, controlled markdown, campaign, hold/monitor, and no-recommendation paths;
+- cost-confidence cases for verified/imported/estimated/missing cost;
+- merchandising recommendation, markdown draft, and merchandising plan evidence.
+
+The validation level remains `INTERIM_DOMAIN_BASELINE`. It is not original consultant confirmation, pilot validation, customer validation, or proof of recovered customer value.
+
+## Golden expected outcomes
+
+`versions/ASO_MERCHANDISING_PILOT_V3/golden-outcomes.json` stores independently derived deterministic outcomes for selected scenarios. The fixture records:
+
+- rule version;
+- available quantity;
+- net units sold;
+- sell-through;
+- weighted average weekly net sales;
+- weeks of cover;
+- merchandise age;
+- inventory risk state;
+- recovery recommendation;
+- planning signal;
+- projectisation eligibility.
+
+Tests compare the rule reference implementation with these expected outcomes. Expected recovery remains expected synthetic value, not actual recovered value.
 
 ## Commands
 
@@ -85,3 +145,11 @@ npm run demo:cleanup
 ```
 
 The commands are deterministic, idempotent, and synthetic-only. They write local ignored seed state under `.tmp/demo/aso-collective` and fail non-zero on expected-count or formula mismatches.
+
+`npm run demo:verify` also checks that the active dataset version chain is present:
+
+```text
+ASO_PHASE0_DATASET_V1
+→ ASO_INVENTORY_OPERATIONS_V2
+→ ASO_MERCHANDISING_PILOT_V3
+```

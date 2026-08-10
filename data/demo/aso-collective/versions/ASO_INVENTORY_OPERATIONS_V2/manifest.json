@@ -1,0 +1,30 @@
+{
+  "dataset_version": "ASO_INVENTORY_OPERATIONS_V2",
+  "extends": "ASO_PHASE0_DATASET_V1",
+  "reference_date": "2026-07-31",
+  "synthetic_only": true,
+  "purpose": "Phase 1 inventory operations coverage for Aso Collective without introducing WMS or future modules.",
+  "scale": {
+    "locations": 5,
+    "styles": 60,
+    "sku_variants": 240,
+    "active_selling_location_pools": 5,
+    "commercial_history_months": 10
+  },
+  "supported_modules": [
+    "inventory_positions",
+    "inventory_movements",
+    "stock_adjustments",
+    "transfer_requests",
+    "stock_counts",
+    "reconciliation_issues"
+  ],
+  "unsupported_modules": [
+    "warehouse_management_system",
+    "purchase_orders",
+    "pos",
+    "finance",
+    "omnichannel_order_management"
+  ],
+  "rule_version": "retailos-operating-model-v0.9.0"
+}
