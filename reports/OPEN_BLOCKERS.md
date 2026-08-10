@@ -2,13 +2,13 @@
 
 ## Active technical blockers
 
-### Supabase CLI migration-history/reset verification
+### Supabase migration-history/reset verification
 
-Status: open.
+Status: open; no longer blocked by missing CLI.
 
-Evidence: the local shell does not have verified Supabase CLI migration-history/reset evidence recorded. Hosted SQL checks have passed for prior milestones, but that is not equivalent to `supabase migration list`, `supabase db reset`, or local migration-history reconciliation.
+Evidence: Supabase CLI `2.113.0` is installed as a project dependency and `npx supabase --version` passes. `npx supabase link --project-ref djvqhjgkcljdiuicdtpx` fails because the current Supabase CLI account lacks privileges for the target project. `docker`/`podman` are not available on PATH, so local `supabase db reset` cannot run in this shell.
 
-Owner action: install/authenticate Supabase CLI, link the approved project, run safe migration-history/reset verification, and record evidence.
+Hosted database inspection through approved ignored `DATABASE_URL` found repository migrations `20` and hosted migration-history rows `9`; key Phase 1/2 relations exist, so this appears to be incomplete migration-history repair after manual SQL application. Do not fake history. Required action: authenticate Supabase CLI with a project-authorized Supabase account, verify exact applied state, then use official migration-history repair where appropriate.
 
 ### Main branch protection
 
@@ -28,10 +28,10 @@ Owner/action: periodically triage Dependabot PRs. PR #57 currently has a failing
 
 ### Phase 0 conditional acceptance gates
 
-Status: open.
+Status: partially closed by hosted synthetic Aso evidence.
 
-- Authenticated browser acceptance incomplete.
-- Authenticated production synthetic workflow incomplete.
+- Authenticated browser acceptance closed for hosted synthetic Aso workflow on 2026-08-10.
+- Authenticated production synthetic workflow closed for hosted synthetic Aso workflow on 2026-08-10.
 - Original consultant review pending.
 - Real retailer pilot pending.
 

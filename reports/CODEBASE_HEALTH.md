@@ -10,12 +10,12 @@ Measured with `npm run code-health`.
 
 | Metric | Value |
 | --- | ---: |
-| Tracked source/test/script files | 209 |
-| Total tracked lines | 30,219 |
+| Tracked source/test/script files | 213 |
+| Total tracked lines | 31,370 |
 | Files >= 250 lines | 25 |
 | `any` occurrences | 9 |
 | `@ts-ignore` / `@ts-expect-error` occurrences | 2 |
-| Non-null assertion member uses (`!.`) | 158 |
+| Non-null assertion member uses (`!.`) | 166 |
 | `eslint-disable` occurrences | 1 |
 | `TODO` / `FIXME` occurrences | 11 |
 
@@ -29,6 +29,7 @@ Measured with `npm run code-health`.
 | 806 | `tests/integration/phase1-inventory-core.test.ts` |
 | 749 | `scripts/demo/aso-collective.ts` |
 | 743 | `tests/integration/phase0-consolidation-hub.test.ts` |
+| 570 | `scripts/demo/hosted-aso.ts` |
 | 519 | `tests/integration/phase0-end-to-end-acceptance.test.ts` |
 | 516 | `scripts/security/live-phase1-workflow-smoke.ts` |
 | 447 | `src/app/inventory/actions.ts` |

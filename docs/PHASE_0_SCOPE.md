@@ -13,7 +13,7 @@ The final Phase 0 milestones are:
 - M0.20 - Aso Collective Phase 0 Demo Dataset.
 - M0.21 - Phase 0 End-to-End Acceptance and Hardening.
 
-M0.20 is accepted. M0.21 is conditionally accepted. Current active work has moved to Phase 2B M2.7-M2.9 under `harness/milestones.yaml`.
+M0.20 is accepted. M0.21 is conditionally accepted. Current active work has moved to Phase 2B after M2.11 acceptance under `harness/milestones.yaml`; M2.12 remains gated by domain review.
 
 ## In scope
 
@@ -45,7 +45,7 @@ Latest inspected production deployment before Phase 2B:
 - Seeded demo analytics presented as real recovered customer value.
 - Static dashboards or product screens presented as final product behavior.
 - Finalizing navigation structure, dashboard KPIs, module grouping, terminology, statuses, workflows, roles, suppliers, warehouse/finance terminology, demo records, or other retail-domain assumptions without consultant validation and product-discovery decisions.
-- Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, POS, payments, wholesale, accounting, advanced forecasting, advanced agent execution, marketplace publishing, autonomous Copilot actions, or production external-system write-back during the current Phase 2B M2.7-M2.9 campaign.
+- Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, POS, payments, wholesale, accounting, advanced forecasting, advanced agent execution, marketplace publishing, autonomous Copilot actions, or production external-system write-back during the current pre-M2.12 technical closure campaign.
 - Implementing any capability beyond the active milestone.
 
 ## M0.9 UI foundation boundary

@@ -40,7 +40,7 @@ No evidence was found of committed secrets, client-side service-role usage, or a
 - Test/evidence required: successful branch protection API read showing required checks and force-push/delete blocks.
 - Status after M2.11 campaign: remediated; branch protection was enabled and verified by API.
 
-#### P1-3 — Business-rule authority is still split across SQL, TypeScript, UI, and tests
+#### P1-3 — Business-rule authority was split across SQL, TypeScript, UI, and tests
 
 - Evidence: inventory/risk/confidence/productivity logic appears in migrations, `src/lib/intelligence/*`, `src/lib/ui/status.ts`, and integration tests.
 - Affected files/modules: `supabase/migrations/`, `src/lib/intelligence/`, `src/lib/ui/status.ts`, `tests/integration/*`.
@@ -49,6 +49,7 @@ No evidence was found of committed secrets, client-side service-role usage, or a
 - Risk of remediation: medium/high; requires careful compatibility tests.
 - Test/evidence required: deterministic fixtures proving SQL and TypeScript agree on key formulas.
 - Status after M2.11 campaign: remediated to pre-pilot baseline with `docs/domain/BUSINESS_RULE_CONTRACT.md`, `src/lib/business-rules/retail-rules.ts`, V3 golden outcomes, and domain consistency tests.
+- Status after pre-M2.12 technical closure: strengthened with `src/lib/business-rules/rule-registry.ts` and database parity tests. SQL `product_productivity_metrics.sell_through_rate_90` remains classified as historical compatibility rather than equivalent net sell-through.
 
 #### P1-4 — Large action/test modules increase regression risk before pilot
 
@@ -116,4 +117,4 @@ No evidence was found of committed secrets, client-side service-role usage, or a
 - No applied migrations were modified.
 - No repository visibility change was made.
 - No product modules were added.
-- Branch protection could not be verified/enabled with current API access.
+- Branch protection was later enabled and verified by API. Historical API failures are preserved in earlier release evidence.

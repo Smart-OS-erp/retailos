@@ -76,3 +76,28 @@ history:
   - label: "Phase 0.5"
     current_mapping: "Phase 0 integration/data-foundation history"
     rule: "Preserve in migrations/reports as historical evidence; do not treat as a conflicting current roadmap phase."
+strategic_invariants:
+  - id: wedge-vs-end-state
+    required: true
+    statement: "Inventory recovery intelligence is RetailOS's initial wedge, not the final product scope."
+    implementation_rule: "Future phases are roadmap context only; existence of a future phase is not implementation authority."
+  - id: shared-os-kernel
+    required: true
+    statement: "Future modules must extend shared identity, tenant isolation, permissions, policy, approvals, workflow states, audit, provenance, events, jobs, attention/tasks, and business-rule versioning instead of reinventing them."
+    implementation_rule: "Do not create empty abstractions prematurely; encode and reuse kernel capabilities when the implementation becomes real."
+  - id: country-awareness-in-core
+    required: true
+    statement: "Country, currency, locale, timezone, pricing mode, tax mode/configuration, operating calendar, and location semantics must remain core-capable rather than POS-only concerns."
+    implementation_rule: "Do not implement future fiscal logic before approval; preserve primitives and record gaps."
+  - id: planning-execution-boundary
+    required: true
+    statement: "Merchandise planning recommends ranges, allocations, replenishment, and targets; purchasing/supplier/WMS workflows execute purchase orders, receipts, landed cost, and physical movement."
+    implementation_rule: "Planning recommendations must not silently execute purchasing, supplier, inventory movement, price, or external-system changes."
+  - id: retailer-validation-gates-expansion
+    required: true
+    statement: "Synthetic Aso data validates engineering consistency only; broad expansion requires real retailer/product validation."
+    implementation_rule: "Do not let roadmap automation start Phase 2C or later major modules before required pilot/product-decision gates."
+  - id: phase-12-optional
+    required: true
+    statement: "Retail network and embedded services are optional strategic expansion, not inevitable scope."
+    implementation_rule: "Phase 12 must remain optional and human-gated."

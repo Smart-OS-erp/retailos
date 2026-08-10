@@ -4,7 +4,7 @@ RetailOS is secure operating intelligence for African fashion retail. It helps r
 
 The first wedge is inventory recovery intelligence: validate messy retail data, consolidate it, identify inventory risk, explain recovery opportunities, projectise action, and support permission-aware operating workflows.
 
-RetailOS is not a generic ERP, POS, accounting package, WMS, static dashboard, or chatbot.
+RetailOS is not positioned as a generic ERP, POS, accounting package, WMS, static dashboard, or chatbot. The initial wedge is inventory recovery intelligence; the end state may progressively absorb approved operating, system-of-record, and transactional capabilities required for a fashion retailer operating system.
 
 ## Current maturity
 
@@ -106,7 +106,8 @@ Supabase CLI migration-history/reset verification remains an explicit open gap u
 
 Aso Collective is a deterministic synthetic African fashion retailer dataset.
 
-- Dataset version: `ASO_PHASE0_DATASET_V1`
+- Current dataset version: `ASO_MERCHANDISING_PILOT_V3`
+- Historical lineage: `ASO_PHASE0_DATASET_V1` → `ASO_INVENTORY_OPERATIONS_V2` → `ASO_MERCHANDISING_PILOT_V3`
 - Data classification: synthetic demo data only
 - Domain validation level: `INTERIM_DOMAIN_BASELINE`
 

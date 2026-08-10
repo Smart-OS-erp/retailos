@@ -10,8 +10,10 @@ This contract makes currently implemented business rules explicit and traceable.
 
 - Authoritative domain language: `docs/domain/RETAIL_OPERATING_MODEL_V0_9.md`.
 - Typed reference implementation: `src/lib/business-rules/retail-rules.ts`.
+- Machine-readable implementation map: `src/lib/business-rules/rule-registry.ts`.
 - Deterministic golden fixtures: `data/demo/aso-collective/versions/ASO_MERCHANDISING_PILOT_V3/golden-outcomes.json`.
 - Consistency tests: `tests/domain/retail-rule-contract.test.ts`.
+- Database parity tests: `tests/integration/business-rule-database-parity.test.ts`.
 - SQL implementations: Supabase migrations and views must expose rule/version fields where available and be mapped back to this contract.
 
 ## Covered rules
@@ -36,6 +38,9 @@ This contract makes currently implemented business rules explicit and traceable.
 - Existing SQL views may use historical field names such as `sell_through_rate_90`. These remain compatibility behavior until a later migration/version explicitly changes them.
 - The TypeScript rule registry is a reference implementation and test oracle, not a replacement for RLS-protected SQL materialization.
 - UI and Copilot must consume persisted/system-derived results and cite rule/version evidence; they must not recompute authoritative metrics.
+- Current database parity result: `inventory.available_quantity` has equivalent SQL/TypeScript parity through `public.current_inventory_balances.available_quantity`.
+- Current database compatibility result: `public.product_productivity_metrics.sell_through_rate_90` is a historical 90-day productivity percentage, not the v0.9 net sell-through formula. It must be labeled with its window/mode and must not be presented as canonical net sell-through.
+- Weighted weekly sales, weeks of cover, and merchandise age are reference/golden validated but do not yet have equivalent SQL outputs.
 
 ## Unsupported precision
 

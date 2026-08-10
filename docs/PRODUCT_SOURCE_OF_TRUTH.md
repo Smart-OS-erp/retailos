@@ -22,11 +22,17 @@ M0.20 is accepted. M0.21 is conditionally accepted. M2.10 Retail Operating Model
 ## Product principles
 
 - Trust before novelty: show provenance, freshness, confidence, and limitations.
+- Wedge before end state: inventory recovery intelligence is the initial wedge, not the final product boundary.
 - Recovery before expansion: unlock value from existing inventory before adding broad platform surface area.
 - Tenant ownership: organizations control their data and access.
 - Explainable intelligence: every conclusion must be traceable to permitted inputs and business rules.
 - Local operating reality: account for locations, currencies, channels, unreliable connections, and human approval workflows.
 - Progressive capability: future phases build on secure foundations without leaking into the active scope.
+- Shared OS kernel: future modules must reuse shared identity, tenant isolation, permissions, policy, approvals, workflow state, audit, provenance, event/job, task/attention, and business-rule versioning primitives when they become real.
+- Country-aware core: country, currency, locale, timezone, pricing mode, tax mode/configuration, operating calendar, and location semantics must remain core-capable even before POS/fiscal features are approved.
+- Planning/execution boundary: merchandise planning recommendations do not execute purchasing, supplier, physical inventory, price, or external-system changes.
+- Validation gates expansion: synthetic Aso data proves internal engineering consistency only; real retailer/product evidence gates broad expansion.
+- Optional network expansion: Phase 12 retail network/embedded services remain optional, not inevitable.
 
 ## Interim domain baseline
 

@@ -4,7 +4,7 @@
 
 RetailOS is secure operating intelligence for African fashion retail. It helps retailers turn fragmented inventory, sales, location, integration, and merchandising data into trusted operating decisions.
 
-RetailOS is not a generic ERP, POS, accounting system, static dashboard, or chatbot. Product principles and domain assumptions live in `docs/`, especially `docs/domain/RETAIL_OPERATING_MODEL_V0_9.md`.
+RetailOS is not positioned as a generic ERP, POS, WMS, accounting system, static dashboard, or chatbot. It starts as Fashion Retail Operating Intelligence and may progressively absorb approved operating, system-of-record, and transactional capabilities required to become the retailer's operating system. Product principles and domain assumptions live in `docs/`, especially `docs/domain/RETAIL_OPERATING_MODEL_V0_9.md`.
 
 ## Authoritative sources
 
@@ -30,6 +30,8 @@ Current approved campaign: Phase 2B — Engineering Reconciliation, Domain Valid
 Approved campaign scope: M2.7, M2.8, M2.9, and M2.11.
 
 Stop after M2.11. Do not begin M2.12 or later without explicit approval and required domain-review evidence.
+
+Pre-M2.12 technical closure work may resolve technical blockers, hosted synthetic demo evidence, rule parity evidence, and documentation drift. It must not mark M2.12 accepted.
 
 ## Autonomy contract
 
