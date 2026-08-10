@@ -8,15 +8,16 @@ RetailOS is a secure operating system for African fashion retail. It converts fr
 
 The active campaign is Phase 2B - Engineering Reconciliation, Domain Validation and Pilot Readiness.
 
-The approved Phase 2B milestones for the current campaign are:
+The approved Phase 2B milestones completed in the current campaign are:
 
 - M2.7 - Repository Governance and Release Discipline.
 - M2.8 - Harness Simplification and Product Reconciliation.
 - M2.9 - Senior SWE Codebase Readiness Review.
+- M2.11 - Aso Inventory + Merchandising Dataset Expansion.
 
 The historical Phase 0.5 label remains represented in migrations, reports, and docs for development history. Its capabilities are now treated as Phase 0 integration and data-foundation milestones. This is a roadmap reconciliation, not a claim that the work was rebuilt.
 
-M0.20 is accepted. M0.21 is conditionally accepted. M2.10 Retail Operating Model v0.9 is satisfied by M0.20 evidence and remains at `INTERIM_DOMAIN_BASELINE`.
+M0.20 is accepted. M0.21 is conditionally accepted. M2.10 Retail Operating Model v0.9 is satisfied by M0.20 evidence and remains at `INTERIM_DOMAIN_BASELINE`. M2.12 is the next milestone and requires original consultant or approved independent domain-review evidence.
 
 ## Product principles
 
@@ -51,4 +52,4 @@ Contradictions must be reconciled when safe and clearly supported by repository 
 
 ## Roadmap boundary
 
-Future phases are context, not blanket implementation authority. Do not start M2.11, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, POS, payments, external-system write-back, or later-platform work unless the active milestone explicitly authorizes it.
+Future phases are context, not blanket implementation authority. Do not start M2.12, Phase 2C, Phase 3, purchasing, WMS, finance, omnichannel, POS, payments, external-system write-back, or later-platform work unless the active milestone explicitly authorizes it.

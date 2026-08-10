@@ -100,7 +100,7 @@ milestones:
   - id: M2.7
     phase: P2B
     name: "Repository Governance and Release Discipline"
-    status: CONDITIONALLY_ACCEPTED
+    status: ACCEPTED
     dependencies:
       - M2.0-M2.6
     acceptance_criteria:
@@ -124,7 +124,7 @@ milestones:
   - id: M2.8
     phase: P2B
     name: "Harness Simplification and Product Reconciliation"
-    status: CONDITIONALLY_ACCEPTED
+    status: ACCEPTED
     dependencies:
       - M2.7
     acceptance_criteria:
@@ -144,7 +144,7 @@ milestones:
   - id: M2.9
     phase: P2B
     name: "Senior SWE Codebase Readiness Review"
-    status: CONDITIONALLY_ACCEPTED
+    status: ACCEPTED
     dependencies:
       - M2.8
     acceptance_criteria:
@@ -186,11 +186,29 @@ milestones:
   - id: M2.11
     phase: P2B
     name: "Aso Inventory + Merchandising Dataset Expansion"
-    status: NOT_STARTED
+    status: ACCEPTED
     dependencies:
       - M2.9
-    human_gates:
-      - "Explicit approval required after M2.9."
+    evidence:
+      - data/demo/aso-collective/versions/ASO_INVENTORY_OPERATIONS_V2/manifest.json
+      - data/demo/aso-collective/versions/ASO_MERCHANDISING_PILOT_V3/manifest.json
+      - data/demo/aso-collective/versions/ASO_MERCHANDISING_PILOT_V3/golden-outcomes.json
+      - reports/M2_11_ACCEPTANCE_EVIDENCE.md
+    acceptance_criteria:
+      - "Aso evolves from V1 into versioned V2 inventory operations and V3 merchandising pilot fixtures."
+      - "Phase 1 and Phase 2A scenarios are covered with deterministic golden outcomes."
+      - "Rule versions are traceable and demo lifecycle remains deterministic/idempotent."
+    validation_requirements:
+      - STATIC
+      - UNIT
+      - INTEGRATION
+      - SECURITY
+      - DOMAIN
+    risk_tier: high
+    required_reviewers:
+      - REPOSITORY_REVIEWER
+      - SECURITY_REVIEWER
+      - DOMAIN_REVIEWER
 
   - id: M2.12
     phase: P2B

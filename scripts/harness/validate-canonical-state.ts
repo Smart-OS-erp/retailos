@@ -19,11 +19,11 @@ const requiredMilestones: Array<[string, string]> = [
   ["M0.21", "status: CONDITIONALLY_ACCEPTED"],
   ["M1.9", "status: ACCEPTED"],
   ["M2.0-M2.6", "status: ACCEPTED"],
-  ["M2.7", "status: CONDITIONALLY_ACCEPTED"],
-  ["M2.8", "status: CONDITIONALLY_ACCEPTED"],
-  ["M2.9", "status: CONDITIONALLY_ACCEPTED"],
+  ["M2.7", "status: ACCEPTED"],
+  ["M2.8", "status: ACCEPTED"],
+  ["M2.9", "status: ACCEPTED"],
   ["M2.10", "status: ACCEPTED"],
-  ["M2.11", "status: NOT_STARTED"],
+  ["M2.11", "status: ACCEPTED"],
 ];
 
 const requiredRoadmapLabels = [
@@ -111,8 +111,9 @@ for (const gate of [
 }
 
 assertIncludes(currentState, "Active Phase: Phase 2B", "current state");
-assertIncludes(currentState, "Current Approved Milestones: M2.7-M2.9", "current state");
-assertIncludes(nextTask, "Stop after M2.9", "next task");
+assertIncludes(currentState, "Current Approved Milestones: M2.7-M2.11", "current state");
+assertIncludes(nextTask, "Stop after M2.11", "next task");
+assertIncludes(nextTask, "M2.12", "next task");
 assertIncludes(agents, "harness/roadmap.yaml", "AGENTS");
 assertIncludes(agents.toLowerCase(), "mandatory stop conditions", "AGENTS");
 assertIncludes(readme, "Phase 2B", "README");
