@@ -69,6 +69,8 @@ These positions can coexist: the full suite is the end-state direction; `reports
 
 The August baseline passed at merge time, but scheduled `Security` workflows now fail. The 2026-11-09 run reported 22 dependency vulnerabilities: 11 moderate, 10 high, and 1 critical. Advisories include the installed Next.js range and transitive packages. This is a current release blocker.
 
+GitHub's repository alert summary reported 34 open vulnerability alerts when this handoff branch was pushed: 8 critical, 10 high, 15 moderate, and 1 low. GitHub alert totals, scheduled `npm audit` totals, and local audit totals cover different dependency/advisory states; preserve each as separate evidence rather than forcing the numbers to match.
+
 Open Dependabot PRs #64–#69 are not accepted fixes. Several fail Security; #66 and #69 also fail Quality. Do not merge them as a batch or run `npm audit fix --force` without reviewing breakage.
 
 A fresh local run also found one test regression: 148 of 149 tests passed, while `tests/integration/phase0-end-to-end-acceptance.test.ts` expected the Copilot summary to contain the literal word `evidence`. The actual deterministic summary was `Review aged inventory recovery is in progress at workflow version 4.` Treat this as unresolved contract/test drift until the intended copy contract is decided and fixed.
